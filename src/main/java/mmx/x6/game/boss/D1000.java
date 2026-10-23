@@ -17,10 +17,11 @@ public final class D1000 extends Entity {
     public static final float START_X = 6288;
     public static final float START_Y = 160;
     public static final float STAND_Y = 304;
-    public static final float CROUCH_Y = 352;
+    public static final float CROUCH_Y = 372;
     public static final float FLOOR_Y = 416;
     public static final int MAX_HP = 32;
 
+    private static final float RAM_LOW_Y = 352;
     private static final float ROOM_LEFT = 6136;
     private static final float ROOM_RIGHT = 6392;
     private static final float LEFT_WALL_INNER = 6080;
@@ -295,7 +296,7 @@ public final class D1000 extends Entity {
             case 0 -> {
                 facePlayer(w);
                 ramDir = faceRight ? 1 : -1;
-                float target = Math.max(STAND_Y - 48, Math.min(CROUCH_Y, w.player.y - 90));
+                float target = Math.max(STAND_Y - 48, Math.min(RAM_LOW_Y, w.player.y - 90));
                 y += Math.signum(target - y) * Math.min(2, Math.abs(target - y));
                 if (++timer >= 180) {
                     sub = 1;

@@ -118,6 +118,19 @@ class D1000Test {
     }
 
     @Test
+    void entryLandsOnTheFloor() {
+        Sim s = bossRoom();
+        D1000 d = spawn(s);
+        float lowest = 0;
+        int guard = 0;
+        while (d.step() == D1000.BossStep.ENTRY && guard++ < 3000) {
+            s.step(0);
+            lowest = Math.max(lowest, d.y);
+        }
+        assertEquals(D1000.FLOOR_Y - 44, lowest, 0.001);
+    }
+
+    @Test
     void lemonAndHalfAreDeflected() {
         Sim s = bossRoom();
         D1000 d = spawn(s);
