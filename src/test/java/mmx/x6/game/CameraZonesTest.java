@@ -64,14 +64,11 @@ class CameraZonesTest {
     }
 
     @Test
-    void zone3OnlyWhileCameraAtMost3840() {
-        CameraController far = cam(3900);
+    void zone3ActsWithTheCameraCentredOnX() {
+        CameraController c = cam(4010 - CameraController.VIEW_W / 2);
         CameraZones z = new CameraZones(List.of(ZONE3));
-        z.update(4010, 800, far);
-        assertEquals(944, far.targetMaxY());
-        CameraController near = cam(3800);
-        z.update(4010, 800, near);
-        assertEquals(704, near.targetMaxY());
+        z.update(4010, 800, c);
+        assertEquals(704, c.targetMaxY());
     }
 
     @Test

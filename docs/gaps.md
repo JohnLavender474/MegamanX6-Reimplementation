@@ -19,6 +19,10 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Camera follow: the X6 follow rule is not read. The camera puts X at (160, 128) in the view,
   inside the limits, with no smoothing; only the limits ease (2 px/update).
   `game/CameraController.java` (`docs/engine.md`, "Camera")
+- Camera zone 3: X6 deletes the zone when the camera x is more than 3840. With the centred follow,
+  the camera x is 3840 or more for all trigger x (4000–4031), so the zone never acted and the
+  camera followed X down in the upper ledge corridor. The check is not made; the zone acts like
+  the others. `game/CameraZones.java` (`docs/stages/intro.md`, "Camera")
 - Bar hang snap: `0x800397F8` is not read; X's head is put 4 px into the bar cell.
   `game/player/Player.java` (`docs/players/air.md`, "Hang")
 - Step down: the "16 px lower" floor test keeps X on a slope at any depth, but on a flat floor
