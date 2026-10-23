@@ -59,6 +59,24 @@ class AnimatorTest {
     }
 
     @Test
+    void enteredTestsAMask() {
+        String json = """
+                {"cell": [1, 1], "origin": [0, 0], "animations": [
+                  {"index": 0, "loop_to": null, "frames": [
+                    {"sprite": 0, "ticks": 1, "flag": 1},
+                    {"sprite": 1, "ticks": 1, "flag": 129}]}]}
+                """;
+        Animator a = new Animator(AnimSet.parse(json));
+        a.play(0);
+        assertFalse(a.entered(0x80));
+        a.tick();
+        assertTrue(a.entered(0x80));
+        assertFalse(a.entered(0x40));
+        a.tick();
+        assertFalse(a.entered(0x80));
+    }
+
+    @Test
     void playAtFrame() {
         Animator a = new Animator(AnimSet.parse(JSON));
         a.play(1, 1);

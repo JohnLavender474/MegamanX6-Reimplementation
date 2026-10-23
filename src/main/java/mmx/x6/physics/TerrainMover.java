@@ -11,12 +11,14 @@ public final class TerrainMover {
     public static final int FLOOR = 8;
 
     private static final float EPS = 0.001f;
+    private static final float MAX_FLAT_STEP_DOWN = 8;
 
     private final CollisionGrid grid;
 
     public boolean lastWallCling;
     public boolean lastSpike;
     public boolean lastOnSlope;
+    public boolean lastProbeCling;
 
     public TerrainMover(CollisionGrid grid) {
         this.grid = grid;
@@ -42,19 +44,36 @@ public final class TerrainMover {
     }
 
     public boolean blocked(Body b, int side, List<Rect> solids) {
+        lastProbeCling = false;
         float edge = side == RIGHT ? b.right() : b.left() - 1;
         for (float py : sidePoints(b)) {
-            if (TileRules.isWall(grid.at(edge, py))) {
+            int v = grid.at(edge, py);
+            if (TileRules.isWall(v)) {
+                lastProbeCling = TileRules.allowsWallCling(v);
                 return true;
             }
         }
         Rect probe = new Rect(side == RIGHT ? b.right() : b.left() - 1, b.top() + 2, 1, b.boxHalfH * 2 - 6);
         for (Rect r : solids) {
             if (r.overlaps(probe)) {
+                lastProbeCling = true;
                 return true;
             }
         }
         return false;
+    }
+
+    public boolean onFloor(Body b, List<Rect> solids) {
+        float y = b.y;
+        boolean slope = lastOnSlope;
+        boolean spike = lastSpike;
+        float prevBottom = b.bottom();
+        b.y += 1;
+        boolean found = floorAt(b, prevBottom, false, solids);
+        b.y = y;
+        lastOnSlope = slope;
+        lastSpike = spike;
+        return found;
     }
 
     private float[] sidePoints(Body b) {
@@ -100,10 +119,12 @@ public final class TerrainMover {
         }
         if (grounded) {
             float y = b.y;
+            float bottom = b.bottom();
             b.y += 16;
-            if (floorAt(b, prevBottom, false, solids)) {
+            if (floorAt(b, prevBottom, false, solids) && (lastOnSlope || b.bottom() - bottom <= MAX_FLAT_STEP_DOWN)) {
                 return FLOOR;
             }
+            lastOnSlope = false;
             b.y = y;
         }
         return 0;

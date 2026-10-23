@@ -237,4 +237,50 @@ class TerrainMoverTest {
         assertFalse(m.blocked(b, TerrainMover.LEFT, NONE));
         assertEquals(69, b.x, 0.001);
     }
+
+    @Test
+    void blockedProbeReportsCling() {
+        CollisionGrid g = grid(
+                "n....#..",
+                "n....#..",
+                "n....#..",
+                "n....#..",
+                "########");
+        TerrainMover m = new TerrainMover(g);
+        assertTrue(m.blocked(xBody(69, 43), TerrainMover.RIGHT, NONE));
+        assertTrue(m.lastProbeCling);
+        assertTrue(m.blocked(xBody(27, 43), TerrainMover.LEFT, NONE));
+        assertFalse(m.lastProbeCling);
+    }
+
+    @Test
+    void groundedDoesNotSnapDownASixteenPixelStep() {
+        CollisionGrid g = grid(
+                "........",
+                "........",
+                "........",
+                "##......",
+                "########");
+        TerrainMover m = new TerrainMover(g);
+        Body b = xBody(46, 48 - 21);
+        int flags = m.move(b, 2, 1, true, NONE);
+        assertFalse(has(flags, TerrainMover.FLOOR));
+    }
+
+    @Test
+    void onFloorProbeDoesNotMove() {
+        CollisionGrid g = grid(
+                "........",
+                "........",
+                "........",
+                "........",
+                "########");
+        TerrainMover m = new TerrainMover(g);
+        Body standing = xBody(40, 64 - 21);
+        assertTrue(m.onFloor(standing, NONE));
+        assertEquals(43, standing.y, 0.001);
+        Body air = xBody(40, 20);
+        assertFalse(m.onFloor(air, NONE));
+        assertEquals(20, air.y, 0.001);
+    }
 }

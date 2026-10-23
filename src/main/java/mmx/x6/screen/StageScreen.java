@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
@@ -13,15 +14,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
-import mmx.x6.game.CameraController;
+import mmx.x6.game.Entity;
 import mmx.x6.game.StepClock;
-import mmx.x6.level.Checkpoint;
-import mmx.x6.input.Buttons;
+import mmx.x6.game.World;
 import mmx.x6.level.Level;
 import mmx.x6.render.Assets;
 import mmx.x6.render.DebugOverlay;
+import mmx.x6.render.EntityRenderer;
 import mmx.x6.render.LevelRenderer;
 
 public final class StageScreen extends ScreenAdapter {
@@ -30,11 +34,10 @@ public final class StageScreen extends ScreenAdapter {
 
     private final Assets assets;
     private final Level level;
-    private final Sfx sfx;
     private final MusicPlayer music;
+    private final World world;
     private final LevelRenderer levelRenderer;
     private final StepClock clock = new StepClock();
-    private final Buttons buttons = new Buttons();
     private final FrameBuffer fbo;
     private final SpriteBatch batch = new SpriteBatch();
     private final SpriteBatch screenBatch = new SpriteBatch();
@@ -43,20 +46,22 @@ public final class StageScreen extends ScreenAdapter {
     private final OrthographicCamera screenCam = new OrthographicCamera();
     private final String shotPath = System.getProperty("mmx.shot");
     private final int shotAfter = Integer.getInteger("mmx.shotAfter", 30);
+    private final int scriptedHold = Integer.getInteger("mmx.hold", -1);
 
     private boolean debug = Boolean.getBoolean("mmx.debug");
-    private float camX = Integer.getInteger("mmx.camX", 0);
-    private float camY = Integer.getInteger("mmx.camY", 944);
     private int updates;
-    private final CameraController camera = new CameraController();
 
     public StageScreen(Assets assets, Level level, Sfx sfx, MusicPlayer music) {
         this.assets = assets;
         this.level = level;
-        this.sfx = sfx;
         this.music = music;
+        this.world = new World(level, assets::anim, sfx, music);
+        Integer startX = Integer.getInteger("mmx.startX");
+        Integer startY = Integer.getInteger("mmx.startY");
+        if (startX != null && startY != null) {
+            world.player.placeStanding(startX, startY);
+        }
         music.play(9);
-        camera.reset(new Checkpoint(0, 0, (int) camX, (int) camY, 0, 6400, 0, 1300, true, 1));
         this.levelRenderer = new LevelRenderer(assets);
         fbo = new FrameBuffer(Pixmap.Format.RGBA8888, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H, false);
         fbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -75,8 +80,12 @@ public final class StageScreen extends ScreenAdapter {
         }
         int n = shotPath != null ? 1 : clock.advance(delta);
         for (int i = 0; i < n; i++) {
-            buttons.sample(Gdx.input::isKeyPressed);
-            update();
+            if (scriptedHold >= 0) {
+                world.buttons.set(scriptedHold);
+            } else {
+                world.buttons.sample(Gdx.input::isKeyPressed);
+            }
+            world.update();
             updates++;
         }
         music.update();
@@ -93,34 +102,22 @@ public final class StageScreen extends ScreenAdapter {
         screenBatch.end();
     }
 
-    private void update() {
-        float speed = 8;
-        if (buttons.isHeld(Buttons.RIGHT)) {
-            camX += speed;
-        }
-        if (buttons.isHeld(Buttons.LEFT)) {
-            camX -= speed;
-        }
-        if (buttons.isHeld(Buttons.DOWN)) {
-            camY += speed;
-        }
-        if (buttons.isHeld(Buttons.UP)) {
-            camY -= speed;
-        }
-    }
-
     private void drawWorld() {
-        camera.setFollow(true);
-        camera.update(camX + 160, camY + 128);
-        float cx = camera.x();
-        float cy = camera.y();
+        float cx = world.camera.x();
+        float cy = world.camera.y();
         fbo.begin();
         ScreenUtils.clear(0, 0, 0, 1);
         batch.setProjectionMatrix(viewCam.combined);
         batch.begin();
-        levelRenderer.draw(batch, level.art2(), camera.layer2X(), camera.layer2Y());
-        levelRenderer.draw(batch, level.art1(), camera.layer1X(), camera.layer1Y());
+        levelRenderer.draw(batch, level.art2(), world.camera.layer2X(), world.camera.layer2Y());
+        levelRenderer.draw(batch, level.art1(), world.camera.layer1X(), world.camera.layer1Y());
         levelRenderer.draw(batch, level.art0Main(), cx, cy);
+        List<Entity> drawn = new ArrayList<>(world.entities);
+        drawn.sort(Comparator.comparingInt(Entity::drawPriority).reversed());
+        for (Entity e : drawn) {
+            drawEntity(e, cx, cy);
+        }
+        drawEntity(world.player, cx, cy);
         levelRenderer.draw(batch, level.art0Front(), cx, cy);
         batch.end();
         if (debug) {
@@ -129,8 +126,23 @@ public final class StageScreen extends ScreenAdapter {
             shapes.begin(ShapeRenderer.ShapeType.Filled);
             DebugOverlay.drawGrid(shapes, level.collision(), cx, cy);
             shapes.end();
+            shapes.begin(ShapeRenderer.ShapeType.Line);
+            DebugOverlay.drawBox(shapes, world.player.hurtBox(), Color.GREEN, cx, cy);
+            for (Entity e : world.entities) {
+                DebugOverlay.drawBox(shapes, e.hurtBox(), Color.BLUE, cx, cy);
+                DebugOverlay.drawBox(shapes, e.contactBox(), Color.RED, cx, cy);
+            }
+            shapes.end();
         }
         fbo.end();
+    }
+
+    private void drawEntity(Entity e, float cx, float cy) {
+        if (!e.visible() || e.spriteSet() == null || e.anim() == null || e.anim().anim() < 0) {
+            return;
+        }
+        Assets.SpriteFrame f = assets.frame(e.spriteSet(), e.anim().anim(), e.anim().frameIndex());
+        EntityRenderer.draw(batch, f, e.x, e.y, e.faceRight, cx, cy);
     }
 
     private void saveShot() {
