@@ -48,8 +48,11 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 ## Drawn with shapes (no exported art)
 
-- Explosions: circles that grow and fade for 16 updates. `game/fx/Explosion.java`
-  (`docs/engine.md`, "Death, debris and drops")
+- Explosions: `enemies/explosion/` (effect type 4) animation 0, 46 updates up to its hold frame.
+  Frame 0 (1 update) is not drawn: it is a flash frame for the fixed flash CLUT `0x7840`, which
+  the export does not draw. All explosions use this one variant ("random variant" is not read). The
+  shot spark (effect type 3) is not exported and is still drawn as circles.
+  `game/fx/Explosion.java` (`docs/engine.md`, "Death, debris and drops")
 - Death orbs: misc type 17 is not read; 3 waves of 8 circles at 2.5 px/update. `game/fx/Orb.java`
   (`docs/players/ladder-hurt-events.md`, "Death")
 - Charge effect: the glow palettes (38, 41) are not drawn; 4 small blue circles orbit X while the
@@ -103,9 +106,14 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   screen shake, the bomb's landing rumble.
 - RAM wind-up: the body moves toward a height 90 px above X, kept between y 256 and 352 (open
   question 3).
-- Death: the blink and a simplified BossExplosion (explosions, white fade, the wreck, a fade back),
-  then STAGE CLEAR. The second blink and explosion and Zero are cut. `game/boss/D1000.java`
-  ("Death")
+- Death: the blink, then `BossExplosion` with flags `0x81` (below), the sink of 0.25 px/update
+  and the wreck at the white screen, then STAGE CLEAR when the explosion object is gone. X is not
+  moved at the white screen. The second blink, the second explosion and Zero are cut.
+  `game/boss/D1000.java` ("Death")
+- Boss explosion: the states, times, explosions and white fade follow `docs/engine.md`
+  ("`BossExplosion`"). Not done: the rays (types 4, 6 and 8 have no sprite data), `Rumble(10)`,
+  `DeleteSysObjects`, `game.player_lock`. The 8 burst explosions come in the first 8 of the 9
+  burst updates. `game/fx/BossExplosion.java`
 - Lemons and half charges hit the core and stop, with no effect (the sheet says only that they
   "do nothing to it").
 

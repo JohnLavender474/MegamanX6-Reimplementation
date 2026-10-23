@@ -1,33 +1,36 @@
 package mmx.x6.game.fx;
 
 import java.util.List;
+import mmx.x6.anim.Animator;
 import mmx.x6.game.Entity;
 import mmx.x6.game.ShapeFx;
 import mmx.x6.game.World;
 
 public final class Explosion extends Entity {
 
-    private static final int LIFE = 16;
+    private static final int SPARK_LIFE = 16;
+    private static final float SPARK_SCALE = 0.35f;
     private static boolean toggle;
 
     private int age;
-    private final float scale;
+    private final boolean spark;
 
     public Explosion(World w, float x, float y) {
-        this(x, y, 1f);
+        this(x, y, false);
+        this.anim = new Animator(w.animSet("explosion"));
+        anim.play(0);
         toggle = !toggle;
-        // TODO: no explosion sprites are exported; drawn as circles (docs/gaps.md, "Explosions")
         w.sfx.play(0, toggle ? 0 : 1);
     }
 
-    private Explosion(float x, float y, float scale) {
+    private Explosion(float x, float y, boolean spark) {
         this.x = x;
         this.y = y;
-        this.scale = scale;
+        this.spark = spark;
     }
 
     public static Explosion spark(float x, float y) {
-        return new Explosion(x, y, 0.35f);
+        return new Explosion(x, y, true);
     }
 
     public static void around(World w, float x, float y, int count, float spread) {
@@ -40,9 +43,27 @@ public final class Explosion extends Entity {
 
     @Override
     public void update(World w) {
-        if (++age >= LIFE) {
+        if (spark) {
+            if (++age >= SPARK_LIFE) {
+                dead = true;
+            }
+            return;
+        }
+        anim.tick();
+        if (anim.atLastFrame()) {
             dead = true;
         }
+    }
+
+    @Override
+    public String spriteSet() {
+        return spark ? null : "explosion";
+    }
+
+    @Override
+    public boolean visible() {
+        // TODO: frame 0 is a flash frame drawn with the fixed flash CLUT 0x7840, which the export does not draw; it is skipped (docs/gaps.md, "Explosions")
+        return spark || anim.frameIndex() > 0;
     }
 
     @Override
@@ -52,8 +73,12 @@ public final class Explosion extends Entity {
 
     @Override
     public List<ShapeFx> shapes() {
-        float t = age / (float) LIFE;
-        float radius = (4 + 14 * t) * scale;
+        if (!spark) {
+            return List.of();
+        }
+        // TODO: the shot spark (effect type 3) is not exported; drawn as circles (docs/gaps.md, "Explosions")
+        float t = age / (float) SPARK_LIFE;
+        float radius = (4 + 14 * t) * SPARK_SCALE;
         float alpha = 1 - t;
         return List.of(
                 new ShapeFx(x, y, radius, 1f, 0.55f, 0.1f, alpha),

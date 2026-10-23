@@ -4,7 +4,7 @@ import mmx.x6.anim.Animator;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Entity;
 import mmx.x6.game.World;
-import mmx.x6.game.fx.Explosion;
+import mmx.x6.game.fx.BossExplosion;
 import mmx.x6.game.player.PlayerStep;
 import mmx.x6.level.RecordDef;
 import mmx.x6.level.TileLayer;
@@ -28,7 +28,8 @@ public final class D1000 extends Entity {
     private static final float RIGHT_WALL_INNER = 6448;
     private static final int WALL_TOP_ROW = 208 / 16;
     private static final int WALL_ROWS = 13;
-    private static final float WHITE_STEP = 25f / 4095f;
+    private static final int SINK_AFTER_FADE = 31;
+    private static final float SINK_SPEED = 0.25f;
 
     private BossStep step = BossStep.ENTRY;
     private int sub;
@@ -41,6 +42,7 @@ public final class D1000 extends Entity {
     private int invincible;
     private int ramDir;
     private D1000Core core;
+    private BossExplosion explosion;
 
     public D1000(World w, RecordDef r) {
         this.record = r;
@@ -467,42 +469,29 @@ public final class D1000 extends Entity {
             case 0 -> {
                 flash = blinkOn(timer) ? 1 : 0;
                 if (timer >= 127) {
+                    explosion = new BossExplosion(x, y, BossExplosion.LONG_HOLD | 1);
+                    w.add(explosion);
                     sub = 1;
                     timer = 0;
                 }
             }
             case 1 -> {
                 flash = (timer / 6) % 2;
-                if (timer <= 9) {
-                    w.add(new Explosion(w, x + w.rng.nextInt(97) - 48, y + w.rng.nextInt(97) - 48));
-                } else if (timer % 4 == 0 && timer < 110) {
-                    w.add(new Explosion(w, x + w.rng.nextInt(193) - 96, y + w.rng.nextInt(193) - 96));
+                if (explosion.fadeUpdates() > SINK_AFTER_FADE) {
+                    y += SINK_SPEED;
                 }
-                if (timer >= 110) {
-                    w.whiteLevel = Math.min(1, w.whiteLevel + WHITE_STEP);
-                    if (timer % 4 == 0) {
-                        w.add(new Explosion(w, x + w.rng.nextInt(193) - 96, y + w.rng.nextInt(193) - 96));
-                    }
-                    if (w.whiteLevel >= 1) {
-                        // TODO: the white hold, the wreck and the second explosion are simplified; Zero is cut (docs/gaps.md, "D-1000 death")
-                        anim.play(11);
-                        y = w.camera.y() + 160;
-                        flash = 0;
-                        sub = 2;
-                        timer = 0;
-                    }
+                if (explosion.white()) {
+                    // TODO: X is not moved at the white screen, and the second blink, the second explosion and Zero are cut (docs/gaps.md, "D-1000 death")
+                    anim.play(11);
+                    y = w.camera.y() + 160;
+                    flash = 0;
+                    sub = 2;
                 }
             }
             case 2 -> {
-                if (timer >= 41) {
-                    sub = 3;
-                }
-            }
-            case 3 -> {
-                w.whiteLevel = Math.max(0, w.whiteLevel - WHITE_STEP);
-                if (w.whiteLevel <= 0) {
-                    sub = 4;
+                if (explosion.dead) {
                     w.flow.clear();
+                    sub = 3;
                 }
             }
             default -> {
