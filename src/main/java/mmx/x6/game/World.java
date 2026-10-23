@@ -60,8 +60,7 @@ public final class World {
         this.player = new Player(this);
         Checkpoint cp = IntroCheckpoints.ALL.get(0);
         camera.reset(cp);
-        camera.setFollow(true);
-        player.placeStanding(cp.playerX(), cp.playerY());
+        player.respawn(cp);
     }
 
     public static World forGrid(CollisionGrid g, Function<String, AnimSet> sets, Sfx sfx, MusicPlayer music) {
@@ -162,6 +161,21 @@ public final class World {
         }
     }
 
+    public void clearEnemies() {
+        for (Entity e : entities) {
+            if (!e.dead && e.clearedByGate()) {
+                e.dead = true;
+                spawner.released(e.record);
+            }
+        }
+        for (Entity e : pending) {
+            if (e.clearedByGate()) {
+                e.dead = true;
+                spawner.released(e.record);
+            }
+        }
+    }
+
     public void resetTo(int checkpointIndex, Checkpoint cp) {
         entities.clear();
         pending.clear();
@@ -171,7 +185,6 @@ public final class World {
         grid.restoreFrom(pristineGrid);
         System.arraycopy(pristineArt, 0, level.art0Main().gids(), 0, pristineArt.length);
         camera.reset(cp);
-        camera.setFollow(true);
         zones.reset();
         spawner.reset();
         music.play(9);

@@ -66,6 +66,11 @@ public final class JunkroidShot extends Entity {
     }
 
     @Override
+    public boolean clearedByGate() {
+        return true;
+    }
+
+    @Override
     public String spriteSet() {
         return "junkroid";
     }

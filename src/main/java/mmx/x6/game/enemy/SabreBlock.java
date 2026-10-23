@@ -41,6 +41,11 @@ public final class SabreBlock extends Enemy implements Solid {
     }
 
     @Override
+    public boolean clearedByGate() {
+        return false;
+    }
+
+    @Override
     public int drawPriority() {
         return 7;
     }

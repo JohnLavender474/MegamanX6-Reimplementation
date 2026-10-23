@@ -65,6 +65,14 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Sabre block art: cut from `banks/intro/intro-1_start/bank-1.png`, whose background colour
   (40, 40, 60) is made transparent. `render/Assets.java`
 
+## Gates and stage start
+
+- Boss gates: only the two intro ids are mapped (id 2: camera fixed at the gate x, y 224; id 1:
+  x to x + 80). The trigger also needs X on the floor. During the pass X does not walk by himself;
+  the gate moves him at 0.640625 px/update and he shows the walk animation.
+  `game/enemy/BossGate.java` (`docs/enemies/boss-gate.md`, open question 2)
+- Stage start: the READY banner is skipped; X beams in at once. (`docs/engine.md`, "Stage start")
+
 ## Skipped on purpose
 
 - Item drops (health, weapon energy, extra lives): the drop weights exist, the drops are out of

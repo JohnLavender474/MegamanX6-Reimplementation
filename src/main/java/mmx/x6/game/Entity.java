@@ -64,6 +64,10 @@ public abstract class Entity {
         return false;
     }
 
+    public boolean clearedByGate() {
+        return isEnemy();
+    }
+
     public List<ShapeFx> shapes() {
         return List.of();
     }

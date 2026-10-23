@@ -24,6 +24,7 @@ import mmx.x6.game.ShapeFx;
 import mmx.x6.game.player.Player;
 import mmx.x6.game.StepClock;
 import mmx.x6.game.World;
+import mmx.x6.level.Checkpoint;
 import mmx.x6.level.Level;
 import mmx.x6.render.Assets;
 import mmx.x6.render.DebugOverlay;
@@ -58,9 +59,15 @@ public final class StageScreen extends ScreenAdapter {
         this.level = level;
         this.music = music;
         this.world = new World(level, assets::anim, sfx, music);
+        Integer startCheckpoint = Integer.getInteger("mmx.checkpoint");
+        if (startCheckpoint != null) {
+            world.flow.restart(startCheckpoint);
+        }
         Integer startX = Integer.getInteger("mmx.startX");
         Integer startY = Integer.getInteger("mmx.startY");
         if (startX != null && startY != null) {
+            world.camera.reset(new Checkpoint(startX, startY, startX - 160, startY - 128, 0, 6144, 0, 1296, true, 1));
+            world.camera.setFollow(true);
             world.player.placeStanding(startX, startY);
         }
         music.play(9);
@@ -79,6 +86,9 @@ public final class StageScreen extends ScreenAdapter {
         }
         if (Gdx.input.isKeyJustPressed(Keys.F1)) {
             debug = !debug;
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.R)) {
+            world.flow.restart(0);
         }
         int n = shotPath != null ? 1 : clock.advance(delta);
         for (int i = 0; i < n; i++) {

@@ -46,6 +46,7 @@ public final class Player extends Entity {
     private static final int HURT_REACTION_END = 60;
     private static final float HURT_SPEED = 2.5f;
     private static final float HURT_DECEL = 0.1875f;
+    private static final float BEAM_SPEED = 8;
 
     private final Body body;
     private PlayerStep step = PlayerStep.STAND;
@@ -85,6 +86,7 @@ public final class Player extends Entity {
     private int deathTimer;
     private boolean hidden;
     private boolean spikeTouched;
+    private int beamThru;
     private int sabreKind;
     private boolean sabreCancel;
     private SabreSlash slash;
@@ -124,6 +126,62 @@ public final class Player extends Entity {
         endSlash();
         faceRight = cp.faceRight();
         placeStanding(cp.playerX(), cp.playerY());
+        step = PlayerStep.BEAM_IN;
+        sub = 0;
+        beamThru = cp.beamThru();
+        body.hasBox = false;
+        latch = -1;
+        anim.play(1);
+        world.sfx.play(1, 13);
+        world.camera.setFollow(false);
+    }
+
+    public void startGate() {
+        endSlash();
+        dropCharge();
+        shotPose = 0;
+        step = PlayerStep.GATE_WALK;
+        faceRight = true;
+        body.hasBox = false;
+        speedX = speedY = 0;
+        anim.play(8);
+    }
+
+    public void pushGate(float dx) {
+        body.x += dx;
+        x = body.x;
+    }
+
+    public void endGate() {
+        body.hasBox = true;
+        latch = 0;
+        toStand();
+    }
+
+    private void updateBeamIn() {
+        anim.tick();
+        if (sub == 0) {
+            if (beamThru > 0) {
+                beamThru--;
+                body.y += BEAM_SPEED;
+                if (beamThru == 0) {
+                    body.hasBox = true;
+                }
+                return;
+            }
+            body.hasBox = true;
+            int f = world.mover.move(body, 0, BEAM_SPEED, false, world.solids());
+            if ((f & TerrainMover.FLOOR) != 0) {
+                anim.play(2);
+                latch = 0;
+                sub = 1;
+                world.camera.setFollow(true);
+            }
+            return;
+        }
+        if (anim.atLastFrame()) {
+            toStand();
+        }
     }
 
     public PlayerStep step() {
@@ -263,6 +321,7 @@ public final class Player extends Entity {
             case SABRE -> updateSabre();
             case HURT -> updateHurt();
             case DEAD -> updateDeath();
+            case BEAM_IN -> updateBeamIn();
             case EVENT_HOLD -> {
                 anim.tick();
                 groundMove(0);

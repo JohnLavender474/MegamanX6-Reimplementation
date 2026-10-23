@@ -15,6 +15,7 @@ public final class IntroEntityFactory implements EntityFactory {
             case "MetaWheelF" -> new MetaWheelF(w, r);
             case "MetaDridler" -> new MetaDridler(w, r);
             case "SabreBlock" -> new SabreBlock(w, r);
+            case "BossGate" -> new BossGate(w, r);
             default -> null;
         };
     }

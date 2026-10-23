@@ -73,6 +73,11 @@ public final class HoverGunnerShot extends Entity {
     }
 
     @Override
+    public boolean clearedByGate() {
+        return true;
+    }
+
+    @Override
     public String spriteSet() {
         return "hover-gunner";
     }
