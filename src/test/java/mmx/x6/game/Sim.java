@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.D1000Anims;
 import mmx.x6.anim.SabreBlockAnims;
 import mmx.x6.anim.ShotAnims;
 import mmx.x6.audio.MusicPlayer;
@@ -86,6 +87,14 @@ public final class Sim {
         }
         if (name.equals("sabre-block")) {
             return SabreBlockAnims.SET;
+        }
+        if (name.equals("d1000")) {
+            AnimSet merged = SETS.get(name);
+            if (merged == null) {
+                merged = D1000Anims.merge(set("d-1000"), set("d-1000-parts"));
+                SETS.put(name, merged);
+            }
+            return merged;
         }
         return SETS.computeIfAbsent(name, n -> {
             DataPaths p = DataPaths.resolve(new String[0]);

@@ -34,6 +34,11 @@ public final class CachedSfx implements Sfx {
     }
 
     @Override
+    public void useBossBank(boolean on) {
+        banks.useBossBank(on);
+    }
+
+    @Override
     public void stop(int bank, int id) {
         Optional<Path> p = banks.wav(bank, id);
         Long handle = playing.remove(key(bank, id));

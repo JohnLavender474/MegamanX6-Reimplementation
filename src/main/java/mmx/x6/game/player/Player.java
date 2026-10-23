@@ -87,6 +87,7 @@ public final class Player extends Entity {
     private boolean hidden;
     private boolean spikeTouched;
     private int beamThru;
+    private float eventWalk;
     private int sabreKind;
     private boolean sabreCancel;
     private SabreSlash slash;
@@ -145,6 +146,30 @@ public final class Player extends Entity {
         body.hasBox = false;
         speedX = speedY = 0;
         anim.play(8);
+    }
+
+    public void startEvent(boolean faceRight, float walk) {
+        endSlash();
+        dropCharge();
+        shotPose = 0;
+        this.faceRight = faceRight;
+        eventWalk = walk;
+        if (step != PlayerStep.DEAD) {
+            step = PlayerStep.EVENT_HOLD;
+            anim.play(walk > 0 ? 8 : standAnim());
+        }
+    }
+
+    public void setEventWalk(float walk) {
+        eventWalk = walk;
+        anim.play(walk > 0 ? 8 : standAnim());
+    }
+
+    public void endEvent() {
+        eventWalk = 0;
+        if (step == PlayerStep.EVENT_HOLD) {
+            toStand();
+        }
     }
 
     public void pushGate(float dx) {
@@ -324,7 +349,18 @@ public final class Player extends Entity {
             case BEAM_IN -> updateBeamIn();
             case EVENT_HOLD -> {
                 anim.tick();
-                groundMove(0);
+                if (latch == 0) {
+                    groundMove(face() * eventWalk);
+                    if (step == PlayerStep.FALL) {
+                        step = PlayerStep.EVENT_HOLD;
+                    }
+                } else {
+                    int f = airMove();
+                    if ((f & TerrainMover.FLOOR) != 0) {
+                        latch = 0;
+                        speedY = 0;
+                    }
+                }
             }
             default -> anim.tick();
         }

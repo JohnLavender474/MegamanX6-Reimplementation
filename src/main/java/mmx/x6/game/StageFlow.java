@@ -29,6 +29,21 @@ public final class StageFlow {
         }
     }
 
+    public void clear() {
+        if (state == State.CLEAR) {
+            return;
+        }
+        state = State.CLEAR;
+        world.music.stop();
+        world.lockCount++;
+    }
+
+    public void anyKey() {
+        if (state == State.CLEAR) {
+            restart(0);
+        }
+    }
+
     public void update() {
         if (state == State.FADE_OUT && --timer <= 0) {
             restart(world.checkpoint);

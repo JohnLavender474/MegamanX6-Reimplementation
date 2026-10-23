@@ -38,6 +38,10 @@ public final class World {
     public int checkpoint;
     public int lockCount;
     public long frame;
+    public int bossHp;
+    public int bossHpMax;
+    public boolean bossBarShown;
+    public float whiteLevel;
 
     private final Function<String, AnimSet> sets;
     private final List<Entity> pending = new ArrayList<>();
@@ -187,6 +191,10 @@ public final class World {
         camera.reset(cp);
         zones.reset();
         spawner.reset();
+        bossHp = 0;
+        bossBarShown = false;
+        whiteLevel = 0;
+        sfx.useBossBank(false);
         music.play(9);
         player.respawn(cp);
     }

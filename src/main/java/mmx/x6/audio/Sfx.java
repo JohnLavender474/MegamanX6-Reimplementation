@@ -6,6 +6,9 @@ public interface Sfx {
 
     void stop(int bank, int id);
 
+    default void useBossBank(boolean on) {
+    }
+
     Sfx NONE = new Sfx() {
         @Override
         public void play(int bank, int id) {

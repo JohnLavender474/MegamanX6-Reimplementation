@@ -73,6 +73,25 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   `game/enemy/BossGate.java` (`docs/enemies/boss-gate.md`, open question 2)
 - Stage start: the READY banner is skipped; X beams in at once. (`docs/engine.md`, "Stage start")
 
+## D-1000
+
+- Floor height: the body lands at y 352 (the sheet's crouched height) and stands at y 304; its
+  terrain box is not used (`docs/enemies/d-1000.md`, open question 8). Bombs land at y 416.
+- Animations: the sheet names only some of them. Used: 0 idle, 1 walk, 3 crouch shake, 4 charge,
+  5 stun, 7 fall, 8 land, 9 stand up, 11 wreck; core 13 idle, 15 hit, 16 appear; core shot 19,
+  bomb 14, fire pillar 20–22. The rest is a guess from the strips. `game/boss/D1000.java`
+- WARNING: plain blinking text for 470 updates; the 22 rays are not drawn.
+  `game/boss/BossWarning.java` (`docs/engine.md`, "Boss entry and exit")
+- Not done: the rock fall and screen quakes at the landing, the core's energy particles, the RAM's
+  screen shake, the bomb's landing rumble.
+- RAM wind-up: the body moves toward a height 90 px above X, kept between y 256 and 352 (open
+  question 3).
+- Death: the blink and a simplified BossExplosion (explosions, white fade, the wreck, a fade back),
+  then STAGE CLEAR. The second blink and explosion and Zero are cut. `game/boss/D1000.java`
+  ("Death")
+- Lemons and half charges hit the core and stop, with no effect (the sheet says only that they
+  "do nothing to it").
+
 ## Skipped on purpose
 
 - Item drops (health, weapon energy, extra lives): the drop weights exist, the drops are out of

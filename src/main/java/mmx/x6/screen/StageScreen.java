@@ -21,6 +21,8 @@ import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
 import mmx.x6.game.Entity;
 import mmx.x6.game.ShapeFx;
+import mmx.x6.game.StageFlow;
+import mmx.x6.render.Hud;
 import mmx.x6.game.player.Player;
 import mmx.x6.game.StepClock;
 import mmx.x6.game.World;
@@ -51,6 +53,7 @@ public final class StageScreen extends ScreenAdapter {
     private final int shotAfter = Integer.getInteger("mmx.shotAfter", 30);
     private final int scriptedHold = Integer.getInteger("mmx.hold", -1);
 
+    private final Hud hud = new Hud();
     private boolean debug = Boolean.getBoolean("mmx.debug");
     private int updates;
 
@@ -87,7 +90,11 @@ public final class StageScreen extends ScreenAdapter {
         if (Gdx.input.isKeyJustPressed(Keys.F1)) {
             debug = !debug;
         }
-        if (Gdx.input.isKeyJustPressed(Keys.R)) {
+        if (world.flow.state() == StageFlow.State.CLEAR) {
+            if (Gdx.input.isKeyJustPressed(Keys.ANY_KEY)) {
+                world.flow.anyKey();
+            }
+        } else if (Gdx.input.isKeyJustPressed(Keys.R)) {
             world.flow.restart(0);
         }
         int n = shotPath != null ? 1 : clock.advance(delta);
@@ -178,12 +185,16 @@ public final class StageScreen extends ScreenAdapter {
                 shapes.circle(p.x + ox - ix, p.y + oy - iy, 2, 8);
             }
         }
+        hud.drawShapes(shapes, world);
         float fade = world.flow.fade();
         if (fade > 0) {
             shapes.setColor(0, 0, 0, fade);
             shapes.rect(0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H);
         }
         shapes.end();
+        batch.begin();
+        hud.drawText(batch, world);
+        batch.end();
     }
 
     private void drawEntity(Entity e, float cx, float cy) {
@@ -208,5 +219,6 @@ public final class StageScreen extends ScreenAdapter {
         batch.dispose();
         screenBatch.dispose();
         shapes.dispose();
+        hud.dispose();
     }
 }

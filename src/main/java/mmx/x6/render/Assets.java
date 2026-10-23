@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimDef;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.D1000Anims;
 import mmx.x6.anim.SabreBlockAnims;
 import mmx.x6.anim.ShotAnims;
 
@@ -130,20 +131,15 @@ public final class Assets implements Disposable {
     private AnimSet loadD1000() {
         AnimSet body = parse(paths.enemyDir("d-1000").resolve("animations.json"));
         AnimSet parts = parse(paths.enemyDir("d-1000-parts").resolve("animations.json"));
-        Map<Integer, AnimDef> merged = new TreeMap<>();
+        AnimSet merged = D1000Anims.merge(body, parts);
         Map<Integer, Source> bySet = new HashMap<>();
         Source bodySrc = new Source(paths.enemyDir("d-1000"), body, Map.of());
         Source partsSrc = new Source(paths.enemyDir("d-1000-parts"), parts, Map.of());
-        for (int i = 0; i <= 23; i++) {
-            AnimSet from = i <= 5 ? body : parts;
-            AnimDef d = from.get(i);
-            if (d != null) {
-                merged.put(i, d);
-                bySet.put(i, i <= 5 ? bodySrc : partsSrc);
-            }
+        for (int i : merged.indices()) {
+            bySet.put(i, i <= D1000Anims.LAST_BODY_ANIM ? bodySrc : partsSrc);
         }
         sources.put("d1000", bySet);
-        return new AnimSet(body.cellW(), body.cellH(), body.originX(), body.originY(), merged);
+        return merged;
     }
 
     private AnimSet loadShots() {
