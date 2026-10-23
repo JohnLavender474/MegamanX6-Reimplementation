@@ -15,7 +15,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
+import mmx.x6.game.CameraController;
 import mmx.x6.game.StepClock;
+import mmx.x6.level.Checkpoint;
 import mmx.x6.input.Buttons;
 import mmx.x6.level.Level;
 import mmx.x6.render.Assets;
@@ -46,6 +48,7 @@ public final class StageScreen extends ScreenAdapter {
     private float camX = Integer.getInteger("mmx.camX", 0);
     private float camY = Integer.getInteger("mmx.camY", 944);
     private int updates;
+    private final CameraController camera = new CameraController();
 
     public StageScreen(Assets assets, Level level, Sfx sfx, MusicPlayer music) {
         this.assets = assets;
@@ -53,6 +56,7 @@ public final class StageScreen extends ScreenAdapter {
         this.sfx = sfx;
         this.music = music;
         music.play(9);
+        camera.reset(new Checkpoint(0, 0, (int) camX, (int) camY, 0, 6400, 0, 1300, true, 1));
         this.levelRenderer = new LevelRenderer(assets);
         fbo = new FrameBuffer(Pixmap.Format.RGBA8888, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H, false);
         fbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -106,20 +110,24 @@ public final class StageScreen extends ScreenAdapter {
     }
 
     private void drawWorld() {
+        camera.setFollow(true);
+        camera.update(camX + 160, camY + 128);
+        float cx = camera.x();
+        float cy = camera.y();
         fbo.begin();
         ScreenUtils.clear(0, 0, 0, 1);
         batch.setProjectionMatrix(viewCam.combined);
         batch.begin();
-        levelRenderer.draw(batch, level.art2(), camX, camY);
-        levelRenderer.draw(batch, level.art1(), camX, camY);
-        levelRenderer.draw(batch, level.art0Main(), camX, camY);
-        levelRenderer.draw(batch, level.art0Front(), camX, camY);
+        levelRenderer.draw(batch, level.art2(), camera.layer2X(), camera.layer2Y());
+        levelRenderer.draw(batch, level.art1(), camera.layer1X(), camera.layer1Y());
+        levelRenderer.draw(batch, level.art0Main(), cx, cy);
+        levelRenderer.draw(batch, level.art0Front(), cx, cy);
         batch.end();
         if (debug) {
             Gdx.gl.glEnable(GL20.GL_BLEND);
             shapes.setProjectionMatrix(viewCam.combined);
             shapes.begin(ShapeRenderer.ShapeType.Filled);
-            DebugOverlay.drawGrid(shapes, level.collision(), camX, camY);
+            DebugOverlay.drawGrid(shapes, level.collision(), cx, cy);
             shapes.end();
         }
         fbo.end();
