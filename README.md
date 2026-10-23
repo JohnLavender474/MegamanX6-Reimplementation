@@ -23,9 +23,11 @@ argument or as `-Dmmx.data=<path>`. A missing file stops the game with one error
 ## Run
 
 ```
-./gradlew run
-./gradlew test
+make run
+make test
 ```
+
+`make run` and `make test` call `./gradlew run` and `./gradlew test`.
 
 Java 17 or later (the build targets 17; it is tested on JDK 25). The Gradle wrapper downloads
 Gradle 9.1.0.
