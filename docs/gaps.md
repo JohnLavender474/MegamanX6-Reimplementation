@@ -49,6 +49,22 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   standing offset, 21 px forward and 9 px up, is used for every pose). (`docs/players/attacks.md`)
 - Player hurt box: the Falcon hurt-box table is not read; the terrain box is used.
 
+## Enemies
+
+- Spawning: a record spawns when its point enters the 48 px band (not on every update while it is
+  inside), so a killed enemy comes back only after its point leaves the band and enters it again.
+  `game/Spawner.java` (`docs/engine.md`, "Spawning and despawning")
+- Hover Gunner poses: which of animations 1–5 shows which aim is not documented; horizontal → 1,
+  45° up → 2, up → 3, 45° down → 4, down → 5. `game/enemy/HoverGunner.java`
+- Meta Wheel F: the stud overlay (misc type 2) is not drawn; the floor-and-ceiling squeeze death is
+  not checked. `game/enemy/MetaWheelF.java` (`docs/enemies/meta-wheel-f.md`)
+- Meta Dridler rock block: the tile copy and 4 explosions are in; the 60 updates of extra
+  explosions, debris and screen shake are not. `game/enemy/MetaDridler.java`
+- Enemy terrain uses the player's tile rules, not the object point tests (`docs/engine.md`, "Tile
+  collision", object point tests).
+- Sabre block art: cut from `banks/intro/intro-1_start/bank-1.png`, whose background colour
+  (40, 40, 60) is made transparent. `render/Assets.java`
+
 ## Skipped on purpose
 
 - Item drops (health, weapon energy, extra lives): the drop weights exist, the drops are out of

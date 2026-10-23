@@ -7,6 +7,7 @@ import java.util.function.Function;
 import mmx.x6.anim.AnimSet;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
+import mmx.x6.game.enemy.IntroEntityFactory;
 import mmx.x6.game.player.Player;
 import mmx.x6.input.Buttons;
 import mmx.x6.level.Checkpoint;
@@ -18,6 +19,8 @@ import mmx.x6.physics.Rect;
 import mmx.x6.physics.TerrainMover;
 
 public final class World {
+
+    public static final int DIFFICULTY = 1;
 
     public final Level level;
     public final CollisionGrid grid;
@@ -31,6 +34,7 @@ public final class World {
     public final Random rng = new Random(6);
     public final StageFlow flow;
     public Player player;
+    public Spawner spawner;
     public int checkpoint;
     public int lockCount;
     public long frame;
@@ -52,6 +56,7 @@ public final class World {
         this.music = music;
         this.zones = new CameraZones(level.cameraZones());
         this.flow = new StageFlow(this);
+        this.spawner = new Spawner(level.records(), DIFFICULTY, new IntroEntityFactory());
         this.player = new Player(this);
         Checkpoint cp = IntroCheckpoints.ALL.get(0);
         camera.reset(cp);
@@ -100,10 +105,11 @@ public final class World {
             resolveContacts();
         }
         entities.removeIf(e -> e.dead);
-        entities.addAll(pending);
-        pending.clear();
         camera.update(player.x, player.y);
         zones.update(player.x, player.y, camera);
+        spawner.update(this);
+        entities.addAll(pending);
+        pending.clear();
     }
 
     private void resolveWeapons() {
@@ -167,12 +173,22 @@ public final class World {
         camera.reset(cp);
         camera.setFollow(true);
         zones.reset();
+        spawner.reset();
         music.play(9);
         player.respawn(cp);
     }
 
     public List<Rect> solids() {
-        return List.of();
+        List<Rect> out = new ArrayList<>();
+        for (Entity e : entities) {
+            if (!e.dead && e instanceof Solid s) {
+                Rect r = s.solidRect();
+                if (r != null) {
+                    out.add(r);
+                }
+            }
+        }
+        return out;
     }
 
     public boolean locked() {

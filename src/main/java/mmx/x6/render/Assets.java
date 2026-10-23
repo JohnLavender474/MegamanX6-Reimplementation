@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimDef;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.SabreBlockAnims;
 import mmx.x6.anim.ShotAnims;
 
 public final class Assets implements Disposable {
@@ -51,6 +52,9 @@ public final class Assets implements Disposable {
     }
 
     public SpriteFrame frame(String set, int anim, int frameIndex) {
+        if ("sabre-block".equals(set)) {
+            return sabreBlockSprite(anim);
+        }
         anim(set);
         Source src = sources.get(set).get(anim);
         if (src == null) {
@@ -107,6 +111,7 @@ public final class Assets implements Disposable {
             case "x-falcon" -> loadDir(set, paths.playerDir("x-falcon"));
             case "d1000" -> loadD1000();
             case "shots" -> loadShots();
+            case "sabre-block" -> SabreBlockAnims.SET;
             default -> loadDir(set, paths.enemyDir(set));
         };
     }
@@ -182,9 +187,20 @@ public final class Assets implements Disposable {
             return;
         }
         Pixmap pix = new Pixmap(new FileHandle(p.toFile()));
-        Texture t = texture(p);
         int w = pix.getWidth();
         int h = pix.getHeight();
+        int background = pix.getPixel(0, 0);
+        pix.setBlending(Pixmap.Blending.None);
+        for (int py = 0; py < h; py++) {
+            for (int px = 0; px < w; px++) {
+                if (pix.getPixel(px, py) == background) {
+                    pix.drawPixel(px, py, 0);
+                }
+            }
+        }
+        Texture t = new Texture(pix);
+        t.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+        textures.put(p + "#transparent", t);
         int x = 0;
         while (x < w && sabreBlock.size() < 4) {
             while (x < w && !opaqueColumn(pix, x, h)) {

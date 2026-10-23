@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.SabreBlockAnims;
 import mmx.x6.anim.ShotAnims;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
@@ -82,6 +83,9 @@ public final class Sim {
         assumeTrue(DataPaths.defaultRootExists());
         if (name.equals("shots")) {
             return ShotAnims.SET;
+        }
+        if (name.equals("sabre-block")) {
+            return SabreBlockAnims.SET;
         }
         return SETS.computeIfAbsent(name, n -> {
             DataPaths p = DataPaths.resolve(new String[0]);
