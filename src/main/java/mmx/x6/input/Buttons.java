@@ -13,10 +13,13 @@ public final class Buttons {
     public static final int BUSTER = 0x20;
     public static final int JUMP = 0x80;
     public static final int DASH = 0x100;
+    public static final int WEAPON_NEXT = 0x200;
+    public static final int WEAPON_PREV = 0x400;
 
     private static final int[][] KEYS = {
-            {Keys.RIGHT, RIGHT}, {Keys.LEFT, LEFT}, {Keys.UP, UP}, {Keys.DOWN, DOWN},
-            {Keys.A, WEAPON}, {Keys.X, BUSTER}, {Keys.Z, JUMP}, {Keys.C, DASH}};
+            {Keys.D, RIGHT}, {Keys.A, LEFT}, {Keys.W, UP}, {Keys.S, DOWN},
+            {Keys.I, WEAPON}, {Keys.J, BUSTER}, {Keys.K, JUMP}, {Keys.L, DASH},
+            {Keys.O, WEAPON_NEXT}, {Keys.Q, WEAPON_PREV}};
 
     private int held;
     private int before;

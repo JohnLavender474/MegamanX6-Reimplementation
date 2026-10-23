@@ -36,11 +36,13 @@ Gradle 9.1.0.
 
 | key | action |
 |---|---|
-| arrow keys | move, climb, aim the crouch |
-| Z | jump (in the air: Falcon dash) |
-| X | buster; hold to charge |
-| C | dash |
-| A | Z-Saber |
+| W A S D | move, climb, aim the crouch |
+| K | jump (in the air: Falcon dash) |
+| J | buster; hold to charge |
+| L | dash |
+| I | Z-Saber (the triangle button) |
+| Q | left trigger: previous weapon (no effect yet) |
+| O | right trigger: next weapon (no effect yet) |
 | R | restart the stage |
 | F1 | debug view: collision, boxes, slash boxes |
 | Esc | quit |
@@ -52,7 +54,7 @@ Gradle 9.1.0.
 | `-Dmmx.checkpoint=N` | start at checkpoint N (0, 1, 2) |
 | `-Dmmx.startX=X -Dmmx.startY=Y` | start standing at a point, with wide camera limits |
 | `-Dmmx.debug=true` | start with the F1 view on |
-| `-Dmmx.hold=BITS` | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash) |
+| `-Dmmx.hold=BITS` | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon) |
 | `-Dmmx.jumpEvery=N` | with `mmx.hold`: pulse jump and the held non-direction buttons every N updates |
 | `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG of the view after N updates and quit |
 
