@@ -14,10 +14,14 @@ public final class SabreSlash extends Entity implements Weapon {
     private static final int NO_BOX_AFTER_HIT = 4;
     private static final int HEAD_TIME = 5;
     private static final int SWING_END = 14;
-    private static final float ARC_FROM = -95;
-    private static final float ARC_TO = 55;
-    private static final float ARC_RADIUS = 30;
-    private static final float THICKNESS = 13;
+    private static final float ARC_FROM = -72;
+    private static final float ARC_TO = 60;
+    private static final float ARC_RADIUS = 50;
+    private static final float THICKNESS = 20;
+    private static final float CENTRE_FORWARD = 14;
+    private static final float CENTRE_UP = 14;
+    private static final int BLADE_LAYER = 1;
+    private static final int OUTLINE_SEGMENTS = 18;
 
     private final Player player;
     private final int weaponId;
@@ -53,8 +57,22 @@ public final class SabreSlash extends Entity implements Weapon {
         if (noBox > 0 || hitsLeft <= 0) {
             return null;
         }
-        // TODO: the slash box comes "from the frame flag" with no numbers in the docs (docs/gaps.md, "Sabre hit box")
-        return faceRight ? new Rect(x - 8, y - 32, 56, 48) : new Rect(x + 8 - 56, y - 32, 56, 48);
+        List<CrescentFx> layers = crescents();
+        if (layers.isEmpty()) {
+            return null;
+        }
+        // TODO: the slash box comes "from the frame flag" with no numbers in the docs; it follows the drawn blade (docs/gaps.md, "Sabre hit box")
+        float minX = Float.POSITIVE_INFINITY;
+        float maxX = Float.NEGATIVE_INFINITY;
+        float minY = Float.POSITIVE_INFINITY;
+        float maxY = Float.NEGATIVE_INFINITY;
+        for (float[] p : layers.get(BLADE_LAYER).outline(OUTLINE_SEGMENTS)) {
+            minX = Math.min(minX, Math.min(p[0], p[2]));
+            maxX = Math.max(maxX, Math.max(p[0], p[2]));
+            minY = Math.min(minY, Math.min(p[1], p[3]));
+            maxY = Math.max(maxY, Math.max(p[1], p[3]));
+        }
+        return new Rect(minX, minY, maxX - minX, maxY - minY);
     }
 
     @Override
@@ -90,8 +108,8 @@ public final class SabreSlash extends Entity implements Weapon {
         float shape = Math.max(0.25f, (to - from) / span);
         float alpha = age < HEAD_TIME + 3 ? 1f : 1f - (age - HEAD_TIME - 3) / (float) (SWING_END - HEAD_TIME - 3);
         float face = faceRight ? 1 : -1;
-        float cx = x + face * 2;
-        float cy = y - 8;
+        float cx = x + face * CENTRE_FORWARD;
+        float cy = y - CENTRE_UP;
         return List.of(
                 new CrescentFx(cx, cy, ARC_RADIUS + 3, (THICKNESS + 6) * shape, from, to, faceRight,
                         0.15f, 0.95f, 0.35f, 0.3f * alpha),

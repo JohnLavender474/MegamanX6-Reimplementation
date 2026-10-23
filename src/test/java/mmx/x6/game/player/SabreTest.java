@@ -67,6 +67,62 @@ class SabreTest {
     }
 
     @Test
+    void swingIsBigAndClearOfXsBody() {
+        Sim s = flat();
+        s.step(WEAPON);
+        s.steps(4, 0);
+        SabreSlash slash = (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash)
+                .findFirst().orElseThrow();
+        s.steps(5, 0);
+        float bodyFront = s.world.player.body().right();
+        float maxX = Float.NEGATIVE_INFINITY;
+        float minY = Float.POSITIVE_INFINITY;
+        float maxY = Float.NEGATIVE_INFINITY;
+        for (CrescentFx c : slash.crescents()) {
+            for (float[] p : c.outline(18)) {
+                assertTrue(p[0] >= bodyFront && p[2] >= bodyFront, "overlaps X at x " + Math.min(p[0], p[2]));
+                maxX = Math.max(maxX, p[0]);
+                minY = Math.min(minY, p[1]);
+                maxY = Math.max(maxY, p[1]);
+            }
+        }
+        assertTrue(maxX - bodyFront >= 40, "reach " + (maxX - bodyFront));
+        assertTrue(maxY - minY >= 80, "height " + (maxY - minY));
+    }
+
+    @Test
+    void hitBoxMatchesTheCrescent() {
+        Sim s = flat();
+        s.step(WEAPON);
+        s.steps(4, 0);
+        SabreSlash slash = (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash)
+                .findFirst().orElseThrow();
+        for (int i = 0; i < 20 && !slash.dead; i++) {
+            s.step(0);
+            List<CrescentFx> layers = slash.crescents();
+            if (layers.isEmpty()) {
+                assertEquals(null, slash.attackBox(), "no box after the crescent fades");
+                continue;
+            }
+            float minX = Float.POSITIVE_INFINITY;
+            float maxX = Float.NEGATIVE_INFINITY;
+            float minY = Float.POSITIVE_INFINITY;
+            float maxY = Float.NEGATIVE_INFINITY;
+            for (float[] p : layers.get(1).outline(18)) {
+                minX = Math.min(minX, Math.min(p[0], p[2]));
+                maxX = Math.max(maxX, Math.max(p[0], p[2]));
+                minY = Math.min(minY, Math.min(p[1], p[3]));
+                maxY = Math.max(maxY, Math.max(p[1], p[3]));
+            }
+            mmx.x6.physics.Rect box = slash.attackBox();
+            assertEquals(minX, box.x(), 0.01);
+            assertEquals(maxX, box.right(), 0.01);
+            assertEquals(minY, box.y(), 0.01);
+            assertEquals(maxY, box.bottom(), 0.01);
+        }
+    }
+
+    @Test
     void crescentPointsAreInFrontAndTaperAtTheEnds() {
         CrescentFx c = new CrescentFx(100, 50, 30, 10, -80, 50, true, 0.5f, 1f, 0.6f, 1f);
         List<float[]> pts = c.outline(16);
