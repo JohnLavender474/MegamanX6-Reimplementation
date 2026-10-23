@@ -13,6 +13,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
+import mmx.x6.audio.MusicPlayer;
+import mmx.x6.audio.Sfx;
 import mmx.x6.game.StepClock;
 import mmx.x6.input.Buttons;
 import mmx.x6.level.Level;
@@ -26,6 +28,8 @@ public final class StageScreen extends ScreenAdapter {
 
     private final Assets assets;
     private final Level level;
+    private final Sfx sfx;
+    private final MusicPlayer music;
     private final LevelRenderer levelRenderer;
     private final StepClock clock = new StepClock();
     private final Buttons buttons = new Buttons();
@@ -43,9 +47,12 @@ public final class StageScreen extends ScreenAdapter {
     private float camY = Integer.getInteger("mmx.camY", 944);
     private int updates;
 
-    public StageScreen(Assets assets, Level level) {
+    public StageScreen(Assets assets, Level level, Sfx sfx, MusicPlayer music) {
         this.assets = assets;
         this.level = level;
+        this.sfx = sfx;
+        this.music = music;
+        music.play(9);
         this.levelRenderer = new LevelRenderer(assets);
         fbo = new FrameBuffer(Pixmap.Format.RGBA8888, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H, false);
         fbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -68,6 +75,7 @@ public final class StageScreen extends ScreenAdapter {
             update();
             updates++;
         }
+        music.update();
         drawWorld();
         if (shotPath != null && updates >= shotAfter) {
             saveShot();
