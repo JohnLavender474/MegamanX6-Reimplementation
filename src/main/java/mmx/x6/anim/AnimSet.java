@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.TreeMap;
+import mmx.x6.physics.Rect;
 
 public final class AnimSet {
 
@@ -16,13 +17,24 @@ public final class AnimSet {
     private final int originX;
     private final int originY;
     private final Map<Integer, AnimDef> anims;
+    private final Map<Integer, List<Rect>> bounds;
 
     public AnimSet(int cellW, int cellH, int originX, int originY, Map<Integer, AnimDef> anims) {
+        this(cellW, cellH, originX, originY, anims, Map.of());
+    }
+
+    private AnimSet(int cellW, int cellH, int originX, int originY, Map<Integer, AnimDef> anims,
+                    Map<Integer, List<Rect>> bounds) {
         this.cellW = cellW;
         this.cellH = cellH;
         this.originX = originX;
         this.originY = originY;
         this.anims = anims;
+        this.bounds = bounds;
+    }
+
+    public AnimSet withBounds(Map<Integer, List<Rect>> bounds) {
+        return new AnimSet(cellW, cellH, originX, originY, anims, Map.copyOf(bounds));
     }
 
     public static AnimSet parse(String json) {
@@ -64,6 +76,11 @@ public final class AnimSet {
 
     public AnimDef get(int index) {
         return anims.get(index);
+    }
+
+    public Rect bounds(int anim, int frame) {
+        List<Rect> frames = bounds.get(anim);
+        return frames == null || frame < 0 || frame >= frames.size() ? null : frames.get(frame);
     }
 
     public Set<Integer> indices() {

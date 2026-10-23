@@ -1334,7 +1334,11 @@ public final class Player extends Entity {
     private void updateSabre() {
         anim.tick();
         if (slash == null && anim.entered(0x80)) {
-            slash = new SabreSlash(this, sabreKind == SABRE_FLOOR ? 50 : 51);
+            slash = new SabreSlash(world, this, sabreKind == SABRE_FLOOR ? 50 : 51, switch (sabreKind) {
+                case SABRE_FLOOR -> SabreSlash.FLOOR_ANIM;
+                case SABRE_AIR -> SabreSlash.AIR_ANIM;
+                default -> SabreSlash.WALL_ANIM;
+            });
             world.add(slash);
             // TODO: X's sabre sound is not named in the docs; the Magma Blade slash sound (1, 23) is used (docs/gaps.md, "Sabre sound")
             world.sfx.play(1, 23);

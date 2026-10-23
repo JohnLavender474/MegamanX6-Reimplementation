@@ -7,10 +7,16 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 - Shot sprites: `x-shots/` has no `animations.json`, and there is no export of the Falcon full
   charge (shot 19). Shot 19 uses the plain full charge (id 18) art and box. (`docs/players/attacks.md`)
-- Sabre hit box: the docs give only "box from the frame flag". The box is the bounding box of the
-  drawn crescent blade on each update, so a slash hits only while the crescent shows (about 14
-  updates, up to 3 hits, not the docs' 4). `game/player/SabreSlash.java`
+- Sabre hit box: the docs give only "box from the frame flag", and the box table is not read. On
+  each frame of the `x-sabre` animation with a flag that is not 0, the box is the bounding box of
+  the drawn pixels of that frame; frames with flag 0 have no box. The floor slash has a box on
+  frames 1–6 (15 updates). `game/player/SabreSlash.java`, `anim/SpriteBounds.java`
   (`docs/players/weapons.md`, "The other ids that X makes")
+- Sabre slash animations: the code that picks the slash animation is not read. Floor (id 50) uses
+  `x-sabre` animation 0, air (id 51) animation 1 and wall (id 51) animation 4, chosen by how they
+  line up with X's sabre poses 183, 184 and 187. Animations 2, 3, 5 and 6–17 are not used. The
+  slash starts at the pose frame with flag `0x80` and ends at the hold frame of its animation.
+  `game/player/SabreSlash.java`
 - D-1000 sprites: no combined export; animations 0–5 come from `d-1000`, 6–23 from `d-1000-parts`.
   (`docs/enemies/d-1000.md`, "Sprites")
 
@@ -46,10 +52,6 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   (`docs/engine.md`, "Death, debris and drops")
 - Death orbs: misc type 17 is not read; 3 waves of 8 circles at 2.5 px/update. `game/fx/Orb.java`
   (`docs/players/ladder-hurt-events.md`, "Death")
-- Sabre swing: X's slash sprites are not exported; a filled green crescent (glow, blade and white
-  core, radius 50 px, centred 14 px in front of and 14 px above X) sweeps from above to below in
-  front of him over 5 updates, then its trailing edge catches up and it fades by update 14. It does
-  not overlap X's body. `game/player/SabreSlash.java`, `game/CrescentFx.java`
 - Charge effect: the glow palettes (38, 41) are not drawn; 4 small blue circles orbit X while the
   buster charges, faster at level 2. `screen/StageScreen.java` (`docs/players/attacks.md`, "Charge")
 

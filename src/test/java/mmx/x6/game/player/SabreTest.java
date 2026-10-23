@@ -4,13 +4,16 @@ import static mmx.x6.input.Buttons.JUMP;
 import static mmx.x6.input.Buttons.WEAPON;
 import static mmx.x6.physics.Grids.grid;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.util.List;
-import mmx.x6.game.CrescentFx;
+import java.util.HashSet;
+import java.util.Set;
+import mmx.x6.anim.AnimSet;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Sim;
 import mmx.x6.game.TestTarget;
+import mmx.x6.physics.Rect;
 import org.junit.jupiter.api.Test;
 
 class SabreTest {
@@ -45,95 +48,77 @@ class SabreTest {
         assertTrue(s.world.entities.stream().anyMatch(e -> e instanceof SabreSlash sl && sl.weaponId() == 51));
     }
 
-    @Test
-    void swingIsDrawnInFrontThenFades() {
-        Sim s = flat();
-        s.step(WEAPON);
-        s.steps(4, 0);
-        SabreSlash slash = (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash)
-                .findFirst().orElseThrow();
-        s.step(0);
-        List<CrescentFx> early = slash.crescents();
-        assertEquals(3, early.size(), "glow, blade and core layers");
-        assertTrue(early.stream().allMatch(c -> c.faceRight() == s.world.player.faceRight));
-        assertTrue(early.stream().allMatch(c -> c.g() >= c.r()), "green or white blade");
-        float firstSpan = early.get(0).toDeg() - early.get(0).fromDeg();
-        s.steps(3, 0);
-        float laterSpan = slash.crescents().get(0).toDeg() - slash.crescents().get(0).fromDeg();
-        assertTrue(laterSpan > firstSpan, "the leading edge sweeps " + firstSpan + " -> " + laterSpan);
-        assertTrue(slash.shapes().isEmpty(), "no circle chain any more");
-        s.steps(20, 0);
-        assertTrue(slash.dead || slash.crescents().isEmpty());
+    private static SabreSlash slash(Sim s) {
+        return (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash).findFirst().orElseThrow();
     }
 
     @Test
-    void swingIsBigAndClearOfXsBody() {
+    void slashAnimationPerPose() {
+        Sim floor = flat();
+        floor.step(WEAPON);
+        floor.steps(4, 0);
+        assertEquals("x-sabre", slash(floor).spriteSet());
+        assertEquals(0, slash(floor).anim().anim());
+
+        Sim air = flat();
+        air.steps(5, JUMP);
+        air.step(JUMP | WEAPON);
+        air.steps(4, JUMP);
+        assertEquals(1, slash(air).anim().anim());
+    }
+
+    @Test
+    void boxIsTheDrawnBladeOnFlaggedFrames() {
         Sim s = flat();
         s.step(WEAPON);
         s.steps(4, 0);
-        SabreSlash slash = (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash)
-                .findFirst().orElseThrow();
-        s.steps(5, 0);
-        float bodyFront = s.world.player.body().right();
-        float maxX = Float.NEGATIVE_INFINITY;
-        float minY = Float.POSITIVE_INFINITY;
-        float maxY = Float.NEGATIVE_INFINITY;
-        for (CrescentFx c : slash.crescents()) {
-            for (float[] p : c.outline(18)) {
-                assertTrue(p[0] >= bodyFront && p[2] >= bodyFront, "overlaps X at x " + Math.min(p[0], p[2]));
-                maxX = Math.max(maxX, p[0]);
-                minY = Math.min(minY, p[1]);
-                maxY = Math.max(maxY, p[1]);
+        SabreSlash slash = slash(s);
+        AnimSet set = s.world.animSet("x-sabre");
+        Set<Integer> boxed = new HashSet<>();
+        for (int i = 0; i < 40 && !slash.dead; i++) {
+            Rect box = slash.attackBox();
+            int frame = slash.anim().frameIndex();
+            Rect b = set.bounds(0, frame);
+            if (slash.anim().flag() == 0 || b == null) {
+                assertNull(box, "no box on frame " + frame);
+            } else {
+                boxed.add(frame);
+                float left = s.world.player.faceRight ? slash.x - b.right() : slash.x + b.x();
+                assertEquals(left, box.x(), 0.01);
+                assertEquals(slash.y + b.y(), box.y(), 0.01);
+                assertEquals(b.w(), box.w(), 0.01);
+                assertEquals(b.h(), box.h(), 0.01);
             }
-        }
-        assertTrue(maxX - bodyFront >= 40, "reach " + (maxX - bodyFront));
-        assertTrue(maxY - minY >= 80, "height " + (maxY - minY));
-    }
-
-    @Test
-    void hitBoxMatchesTheCrescent() {
-        Sim s = flat();
-        s.step(WEAPON);
-        s.steps(4, 0);
-        SabreSlash slash = (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash)
-                .findFirst().orElseThrow();
-        for (int i = 0; i < 20 && !slash.dead; i++) {
             s.step(0);
-            List<CrescentFx> layers = slash.crescents();
-            if (layers.isEmpty()) {
-                assertEquals(null, slash.attackBox(), "no box after the crescent fades");
-                continue;
-            }
-            float minX = Float.POSITIVE_INFINITY;
-            float maxX = Float.NEGATIVE_INFINITY;
-            float minY = Float.POSITIVE_INFINITY;
-            float maxY = Float.NEGATIVE_INFINITY;
-            for (float[] p : layers.get(1).outline(18)) {
-                minX = Math.min(minX, Math.min(p[0], p[2]));
-                maxX = Math.max(maxX, Math.max(p[0], p[2]));
-                minY = Math.min(minY, Math.min(p[1], p[3]));
-                maxY = Math.max(maxY, Math.max(p[1], p[3]));
-            }
-            mmx.x6.physics.Rect box = slash.attackBox();
-            assertEquals(minX, box.x(), 0.01);
-            assertEquals(maxX, box.right(), 0.01);
-            assertEquals(minY, box.y(), 0.01);
-            assertEquals(maxY, box.bottom(), 0.01);
         }
+        assertEquals(Set.of(1, 2, 3, 4, 5, 6), boxed);
     }
 
     @Test
-    void crescentPointsAreInFrontAndTaperAtTheEnds() {
-        CrescentFx c = new CrescentFx(100, 50, 30, 10, -80, 50, true, 0.5f, 1f, 0.6f, 1f);
-        List<float[]> pts = c.outline(16);
-        assertEquals(17, pts.size());
-        assertTrue(pts.stream().allMatch(p -> p[0] >= 100 - 1e-3), "outer edge in front");
-        float[] mid = pts.get(8);
-        float[] end = pts.get(0);
-        assertEquals(0, Math.hypot(end[0] - end[2], end[1] - end[3]), 1e-3);
-        assertTrue(Math.hypot(mid[0] - mid[2], mid[1] - mid[3]) > 9, "thick in the middle");
-        CrescentFx left = new CrescentFx(100, 50, 30, 10, -80, 50, false, 0.5f, 1f, 0.6f, 1f);
-        assertTrue(left.outline(16).stream().allMatch(p -> p[0] <= 100 + 1e-3), "mirrored when facing left");
+    void floorBladeReachesInFront() {
+        Sim s = flat();
+        s.step(WEAPON);
+        s.steps(4, 0);
+        SabreSlash slash = slash(s);
+        float reach = 0;
+        for (int i = 0; i < 20; i++) {
+            Rect box = slash.attackBox();
+            if (box != null) {
+                reach = Math.max(reach, box.right() - s.world.player.x);
+            }
+            s.step(0);
+        }
+        assertTrue(reach >= 40, "reach " + reach);
+    }
+
+    @Test
+    void slashEndsAtItsHoldFrame() {
+        Sim s = flat();
+        s.step(WEAPON);
+        s.steps(4, 0);
+        SabreSlash slash = slash(s);
+        s.steps(30, 0);
+        assertTrue(slash.dead);
     }
 
     @Test

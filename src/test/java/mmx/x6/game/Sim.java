@@ -14,6 +14,7 @@ import mmx.x6.anim.AnimSet;
 import mmx.x6.anim.D1000Anims;
 import mmx.x6.anim.SabreBlockAnims;
 import mmx.x6.anim.ShotAnims;
+import mmx.x6.anim.SpriteBounds;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
 import mmx.x6.level.CollisionGrid;
@@ -100,7 +101,8 @@ public final class Sim {
             DataPaths p = DataPaths.resolve(new String[0]);
             try {
                 java.nio.file.Path dir = n.equals("x-falcon") ? p.playerDir(n) : p.enemyDir(n);
-                return AnimSet.parse(Files.readString(dir.resolve("animations.json")));
+                AnimSet parsed = AnimSet.parse(Files.readString(dir.resolve("animations.json")));
+                return n.equals("x-sabre") ? SpriteBounds.attach(parsed, dir) : parsed;
             } catch (IOException e) {
                 throw new UncheckedIOException(e);
             }

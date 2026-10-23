@@ -71,8 +71,4 @@ public abstract class Entity {
     public List<ShapeFx> shapes() {
         return List.of();
     }
-
-    public List<CrescentFx> crescents() {
-        return List.of();
-    }
 }

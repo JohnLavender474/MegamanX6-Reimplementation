@@ -19,7 +19,6 @@ import java.util.Comparator;
 import java.util.List;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
-import mmx.x6.game.CrescentFx;
 import mmx.x6.game.Entity;
 import mmx.x6.game.ShapeFx;
 import mmx.x6.game.StageFlow;
@@ -182,9 +181,6 @@ public final class StageScreen extends ScreenAdapter {
                 shapes.setColor(s.r(), s.g(), s.b(), s.a());
                 shapes.circle(s.x() - ix, s.y() - iy, s.radius(), 16);
             }
-            for (CrescentFx c : e.crescents()) {
-                drawCrescent(c, ix, iy);
-            }
         }
         Player p = world.player;
         if (p.chargeLevel() > 0 && p.visible()) {
@@ -211,17 +207,6 @@ public final class StageScreen extends ScreenAdapter {
         batch.begin();
         hud.drawText(batch, world);
         batch.end();
-    }
-
-    private void drawCrescent(CrescentFx c, int ix, int iy) {
-        shapes.setColor(c.r(), c.g(), c.b(), c.a());
-        List<float[]> pts = c.outline(18);
-        for (int i = 0; i + 1 < pts.size(); i++) {
-            float[] p = pts.get(i);
-            float[] q = pts.get(i + 1);
-            shapes.triangle(p[0] - ix, p[1] - iy, q[0] - ix, q[1] - iy, p[2] - ix, p[3] - iy);
-            shapes.triangle(q[0] - ix, q[1] - iy, q[2] - ix, q[3] - iy, p[2] - ix, p[3] - iy);
-        }
     }
 
     private void drawEntity(Entity e, float cx, float cy) {
