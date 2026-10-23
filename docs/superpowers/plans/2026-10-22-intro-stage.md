@@ -33,6 +33,15 @@ names before you write its code.
   item drops, special weapons, lives.
 - A value that the docs do not give gets a best guess and a `TODO` comment that names the doc
   section or the spec's "Known gaps" item. No other comments (user rule).
+- `docs/gaps.md` in this repo lists every gap and `TODO`: one line each, with the file, what is
+  guessed or missing, and the doc section. Task 1 creates it with the spec's known gaps and the
+  skipped item drops (`docs/engine.md` "Death, debris and drops": the weights exist, the drops
+  are out of scope). Each task adds its own `TODO`s in the same commit.
+- Missing art for an integral effect is drawn with `ShapeRenderer`, only where the game needs it
+  to read well: explosions, the death orbs, and the charge effect (4 small blue glowing circles
+  that orbit X while the buster charges; faster at level 2). Each one is a `docs/gaps.md` line.
+- The bar hang is optional. If it does not fit in Task 7 in a simple way, skip it and add a
+  `docs/gaps.md` line.
 - Tests that need the real data call `Assumptions.assumeTrue(DataPaths.defaultRootExists())`, so
   the build passes on a machine with no data.
 
@@ -877,7 +886,10 @@ Source: `docs/enemies/boss-gate.md`, `docs/players/ladder-hurt-events.md` "Beam-
 Gate steps and timings as `docs/enemies/boss-gate.md`. Limits for the two intro ids only: id 2
 → (X, X, 224, 224); id 1 → (X, X + 80, keep, keep). The player's step 19 (GATE_WALK) does not
 walk by itself: the gate moves X (`TODO` boss-gate.md open question 2); X shows the walk
-animation. Beam-in: animation 1 (the beam), sound (1, 13), `speedY = -8`, the checkpoint's
+animation. The camera does not snap at a gate: the gate sets target limits, and
+`CameraController` eases the current limits to them at 2 px/update, so the view scrolls into the
+hallway and into the boss room (`gateCameraEases` test: during PASS the camera x grows by at most
+2 per update). Beam-in: animation 1 (the beam), sound (1, 13), `speedY = -8`, the checkpoint's
 `beamThru` updates with no terrain box, then on the floor animation 2 and follow on; at its hold
 frame the lock ends and X stands. The READY banner is skipped.
 
