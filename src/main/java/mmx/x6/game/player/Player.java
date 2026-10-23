@@ -247,11 +247,13 @@ public final class Player extends Entity {
     }
 
     public float busterX() {
-        return x + (faceRight ? 21 : -21);
+        // TODO: only the stand and crouch buster points of buster_ofs (0x8007673C) are used; walk, jump, dash and wall shots start at the stand point (docs/gaps.md, "Buster point")
+        int forward = step == PlayerStep.CROUCH ? 31 : 21;
+        return x + (faceRight ? forward : -forward);
     }
 
     public float busterY() {
-        return y - 9;
+        return y + (step == PlayerStep.CROUCH ? 4 : -9);
     }
 
     @Override
@@ -458,6 +460,8 @@ public final class Player extends Entity {
         int a = anim.anim();
         if (step == PlayerStep.STAND) {
             anim.play(standShot);
+        } else if (step == PlayerStep.CROUCH && sub == 1) {
+            anim.play(standShot == 91 ? 139 : 108);
         } else if (SHOOTING_VERSIONS.contains(a)) {
             anim.play(a + 112, anim.frameIndex());
         }
@@ -737,7 +741,7 @@ public final class Player extends Entity {
         step = PlayerStep.CROUCH;
         sub = 0;
         speedX = 0;
-        play(81);
+        play(shotPose > 0 ? 109 : 81);
     }
 
     private void updateCrouch() {
@@ -755,9 +759,13 @@ public final class Player extends Entity {
             return;
         }
         anim.tick();
-        if (sub == 0 && !isHeld(Buttons.DOWN)) {
-            play(82);
+        if (sub != 2 && !isHeld(Buttons.DOWN)) {
+            play(shotPose > 0 ? 110 : 82);
             sub = 2;
+        } else if (sub == 0 && anim.atLastFrame()) {
+            sub = 1;
+        } else if (sub == 1 && shotPose == 0 && anim.anim() != 81) {
+            anim.play(81, 2);
         } else if (sub == 2 && anim.atLastFrame()) {
             toStand();
         }

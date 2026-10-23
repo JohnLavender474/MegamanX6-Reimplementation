@@ -19,6 +19,10 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Camera follow: the X6 follow rule is not read. The camera puts X at (160, 128) in the view,
   inside the limits, with no smoothing; only the limits ease (2 px/update).
   `game/CameraController.java` (`docs/engine.md`, "Camera")
+- Buster point: `buster_ofs` (`0x8007673C`) gives a point per X sprite. Only two are used: stand
+  (21 px forward, 9 px up) and crouch (31 px forward, 4 px down). Walk, jump, dash and wall shots
+  start at the stand point; the table gives 20–42 px forward and 12 px up to 5 px down for them.
+  `game/player/Player.java` (`docs/players/attacks.md`, "The shots")
 - Camera zone 3: X6 deletes the zone when the camera x is more than 3840. With the centred follow,
   the camera x is 3840 or more for all trigger x (4000–4031), so the zone never acted and the
   camera followed X down in the upper ledge corridor. The check is not made; the zone acts like
@@ -55,8 +59,7 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   the restart at the last checkpoint. `game/StageFlow.java`
 - Sabre sound: X's slash sound is not named; the Magma Blade slash sound (bank 1, id 23) is used.
   `game/player/Player.java` (`docs/players/weapons.md`, "Slot 3")
-- Lemon muzzle flash (animation 39) is not drawn; the per-sprite buster offsets are not used (the
-  standing offset, 21 px forward and 9 px up, is used for every pose). (`docs/players/attacks.md`)
+- Lemon muzzle flash (animation 39) is not drawn. (`docs/players/attacks.md`)
 - Player hurt box: the Falcon hurt-box table is not read; the terrain box is used.
 
 ## Enemies

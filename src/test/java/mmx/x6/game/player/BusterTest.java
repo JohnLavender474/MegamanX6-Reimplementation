@@ -1,6 +1,7 @@
 package mmx.x6.game.player;
 
 import static mmx.x6.input.Buttons.BUSTER;
+import static mmx.x6.input.Buttons.DOWN;
 import static mmx.x6.physics.Grids.grid;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -56,6 +57,26 @@ class BusterTest {
         s.step(0);
         assertEquals(6.75f, shot.x - x, 0.001);
         assertEquals(1, s.sfx.count(1, 8));
+    }
+
+    @Test
+    void lemonStartsAtTheStandingBuster() {
+        Sim s = flat();
+        s.step(BUSTER);
+        BusterShot shot = shots(s).get(0);
+        assertEquals(s.world.player.x + 21, shot.x, 0.001);
+        assertEquals(s.world.player.y - 9, shot.y, 0.001);
+    }
+
+    @Test
+    void lemonStartsAtTheCrouchingBuster() {
+        Sim s = flat();
+        s.steps(10, DOWN);
+        assertEquals(PlayerStep.CROUCH, s.world.player.step());
+        s.step(DOWN | BUSTER);
+        BusterShot shot = shots(s).get(0);
+        assertEquals(s.world.player.x + 31, shot.x, 0.001);
+        assertEquals(s.world.player.y + 4, shot.y, 0.001);
     }
 
     @Test
