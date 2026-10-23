@@ -30,6 +30,25 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Dash end: X slides from 4.125 down by 0.1875 per update until the end animation stops; the
   timer rule of the docs is not used. Voices (bank 3) are not played.
 
+## Drawn with shapes (no exported art)
+
+- Explosions: circles that grow and fade for 16 updates. `game/fx/Explosion.java`
+  (`docs/engine.md`, "Death, debris and drops")
+- Death orbs: misc type 17 is not read; 3 waves of 8 circles at 2.5 px/update. `game/fx/Orb.java`
+  (`docs/players/ladder-hurt-events.md`, "Death")
+- Charge effect: the glow palettes (38, 41) are not drawn; 4 small blue circles orbit X while the
+  buster charges, faster at level 2. `screen/StageScreen.java` (`docs/players/attacks.md`, "Charge")
+
+## More guesses
+
+- Respawn: the path from the death orbs back to the stage is not read; a 30-update black fade, then
+  the restart at the last checkpoint. `game/StageFlow.java`
+- Sabre sound: X's slash sound is not named; the Magma Blade slash sound (bank 1, id 23) is used.
+  `game/player/Player.java` (`docs/players/weapons.md`, "Slot 3")
+- Lemon muzzle flash (animation 39) is not drawn; the per-sprite buster offsets are not used (the
+  standing offset, 21 px forward and 9 px up, is used for every pose). (`docs/players/attacks.md`)
+- Player hurt box: the Falcon hurt-box table is not read; the terrain box is used.
+
 ## Skipped on purpose
 
 - Item drops (health, weapon energy, extra lives): the drop weights exist, the drops are out of

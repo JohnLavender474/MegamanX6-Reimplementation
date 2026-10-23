@@ -31,6 +31,16 @@ class CollisionGridTest {
     }
 
     @Test
+    void restoreFromCopiesTheValuesBack() {
+        CollisionGrid g = grid();
+        CollisionGrid pristine = g.copy();
+        g.set(0, 0, 63);
+        g.restoreFrom(pristine);
+        assertEquals(0, g.raw(0, 0));
+        assertEquals(59, g.raw(1, 0));
+    }
+
+    @Test
     void copyIsIndependent() {
         CollisionGrid g = grid();
         g.set(3, 1, 63);

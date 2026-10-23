@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimDef;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.ShotAnims;
 
 public final class Assets implements Disposable {
 
@@ -141,32 +142,14 @@ public final class Assets implements Disposable {
     }
 
     private AnimSet loadShots() {
-        Map<Integer, AnimDef> anims = new TreeMap<>();
-        Map<Integer, String> files = new HashMap<>();
-        shot(anims, files, 21, "anim-21-lemon.png", new int[] {1, 2, 2, 2, 2, 2}, -1, 1);
-        shot(anims, files, 26, "anim-26-half-charge.png", new int[] {2, 2, 2, 2}, -1, 0);
-        shot(anims, files, 27, "anim-27-full-charge-18.png", new int[] {3, 3, 3}, -1, 0);
-        shot(anims, files, 22, "anim-22-half-charge-flash.png", new int[] {1, 1, 1, 1, 1, 1}, 3, null);
-        shot(anims, files, 25, "anim-25-full-charge-flash-falcon.png", new int[] {1, 1, 1, 1, 1, 1, 1, 1}, 5, null);
-        shot(anims, files, 39, "anim-39-lemon-flash.png", new int[] {1, 1, 1, 1}, -1, null);
-        AnimSet s = new AnimSet(0, 0, 0, 0, anims);
+        AnimSet s = ShotAnims.SET;
         Map<Integer, Source> bySet = new HashMap<>();
-        Source src = new Source(paths.playerDir("x-shots"), s, files);
-        for (int i : anims.keySet()) {
+        Source src = new Source(paths.playerDir("x-shots"), s, ShotAnims.FILES);
+        for (int i : s.indices()) {
             bySet.put(i, src);
         }
         sources.put("shots", bySet);
         return s;
-    }
-
-    private static void shot(Map<Integer, AnimDef> anims, Map<Integer, String> files, int index, String file,
-                             int[] ticks, int flagFrame, Integer loopTo) {
-        List<AnimDef.Frame> frames = new ArrayList<>();
-        for (int i = 0; i < ticks.length; i++) {
-            frames.add(new AnimDef.Frame(i, ticks[i], i == flagFrame ? 1 : 0));
-        }
-        anims.put(index, new AnimDef(index, List.copyOf(frames), loopTo));
-        files.put(index, file);
     }
 
     private SpriteFrame[] cutStrip(Source src, int anim) {

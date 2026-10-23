@@ -41,4 +41,8 @@ public final class CollisionGrid {
     public CollisionGrid copy() {
         return new CollisionGrid(width, height, values.clone());
     }
+
+    public void restoreFrom(CollisionGrid source) {
+        System.arraycopy(source.values, 0, values, 0, Math.min(values.length, source.values.length));
+    }
 }

@@ -20,6 +20,8 @@ import java.util.List;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
 import mmx.x6.game.Entity;
+import mmx.x6.game.ShapeFx;
+import mmx.x6.game.player.Player;
 import mmx.x6.game.StepClock;
 import mmx.x6.game.World;
 import mmx.x6.level.Level;
@@ -120,6 +122,7 @@ public final class StageScreen extends ScreenAdapter {
         drawEntity(world.player, cx, cy);
         levelRenderer.draw(batch, level.art0Front(), cx, cy);
         batch.end();
+        drawShapes(cx, cy);
         if (debug) {
             Gdx.gl.glEnable(GL20.GL_BLEND);
             shapes.setProjectionMatrix(viewCam.combined);
@@ -135,6 +138,42 @@ public final class StageScreen extends ScreenAdapter {
             shapes.end();
         }
         fbo.end();
+    }
+
+    private void drawShapes(float cx, float cy) {
+        Gdx.gl.glEnable(GL20.GL_BLEND);
+        Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+        shapes.setProjectionMatrix(viewCam.combined);
+        shapes.begin(ShapeRenderer.ShapeType.Filled);
+        int ix = (int) Math.floor(cx);
+        int iy = (int) Math.floor(cy);
+        for (Entity e : world.entities) {
+            for (ShapeFx s : e.shapes()) {
+                shapes.setColor(s.r(), s.g(), s.b(), s.a());
+                shapes.circle(s.x() - ix, s.y() - iy, s.radius(), 16);
+            }
+        }
+        Player p = world.player;
+        if (p.chargeLevel() > 0 && p.visible()) {
+            float speed = p.chargeLevel() == 2 ? 0.35f : 0.2f;
+            float base = world.frame * speed;
+            float radius = 18;
+            for (int i = 0; i < 4; i++) {
+                double a = base + i * Math.PI / 2;
+                float ox = (float) Math.cos(a) * radius;
+                float oy = (float) Math.sin(a) * radius * 0.8f;
+                shapes.setColor(0.3f, 0.6f, 1f, 0.45f);
+                shapes.circle(p.x + ox - ix, p.y + oy - iy, 4, 10);
+                shapes.setColor(0.8f, 0.95f, 1f, 0.9f);
+                shapes.circle(p.x + ox - ix, p.y + oy - iy, 2, 8);
+            }
+        }
+        float fade = world.flow.fade();
+        if (fade > 0) {
+            shapes.setColor(0, 0, 0, fade);
+            shapes.rect(0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H);
+        }
+        shapes.end();
     }
 
     private void drawEntity(Entity e, float cx, float cy) {

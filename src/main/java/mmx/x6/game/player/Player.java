@@ -12,10 +12,14 @@ import static mmx.x6.game.player.PlayerConst.JUMP_GRAVITY;
 import static mmx.x6.game.player.PlayerConst.WALK;
 import static mmx.x6.game.player.PlayerConst.WALK_START;
 
+import java.util.Set;
 import mmx.x6.anim.Animator;
+import mmx.x6.game.Damage;
 import mmx.x6.game.Entity;
 import mmx.x6.game.World;
+import mmx.x6.game.fx.Orb;
 import mmx.x6.input.Buttons;
+import mmx.x6.level.Checkpoint;
 import mmx.x6.physics.Body;
 import mmx.x6.physics.Rect;
 import mmx.x6.physics.TerrainMover;
@@ -30,6 +34,18 @@ public final class Player extends Entity {
     private static final int LADDER_LET_GO = 4;
     private static final int LADDER_UP = 10;
     private static final int LADDER_DOWN = 11;
+
+    private static final int SABRE_FLOOR = 0;
+    private static final int SABRE_AIR = 1;
+    private static final int SABRE_WALL = 2;
+
+    private static final Set<Integer> SHOOTING_VERSIONS = Set.of(7, 8, 10, 11, 12, 13, 14, 15, 16, 17);
+    private static final Set<Integer> STAND_SHOTS = Set.of(88, 90, 91);
+
+    private static final int HURT_IFRAMES = 75;
+    private static final int HURT_REACTION_END = 60;
+    private static final float HURT_SPEED = 2.5f;
+    private static final float HURT_DECEL = 0.1875f;
 
     private final Body body;
     private PlayerStep step = PlayerStep.STAND;
@@ -55,7 +71,23 @@ public final class Player extends Entity {
     private int lastFlags;
     private int held;
     private int pressed;
+    private int released;
     private World world;
+
+    private int shotWait;
+    private int shotPose;
+    private int chargeTimer;
+    private int chargeLevel;
+    private int iframes;
+    private boolean pendingHit;
+    private boolean pendingDeath;
+    private boolean hitFromRight;
+    private int deathTimer;
+    private boolean hidden;
+    private boolean spikeTouched;
+    private int sabreKind;
+    private boolean sabreCancel;
+    private SabreSlash slash;
 
     public Player(World w) {
         this.world = w;
@@ -78,7 +110,20 @@ public final class Player extends Entity {
         airDashSpeed = airDashUsed = dashFlag = false;
         hangCooldown = 0;
         body.hasBox = true;
+        shotPose = shotWait = 0;
+        chargeTimer = chargeLevel = 0;
         toStand();
+    }
+
+    public void respawn(Checkpoint cp) {
+        hp = PlayerConst.MAX_HP;
+        iframes = 0;
+        pendingHit = pendingDeath = false;
+        hidden = false;
+        deathTimer = 0;
+        endSlash();
+        faceRight = cp.faceRight();
+        placeStanding(cp.playerX(), cp.playerY());
     }
 
     public PlayerStep step() {
@@ -95,7 +140,35 @@ public final class Player extends Entity {
 
     public boolean locked() {
         return world.locked() || step == PlayerStep.GATE_WALK || step == PlayerStep.EVENT_HOLD
-                || step == PlayerStep.BEAM_IN;
+                || step == PlayerStep.BEAM_IN || step == PlayerStep.DEAD;
+    }
+
+    public int chargeLevel() {
+        return chargeLevel;
+    }
+
+    public int chargeTimer() {
+        return chargeTimer;
+    }
+
+    public boolean shooting() {
+        return shotPose > 0;
+    }
+
+    public boolean invulnerable() {
+        return iframes > 0 || pendingHit || pendingDeath;
+    }
+
+    public boolean dying() {
+        return step == PlayerStep.DEAD || pendingDeath;
+    }
+
+    public float busterX() {
+        return x + (faceRight ? 21 : -21);
+    }
+
+    public float busterY() {
+        return y - 9;
     }
 
     @Override
@@ -104,8 +177,41 @@ public final class Player extends Entity {
     }
 
     @Override
+    public boolean visible() {
+        if (hidden) {
+            return false;
+        }
+        return iframes == 0 || step == PlayerStep.HURT || (iframes & 2) == 0;
+    }
+
+    @Override
     public Rect hurtBox() {
-        return body.box();
+        return body.hasBox && step != PlayerStep.DEAD ? body.box() : null;
+    }
+
+    public boolean hurt(World w, int damage, float attackerX) {
+        if (dying() || invulnerable() || locked()) {
+            return false;
+        }
+        int d = Damage.toPlayer(damage);
+        hp -= d;
+        hitFromRight = attackerX > x;
+        iframes = HURT_IFRAMES;
+        dropCharge();
+        if (hp <= 0) {
+            hp = 0;
+            pendingDeath = true;
+        } else {
+            pendingHit = true;
+        }
+        return true;
+    }
+
+    public void kill() {
+        if (!dying()) {
+            hp = 0;
+            pendingDeath = true;
+        }
     }
 
     @Override
@@ -113,11 +219,29 @@ public final class Player extends Entity {
         world = w;
         prevX = x;
         prevY = y;
+        spikeTouched = false;
         boolean lock = locked();
         held = lock ? 0 : w.buttons.held();
         pressed = lock ? 0 : w.buttons.pressed();
+        released = lock ? 0 : w.buttons.released();
         if (hangCooldown > 0) {
             hangCooldown--;
+        }
+        if (shotWait > 0) {
+            shotWait--;
+        }
+        if (shotPose > 0 && --shotPose == 0) {
+            endShotPose();
+        }
+        if (iframes > 0 && step != PlayerStep.DEAD) {
+            iframes--;
+        }
+        if (pendingDeath) {
+            pendingDeath = false;
+            startDeath();
+        } else if (pendingHit) {
+            pendingHit = false;
+            startHurt();
         }
         probeSides();
         switch (step) {
@@ -136,13 +260,28 @@ public final class Player extends Entity {
             case FALCON_DASH -> updateFalconDash();
             case LADDER -> updateLadder();
             case BAR -> updateBar();
+            case SABRE -> updateSabre();
+            case HURT -> updateHurt();
+            case DEAD -> updateDeath();
             case EVENT_HOLD -> {
                 anim.tick();
                 groundMove(0);
             }
             default -> anim.tick();
         }
-        clampToCamera();
+        if (step != PlayerStep.SABRE) {
+            endSlash();
+        }
+        if (step != PlayerStep.DEAD) {
+            updateCharge();
+            clampToCamera();
+            if (spikeTouched && iframes == 0) {
+                kill();
+            }
+            if (w.camera.y() >= w.camera.maxY() && body.y - 8 >= w.camera.maxY() + 256) {
+                kill();
+            }
+        }
         x = body.x;
         y = body.y;
     }
@@ -176,6 +315,10 @@ public final class Player extends Entity {
         return (pressed & bit) != 0;
     }
 
+    private boolean isReleased(int bit) {
+        return (released & bit) != 0;
+    }
+
     private int dir() {
         if (isHeld(Buttons.RIGHT)) {
             return 1;
@@ -203,12 +346,105 @@ public final class Player extends Entity {
     }
 
     private void play(int a) {
-        anim.play(a);
+        anim.play(shotPose > 0 && SHOOTING_VERSIONS.contains(a) ? a + 112 : a);
+    }
+
+    private void endShotPose() {
+        int a = anim.anim();
+        if (STAND_SHOTS.contains(a)) {
+            anim.play(standAnim());
+        } else if (SHOOTING_VERSIONS.contains(a - 112)) {
+            anim.play(a - 112, anim.frameIndex());
+        }
+    }
+
+    private void startShotPose(int poseUpdates, int standShot) {
+        shotPose = poseUpdates;
+        int a = anim.anim();
+        if (step == PlayerStep.STAND) {
+            anim.play(standShot);
+        } else if (SHOOTING_VERSIONS.contains(a)) {
+            anim.play(a + 112, anim.frameIndex());
+        }
+    }
+
+    private int countShots() {
+        int n = 0;
+        for (Entity e : world.entities) {
+            if (!e.dead && (e instanceof BusterShot || e instanceof ChargeFlash)) {
+                n++;
+            }
+        }
+        return n;
+    }
+
+    private boolean tryShoot(boolean allowSabre) {
+        if (shotWait > 0) {
+            return false;
+        }
+        if (allowSabre && isPressed(Buttons.WEAPON)) {
+            startSabre();
+            return true;
+        }
+        int id = -1;
+        if (isPressed(Buttons.BUSTER)) {
+            id = 0;
+        } else if (isReleased(Buttons.BUSTER) && chargeLevel > 0) {
+            id = chargeLevel == 1 ? 9 : 19;
+        }
+        if (id < 0) {
+            return false;
+        }
+        int limit = id == 19 ? 2 : 3;
+        if (countShots() >= limit) {
+            return false;
+        }
+        if (id == 0) {
+            world.add(new BusterShot(world, 0, busterX(), busterY(), faceRight));
+            world.sfx.play(1, 8);
+            shotWait = 6;
+            startShotPose(20, 88);
+        } else {
+            world.add(new ChargeFlash(world, this, id));
+            shotWait = 15;
+            startShotPose(id == 9 ? 25 : 35, id == 9 ? 90 : 91);
+        }
+        return false;
+    }
+
+    private void updateCharge() {
+        int raw = locked() ? 0 : world.buttons.held();
+        int rawPressed = locked() ? 0 : world.buttons.pressed();
+        int rawReleased = locked() ? 0 : world.buttons.released();
+        int bits = Buttons.BUSTER | Buttons.WEAPON;
+        if ((rawPressed & bits) != 0 || (rawReleased & bits) != 0 || step == PlayerStep.HURT) {
+            dropCharge();
+            return;
+        }
+        if ((raw & Buttons.BUSTER) == 0) {
+            return;
+        }
+        chargeTimer++;
+        if (chargeTimer == 25) {
+            chargeLevel = 1;
+            world.sfx.play(1, 7);
+        } else if (chargeTimer == 90) {
+            chargeLevel = 2;
+        }
+    }
+
+    private void dropCharge() {
+        if (chargeLevel > 0) {
+            world.sfx.stop(1, 7);
+        }
+        chargeTimer = 0;
+        chargeLevel = 0;
     }
 
     private boolean groundMove(float dx) {
         int f = world.mover.move(body, dx, 1, true, world.solids());
         lastFlags = f;
+        spikeTouched |= world.mover.lastSpike;
         if ((f & TerrainMover.FLOOR) == 0) {
             toFall();
             return false;
@@ -219,6 +455,7 @@ public final class Player extends Entity {
     private int airMove() {
         int f = world.mover.move(body, speedX, -speedY, false, world.solids());
         lastFlags = f;
+        spikeTouched |= world.mover.lastSpike;
         speedY -= gravity;
         if (speedY < FALL_MAX) {
             speedY = FALL_MAX;
@@ -244,6 +481,9 @@ public final class Player extends Entity {
         if (tryLadderFromGround()) {
             return true;
         }
+        if (tryShoot(true)) {
+            return true;
+        }
         if (isPressed(Buttons.DASH)) {
             startDash();
             return true;
@@ -264,7 +504,7 @@ public final class Player extends Entity {
         sub = 0;
         speedX = speedY = 0;
         latch = 0;
-        play(standAnim());
+        anim.play(standAnim());
     }
 
     private void updateStand() {
@@ -282,7 +522,9 @@ public final class Player extends Entity {
                 return;
             }
         }
-        anim.playIfNot(standAnim());
+        if (!(shotPose > 0 && STAND_SHOTS.contains(anim.anim()))) {
+            anim.playIfNot(standAnim());
+        }
         anim.tick();
         groundMove(0);
     }
@@ -332,6 +574,7 @@ public final class Player extends Entity {
 
     private void updateDash() {
         anim.tick();
+        tryShoot(false);
         if (sub == 0) {
             if (isPressed(Buttons.JUMP)) {
                 startJump(false);
@@ -407,6 +650,7 @@ public final class Player extends Entity {
         if (d != 0) {
             faceRight = d > 0;
         }
+        tryShoot(false);
         if (isPressed(Buttons.DASH)) {
             startDash();
             return;
@@ -486,6 +730,9 @@ public final class Player extends Entity {
         if (!isHeld(Buttons.JUMP) || locked() || (lastFlags & TerrainMover.CEILING) != 0) {
             speedY = Math.min(speedY, 0);
         }
+        if (tryShoot(true)) {
+            return;
+        }
         anim.tick();
         if (anim.entered(0x80)) {
             world.sfx.play(1, 1);
@@ -529,6 +776,9 @@ public final class Player extends Entity {
     }
 
     private void updateFall() {
+        if (tryShoot(true)) {
+            return;
+        }
         anim.tick();
         if (tryLadderAir() || tryHang() || wallTest() || tryAirDash()) {
             return;
@@ -597,18 +847,25 @@ public final class Player extends Entity {
             wallKick(wallSide);
             return;
         }
+        tryShoot(false);
         anim.tick();
         if (anim.entered(0x80)) {
             faceRight = wallSide < 0;
         }
         if (--wallTimer <= 0) {
-            step = PlayerStep.WALL_SLIDE;
-            sub = 0;
-            play(15);
-            speedY = PlayerConst.WALL_SLIDE;
-            gravity = 0;
-            speedX = 0;
+            toWallSlide();
         }
+    }
+
+    private void toWallSlide() {
+        step = PlayerStep.WALL_SLIDE;
+        sub = 0;
+        play(15);
+        speedY = PlayerConst.WALL_SLIDE;
+        gravity = 0;
+        speedX = 0;
+        latch = -1;
+        faceRight = wallSide < 0;
     }
 
     private void updateWallSlide() {
@@ -625,9 +882,13 @@ public final class Player extends Entity {
                 wallKick(wallSide);
                 return;
             }
+            if (tryShoot(true)) {
+                return;
+            }
             anim.tick();
             if (dir() == wallSide) {
                 int f = world.mover.move(body, 0, -PlayerConst.WALL_SLIDE, false, world.solids());
+                spikeTouched |= world.mover.lastSpike;
                 if ((f & TerrainMover.FLOOR) != 0) {
                     toLand();
                 }
@@ -674,6 +935,7 @@ public final class Player extends Entity {
 
     private void updateWallKick() {
         if (sub == 0) {
+            tryShoot(false);
             anim.tick();
             int f = airMove();
             int side = speedX > 0 ? TerrainMover.RIGHT : TerrainMover.LEFT;
@@ -689,6 +951,9 @@ public final class Player extends Entity {
         }
         if (!isHeld(Buttons.JUMP) || locked() || (lastFlags & TerrainMover.CEILING) != 0) {
             speedY = Math.min(speedY, 0);
+        }
+        if (tryShoot(true)) {
+            return;
         }
         anim.tick();
         if (tryLadderAir() || tryHang() || wallTest() || tryAirDash()) {
@@ -736,6 +1001,7 @@ public final class Player extends Entity {
     }
 
     private void updateFalconDash() {
+        tryShoot(false);
         anim.tick();
         if (sub == 0) {
             if (!anim.atLastFrame()) {
@@ -750,6 +1016,7 @@ public final class Player extends Entity {
         }
         int f = world.mover.move(body, face() * speedX, 0, false, world.solids());
         lastFlags = f;
+        spikeTouched |= world.mover.lastSpike;
         if ((f & (faceRight ? TerrainMover.RIGHT : TerrainMover.LEFT)) != 0) {
             endFalconDash();
             return;
@@ -768,7 +1035,7 @@ public final class Player extends Entity {
     }
 
     private boolean tryLadderFromGround() {
-        if (isHeld(Buttons.UP) && TileRules.isLadder(tileAt(body.x, body.top()))) {
+        if (shotWait == 0 && isHeld(Buttons.UP) && TileRules.isLadder(tileAt(body.x, body.top()))) {
             body.x = (float) Math.floor(body.x / 16) * 16 + 8;
             play(27);
             latch = 1;
@@ -777,7 +1044,7 @@ public final class Player extends Entity {
             speedX = speedY = 0;
             return true;
         }
-        if (isHeld(Buttons.DOWN) && TileRules.isLadderTop(tileAt(body.x, body.bottom()))) {
+        if (shotWait == 0 && isHeld(Buttons.DOWN) && TileRules.isLadderTop(tileAt(body.x, body.bottom()))) {
             body.x = (float) Math.floor(body.x / 16) * 16 + 8;
             play(29);
             latch = 1;
@@ -877,6 +1144,7 @@ public final class Player extends Entity {
         if (d != 0) {
             faceRight = d > 0;
         }
+        tryShoot(false);
         if (isHeld(Buttons.UP)) {
             if (sub == LADDER_DOWN) {
                 anim.play(31, anim.flag() & 0x3F);
@@ -924,6 +1192,7 @@ public final class Player extends Entity {
             }
             return;
         }
+        tryShoot(false);
         int d = dir();
         float barY = barRow * 16 + 8;
         if (d != 0) {
@@ -936,6 +1205,166 @@ public final class Player extends Entity {
         if (!TileRules.isBar(tileAt(body.x, barY))) {
             hangCooldown = 4;
             toFall();
+        }
+    }
+
+    private void startSabre() {
+        if (slash != null) {
+            return;
+        }
+        if (step == PlayerStep.WALL_SLIDE) {
+            sabreKind = SABRE_WALL;
+            anim.play(187);
+        } else if (latch == 0) {
+            sabreKind = SABRE_FLOOR;
+            anim.play(183);
+            speedX = 0;
+        } else {
+            sabreKind = SABRE_AIR;
+            anim.play(184);
+        }
+        step = PlayerStep.SABRE;
+        sabreCancel = false;
+        shotWait = 1;
+    }
+
+    private void updateSabre() {
+        anim.tick();
+        if (slash == null && anim.entered(0x80)) {
+            slash = new SabreSlash(this, sabreKind == SABRE_FLOOR ? 50 : 51);
+            world.add(slash);
+            // TODO: X's sabre sound is not named in the docs; the Magma Blade slash sound (1, 23) is used (docs/gaps.md, "Sabre sound")
+            world.sfx.play(1, 23);
+        }
+        if (anim.entered(0x40)) {
+            sabreCancel = true;
+        }
+        switch (sabreKind) {
+            case SABRE_FLOOR -> {
+                if (sabreCancel && isPressed(Buttons.JUMP)) {
+                    endSlash();
+                    startJump(false);
+                    return;
+                }
+                if (sabreCancel && isHeld(Buttons.DOWN)) {
+                    endSlash();
+                    toCrouch();
+                    return;
+                }
+                if (!groundMove(0)) {
+                    return;
+                }
+            }
+            case SABRE_AIR -> {
+                if (wallTest()) {
+                    return;
+                }
+                int f = airControlMove();
+                if ((f & TerrainMover.FLOOR) != 0) {
+                    endSlash();
+                    toLand();
+                    return;
+                }
+            }
+            default -> {
+                if (isPressed(Buttons.JUMP)) {
+                    endSlash();
+                    wallKick(wallSide);
+                    return;
+                }
+                if (!wallStillThere()) {
+                    endSlash();
+                    toFall();
+                    return;
+                }
+            }
+        }
+        if (anim.atLastFrame()) {
+            endSlash();
+            switch (sabreKind) {
+                case SABRE_FLOOR -> toStand();
+                case SABRE_AIR -> {
+                    step = speedY > 0 ? PlayerStep.JUMP : PlayerStep.FALL;
+                    latch = speedY > 0 ? 1 : -1;
+                    play(speedY > 0 ? 10 : 11);
+                }
+                default -> toWallSlide();
+            }
+        }
+    }
+
+    private void endSlash() {
+        if (slash != null) {
+            slash.dead = true;
+            slash = null;
+        }
+    }
+
+    private void startHurt() {
+        endSlash();
+        dropCharge();
+        shotPose = 0;
+        step = PlayerStep.HURT;
+        anim.play(35);
+        faceRight = hitFromRight;
+        speedX = HURT_SPEED;
+        airDashSpeed = dashFlag = false;
+        world.sfx.play(3, world.rng.nextInt(2));
+        world.sfx.play(3, 17);
+    }
+
+    private void updateHurt() {
+        anim.tick();
+        int away = -face();
+        float dx = blocked(away) ? 0 : away * speedX;
+        int f = world.mover.move(body, dx, latch == 0 ? 1 : 0, latch == 0, world.solids());
+        spikeTouched |= world.mover.lastSpike;
+        if (latch == 0 && (f & TerrainMover.FLOOR) == 0) {
+            latch = -1;
+        }
+        speedX = Math.max(0, speedX - HURT_DECEL);
+        if (iframes <= HURT_REACTION_END) {
+            if (world.mover.onFloor(body, world.solids())) {
+                latch = 0;
+                toStand();
+            } else {
+                play(11);
+                gravity = FALL_GRAVITY;
+                speedX = speedY = 0;
+                latch = -1;
+                step = PlayerStep.FALL;
+            }
+        }
+    }
+
+    private void startDeath() {
+        endSlash();
+        dropCharge();
+        world.sfx.stop(1, 5);
+        step = PlayerStep.DEAD;
+        anim.play(33);
+        deathTimer = 0;
+        hidden = false;
+        world.freeze(9);
+    }
+
+    private void updateDeath() {
+        deathTimer++;
+        if (deathTimer < 9) {
+            return;
+        }
+        if (deathTimer == 9) {
+            hidden = true;
+            world.sfx.play(3, 16);
+            world.sfx.play(3, 14);
+            Orb.wave(world, x, y, 0);
+        } else if (deathTimer == 28) {
+            Orb.wave(world, x, y, 2);
+        } else if (deathTimer == 47) {
+            Orb.wave(world, x, y, 1);
+            Orb.wave(world, x, y, 3);
+        } else if (deathTimer == 69) {
+            world.flow.playerDeathDone();
         }
     }
 }

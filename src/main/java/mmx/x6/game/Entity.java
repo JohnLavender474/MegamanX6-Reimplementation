@@ -1,5 +1,6 @@
 package mmx.x6.game;
 
+import java.util.List;
 import mmx.x6.anim.Animator;
 import mmx.x6.level.RecordDef;
 import mmx.x6.physics.Rect;
@@ -16,6 +17,8 @@ public abstract class Entity {
     public int hitClass;
     public RecordDef record;
     public boolean dead;
+    public DamageTables.Table damageTable;
+    public int flash;
     protected Animator anim;
 
     public abstract void update(World w);
@@ -42,5 +45,26 @@ public abstract class Entity {
 
     public boolean visible() {
         return true;
+    }
+
+    public void onHurt(World w, int weaponId) {
+    }
+
+    public void onKilled(World w, int weaponId) {
+        dead = true;
+    }
+
+    public void onDeflect(World w, int weaponId) {
+    }
+
+    public void onTouchPlayer(World w) {
+    }
+
+    public boolean isEnemy() {
+        return false;
+    }
+
+    public List<ShapeFx> shapes() {
+        return List.of();
     }
 }

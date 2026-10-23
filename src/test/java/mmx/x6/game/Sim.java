@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.ShotAnims;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
 import mmx.x6.level.CollisionGrid;
@@ -79,6 +80,9 @@ public final class Sim {
 
     public static AnimSet set(String name) {
         assumeTrue(DataPaths.defaultRootExists());
+        if (name.equals("shots")) {
+            return ShotAnims.SET;
+        }
         return SETS.computeIfAbsent(name, n -> {
             DataPaths p = DataPaths.resolve(new String[0]);
             try {
