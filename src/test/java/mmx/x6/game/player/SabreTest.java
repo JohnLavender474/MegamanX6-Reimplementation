@@ -6,6 +6,8 @@ import static mmx.x6.physics.Grids.grid;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.util.List;
+import mmx.x6.game.CrescentFx;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Sim;
 import mmx.x6.game.TestTarget;
@@ -51,12 +53,31 @@ class SabreTest {
         SabreSlash slash = (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash)
                 .findFirst().orElseThrow();
         s.step(0);
-        assertTrue(!slash.shapes().isEmpty());
-        float px = s.world.player.x;
-        assertTrue(slash.shapes().stream().allMatch(f -> f.x() >= px - 12), "in front of X");
-        assertTrue(slash.shapes().stream().allMatch(f -> f.g() > f.r()), "green blade");
+        List<CrescentFx> early = slash.crescents();
+        assertEquals(3, early.size(), "glow, blade and core layers");
+        assertTrue(early.stream().allMatch(c -> c.faceRight() == s.world.player.faceRight));
+        assertTrue(early.stream().allMatch(c -> c.g() >= c.r()), "green or white blade");
+        float firstSpan = early.get(0).toDeg() - early.get(0).fromDeg();
+        s.steps(3, 0);
+        float laterSpan = slash.crescents().get(0).toDeg() - slash.crescents().get(0).fromDeg();
+        assertTrue(laterSpan > firstSpan, "the leading edge sweeps " + firstSpan + " -> " + laterSpan);
+        assertTrue(slash.shapes().isEmpty(), "no circle chain any more");
         s.steps(20, 0);
-        assertTrue(slash.dead || slash.shapes().isEmpty());
+        assertTrue(slash.dead || slash.crescents().isEmpty());
+    }
+
+    @Test
+    void crescentPointsAreInFrontAndTaperAtTheEnds() {
+        CrescentFx c = new CrescentFx(100, 50, 30, 10, -80, 50, true, 0.5f, 1f, 0.6f, 1f);
+        List<float[]> pts = c.outline(16);
+        assertEquals(17, pts.size());
+        assertTrue(pts.stream().allMatch(p -> p[0] >= 100 - 1e-3), "outer edge in front");
+        float[] mid = pts.get(8);
+        float[] end = pts.get(0);
+        assertEquals(0, Math.hypot(end[0] - end[2], end[1] - end[3]), 1e-3);
+        assertTrue(Math.hypot(mid[0] - mid[2], mid[1] - mid[3]) > 9, "thick in the middle");
+        CrescentFx left = new CrescentFx(100, 50, 30, 10, -80, 50, false, 0.5f, 1f, 0.6f, 1f);
+        assertTrue(left.outline(16).stream().allMatch(p -> p[0] <= 100 + 1e-3), "mirrored when facing left");
     }
 
     @Test
