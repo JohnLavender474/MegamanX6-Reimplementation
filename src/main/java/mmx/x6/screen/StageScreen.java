@@ -25,7 +25,9 @@ import mmx.x6.game.StageFlow;
 import mmx.x6.render.Hud;
 import mmx.x6.game.player.Player;
 import mmx.x6.game.StepClock;
+import mmx.x6.game.Weapon;
 import mmx.x6.game.World;
+import mmx.x6.input.Buttons;
 import mmx.x6.level.Checkpoint;
 import mmx.x6.level.Level;
 import mmx.x6.render.Assets;
@@ -52,6 +54,7 @@ public final class StageScreen extends ScreenAdapter {
     private final String shotPath = System.getProperty("mmx.shot");
     private final int shotAfter = Integer.getInteger("mmx.shotAfter", 30);
     private final int scriptedHold = Integer.getInteger("mmx.hold", -1);
+    private final int jumpEvery = Integer.getInteger("mmx.jumpEvery", 0);
 
     private final Hud hud = new Hud();
     private boolean debug = Boolean.getBoolean("mmx.debug");
@@ -100,7 +103,13 @@ public final class StageScreen extends ScreenAdapter {
         int n = shotPath != null ? 1 : clock.advance(delta);
         for (int i = 0; i < n; i++) {
             if (scriptedHold >= 0) {
-                world.buttons.set(scriptedHold);
+                int dirs = scriptedHold & (Buttons.LEFT | Buttons.RIGHT | Buttons.UP | Buttons.DOWN);
+                if (jumpEvery > 0) {
+                    boolean on = updates % jumpEvery < jumpEvery * 2 / 3;
+                    world.buttons.set(dirs | (on ? (scriptedHold & ~dirs) | Buttons.JUMP : 0));
+                } else {
+                    world.buttons.set(scriptedHold);
+                }
             } else {
                 world.buttons.sample(Gdx.input::isKeyPressed);
             }
@@ -151,6 +160,9 @@ public final class StageScreen extends ScreenAdapter {
             for (Entity e : world.entities) {
                 DebugOverlay.drawBox(shapes, e.hurtBox(), Color.BLUE, cx, cy);
                 DebugOverlay.drawBox(shapes, e.contactBox(), Color.RED, cx, cy);
+                if (e instanceof Weapon wp) {
+                    DebugOverlay.drawBox(shapes, wp.attackBox(), Color.YELLOW, cx, cy);
+                }
             }
             shapes.end();
         }

@@ -44,6 +44,22 @@ class SabreTest {
     }
 
     @Test
+    void swingIsDrawnInFrontThenFades() {
+        Sim s = flat();
+        s.step(WEAPON);
+        s.steps(4, 0);
+        SabreSlash slash = (SabreSlash) s.world.entities.stream().filter(e -> e instanceof SabreSlash)
+                .findFirst().orElseThrow();
+        s.step(0);
+        assertTrue(!slash.shapes().isEmpty());
+        float px = s.world.player.x;
+        assertTrue(slash.shapes().stream().allMatch(f -> f.x() >= px - 12), "in front of X");
+        assertTrue(slash.shapes().stream().allMatch(f -> f.g() > f.r()), "green blade");
+        s.steps(20, 0);
+        assertTrue(slash.dead || slash.shapes().isEmpty());
+    }
+
+    @Test
     void sabreHitsUpToFour() {
         Sim s = flat();
         TestTarget block = new TestTarget(130, 130, 64, 64, 32, DamageTables.Table.SABRE_ONLY);

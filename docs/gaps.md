@@ -36,6 +36,8 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   (`docs/engine.md`, "Death, debris and drops")
 - Death orbs: misc type 17 is not read; 3 waves of 8 circles at 2.5 px/update. `game/fx/Orb.java`
   (`docs/players/ladder-hurt-events.md`, "Death")
+- Sabre swing: X's slash sprites are not exported; a green crescent of circles sweeps from above X
+  to in front of him over 6 updates, then fades. `game/player/SabreSlash.java`
 - Charge effect: the glow palettes (38, 41) are not drawn; 4 small blue circles orbit X while the
   buster charges, faster at level 2. `screen/StageScreen.java` (`docs/players/attacks.md`, "Charge")
 
