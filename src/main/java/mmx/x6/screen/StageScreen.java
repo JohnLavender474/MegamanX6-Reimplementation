@@ -21,6 +21,7 @@ import java.util.List;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
 import mmx.x6.game.Entity;
+import mmx.x6.game.Progress;
 import mmx.x6.game.ShapeFx;
 import mmx.x6.game.StageFlow;
 import mmx.x6.render.Hud;
@@ -36,6 +37,7 @@ import mmx.x6.render.DebugOverlay;
 import mmx.x6.render.EntityRenderer;
 import mmx.x6.render.FlashShader;
 import mmx.x6.render.LevelRenderer;
+import mmx.x6.stage.StageDef;
 
 public final class StageScreen extends ScreenAdapter {
 
@@ -55,19 +57,24 @@ public final class StageScreen extends ScreenAdapter {
     private final OrthographicCamera viewCam = new OrthographicCamera();
     private final OrthographicCamera screenCam = new OrthographicCamera();
     private final String shotPath = System.getProperty("mmx.shot");
-    private final int shotAfter = Integer.getInteger("mmx.shotAfter", 30);
+    private final int[] shotTimes = parseShots(System.getProperty("mmx.shotAfter", "30"));
+    private int shotIndex;
     private final int scriptedHold = Integer.getInteger("mmx.hold", -1);
     private final int jumpEvery = Integer.getInteger("mmx.jumpEvery", 0);
 
+    private final Runnable exit;
     private final Hud hud = new Hud();
     private boolean debug = Boolean.getBoolean("mmx.debug");
     private int updates;
 
-    public StageScreen(Assets assets, Level level, Sfx sfx, MusicPlayer music) {
+    public StageScreen(Assets assets, StageDef stage, Level level, Sfx sfx, MusicPlayer music, Progress progress,
+                       Runnable exit) {
         this.assets = assets;
         this.level = level;
         this.music = music;
-        this.world = new World(level, assets::anim, sfx, music);
+        this.exit = exit;
+        this.world = new World(stage, level, assets::anim, sfx, music);
+        world.progress = progress;
         Integer startCheckpoint = Integer.getInteger("mmx.checkpoint");
         if (startCheckpoint != null) {
             world.flow.restart(startCheckpoint);
@@ -75,11 +82,12 @@ public final class StageScreen extends ScreenAdapter {
         Integer startX = Integer.getInteger("mmx.startX");
         Integer startY = Integer.getInteger("mmx.startY");
         if (startX != null && startY != null) {
-            world.camera.reset(new Checkpoint(startX, startY, startX - 160, startY - 128, 0, 6144, 0, 1296, true, 1));
+            world.camera.reset(new Checkpoint(startX, startY, startX - 160, startY - 128, 0, level.width() * 16 - 320,
+                    0, level.height() * 16 - 240, true, 1));
             world.camera.setFollow(true);
             world.player.placeStanding(startX, startY);
         }
-        music.play(9);
+        music.play(stage.music());
         this.levelRenderer = new LevelRenderer(assets);
         fbo = new FrameBuffer(Pixmap.Format.RGBA8888, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H, false);
         fbo.getColorBufferTexture().setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
@@ -90,7 +98,7 @@ public final class StageScreen extends ScreenAdapter {
     @Override
     public void render(float delta) {
         if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-            Gdx.app.exit();
+            exit.run();
             return;
         }
         if (Gdx.input.isKeyJustPressed(Keys.F1)) {
@@ -98,7 +106,8 @@ public final class StageScreen extends ScreenAdapter {
         }
         if (world.flow.state() == StageFlow.State.CLEAR) {
             if (Gdx.input.isKeyJustPressed(Keys.ANY_KEY)) {
-                world.flow.anyKey();
+                exit.run();
+                return;
             }
         } else if (Gdx.input.isKeyJustPressed(Keys.R)) {
             world.flow.restart(0);
@@ -121,9 +130,12 @@ public final class StageScreen extends ScreenAdapter {
         }
         music.update();
         drawWorld();
-        if (shotPath != null && updates >= shotAfter) {
-            saveShot();
-            Gdx.app.exit();
+        if (shotPath != null && updates >= shotTimes[shotIndex]) {
+            saveShot(shotTimes.length == 1 ? shotPath : shotPath.replace(".png", "-" + shotTimes[shotIndex] + ".png"));
+            if (++shotIndex >= shotTimes.length) {
+                Gdx.app.exit();
+                shotIndex = shotTimes.length - 1;
+            }
         }
         ScreenUtils.clear(0, 0, 0, 1);
         screenBatch.setProjectionMatrix(screenCam.combined);
@@ -140,8 +152,16 @@ public final class StageScreen extends ScreenAdapter {
         ScreenUtils.clear(0, 0, 0, 1);
         batch.setProjectionMatrix(viewCam.combined);
         batch.begin();
-        levelRenderer.draw(batch, level.art2(), world.camera.layer2X(), world.camera.layer2Y());
-        levelRenderer.draw(batch, level.art1(), world.camera.layer1X(), world.camera.layer1Y());
+        if (!world.layer2Front) {
+            drawLayer2();
+        }
+        float l1x = world.camera.layer1X() + (world.layer1Relative ? cx : 0);
+        float l1y = world.camera.layer1Y() + (world.layer1Relative ? cy : 0);
+        if (world.layer1Alpha > 0) {
+            batch.setColor(1, 1, 1, world.layer1Alpha);
+            levelRenderer.draw(batch, level.art1(), l1x, l1y);
+            batch.setColor(1, 1, 1, 1);
+        }
         levelRenderer.draw(batch, level.art0Main(), cx, cy);
         List<Entity> drawn = new ArrayList<>(world.entities);
         drawn.sort(Comparator.comparingInt(Entity::drawPriority).reversed());
@@ -150,6 +170,9 @@ public final class StageScreen extends ScreenAdapter {
         }
         drawEntity(world.player, cx, cy);
         levelRenderer.draw(batch, level.art0Front(), cx, cy);
+        if (world.layer2Front) {
+            drawLayer2();
+        }
         batch.end();
         drawShapes(cx, cy);
         if (debug) {
@@ -170,6 +193,15 @@ public final class StageScreen extends ScreenAdapter {
             shapes.end();
         }
         fbo.end();
+    }
+
+    private void drawLayer2() {
+        if (world.layer2Alpha <= 0) {
+            return;
+        }
+        batch.setColor(1, 1, 1, world.layer2Alpha);
+        levelRenderer.draw(batch, level.art2(), world.camera.layer2X(), world.camera.layer2Y());
+        batch.setColor(1, 1, 1, 1);
     }
 
     private void drawShapes(float cx, float cy) {
@@ -227,11 +259,20 @@ public final class StageScreen extends ScreenAdapter {
         EntityRenderer.draw(batch, f, e.x, e.y, e.faceRight, cx, cy);
     }
 
-    private void saveShot() {
+    private static int[] parseShots(String list) {
+        String[] parts = list.split(",");
+        int[] out = new int[parts.length];
+        for (int i = 0; i < parts.length; i++) {
+            out[i] = Integer.parseInt(parts[i].trim());
+        }
+        return out;
+    }
+
+    private void saveShot(String path) {
         fbo.begin();
         Pixmap p = Pixmap.createFromFrameBuffer(0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H);
         fbo.end();
-        PixmapIO.writePNG(new FileHandle(shotPath), p, 0, true);
+        PixmapIO.writePNG(new FileHandle(path), p, 0, true);
         p.dispose();
     }
 

@@ -17,22 +17,31 @@ public final class SoundBanks {
 
     private static final int SPU_RATE = 44100;
 
-    private static final Map<Integer, String> FOLDERS = Map.of(
-            0, "m087-e04", 1, "m087-e11", 2, "m094-e05", 3, "m087-e13", 5, "m094-e03");
-    private static final String BOSS_BANK_2 = "m123-e01";
-
+    private final Map<Integer, String> folders = new HashMap<>(Map.of(0, "m087-e04", 1, "m087-e11", 3, "m087-e13"));
     private final Map<String, Map<Integer, Clip>> banks = new HashMap<>();
+    private String bossBank2;
     private boolean boss;
 
     private SoundBanks() {
     }
 
     public static SoundBanks load(DataPaths p) {
+        return load(p, "m094-e05", "m094-e03", "m123-e01");
+    }
+
+    public static SoundBanks load(DataPaths p, String bank2, String bank5, String bossBank2) {
         SoundBanks b = new SoundBanks();
-        for (String folder : FOLDERS.values()) {
+        b.folders.put(2, bank2);
+        if (bank5 != null) {
+            b.folders.put(5, bank5);
+        }
+        b.bossBank2 = bossBank2;
+        for (String folder : b.folders.values()) {
             b.banks.put(folder, readBank(p, folder));
         }
-        b.banks.put(BOSS_BANK_2, readBank(p, BOSS_BANK_2));
+        if (bossBank2 != null) {
+            b.banks.put(bossBank2, readBank(p, bossBank2));
+        }
         return b;
     }
 
@@ -89,7 +98,7 @@ public final class SoundBanks {
     }
 
     public Optional<Clip> clip(int bank, int id) {
-        String folder = bank == 2 && boss ? BOSS_BANK_2 : FOLDERS.get(bank);
+        String folder = bank == 2 && boss && bossBank2 != null ? bossBank2 : folders.get(bank);
         if (folder == null) {
             return Optional.empty();
         }

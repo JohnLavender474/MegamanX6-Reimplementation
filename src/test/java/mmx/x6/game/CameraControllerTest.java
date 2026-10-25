@@ -109,4 +109,28 @@ class CameraControllerTest {
         assertEquals(30, cam.layer2X());
         assertEquals(380, cam.layer1X());
     }
+
+    @Test
+    void halfXModeKeepsY() {
+        CameraController cam = new CameraController();
+        cam.configure(5, 0, 0, 4, 0, 0);
+        cam.reset(new Checkpoint(0, 0, 5576, 224, 0, 9000, 0, 2000, true, 1, new mmx.x6.level.Point(320, 0), null));
+        assertEquals(2788, cam.layer2X());
+        assertEquals(224, cam.layer2Y());
+        assertEquals(320, cam.layer1X());
+        cam.setFollow(true);
+        cam.update(5576 + 160 + 10, 224 + 128);
+        assertEquals(2793, cam.layer2X());
+        assertEquals(320, cam.layer1X());
+    }
+
+    @Test
+    void layerTwoOffsetFromTheCheckpoint() {
+        CameraController cam = new CameraController();
+        cam.configure(5, 0, 0, 1, 0, 0);
+        cam.reset(new Checkpoint(0, 0, 3200, 1056, 3200, 3504, 944, 1184, true, 1, null,
+                new mmx.x6.level.Point(-672, 1136)));
+        assertEquals(928, cam.layer2X());
+        assertEquals(1664, cam.layer2Y());
+    }
 }

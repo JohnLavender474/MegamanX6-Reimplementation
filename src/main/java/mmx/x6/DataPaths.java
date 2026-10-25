@@ -6,6 +6,8 @@ import java.util.List;
 
 public final class DataPaths {
 
+    private static final Path LOCAL_TMX = Path.of("assets", "tmx");
+
     private final Path root;
 
     public DataPaths(Path root) {
@@ -44,11 +46,29 @@ public final class DataPaths {
     }
 
     public Path tmx() {
-        return root.resolve("tmx/m094-intro/intro.tmx");
+        return tmx("m094-intro", "intro.tmx");
     }
 
     public Path tilesPng() {
-        return root.resolve("tmx/m094-intro/tiles.png");
+        return tilesPng("m094-intro");
+    }
+
+    public Path tmx(String dir, String file) {
+        return root.resolve("tmx").resolve(dir).resolve(file);
+    }
+
+    public Path tilesPng(String dir) {
+        return root.resolve("tmx").resolve(dir).resolve("tiles.png");
+    }
+
+    public Path stageTmx(String dir, String file) {
+        Path local = LOCAL_TMX.resolve(dir).resolve(file);
+        return Files.isRegularFile(local) ? local : tmx(dir, file);
+    }
+
+    public Path stageTiles(String dir) {
+        Path local = LOCAL_TMX.resolve(dir).resolve("tiles.png");
+        return Files.isRegularFile(local) ? local : tilesPng(dir);
     }
 
     public Path playerDir(String name) {

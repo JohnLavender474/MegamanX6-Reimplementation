@@ -16,19 +16,47 @@ public final class Spawner {
     private final Set<RecordDef> kept = new HashSet<>();
     private final Set<RecordDef> inBand = new HashSet<>();
 
+    private final List<RecordDef> fixed;
+    private boolean fixedMade;
+
     public Spawner(List<RecordDef> records, int difficulty, EntityFactory factory) {
+        this(records, List.of(), difficulty, factory);
+    }
+
+    public Spawner(List<RecordDef> records, List<RecordDef> fixed, int difficulty, EntityFactory factory) {
         this.records = records;
+        this.fixed = fixed;
         this.difficulty = difficulty;
         this.factory = factory;
     }
 
+    public Entity createExtra(World w, String name, int b, int id, int x, int y) {
+        Entity e = factory.create(w, new RecordDef(-1, name, "main", 0, b, id, 0, x, y));
+        if (e != null) {
+            e.record = null;
+        }
+        return e;
+    }
+
     public void update(World w) {
+        if (!fixedMade) {
+            fixedMade = true;
+            for (RecordDef r : fixed) {
+                Entity e = factory.create(w, r);
+                if (e != null) {
+                    e.record = r;
+                    w.add(e);
+                }
+            }
+        }
         for (RecordDef r : records) {
+            boolean now = inBand(w, r);
             if ("CheckpointMarker".equals(r.name())) {
-                updateMarker(w, r);
+                if (now && !kept.contains(r)) {
+                    updateMarker(w, r);
+                }
                 continue;
             }
-            boolean now = inBand(w, r);
             boolean entered = now && !inBand.contains(r);
             if (now) {
                 inBand.add(r);
@@ -50,8 +78,9 @@ public final class Spawner {
     private void updateMarker(World w, RecordDef r) {
         int cp = r.id() & 0x7F;
         boolean reached = (r.id() & 0x80) != 0 ? w.player.y >= r.y() : w.player.x >= r.x();
-        if (reached && cp > w.checkpoint) {
+        if (reached) {
             w.checkpoint = cp;
+            kept.add(r);
         }
     }
 
@@ -80,6 +109,7 @@ public final class Spawner {
     }
 
     public void reset() {
+        fixedMade = false;
         spawned.clear();
         kept.clear();
         inBand.clear();

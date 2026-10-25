@@ -8,7 +8,7 @@ public final class DamageTables {
     private static final int D = DEFLECT;
     private static final int N = NO_EFFECT;
 
-    public enum Table { NORMAL, SABRE_ONLY, D1000, DEFLECT, MINOR }
+    public enum Table { NORMAL, SABRE_ONLY, D1000, DEFLECT, MINOR, YAMMARK, SNAKE, GREY_BLOCK, ONE_HIT, TURTLOID }
 
     private static final int[] NORMAL = {
             3, 5, 4, 6, 6, 6, 5, N, 4, 7, 6, 6, 6, 6, 8, 6,
@@ -38,6 +38,27 @@ public final class DamageTables {
             4, 4, 4, 4, 4, 4, 4, N, 1, 1, 4, 127, 127, 127, 127, 3,
             D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D};
 
+    private static final int[] YAMMARK = {
+            1, D, 2, 2, 2, 2, 2, N, 5, 1, D, 2, 2, 2, 2, 2,
+            2, 8, 4, 4, 4, D, 8, D, 2, 2, 5, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 8, 1, 4, 8,
+            2, 1, 2, 2, 1, 2, D, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
+
+    private static final int[] SNAKE = {
+            1, 2, 5, D, 5, 5, 4, N, 2, 1, 4, 8, D, 8, 8, 8,
+            2, 8, 4, 4, 4, D, 8, D, 3, 3, 5, 2, 2, 2, 2, 2,
+            2, 5, D, 5, 6, 3, 2, 2, 2, 2, 4, 2, 8, 1, 4, 8,
+            4, 4, 3, 3, 1, 5, 1, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
+
+    private static final int[] TURTLOID = {
+            1, 2, 5, 2, 2, 2, D, N, 2, 1, 2, 8, 2, 2, 2, D,
+            2, 8, 4, 4, 4, D, 8, D, 1, 1, 2, 2, 2, 2, 2, 2,
+            2, 5, 2, 2, 2, 2, 2, 2, 2, 2, D, 2, D, 1, 4, 8,
+            2, 1, 2, 2, 3, 2, 1, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
+
     private DamageTables() {
     }
 
@@ -50,6 +71,16 @@ public final class DamageTables {
             case SABRE_ONLY -> SABRE_ONLY[weaponId];
             case D1000 -> D1000[weaponId];
             case MINOR -> MINOR[weaponId];
+            case YAMMARK -> YAMMARK[weaponId];
+            case SNAKE -> SNAKE[weaponId];
+            case TURTLOID -> TURTLOID[weaponId];
+            case ONE_HIT -> 127;
+            case GREY_BLOCK -> switch (weaponId) {
+                case 4, 35 -> 4;
+                case 55 -> 127;
+                case 7, 23 -> NO_EFFECT;
+                default -> DEFLECT;
+            };
             case DEFLECT -> weaponId == 7 || weaponId == 23 || weaponId == 79 ? NO_EFFECT : DEFLECT;
         };
     }

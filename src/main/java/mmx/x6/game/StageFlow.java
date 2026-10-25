@@ -1,7 +1,5 @@
 package mmx.x6.game;
 
-import mmx.x6.level.IntroCheckpoints;
-
 public final class StageFlow {
 
     public enum State { PLAYING, FADE_OUT, CLEAR }
@@ -54,7 +52,7 @@ public final class StageFlow {
         restarts++;
         state = State.PLAYING;
         timer = 0;
-        world.resetTo(checkpoint, IntroCheckpoints.ALL.get(checkpoint));
+        world.resetTo(checkpoint, world.stage.checkpoints().get(checkpoint));
     }
 
     public boolean restarted() {

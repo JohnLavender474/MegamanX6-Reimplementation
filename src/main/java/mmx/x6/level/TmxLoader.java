@@ -61,6 +61,7 @@ public final class TmxLoader {
         }
 
         List<RecordDef> records = new ArrayList<>();
+        List<RecordDef> fixed = new ArrayList<>();
         List<CameraZoneDef> zones = new ArrayList<>();
         for (Element group : children(map, "objectgroup")) {
             String groupName = group.getAttribute("name");
@@ -68,9 +69,10 @@ public final class TmxLoader {
                 Map<String, String> p = properties(o);
                 int x = (int) Double.parseDouble(o.getAttribute("x"));
                 int y = (int) Double.parseDouble(o.getAttribute("y"));
-                if ("records".equals(groupName)) {
-                    records.add(new RecordDef(intOr(p, "index", -1), o.getAttribute("name"), o.getAttribute("type"),
-                            intOr(p, "kind", 0), intOr(p, "b", 0), intOr(p, "id", 0), intOr(p, "a", 0), x, y));
+                if ("records".equals(groupName) || "fixed records".equals(groupName)) {
+                    RecordDef r = new RecordDef(intOr(p, "index", -1), o.getAttribute("name"), o.getAttribute("type"),
+                            intOr(p, "kind", 0), intOr(p, "b", 0), intOr(p, "id", 0), intOr(p, "a", 0), x, y);
+                    ("records".equals(groupName) ? records : fixed).add(r);
                 } else if ("camera zones".equals(groupName)) {
                     int w = (int) Double.parseDouble(o.getAttribute("width"));
                     int h = (int) Double.parseDouble(o.getAttribute("height"));
@@ -84,7 +86,7 @@ public final class TmxLoader {
         return new Level(width, height, require(layers, "art 2 background", tmx),
                 require(layers, "art 1 decoration", tmx), require(layers, "art 0 main", tmx),
                 require(layers, "art 0 front", tmx), new CollisionGrid(width, height, values),
-                List.copyOf(records), List.copyOf(zones));
+                List.copyOf(records), List.copyOf(zones), List.copyOf(fixed));
     }
 
     private static TileLayer require(Map<String, TileLayer> layers, String name, Path tmx) throws IOException {

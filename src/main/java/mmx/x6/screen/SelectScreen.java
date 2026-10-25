@@ -1,0 +1,76 @@
+package mmx.x6.screen;
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.ScreenAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.ScreenUtils;
+import java.util.List;
+import java.util.function.Consumer;
+import mmx.x6.stage.StageDef;
+
+public final class SelectScreen extends ScreenAdapter {
+
+    private static final int W = 960;
+    private static final int H = 720;
+
+    private final List<StageDef> stages;
+    private final Consumer<StageDef> start;
+    private final SpriteBatch batch = new SpriteBatch();
+    private final BitmapFont font = new BitmapFont();
+    private final GlyphLayout layout = new GlyphLayout();
+    private final OrthographicCamera cam = new OrthographicCamera();
+    private int index;
+
+    public SelectScreen(List<StageDef> stages, int index, Consumer<StageDef> start) {
+        this.stages = stages;
+        this.index = index;
+        this.start = start;
+        font.getData().setScale(3);
+        cam.setToOrtho(false, W, H);
+    }
+
+    @Override
+    public void render(float delta) {
+        if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+            Gdx.app.exit();
+            return;
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
+            index = (index + stages.size() - 1) % stages.size();
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+            index = (index + 1) % stages.size();
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.J) || Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+            start.accept(stages.get(index));
+            return;
+        }
+        ScreenUtils.clear(0.02f, 0.03f, 0.08f, 1);
+        batch.setProjectionMatrix(cam.combined);
+        batch.begin();
+        centred("STAGE SELECT", H - 120, 0.6f, 0.85f, 1f);
+        for (int i = 0; i < stages.size(); i++) {
+            boolean on = i == index;
+            String text = (on ? "> " : "  ") + stages.get(i).title() + (on ? " <" : "  ");
+            centred(text, H - 260 - i * 70, on ? 1f : 0.55f, on ? 1f : 0.6f, on ? 0.4f : 0.7f);
+        }
+        centred("W / S  CHOOSE     J  START", 90, 0.5f, 0.6f, 0.7f);
+        batch.end();
+    }
+
+    private void centred(String text, float y, float r, float g, float b) {
+        font.setColor(r, g, b, 1);
+        layout.setText(font, text);
+        font.draw(batch, text, (W - layout.width) / 2, y);
+    }
+
+    @Override
+    public void dispose() {
+        batch.dispose();
+        font.dispose();
+    }
+}

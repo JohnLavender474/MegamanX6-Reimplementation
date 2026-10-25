@@ -39,12 +39,27 @@ public final class Assets implements Disposable {
     private final Map<String, Texture> textures = new HashMap<>();
     private final Map<String, SpriteFrame[]> strips = new HashMap<>();
     private final List<SpriteFrame> sabreBlock = new ArrayList<>();
+    private Path tilesPath;
     private Texture tiles;
     private TextureRegion[] tileRegions;
     private Texture white;
 
     public Assets(DataPaths paths) {
         this.paths = paths;
+        this.tilesPath = paths.tilesPng();
+    }
+
+    public void useTiles(Path p) {
+        if (p.equals(tilesPath)) {
+            return;
+        }
+        if (tiles != null) {
+            textures.remove(tilesPath.toString());
+            tiles.dispose();
+        }
+        tilesPath = p;
+        tiles = null;
+        tileRegions = null;
     }
 
     public AnimSet anim(String set) {
@@ -97,7 +112,7 @@ public final class Assets implements Disposable {
 
     public TextureRegion tile(int gid) {
         if (tiles == null) {
-            tiles = texture(paths.tilesPng());
+            tiles = texture(tilesPath);
             int cols = tiles.getWidth() / 16;
             int rows = tiles.getHeight() / 16;
             tileRegions = new TextureRegion[cols * rows];

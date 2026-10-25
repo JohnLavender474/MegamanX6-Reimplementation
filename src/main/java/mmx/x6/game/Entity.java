@@ -68,6 +68,10 @@ public abstract class Entity {
         return isEnemy();
     }
 
+    public boolean runsInPause() {
+        return false;
+    }
+
     public List<ShapeFx> shapes() {
         return List.of();
     }

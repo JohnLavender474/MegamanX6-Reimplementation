@@ -50,6 +50,12 @@ public final class Hud implements Disposable {
         if (warning) {
             centred(batch, "WARNING", 112, 1f, 0.2f, 0.2f);
         }
+        if (w.message != null) {
+            centred(batch, w.message, 64, 1f, 1f, 0.6f);
+        }
+        font.setColor(0.85f, 0.9f, 1f, 1);
+        font.draw(batch, "x" + w.progress.lives, 8, BAR_TOP + PlayerConst.MAX_HP * UNIT + 6);
+        font.draw(batch, "SOULS " + w.progress.souls, LevelRenderer.VIEW_W - 76, 6);
         if (w.flow.state() == StageFlow.State.CLEAR) {
             centred(batch, "STAGE CLEAR", 102, 1f, 1f, 1f);
             centred(batch, "PRESS ANY KEY", 122, 0.8f, 0.9f, 1f);

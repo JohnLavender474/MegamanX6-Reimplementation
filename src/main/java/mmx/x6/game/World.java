@@ -1,27 +1,31 @@
 package mmx.x6.game;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.Random;
 import java.util.function.Function;
 import mmx.x6.anim.AnimSet;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
-import mmx.x6.game.enemy.IntroEntityFactory;
 import mmx.x6.game.player.Player;
 import mmx.x6.input.Buttons;
 import mmx.x6.level.Checkpoint;
 import mmx.x6.level.CollisionGrid;
-import mmx.x6.level.IntroCheckpoints;
 import mmx.x6.level.Level;
+import mmx.x6.level.RecordDef;
 import mmx.x6.level.TileLayer;
 import mmx.x6.physics.Rect;
 import mmx.x6.physics.TerrainMover;
+import mmx.x6.stage.StageDef;
+import mmx.x6.stage.Stages;
 
 public final class World {
 
     public static final int DIFFICULTY = 1;
 
+    public final StageDef stage;
     public final Level level;
     public final CollisionGrid grid;
     public final TerrainMover mover;
@@ -33,6 +37,7 @@ public final class World {
     public final List<Entity> entities = new ArrayList<>();
     public final Random rng = new Random(6);
     public final StageFlow flow;
+    public Progress progress = new Progress();
     public Player player;
     public Spawner spawner;
     public int checkpoint;
@@ -42,6 +47,17 @@ public final class World {
     public int bossHpMax;
     public boolean bossBarShown;
     public float whiteLevel;
+    public boolean flag26;
+    public boolean flag28;
+    public boolean healHold;
+    public Entity pauseOwner;
+    public final Set<RecordDef> soulsTaken = new HashSet<>();
+    public String message;
+    public int messageTimer;
+    public float layer1Alpha = 1;
+    public boolean layer1Relative;
+    public float layer2Alpha = 1;
+    public boolean layer2Front;
 
     private final Function<String, AnimSet> sets;
     private final List<Entity> pending = new ArrayList<>();
@@ -50,6 +66,11 @@ public final class World {
     private int frozen;
 
     public World(Level level, Function<String, AnimSet> sets, Sfx sfx, MusicPlayer music) {
+        this(Stages.INTRO, level, sets, sfx, music);
+    }
+
+    public World(StageDef stage, Level level, Function<String, AnimSet> sets, Sfx sfx, MusicPlayer music) {
+        this.stage = stage;
         this.level = level;
         this.grid = level.collision();
         this.pristineGrid = grid.copy();
@@ -60,10 +81,17 @@ public final class World {
         this.music = music;
         this.zones = new CameraZones(level.cameraZones());
         this.flow = new StageFlow(this);
-        this.spawner = new Spawner(level.records(), DIFFICULTY, new IntroEntityFactory());
+        this.spawner = new Spawner(level.records(), level.fixedRecords(), DIFFICULTY, stage.factory().get());
+        TileLayer l1 = level.art1();
+        TileLayer l2 = level.art2();
+        if (l1.x6Mode() > 0 && l2.x6Mode() > 0) {
+            camera.configure(l1.x6Mode(), l1.x6OffsetX(), l1.x6OffsetY(), l2.x6Mode(), l2.x6OffsetX(),
+                    l2.x6OffsetY());
+        }
         this.player = new Player(this);
-        Checkpoint cp = IntroCheckpoints.ALL.get(0);
+        Checkpoint cp = stage.checkpoints().get(0);
         camera.reset(cp);
+        layer1Alpha = camera.layer1Mode() == 5 ? 0 : 1;
         player.respawn(cp);
     }
 
@@ -87,15 +115,27 @@ public final class World {
         frozen = Math.max(frozen, updates);
     }
 
+    public void showMessage(String text, int updates) {
+        message = text;
+        messageTimer = updates;
+    }
+
     public void update() {
         frame++;
+        if (messageTimer > 0 && --messageTimer == 0) {
+            message = null;
+        }
         flow.update();
         player.update(this);
         if (frozen > 0) {
             frozen--;
         } else {
+            List<Rect> before = solidsBefore();
+            if (pauseOwner != null && pauseOwner.dead) {
+                pauseOwner = null;
+            }
             for (Entity e : entities) {
-                if (!e.dead) {
+                if (!e.dead && (pauseOwner == null || e == pauseOwner || e.runsInPause())) {
                     e.prevX = e.x;
                     e.prevY = e.y;
                     if (e.flash > 0) {
@@ -104,8 +144,11 @@ public final class World {
                     e.update(this);
                 }
             }
-            resolveWeapons();
-            resolveContacts();
+            carry(before);
+            if (pauseOwner == null) {
+                resolveWeapons();
+                resolveContacts();
+            }
         }
         entities.removeIf(e -> e.dead);
         camera.update(player.x, player.y);
@@ -113,6 +156,40 @@ public final class World {
         spawner.update(this);
         entities.addAll(pending);
         pending.clear();
+    }
+
+    private List<Rect> solidsBefore() {
+        List<Rect> out = new ArrayList<>();
+        for (Entity e : entities) {
+            out.add(e instanceof Solid s && !e.dead ? s.solidRect() : null);
+        }
+        return out;
+    }
+
+    private void carry(List<Rect> before) {
+        if (player.dying() || !player.body().hasBox) {
+            return;
+        }
+        Rect feet = player.body().box();
+        for (int i = 0; i < before.size(); i++) {
+            Rect old = before.get(i);
+            Entity e = entities.get(i);
+            if (old == null || e.dead || !(e instanceof Solid s)) {
+                continue;
+            }
+            Rect now = s.solidRect();
+            if (now == null || !s.carries()) {
+                continue;
+            }
+            float dx = now.x() - old.x();
+            float dy = now.y() - old.y();
+            boolean onTop = Math.abs(feet.bottom() - old.y()) <= 1.5f && feet.right() > old.x()
+                    && feet.x() < old.right();
+            if (onTop && (dx != 0 || dy != 0)) {
+                player.carry(dx, dy);
+                return;
+            }
+        }
     }
 
     private void resolveWeapons() {
@@ -194,9 +271,31 @@ public final class World {
         bossHp = 0;
         bossBarShown = false;
         whiteLevel = 0;
+        flag26 = false;
+        flag28 = false;
+        healHold = false;
+        layer1Alpha = camera.layer1Mode() == 5 ? 0 : 1;
+        layer1Relative = false;
+        layer2Alpha = 1;
+        layer2Front = false;
+        pauseOwner = null;
         sfx.useBossBank(false);
-        music.play(9);
+        music.play(stage.music());
         player.respawn(cp);
+    }
+
+    public void copyTiles(int srcX, int srcY, int cellsW, int cellsH, int dstX, int dstY) {
+        TileLayer art = level.art0Main();
+        int sc = srcX / 16;
+        int sr = srcY / 16;
+        int dc = dstX / 16;
+        int dr = dstY / 16;
+        for (int r = 0; r < cellsH; r++) {
+            for (int c = 0; c < cellsW; c++) {
+                grid.set(dc + c, dr + r, grid.raw(sc + c, sr + r));
+                art.setGid(dc + c, dr + r, art.gid(sc + c, sr + r));
+            }
+        }
     }
 
     public List<Rect> solids() {

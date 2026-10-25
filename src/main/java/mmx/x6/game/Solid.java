@@ -5,4 +5,8 @@ import mmx.x6.physics.Rect;
 public interface Solid {
 
     Rect solidRect();
+
+    default boolean carries() {
+        return false;
+    }
 }

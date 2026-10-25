@@ -172,6 +172,15 @@ public final class Player extends Entity {
         }
     }
 
+    public void carry(float dx, float dy) {
+        if (dx != 0) {
+            world.mover.move(body, dx, 0, true, world.solids());
+        }
+        body.y += dy;
+        x = body.x;
+        y = body.y;
+    }
+
     public void pushGate(float dx) {
         body.x += dx;
         x = body.x;
