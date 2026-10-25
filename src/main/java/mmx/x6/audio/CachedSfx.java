@@ -1,7 +1,6 @@
 package mmx.x6.audio;
 
 import com.badlogic.gdx.audio.Sound;
-import java.nio.file.Path;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -13,13 +12,13 @@ import java.util.function.Function;
 public final class CachedSfx implements Sfx {
 
     private final SoundBanks banks;
-    private final Function<Path, Sound> loader;
+    private final Function<SoundBanks.Clip, Sound> loader;
     private final Consumer<String> log;
-    private final Map<Path, Sound> cache = new HashMap<>();
+    private final Map<SoundBanks.Clip, Sound> cache = new HashMap<>();
     private final Map<Long, Long> playing = new HashMap<>();
     private final Set<Long> reported = new HashSet<>();
 
-    public CachedSfx(SoundBanks banks, Function<Path, Sound> loader, Consumer<String> log) {
+    public CachedSfx(SoundBanks banks, Function<SoundBanks.Clip, Sound> loader, Consumer<String> log) {
         this.banks = banks;
         this.loader = loader;
         this.log = log;
@@ -40,7 +39,7 @@ public final class CachedSfx implements Sfx {
 
     @Override
     public void stop(int bank, int id) {
-        Optional<Path> p = banks.wav(bank, id);
+        Optional<SoundBanks.Clip> p = banks.clip(bank, id);
         Long handle = playing.remove(key(bank, id));
         if (p.isPresent() && handle != null && cache.containsKey(p.get())) {
             cache.get(p.get()).stop(handle);
@@ -48,7 +47,7 @@ public final class CachedSfx implements Sfx {
     }
 
     private Sound sound(int bank, int id) {
-        Optional<Path> p = banks.wav(bank, id);
+        Optional<SoundBanks.Clip> p = banks.clip(bank, id);
         if (p.isPresent()) {
             Sound cached = cache.get(p.get());
             if (cached != null) {

@@ -1,11 +1,11 @@
 package mmx.x6;
 
 import com.badlogic.gdx.Game;
-import com.badlogic.gdx.Gdx;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import mmx.x6.audio.CachedSfx;
 import mmx.x6.audio.GdxMusicPlayer;
+import mmx.x6.audio.GdxSounds;
 import mmx.x6.audio.SoundBanks;
 import mmx.x6.level.Level;
 import mmx.x6.level.TmxLoader;
@@ -32,8 +32,7 @@ public final class X6Game extends Game {
             throw new UncheckedIOException(e);
         }
         assets = new Assets(paths);
-        sfx = new CachedSfx(SoundBanks.load(paths), p -> Gdx.audio.newSound(Gdx.files.absolute(p.toString())),
-                System.err::println);
+        sfx = new CachedSfx(SoundBanks.load(paths), GdxSounds::load, System.err::println);
         music = new GdxMusicPlayer(paths);
         setScreen(new StageScreen(assets, level, sfx, music));
     }

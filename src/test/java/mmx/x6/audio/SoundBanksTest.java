@@ -21,41 +21,56 @@ class SoundBanksTest {
 
     @Test
     void playerJumpSound() {
-        Path p = real().wav(1, 1).orElseThrow();
+        Path p = real().clip(1, 1).orElseThrow().wav();
         assertTrue(Files.isRegularFile(p));
     }
 
     @Test
     void landSound() {
-        assertTrue(real().wav(1, 2).isPresent());
+        assertTrue(real().clip(1, 2).isPresent());
     }
 
     @Test
     void sameAsBankResolvesToTheOtherFolder() {
         SoundBanks b = real();
-        b.wav(0, 16).ifPresent(p -> {
+        b.clip(0, 16).map(SoundBanks.Clip::wav).ifPresent(p -> {
             assertTrue(p.toString().contains("m085-e04"));
             assertTrue(Files.isRegularFile(p));
         });
     }
 
     @Test
+    void toneKeyedAtItsNoteWithTheFineTune() {
+        assertEquals(15998, real().clip(1, 8).orElseThrow().rate());
+    }
+
+    @Test
+    void toneWithNoFineTune() {
+        assertEquals(11025, real().clip(1, 2).orElseThrow().rate());
+    }
+
+    @Test
+    void sameAsBankTakesItsOwnTones() {
+        assertEquals(15998, real().clip(0, 0).orElseThrow().rate());
+    }
+
+    @Test
     void unknownIdIsEmpty() {
-        assertTrue(real().wav(1, 999).isEmpty());
+        assertTrue(real().clip(1, 999).isEmpty());
     }
 
     @Test
     void unknownBankIsEmpty() {
-        assertTrue(real().wav(4, 0).isEmpty());
+        assertTrue(real().clip(4, 0).isEmpty());
     }
 
     @Test
     void bossBankSwitch() {
         SoundBanks banks = real();
         banks.useBossBank(true);
-        banks.wav(2, 5).ifPresent(p -> assertTrue(p.toString().contains("m123-e01")));
+        banks.clip(2, 5).map(SoundBanks.Clip::wav).ifPresent(p -> assertTrue(p.toString().contains("m123-e01")));
         banks.useBossBank(false);
-        banks.wav(2, 26).ifPresent(p -> assertTrue(p.toString().contains("m094-e05")));
+        banks.clip(2, 26).map(SoundBanks.Clip::wav).ifPresent(p -> assertTrue(p.toString().contains("m094-e05")));
     }
 
     @Test
