@@ -1,7 +1,9 @@
 package mmx.x6.game.player;
 
 import static mmx.x6.input.Buttons.BUSTER;
+import static mmx.x6.input.Buttons.DASH;
 import static mmx.x6.input.Buttons.DOWN;
+import static mmx.x6.input.Buttons.RIGHT;
 import static mmx.x6.physics.Grids.grid;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
@@ -77,6 +79,29 @@ class BusterTest {
         BusterShot shot = shots(s).get(0);
         assertEquals(s.world.player.x + 31, shot.x, 0.001);
         assertEquals(s.world.player.y + 4, shot.y, 0.001);
+    }
+
+    @Test
+    void lemonStartsAtTheDashBuster() {
+        Sim s = flat();
+        s.steps(8, DASH);
+        assertEquals(PlayerStep.DASH, s.world.player.step());
+        float x = s.world.player.x;
+        float y = s.world.player.y;
+        s.step(DASH | BUSTER);
+        BusterShot shot = shots(s).get(0);
+        assertTrue(shot.x - x >= 31, "forward " + (shot.x - x));
+        assertTrue(shot.y - y > -9, "down " + (shot.y - y));
+    }
+
+    @Test
+    void lemonStartsAtTheWalkShotBuster() {
+        Sim s = flat();
+        s.steps(12, RIGHT);
+        float x = s.world.player.x;
+        s.step(RIGHT | BUSTER);
+        BusterShot shot = shots(s).get(0);
+        assertTrue(shot.x - x >= 28, "forward " + (shot.x - x));
     }
 
     @Test

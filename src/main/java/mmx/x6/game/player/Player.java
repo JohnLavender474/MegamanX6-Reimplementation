@@ -247,13 +247,12 @@ public final class Player extends Entity {
     }
 
     public float busterX() {
-        // TODO: only the stand and crouch buster points of buster_ofs (0x8007673C) are used; walk, jump, dash and wall shots start at the stand point (docs/gaps.md, "Buster point")
-        int forward = step == PlayerStep.CROUCH ? 31 : 21;
+        int forward = BusterPoints.forward(anim.anim(), anim.sprite());
         return x + (faceRight ? forward : -forward);
     }
 
     public float busterY() {
-        return y + (step == PlayerStep.CROUCH ? 4 : -9);
+        return y + BusterPoints.down(anim.anim(), anim.sprite());
     }
 
     @Override
@@ -499,10 +498,10 @@ public final class Player extends Entity {
             return false;
         }
         if (id == 0) {
+            startShotPose(20, 88);
             world.add(new BusterShot(world, 0, busterX(), busterY(), faceRight));
             world.sfx.play(1, 8);
             shotWait = 6;
-            startShotPose(20, 88);
         } else {
             world.add(new ChargeFlash(world, this, id));
             shotWait = 15;
