@@ -481,7 +481,7 @@ public final class D1000 extends Entity {
                     y += SINK_SPEED;
                 }
                 if (explosion.white()) {
-                    // TODO: X is not moved at the white screen, and the second blink, the second explosion and Zero are cut (docs/gaps.md, "D-1000 death")
+                    // TODO: X is not moved at the white screen, and the second blink, the second explosion and Zero are cut (docs/gaps.md, "D-1000", "Death")
                     anim.play(11);
                     y = w.camera.y() + 160;
                     flash = 0;
