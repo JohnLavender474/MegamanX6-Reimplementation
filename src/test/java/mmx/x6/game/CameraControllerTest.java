@@ -29,6 +29,8 @@ class CameraControllerTest {
         cam.setFollow(true);
         cam.update(1000, 1100);
         assertEquals(840, cam.x());
+        assertEquals(929, cam.y());
+        cam.update(1000, 1200);
         assertEquals(944, cam.y());
     }
 

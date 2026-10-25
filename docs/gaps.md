@@ -22,9 +22,15 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 ## Guesses in the code
 
-- Camera follow: the X6 follow rule is not read. The camera puts X at (160, 128) in the view,
-  inside the limits, with no smoothing; only the limits ease (2 px/update).
+- Camera follow: only the y line is read (`cam+0x2E` = 171, the screen y where the camera keeps the
+  player). The x line (160) is a guess, and the follow has no dead zone or smoothing.
   `game/CameraController.java` (`docs/engine.md`, "Camera")
+- Camera limits: `CameraLimitEase` (`0x80028EBC`) as `docs/engine.md` gives it for max y
+  (`0x80029180`): a limit moves relative to the camera; when the player is more than 1 px past the
+  follow line toward a farther target, the limit goes to the target at once; else it keeps up with
+  the player's move plus `cam+0x47`. Min y, min x and max x use the same rule mirrored (the docs mark
+  them [likely]). Before 2026-10-25 every limit moved 2 px per update, which made the Yammark rope
+  pan slow and killed X in the pit below it. `game/CameraController.java`
 - Air dash start: the `x-falcon` export of animation 169 (frame set 1) shows other sprites (a few
   loose pixels), so X looked invisible for its 8 updates. The game still plays 169 for the timing,
   but the first frame of animation 171 is drawn. `render/Assets.java` (`docs/players/air.md`,

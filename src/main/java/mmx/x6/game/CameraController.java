@@ -7,6 +7,8 @@ public final class CameraController {
 
     public static final int VIEW_W = 320;
     public static final int VIEW_H = 240;
+    public static final int FOLLOW_X = 160;
+    public static final int FOLLOW_Y = 171;
 
     private float x;
     private float y;
@@ -23,6 +25,8 @@ public final class CameraController {
     private float layer2X;
     private float layer2Y;
     private boolean follow;
+    private float lastPx = Float.NaN;
+    private float lastPy = Float.NaN;
     private int layer1Mode = 1;
     private int layer2Mode = 3;
     private int layer1Ox;
@@ -52,6 +56,8 @@ public final class CameraController {
         maxY = tMaxY = cp.maxY();
         easeSpeed = 2;
         follow = false;
+        lastPx = Float.NaN;
+        lastPy = Float.NaN;
         Point off = cp.layer2Offset();
         layer2Ox = off == null ? tmxLayer2Ox : off.x();
         layer2Oy = off == null ? tmxLayer2Oy : off.y();
@@ -120,15 +126,22 @@ public final class CameraController {
 
     public void update(float px, float py) {
         int step = Math.max(1, Math.round(easeSpeed));
-        minX = ease(minX, tMinX, step);
-        maxX = ease(maxX, tMaxX, step);
-        minY = ease(minY, tMinY, step);
-        maxY = ease(maxY, tMaxY, step);
-        float tx = follow ? px - VIEW_W / 2f : x;
-        // TODO: the X6 follow rule is not read; this keeps X centred (docs/gaps.md, "Camera follow")
-        float ty = follow ? py - 128 : y;
+        float dx = Float.isNaN(lastPx) ? 0 : px - lastPx;
+        float dy = Float.isNaN(lastPy) ? 0 : py - lastPy;
+        lastPx = px;
+        lastPy = py;
+        // TODO: only the y line (cam+0x2E, 171) is read; X is kept at screen x 160, and the follow has no dead zone (docs/gaps.md, "Camera follow")
+        float tx = follow ? px - FOLLOW_X : x;
+        float ty = follow ? py - FOLLOW_Y : y;
         x = clamp(tx, minX, Math.max(minX, maxX));
         y = clamp(ty, minY, Math.max(minY, maxY));
+        maxY = easeMax(maxY, tMaxY, y, py - y - FOLLOW_Y, dy, step);
+        // TODO: max y is read (0x80029180); min y, min x and max x use the same rule mirrored, which the docs mark [likely] (docs/gaps.md, "Camera limits")
+        minY = easeMin(minY, tMinY, y, FOLLOW_Y - (py - y), -dy, step);
+        maxX = easeMax(maxX, tMaxX, x, px - x - FOLLOW_X, dx, step);
+        minX = easeMin(minX, tMinX, x, FOLLOW_X - (px - x), -dx, step);
+        x = clamp(x, minX, Math.max(minX, maxX));
+        y = clamp(y, minY, Math.max(minY, maxY));
         layer1X = step(layer1Mode, layer1X, target(layer1Mode, x, layer1Ox), true);
         if (layer1Mode != 9) {
             layer1Y = step(layer1Mode, layer1Y, target(layer1Mode, y, layer1Oy, true), true);
@@ -178,14 +191,30 @@ public final class CameraController {
         return target - Math.signum(d) * 320;
     }
 
-    private static int ease(int current, int target, int step) {
-        if (current < target) {
-            return Math.min(target, current + step);
+    static int easeMax(int current, int target, float cam, float pastLine, float move, int step) {
+        if (current == target) {
+            return current;
         }
-        if (current > target) {
-            return Math.max(target, current - step);
+        if (target > cam) {
+            if (pastLine + 2 >= 4) {
+                return target;
+            }
+            return (int) Math.min(target, Math.floor(cam) + Math.max(0, move) + step);
         }
-        return current;
+        return (int) Math.max(Math.floor(cam) - step, target);
+    }
+
+    static int easeMin(int current, int target, float cam, float pastLine, float move, int step) {
+        if (current == target) {
+            return current;
+        }
+        if (target < cam) {
+            if (pastLine + 2 >= 4) {
+                return target;
+            }
+            return (int) Math.max(target, Math.ceil(cam) - Math.max(0, move) - step);
+        }
+        return (int) Math.min(Math.ceil(cam) + step, target);
     }
 
     private static float clamp(float v, float lo, float hi) {
