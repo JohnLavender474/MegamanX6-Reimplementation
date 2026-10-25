@@ -11,6 +11,7 @@ import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShaderProgram;
 import com.badlogic.gdx.graphics.glutils.FrameBuffer;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
@@ -33,6 +34,7 @@ import mmx.x6.level.Level;
 import mmx.x6.render.Assets;
 import mmx.x6.render.DebugOverlay;
 import mmx.x6.render.EntityRenderer;
+import mmx.x6.render.FlashShader;
 import mmx.x6.render.LevelRenderer;
 
 public final class StageScreen extends ScreenAdapter {
@@ -48,6 +50,7 @@ public final class StageScreen extends ScreenAdapter {
     private final FrameBuffer fbo;
     private final SpriteBatch batch = new SpriteBatch();
     private final SpriteBatch screenBatch = new SpriteBatch();
+    private final ShaderProgram flashShader = FlashShader.create();
     private final ShapeRenderer shapes = new ShapeRenderer();
     private final OrthographicCamera viewCam = new OrthographicCamera();
     private final OrthographicCamera screenCam = new OrthographicCamera();
@@ -214,6 +217,13 @@ public final class StageScreen extends ScreenAdapter {
             return;
         }
         Assets.SpriteFrame f = assets.frame(e.spriteSet(), e.anim().anim(), e.anim().frameIndex());
+        if (e.flash > 0) {
+            // TODO: the exports are RGBA, so the flash CLUT 0x7840 is applied by brightness, not by palette index (docs/gaps.md, "Hit flash")
+            batch.setShader(flashShader);
+            EntityRenderer.draw(batch, f, e.x, e.y, e.faceRight, cx, cy);
+            batch.setShader(null);
+            return;
+        }
         EntityRenderer.draw(batch, f, e.x, e.y, e.faceRight, cx, cy);
     }
 
@@ -229,6 +239,7 @@ public final class StageScreen extends ScreenAdapter {
     public void dispose() {
         fbo.dispose();
         batch.dispose();
+        flashShader.dispose();
         screenBatch.dispose();
         shapes.dispose();
         hud.dispose();

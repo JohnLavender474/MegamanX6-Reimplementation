@@ -25,10 +25,20 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Camera follow: the X6 follow rule is not read. The camera puts X at (160, 128) in the view,
   inside the limits, with no smoothing; only the limits ease (2 px/update).
   `game/CameraController.java` (`docs/engine.md`, "Camera")
-- Buster point: `buster_ofs` (`0x8007673C`) gives a point per X sprite. Only two are used: stand
-  (21 px forward, 9 px up) and crouch (31 px forward, 4 px down). Walk, jump, dash and wall shots
-  start at the stand point; the table gives 20–42 px forward and 12 px up to 5 px down for them.
-  `game/player/Player.java` (`docs/players/attacks.md`, "The shots")
+- Air dash start: the `x-falcon` export of animation 169 (frame set 1) shows other sprites (a few
+  loose pixels), so X looked invisible for its 8 updates. The game still plays 169 for the timing,
+  but the first frame of animation 171 is drawn. `render/Assets.java` (`docs/players/air.md`,
+  "Animations used here")
+- Hit flash: the game draws a hit object for 1 update with the fixed flash CLUT `0x7840` (a ramp
+  from (140, 222, 255) to white, read from VRAM in three save states). The exports are RGBA, not
+  palette indexes, so a shader maps the brightness of each pixel onto that ramp. The D-1000 death
+  blink uses the same flash (before, the body was hidden). `render/FlashShader.java`
+  (`docs/engine.md`, "Hit flash")
+- Buster point: the points of `buster_ofs` (`0x8007673C`, frame set 1: `0x8007693C`) are copied
+  into `game/player/BusterPoints.java` from the executable. The point comes from X's sprite after
+  the shot pose starts (the walk sprites have no point; their shooting versions have one). A sprite
+  with no point uses the stand point (21 px forward, 9 px up). The frame set of an animation
+  (set 1: 83–85, 140, 144–192) is from `docs/engine.md`, "Frame sets".
 - Camera zone 3: X6 deletes the zone when the camera x is more than 3840. With the centred follow,
   the camera x is 3840 or more for all trigger x (4000–4031), so the zone never acted and the
   camera followed X down in the upper ledge corridor. The check is not made; the zone acts like
@@ -43,6 +53,9 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   (`docs/players/ladder-hurt-events.md`, "Step 14")
 - Falcon dash: always flies level (animation 171); the docs leave the rising and falling cases
   open. No hit part (weapon id 23). `game/player/Player.java` (`docs/players/air.md`, "Falcon dash")
+- Sound rate: each tone plays at 44100 × 2^((note_min − centre + fine/128)/12) Hz (`PlayTone` keys
+  `SsUtKeyOnV` `0x8005A9D4` at byte 6 of the tone, not at the centre note, so `docs/sound.md` is
+  wrong there); ADSR, volume and pan are not applied. `audio/SoundBanks.java`, `audio/WavRate.java`
 - Dash end: X slides from 4.125 down by 0.1875 per update until the end animation stops; the
   timer rule of the docs is not used. Voices (bank 3) are not played.
 

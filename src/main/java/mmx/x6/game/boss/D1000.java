@@ -519,7 +519,7 @@ public final class D1000 extends Entity {
             return false;
         }
         if (step == BossStep.DEATH) {
-            return flash == 0;
+            return true;
         }
         return invincible == 0 || (invincible / 4) % 2 == 0;
     }
