@@ -66,7 +66,6 @@ public final class RocketPlatform extends Entity implements Solid {
 
     @Override
     public Rect solidRect() {
-        // TODO: the platform is also off for 75 updates after the player is hurt (mega+0xE5); not done (docs/gaps.md, "Caterpirade")
         return new Rect(x - 14, y - 28, 28, 56);
     }
 

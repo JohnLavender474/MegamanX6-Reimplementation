@@ -15,13 +15,11 @@ public final class GreyBlock extends Entity implements Solid {
     public enum Step { FALL, REST, RISE, DYING }
 
     private static final int NIGHTMARE_IRON = 4;
-    private static final int SQUEEZE = 75;
 
     private final float startY;
     private final int id;
     private Step step = Step.FALL;
     private int timer;
-    private int passThrough;
 
     public GreyBlock(World w, RecordDef r) {
         this.record = r;
@@ -30,6 +28,7 @@ public final class GreyBlock extends Entity implements Solid {
         this.y = r.y();
         this.startY = y;
         this.hp = 16;
+        this.contactDamage = 8;
         this.damageTable = DamageTables.Table.GREY_BLOCK;
         this.anim = new Animator(w.animSet("grey-block"));
         anim.play(0);
@@ -50,9 +49,6 @@ public final class GreyBlock extends Entity implements Solid {
             return;
         }
         anim.tick();
-        if (passThrough > 0) {
-            passThrough--;
-        }
         switch (step) {
             case FALL -> {
                 if (anim.flag() == 2) {
@@ -64,7 +60,6 @@ public final class GreyBlock extends Entity implements Solid {
                         step = Step.REST;
                         timer = 181;
                     }
-                    squeeze(w);
                 }
             }
             case REST -> {
@@ -101,15 +96,6 @@ public final class GreyBlock extends Entity implements Solid {
         return false;
     }
 
-    private void squeeze(World w) {
-        Rect p = w.player.hurtBox();
-        Rect me = new Rect(x - 32, y - 24, 64, 48);
-        if (passThrough == 0 && p != null && me.overlaps(p) && p.y() > y) {
-            w.player.hurt(w, 8, x);
-            passThrough = SQUEEZE;
-        }
-    }
-
     @Override
     public void onKilled(World w, int weaponId) {
         w.add(new Explosion(w, x, y));
@@ -119,7 +105,7 @@ public final class GreyBlock extends Entity implements Solid {
 
     @Override
     public Rect solidRect() {
-        if (anim.flag() == 0 || passThrough > 0 || step == Step.DYING) {
+        if (anim.flag() == 0 || step == Step.DYING) {
             return null;
         }
         return new Rect(x - 32, y - 24, 64, 48);

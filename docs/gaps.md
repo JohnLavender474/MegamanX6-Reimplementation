@@ -158,9 +158,16 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   rolls of Rainy Turtloid and Nightmare Snake).
 - Shots that hit shots: the Worm Spider ball and the Sea Attacker bubble have 1 HP for weapons with
   `+0x9C` ≠ 0 (`docs/damage.md`); the buster passes through them, and they are made unhittable.
-- Moving solids carry the player by their move of the update (`World.carry`); the 75-update fall
-  through after a hit (`mega+0xE5`) is made only for the grey block. Caterpirade: the same rule is
-  not made. `game/enemy/yammark/Caterpirade.java`, `game/enemy/turtloid/RocketPlatform.java`
+- Solid objects: `World.solidObject` follows `SolidObject` (`docs/engine.md`, "Solid objects") after
+  each solid moves: no push when X's centre is inside, else a push along the shorter overlap; when
+  that puts X into terrain, X goes back, takes the squeeze damage (the object's contact damage, else
+  127) and gets the 75-update squeeze timer (`mega+0xE5`), during which the stage objects skip the
+  push (the boss gate does not). The player's own moves stop at a solid only when X moves into it
+  from outside (`physics/TerrainMover.java`). Not done: the touch flags, `actor2`, and the carry under
+  a solid (`0x04`) and at its sides. Moving solids carry X on top by their move (`World.carry`).
+  The tools docs disagree on `mega+0xE5`: `caterpirade.md` and `rocket-platform.md` say it starts
+  after any hit, `engine.md` and `ladder-hurt-events.md` say only after a squeeze; this code follows
+  the second.
 - Maverick text: the text box of each Maverick before the fight is not shown.
 - Maverick end: after the boss soul (`docs/enemies/nightmare-virus.md`, BOSS SOUL) the player exit
   (step 25, the victory music) is not read; STAGE CLEAR shows. `game/boss/Maverick.java`

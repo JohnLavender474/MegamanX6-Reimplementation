@@ -188,6 +188,11 @@ public final class BossGate extends Entity implements Solid {
     }
 
     @Override
+    public boolean skipsWhileSqueezed() {
+        return false;
+    }
+
+    @Override
     public String spriteSet() {
         return "boss-gate";
     }

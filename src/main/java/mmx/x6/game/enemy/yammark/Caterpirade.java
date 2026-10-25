@@ -1,6 +1,5 @@
 package mmx.x6.game.enemy.yammark;
 
-import java.util.List;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Solid;
 import mmx.x6.game.World;
@@ -51,7 +50,7 @@ public final class Caterpirade extends Enemy implements Solid {
                 move(w);
                 float probeX = x + (faceRight ? 14 : -14);
                 boolean ledge = !TileRules.isObjectSolid(w.grid.at(probeX, y + 22)) && !TileRules.isSlope(w.grid.at(probeX, y + 22));
-                boolean wall = w.mover.blocked(body, faceRight ? TerrainMover.RIGHT : TerrainMover.LEFT, others(w));
+                boolean wall = w.mover.blocked(body, faceRight ? TerrainMover.RIGHT : TerrainMover.LEFT, w.solids());
                 if (!onFloor) {
                     step = Step.FALL;
                 } else if (ledge || wall) {
@@ -140,16 +139,11 @@ public final class Caterpirade extends Enemy implements Solid {
         }
     }
 
-    private List<Rect> others(World w) {
-        Rect self = solidRect();
-        return w.solids().stream().filter(r -> self == null || !r.equals(self)).toList();
-    }
-
     private void move(World w) {
         body.x = x;
         body.y = y;
         speedY = Math.min(FALL_MAX, speedY + GRAVITY);
-        int f = w.mover.move(body, speedX, speedY, onFloor, others(w));
+        int f = w.mover.move(body, speedX, speedY, onFloor, w.solids());
         onFloor = (f & TerrainMover.FLOOR) != 0;
         if (onFloor) {
             speedY = 0;
@@ -182,7 +176,6 @@ public final class Caterpirade extends Enemy implements Solid {
 
     @Override
     public Rect solidRect() {
-        // TODO: the platform is also off for 75 updates after the player is hurt (mega+0xE5); not done (docs/gaps.md, "Caterpirade")
         return ball() || dead ? null : new Rect(x - 14, y - 14, 28, 28);
     }
 

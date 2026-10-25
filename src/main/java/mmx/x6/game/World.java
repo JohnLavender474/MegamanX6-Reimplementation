@@ -142,6 +142,9 @@ public final class World {
                         e.flash--;
                     }
                     e.update(this);
+                    if (e instanceof Solid s && !e.dead) {
+                        solidObject(e, s);
+                    }
                 }
             }
             carry(before);
@@ -295,6 +298,35 @@ public final class World {
                 grid.set(dc + c, dr + r, grid.raw(sc + c, sr + r));
                 art.setGid(dc + c, dr + r, art.gid(sc + c, sr + r));
             }
+        }
+    }
+
+    private void solidObject(Entity e, Solid s) {
+        if (player.dying() || !player.body().hasBox || s.skipsWhileSqueezed() && player.squeezeTimer > 0) {
+            return;
+        }
+        Rect r = s.solidRect();
+        Rect p = player.body().box();
+        if (r == null || !r.overlaps(p)) {
+            return;
+        }
+        float cx = player.body().centerX();
+        float cy = player.body().centerY();
+        if (cx > r.x() && cx < r.right() && cy > r.y() && cy < r.bottom()) {
+            return;
+        }
+        float ox = cx < r.centerX() ? r.x() - p.right() : r.right() - p.x();
+        float oy = cy < r.y() + r.h() / 2 ? r.y() - p.bottom() : r.bottom() - p.y();
+        float oldX = player.x;
+        float oldY = player.y;
+        if (Math.abs(ox) < Math.abs(oy)) {
+            player.shove(ox, 0);
+        } else {
+            player.shove(0, oy);
+        }
+        if (mover.embedded(player.body())) {
+            player.shove(oldX - player.x, oldY - player.y);
+            player.squeeze(this, e.contactDamage > 0 ? e.contactDamage : 127);
         }
     }
 

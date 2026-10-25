@@ -283,4 +283,33 @@ class TerrainMoverTest {
         assertFalse(m.onFloor(air, NONE));
         assertEquals(20, air.y, 0.001);
     }
+
+    @Test
+    void solidStopsOnlyABodyThatMovesIntoIt() {
+        CollisionGrid g = grid(
+                "........",
+                "........",
+                "........",
+                "........",
+                "........",
+                "########");
+        TerrainMover m = new TerrainMover(g);
+        List<Rect> solid = List.of(new Rect(32, 40, 64, 16));
+        Body below = xBody(64, 80);
+        int flags = 0;
+        for (int i = 0; i < 6; i++) {
+            flags |= m.move(below, 0, -4, false, solid);
+        }
+        assertTrue(has(flags, TerrainMover.CEILING));
+        assertEquals(56, below.top(), 0.001);
+        Body inside = xBody(64, 50);
+        assertEquals(0, m.move(inside, 0, -4, false, solid) & TerrainMover.CEILING);
+        Body side = xBody(10, 40 + 10);
+        int f = 0;
+        for (int i = 0; i < 6; i++) {
+            f |= m.move(side, 4, 0, false, solid);
+        }
+        assertTrue(has(f, TerrainMover.RIGHT));
+        assertEquals(32, side.right(), 0.001);
+    }
 }

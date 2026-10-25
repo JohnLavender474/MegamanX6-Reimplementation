@@ -30,15 +30,17 @@ public final class TerrainMover {
         lastOnSlope = false;
         int flags = 0;
         if (dx != 0) {
+            float prevLeft = b.left();
             b.x += dx;
-            flags |= resolveX(b, dx > 0 ? RIGHT : LEFT, solids);
+            flags |= resolveX(b, dx > 0 ? RIGHT : LEFT, prevLeft, solids);
         }
         float prevBottom = b.bottom();
+        float prevTop = b.top();
         b.y += dy;
         if (dy >= 0) {
             flags |= resolveFloor(b, prevBottom, grounded, solids);
         } else {
-            flags |= resolveCeiling(b, solids);
+            flags |= resolveCeiling(b, prevTop, solids);
         }
         return flags;
     }
@@ -80,7 +82,7 @@ public final class TerrainMover {
         return new float[] {b.top() + 2, b.centerY(), b.bottom() - 4};
     }
 
-    private int resolveX(Body b, int side, List<Rect> solids) {
+    private int resolveX(Body b, int side, float prevLeft, List<Rect> solids) {
         float edge = side == RIGHT ? b.right() - EPS : b.left();
         for (float py : sidePoints(b)) {
             int v = grid.at(edge, py);
@@ -99,8 +101,10 @@ public final class TerrainMover {
             }
         }
         Rect inner = new Rect(b.left(), b.top() + 2, b.boxHalfW * 2, b.boxHalfH * 2 - 6);
+        float prevRight = prevLeft + b.boxHalfW * 2;
         for (Rect r : solids) {
-            if (r.overlaps(inner)) {
+            boolean outside = side == RIGHT ? prevRight <= r.x() + EPS : prevLeft >= r.right() - EPS;
+            if (outside && r.overlaps(inner)) {
                 if (side == RIGHT) {
                     b.x -= b.right() - r.x();
                 } else {
@@ -164,8 +168,13 @@ public final class TerrainMover {
             b.y -= feet - cellTop;
             return true;
         }
+        return floorOn(b, prevBottom, solids);
+    }
+
+    private static boolean floorOn(Body b, float prevBottom, List<Rect> rects) {
         Rect box = b.box();
-        for (Rect r : solids) {
+        float feet = b.bottom();
+        for (Rect r : rects) {
             if (box.overlaps(r) || (feet == r.y() && box.x() < r.right() && r.x() < box.right())) {
                 if (prevBottom <= r.y() + EPS) {
                     b.y -= feet - r.y();
@@ -176,7 +185,7 @@ public final class TerrainMover {
         return false;
     }
 
-    private int resolveCeiling(Body b, List<Rect> solids) {
+    private int resolveCeiling(Body b, float prevTop, List<Rect> solids) {
         float top = b.top();
         for (float px : new float[] {b.left() + 1, b.centerX(), b.right() - 1}) {
             int v = grid.at(px, top);
@@ -190,11 +199,26 @@ public final class TerrainMover {
         }
         Rect box = b.box();
         for (Rect r : solids) {
-            if (box.overlaps(r)) {
+            if (prevTop >= r.bottom() - EPS && box.overlaps(r)) {
                 b.y += r.bottom() - top;
                 return CEILING;
             }
         }
         return 0;
+    }
+
+    public boolean embedded(Body b) {
+        for (float py : sidePoints(b)) {
+            if (TileRules.isWall(grid.at(b.left() + 1, py)) || TileRules.isWall(grid.at(b.right() - 1, py))) {
+                return true;
+            }
+        }
+        for (float px : new float[] {b.left() + 1, b.centerX(), b.right() - 1}) {
+            if (TileRules.isCeiling(grid.at(px, b.top() + 1)) || TileRules.isFlatFloor(grid.at(px, b.bottom() - 1))
+                    && !TileRules.isOneWay(grid.at(px, b.bottom() - 1))) {
+                return true;
+            }
+        }
+        return false;
     }
 }

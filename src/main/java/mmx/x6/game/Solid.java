@@ -9,4 +9,8 @@ public interface Solid {
     default boolean carries() {
         return false;
     }
+
+    default boolean skipsWhileSqueezed() {
+        return true;
+    }
 }

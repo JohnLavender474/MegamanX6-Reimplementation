@@ -46,6 +46,7 @@ public final class Player extends Entity {
     private static final int HURT_REACTION_END = 60;
     private static final float HURT_SPEED = 2.5f;
     private static final float HURT_DECEL = 0.1875f;
+    private static final int SQUEEZE_UPDATES = 75;
     private static final float BEAM_SPEED = 8;
 
     private final Body body;
@@ -53,6 +54,7 @@ public final class Player extends Entity {
     private int sub;
     private int timer;
     public float speedX;
+    public int squeezeTimer;
     public float speedY;
     public float gravity;
     private int latch;
@@ -179,6 +181,24 @@ public final class Player extends Entity {
         body.y += dy;
         x = body.x;
         y = body.y;
+    }
+
+    public void shove(float dx, float dy) {
+        body.x += dx;
+        body.y += dy;
+        x = body.x;
+        y = body.y;
+    }
+
+    public void squeeze(World w, int damage) {
+        if (dying()) {
+            return;
+        }
+        squeezeTimer = SQUEEZE_UPDATES;
+        hp -= damage;
+        if (hp <= 0) {
+            kill();
+        }
     }
 
     public void pushGate(float dx) {
@@ -312,6 +332,9 @@ public final class Player extends Entity {
         world = w;
         prevX = x;
         prevY = y;
+        if (squeezeTimer > 0) {
+            squeezeTimer--;
+        }
         spikeTouched = false;
         boolean lock = locked();
         held = lock ? 0 : w.buttons.held();
