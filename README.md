@@ -1,7 +1,14 @@
 # mmx-x6
 
-A playable approximation of the Mega Man X6 intro stage in Java and LibGDX: X (Falcon Armor) from
-the beam-in to the death of the D-1000, then a STAGE CLEAR screen.
+A playable approximation of Mega Man X6 stages in Java and LibGDX, with X in the Falcon Armor:
+
+- the intro stage, from the beam-in to the death of the D-1000;
+- Commander Yammark's stage, to the fight with Commander Yammark;
+- Rainy Turtloid's stage (section 1), to the fight with Rainy Turtloid;
+- Blaze Heatnix's stage (section 1), with all the Nightmare Snake fights, to a stand-in for Blaze
+  Heatnix (there is no data for him yet).
+
+Each stage ends with a STAGE CLEAR screen. A stage select screen comes first.
 
 The behaviour follows the reverse-engineering docs in `~/IdeaProjects/mmx-demake-tools/docs/`
 where they give data, and best guesses elsewhere. Every guess and gap is listed in
@@ -12,7 +19,10 @@ where they give data, and best guesses elsewhere. Every guess and gap is listed 
 
 No game data is in this repo. The game reads the files that `mmx-demake-tools` extracts:
 
-- `tmx/m094-intro/` (map, tiles, collision)
+- `tmx/m094-intro/`, `tmx/m095-commander-yammark-section-1/`, `tmx/m097-blaze-heatnix-section-1/`,
+  `tmx/m101-rainy-turtloid-section-1/` (map, tiles, collision). When the same folder is in
+  `assets/tmx/` of this repo (git ignores it), the game reads that copy instead. The Yammark and
+  Turtloid copies there are made with a texture split (see `docs/gaps.md`, "TMX").
 - `sprites/players/x-falcon`, `sprites/players/x-shots`, `sprites/enemies/*`,
   `sprites/banks/intro/intro-1_start/bank-1.png`
 - `sounds/` (VAB banks as WAV) and `music/bgm/` (XA tracks as WAV)
@@ -24,10 +34,12 @@ argument or as `-Dmmx.data=<path>`. A missing file stops the game with one error
 
 ```
 make run
+make run STAGE=turtloid
 make test
 ```
 
-`make run` and `make test` call `./gradlew run` and `./gradlew test`.
+`make run` and `make test` call `./gradlew run` and `./gradlew test`. `STAGE` (`intro`,
+`yammark`, `turtloid`, `heatnix`) skips the stage select screen.
 
 Java 17 or later (the build targets 17; it is tested on JDK 25). The Gradle wrapper downloads
 Gradle 9.1.0.
@@ -45,17 +57,20 @@ Gradle 9.1.0.
 | O | right trigger: next weapon (no effect yet) |
 | R | restart the stage |
 | F1 | debug view: collision, boxes, slash boxes |
-| Esc | quit |
+| Esc | back to the stage select screen; on that screen: quit |
+
+On the stage select screen, W and S choose and J (or Enter) starts.
 
 ## Debug options
 
 | property | effect |
 |---|---|
-| `-Dmmx.checkpoint=N` | start at checkpoint N (0, 1, 2) |
+| `-Dmmx.stage=KEY` | start this stage (`intro`, `yammark`, `turtloid`, `heatnix`) without the select screen |
+| `-Dmmx.checkpoint=N` | start at checkpoint N (intro 0–2, Yammark 0–3, Turtloid 0–5, Heatnix 0–7) |
 | `-Dmmx.startX=X -Dmmx.startY=Y` | start standing at a point, with wide camera limits |
 | `-Dmmx.debug=true` | start with the F1 view on |
 | `-Dmmx.hold=BITS` | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon) |
 | `-Dmmx.jumpEvery=N` | with `mmx.hold`: pulse jump and the held non-direction buttons every N updates |
-| `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG of the view after N updates and quit |
+| `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG of the view after N updates and quit; with a list (`300,600`), one PNG per value (`FILE-300.png`, …) |
 
-Example: `./gradlew run -Dmmx.checkpoint=2` starts in the hallway before the boss.
+Example: `./gradlew run -Dmmx.stage=intro -Dmmx.checkpoint=2` starts in the hallway before the D-1000.
