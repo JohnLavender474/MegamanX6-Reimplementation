@@ -30,6 +30,9 @@ public final class Assets implements Disposable {
     private record Source(Path dir, AnimSet set, Map<Integer, String> files) {
     }
 
+    private static final int AIR_DASH_START = 169;
+    private static final int AIR_DASH = 171;
+
     private final DataPaths paths;
     private final Map<String, AnimSet> sets = new HashMap<>();
     private final Map<String, Map<Integer, Source>> sources = new HashMap<>();
@@ -58,6 +61,9 @@ public final class Assets implements Disposable {
             return sabreBlockSprite(anim);
         }
         anim(set);
+        int[] drawn = drawnFrame(set, anim, frameIndex);
+        anim = drawn[0];
+        frameIndex = drawn[1];
         Source src = sources.get(set).get(anim);
         if (src == null) {
             return null;
@@ -72,6 +78,14 @@ public final class Assets implements Disposable {
             return null;
         }
         return frames[Math.max(0, Math.min(frameIndex, frames.length - 1))];
+    }
+
+    static int[] drawnFrame(String set, int anim, int frameIndex) {
+        if ("x-falcon".equals(set) && anim == AIR_DASH_START) {
+            // TODO: the export of animation 169 (frame set 1) shows other sprites; the first air dash frame (171) is drawn instead (docs/gaps.md, "Air dash start")
+            return new int[] {AIR_DASH, 0};
+        }
+        return new int[] {anim, frameIndex};
     }
 
     public SpriteFrame sabreBlockSprite(int sprite) {
