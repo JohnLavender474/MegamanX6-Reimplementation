@@ -21,7 +21,6 @@ public final class D1000 extends Entity {
     public static final float FLOOR_Y = 416;
     public static final int MAX_HP = 32;
 
-    private static final float RAM_LOW_Y = 352;
     private static final float ROOM_LEFT = 6136;
     private static final float ROOM_RIGHT = 6392;
     private static final float LEFT_WALL_INNER = 6080;
@@ -73,6 +72,11 @@ public final class D1000 extends Entity {
             return r < 6 ? BossStep.SUMMON : BossStep.BOMB;
         }
         return r < 6 ? BossStep.RAM : BossStep.BOMB;
+    }
+
+    public static float windUpY(float y, float playerY) {
+        float target = (float) Math.floor(playerY);
+        return y + Math.signum(target - y) * Math.min(2, Math.abs(target - y));
     }
 
     public static int coreXFor(float playerX) {
@@ -216,7 +220,10 @@ public final class D1000 extends Entity {
                     core.summon();
                 }
             }
-            case RAM -> ramDir = faceRight ? 1 : -1;
+            case RAM -> {
+                ramDir = faceRight ? 1 : -1;
+                anim.play(1);
+            }
             default -> {
             }
         }
@@ -298,13 +305,13 @@ public final class D1000 extends Entity {
             case 0 -> {
                 facePlayer(w);
                 ramDir = faceRight ? 1 : -1;
-                float target = Math.max(STAND_Y - 48, Math.min(RAM_LOW_Y, w.player.y - 90));
-                y += Math.signum(target - y) * Math.min(2, Math.abs(target - y));
                 if (++timer >= 180) {
                     sub = 1;
                     speedX = 0;
                     anim.play(4);
+                    w.sfx.play(2, 4);
                 }
+                y = windUpY(y, w.player.y);
             }
             case 1 -> {
                 speedX = Math.min(4, speedX + 1);

@@ -134,8 +134,9 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   `game/boss/BossWarning.java` (`docs/engine.md`, "Boss entry and exit")
 - Not done: the rock fall and screen quakes at the landing, the core's energy particles, the RAM's
   screen shake, the bomb's landing rumble.
-- RAM wind-up: the body moves toward a height 90 px above X, kept between y 256 and 352 (open
-  question 3).
+- RAM wind-up: the body moves its y 2 px per update toward X's y, with no offset and no limit, as
+  `0x800EE58C` does. Before 2026-10-26 it moved toward 90 px above X (kept between y 256 and 352),
+  which took the body half off the top of the screen.
 - Death: the blink, then `BossExplosion` with flags `0x81` (below), the sink of 0.25 px/update
   and the wreck at the white screen, then STAGE CLEAR when the explosion object is gone. X is not
   moved at the white screen. The second blink, the second explosion and Zero are cut.

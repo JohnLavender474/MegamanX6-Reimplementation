@@ -86,6 +86,15 @@ class D1000Test {
     }
 
     @Test
+    void ramWindUpMovesTwoPixelsTowardThePlayersY() {
+        assertEquals(306, D1000.windUpY(304, 395));
+        assertEquals(395, D1000.windUpY(394, 395));
+        assertEquals(395, D1000.windUpY(395, 395));
+        assertEquals(302, D1000.windUpY(304, 230));
+        assertEquals(230, D1000.windUpY(231, 230));
+    }
+
+    @Test
     void coreSideAwayFromPlayer() {
         assertEquals(6368, D1000.coreXFor(6100));
         assertEquals(6160, D1000.coreXFor(6300));
