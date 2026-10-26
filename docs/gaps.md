@@ -76,6 +76,10 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 ## More guesses
 
+- Draw order: the docs do not say whether a higher draw priority is in front (`docs/engine.md`,
+  open question 5). Objects with priority 0 or more are drawn behind X (higher first), and objects
+  with a negative priority (the sabre slash, shots, the charge flash, explosions, debris) in front of
+  X. `screen/StageScreen.java`
 - Respawn: the path from the death orbs back to the stage is not read; a 30-update black fade, then
   the restart at the last checkpoint. `game/StageFlow.java`
 - Sabre sound: X's slash sound is not named; the Magma Blade slash sound (bank 1, id 23) is used.
@@ -203,8 +207,10 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 ## Rainy Turtloid's stage
 
-- Acid rain: the curtain (BG layer 1) is drawn at half alpha behind layer 0, and the palette fade to
-  the rain colours (`PaletteDarken`, `0x800ED18C`) is not done. `game/enemy/turtloid/AcidRain.java`
+- Acid rain: the curtain (BG layer 1) is drawn at half alpha in front of layer 0 and the objects
+  (the docs do not give the layer order; the user saw that the rain must show in the caves too), and
+  the palette fade to the rain colours (`PaletteDarken`, `0x800ED18C`) is not done.
+  `game/enemy/turtloid/AcidRain.java`
 - Batton Bone B81: the set-up does not set the facing, so the bats face left.
 - Monbando: X is the player, so the attack roll picks the slam or the missile (no punch).
 - Health capsule: a 48 × 16 px block on the floor; X jumps onto it (the push-out of the solid body

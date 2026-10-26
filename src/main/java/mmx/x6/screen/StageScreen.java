@@ -155,21 +155,27 @@ public final class StageScreen extends ScreenAdapter {
         if (!world.layer2Front) {
             drawLayer2();
         }
-        float l1x = world.camera.layer1X() + (world.layer1Relative ? cx : 0);
-        float l1y = world.camera.layer1Y() + (world.layer1Relative ? cy : 0);
-        if (world.layer1Alpha > 0) {
-            batch.setColor(1, 1, 1, world.layer1Alpha);
-            levelRenderer.draw(batch, level.art1(), l1x, l1y);
-            batch.setColor(1, 1, 1, 1);
+        if (!world.layer1Front) {
+            drawLayer1(cx, cy);
         }
         levelRenderer.draw(batch, level.art0Main(), cx, cy);
         List<Entity> drawn = new ArrayList<>(world.entities);
         drawn.sort(Comparator.comparingInt(Entity::drawPriority).reversed());
         for (Entity e : drawn) {
-            drawEntity(e, cx, cy);
+            if (e.drawPriority() >= 0) {
+                drawEntity(e, cx, cy);
+            }
         }
         drawEntity(world.player, cx, cy);
+        for (Entity e : drawn) {
+            if (e.drawPriority() < 0) {
+                drawEntity(e, cx, cy);
+            }
+        }
         levelRenderer.draw(batch, level.art0Front(), cx, cy);
+        if (world.layer1Front) {
+            drawLayer1(cx, cy);
+        }
         if (world.layer2Front) {
             drawLayer2();
         }
@@ -193,6 +199,17 @@ public final class StageScreen extends ScreenAdapter {
             shapes.end();
         }
         fbo.end();
+    }
+
+    private void drawLayer1(float cx, float cy) {
+        if (world.layer1Alpha <= 0) {
+            return;
+        }
+        float l1x = world.camera.layer1X() + (world.layer1Relative ? cx : 0);
+        float l1y = world.camera.layer1Y() + (world.layer1Relative ? cy : 0);
+        batch.setColor(1, 1, 1, world.layer1Alpha);
+        levelRenderer.draw(batch, level.art1(), l1x, l1y);
+        batch.setColor(1, 1, 1, 1);
     }
 
     private void drawLayer2() {

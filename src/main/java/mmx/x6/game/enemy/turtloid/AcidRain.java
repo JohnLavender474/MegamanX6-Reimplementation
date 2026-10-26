@@ -21,6 +21,8 @@ public final class AcidRain extends Entity {
     public AcidRain(World w, RecordDef r) {
         this.record = r;
         w.layer1Alpha = 0;
+        // TODO: the docs do not give the order of the rain layer and layer 0; it is drawn in front of the tiles and the objects (docs/gaps.md, "Acid rain")
+        w.layer1Front = true;
     }
 
     public State state() {

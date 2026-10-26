@@ -56,6 +56,7 @@ public final class World {
     public int messageTimer;
     public float layer1Alpha = 1;
     public boolean layer1Relative;
+    public boolean layer1Front;
     public float layer2Alpha = 1;
     public boolean layer2Front;
 
@@ -73,6 +74,7 @@ public final class World {
         this.stage = stage;
         this.level = level;
         this.grid = level.collision();
+        CustomChanges.apply(stage, grid);
         this.pristineGrid = grid.copy();
         this.pristineArt = level.art0Main().gids().clone();
         this.mover = new TerrainMover(grid);
@@ -212,7 +214,7 @@ public final class World {
                 if (hb == null || !box.overlaps(hb) || !wp.canHit(t)) {
                     continue;
                 }
-                int r = Damage.hitObject(t, wp.weaponId());
+                int r = Damage.hitObject(t, wp.weaponId(), wp.damageScale());
                 if (r == Damage.NO_HIT) {
                     continue;
                 }
@@ -279,6 +281,7 @@ public final class World {
         healHold = false;
         layer1Alpha = camera.layer1Mode() == 5 ? 0 : 1;
         layer1Relative = false;
+        layer1Front = false;
         layer2Alpha = 1;
         layer2Front = false;
         pauseOwner = null;

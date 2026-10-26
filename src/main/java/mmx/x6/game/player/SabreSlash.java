@@ -1,6 +1,7 @@
 package mmx.x6.game.player;
 
 import mmx.x6.anim.Animator;
+import mmx.x6.game.CustomChanges;
 import mmx.x6.game.Damage;
 import mmx.x6.game.Entity;
 import mmx.x6.game.Weapon;
@@ -48,6 +49,16 @@ public final class SabreSlash extends Entity implements Weapon {
         if (noBox > 0) {
             noBox--;
         }
+    }
+
+    @Override
+    public float damageScale() {
+        return CustomChanges.SABRE_DAMAGE_SCALE;
+    }
+
+    @Override
+    public int drawPriority() {
+        return -1;
     }
 
     @Override

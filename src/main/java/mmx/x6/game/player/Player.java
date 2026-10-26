@@ -14,6 +14,7 @@ import static mmx.x6.game.player.PlayerConst.WALK_START;
 
 import java.util.Set;
 import mmx.x6.anim.Animator;
+import mmx.x6.game.CustomChanges;
 import mmx.x6.game.Damage;
 import mmx.x6.game.Entity;
 import mmx.x6.game.World;
@@ -1364,6 +1365,12 @@ public final class Player extends Entity {
 
     private void updateSabre() {
         anim.tick();
+        for (int i = 1; i < CustomChanges.SABRE_RECOVERY_SPEED; i++) {
+            if ((anim.flag() & 0x40) == 0 || anim.flagEntered() || anim.atLastFrame()) {
+                break;
+            }
+            anim.tick();
+        }
         if (slash == null && anim.entered(0x80)) {
             slash = new SabreSlash(world, this, sabreKind == SABRE_FLOOR ? 50 : 51, switch (sabreKind) {
                 case SABRE_FLOOR -> SabreSlash.FLOOR_ANIM;

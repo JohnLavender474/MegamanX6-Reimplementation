@@ -129,7 +129,29 @@ class SabreTest {
         s.step(WEAPON);
         s.steps(60, 0);
         assertTrue(block.hp < 32, "hp " + block.hp);
-        assertTrue(block.hp >= 32 - 4 * 4, "hp " + block.hp);
-        assertEquals(0, (32 - block.hp) % 4);
+        assertTrue(block.hp >= 32 - 4 * 6, "hp " + block.hp);
+        assertEquals(0, (32 - block.hp) % 6, "the table value 4 times the custom 1.5");
+    }
+
+    @Test
+    void floorSabreRecoversInHalfTheHoldTime() {
+        Sim s = flat();
+        s.step(WEAPON);
+        int n = 1;
+        while (s.world.player.step() == PlayerStep.SABRE && n < 100) {
+            s.step(0);
+            n++;
+        }
+        assertEquals(PlayerStep.STAND, s.world.player.step());
+        assertTrue(n <= 26, "updates " + n);
+        assertTrue(n >= 20, "updates " + n);
+    }
+
+    @Test
+    void slashIsDrawnInFrontOfX() {
+        Sim s = flat();
+        s.step(WEAPON);
+        s.steps(4, 0);
+        assertTrue(slash(s).drawPriority() < 0);
     }
 }

@@ -71,4 +71,23 @@ class TurtloidStageTest {
         assertFalse(r.world.flag26);
         assertEquals(2272, r.world.camera.targetMaxX());
     }
+
+    @Test
+    void noCeilingOverTheRocketPlatforms() {
+        StageRun r = StageRun.at(Stages.TURTLOID, 3);
+        for (int x = 4128; x < 4992; x += 16) {
+            assertEquals(0, r.world.grid.at(x, 208), "x " + x);
+        }
+        assertEquals(57, r.world.grid.at(4112, 208));
+        assertEquals(57, r.world.grid.at(4992, 208));
+        r.world.flow.restart(3);
+        assertEquals(0, r.world.grid.at(4500, 208), "the change stays after a restart");
+    }
+
+    @Test
+    void rainIsDrawnInFrontOfTheTiles() {
+        StageRun r = StageRun.at(Stages.TURTLOID, 1);
+        r.steps(5, 0);
+        assertTrue(r.world.layer1Front);
+    }
 }

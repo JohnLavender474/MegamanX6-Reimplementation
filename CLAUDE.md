@@ -11,7 +11,8 @@ the Falcon Armor. It has four stages: the intro (to the D-1000), Commander Yamma
 
 The behaviour follows the reverse-engineering (RE) docs of the sister repo `mmx-demake-tools` where
 they give data, and best guesses elsewhere. **Every guess, simplification and gap is listed in
-`docs/gaps.md`.** The design and plans are in `docs/superpowers/specs/` and
+`docs/gaps.md`.** The changes that differ from X6 on purpose (the user's design choices) are in
+`docs/custom-changes.md`, with their values in `game/CustomChanges.java`. The design and plans are in `docs/superpowers/specs/` and
 `docs/superpowers/plans/`. `README.md` has the keys and the debug options.
 
 No game data is in this repo. Everything loads at run time from the data root (below).
@@ -42,7 +43,7 @@ make test                    # ./gradlew test
 | `stage` | `StageDef` (TMX, checkpoints, music, sound banks, Nightmare Effect, entity factory) and `Stages` (the four stages) |
 | `level` | `TmxLoader`, `Level`, `CollisionGrid`, `TileLayer`, `RecordDef`, `CameraZoneDef`, `Checkpoint`, `IntroCheckpoints` |
 | `physics` | `TerrainMover` (tile collision, slopes, solids), `TileRules` (collision values), `Body`, `Rect` |
-| `game` | `World` (one update; entity loop; weapons, contacts, solids, carry, pause), `CameraController` (follow, `CameraLimitEase`, BG layer modes), `CameraZones`, `Spawner` (spawn band, fixed records, checkpoint markers), `StageFlow` (death fade, restart, clear), `Damage`, `DamageTables`, `Progress` (lives, souls, Reploids, parts), `Entity`, `Solid`, `Weapon` |
+| `game` | `World` (one update; entity loop; weapons, contacts, solids, carry, pause), `CameraController` (follow, `CameraLimitEase`, BG layer modes), `CameraZones`, `Spawner` (spawn band, fixed records, checkpoint markers), `StageFlow` (death fade, restart, clear), `Damage`, `DamageTables`, `Progress` (lives, souls, Reploids, parts), `Entity`, `Solid`, `Weapon`, `CustomChanges` (the user's changes, `docs/custom-changes.md`) |
 | `game/player` | `Player` (all X steps), `PlayerConst`, `BusterShot`, `BusterPoints` (copied from the executable), `SabreSlash` |
 | `game/enemy` | shared objects (`BossGate`, `RescueReploid`, `NightmareVirus`, `LightCapsule`, `TeleporterCrystal`, `Projectile`), the intro enemies, `CommonEntityFactory`; one sub-package per stage with its factory |
 | `game/boss` | `Maverick` (warning, HP fill, hit invulnerability, death blink, explosion, boss soul), the D-1000 parts |
@@ -157,7 +158,8 @@ These come from bugs that the user found in play (2026-10-23 to 2026-10-25).
    right; a pit, a ledge or a gate may need a placed start (`placeStanding`). When a scripted run
    fails, trace it (position, step, camera, entities) before you change game code.
 9. **Do not change the user's design choices back without asking**, but tell the user when a choice
-   differs from the real game and say what the real behaviour is.
+   differs from the real game and say what the real behaviour is. Record each choice in
+   `docs/custom-changes.md`.
 
 ## Doing a task
 

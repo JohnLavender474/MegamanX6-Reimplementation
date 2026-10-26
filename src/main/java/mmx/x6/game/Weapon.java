@@ -6,6 +6,10 @@ public interface Weapon {
 
     int weaponId();
 
+    default float damageScale() {
+        return 1;
+    }
+
     Rect attackBox();
 
     boolean canHit(Entity target);

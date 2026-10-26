@@ -16,6 +16,10 @@ public final class Damage {
     }
 
     public static int hitObject(Entity e, int weaponId) {
+        return hitObject(e, weaponId, 1);
+    }
+
+    public static int hitObject(Entity e, int weaponId, float scale) {
         if (e.damageTable == null) {
             return NO_HIT;
         }
@@ -26,6 +30,7 @@ public final class Damage {
         if (v == DamageTables.DEFLECT) {
             return BLOCKED;
         }
+        v = Math.round(v * scale);
         e.hp -= v;
         e.flash = 1;
         return e.hp <= 0 ? -(weaponId + 1) : weaponId + 1;
