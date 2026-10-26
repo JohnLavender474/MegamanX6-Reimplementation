@@ -17,6 +17,7 @@ import java.util.TreeMap;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimDef;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.BankSheetAnims;
 import mmx.x6.anim.D1000Anims;
 import mmx.x6.anim.SabreBlockAnims;
 import mmx.x6.anim.ShotAnims;
@@ -39,6 +40,7 @@ public final class Assets implements Disposable {
     private final Map<String, Texture> textures = new HashMap<>();
     private final Map<String, SpriteFrame[]> strips = new HashMap<>();
     private final List<SpriteFrame> sabreBlock = new ArrayList<>();
+    private final Map<String, SpriteFrame> bankSprites = new HashMap<>();
     private Path tilesPath;
     private Texture tiles;
     private TextureRegion[] tileRegions;
@@ -74,6 +76,15 @@ public final class Assets implements Disposable {
     public SpriteFrame frame(String set, int anim, int frameIndex) {
         if ("sabre-block".equals(set)) {
             return sabreBlockSprite(anim);
+        }
+        BankSheetAnims.Sheet sheet = BankSheetAnims.SHEETS.get(set);
+        if (sheet != null) {
+            AnimDef d = sheet.set().get(anim);
+            if (d == null) {
+                return null;
+            }
+            int sprite = d.frames().get(Math.max(0, Math.min(frameIndex, d.frames().size() - 1))).sprite();
+            return bankSprite(sheet, sprite);
         }
         anim(set);
         int[] drawn = drawnFrame(set, anim, frameIndex);
@@ -138,6 +149,10 @@ public final class Assets implements Disposable {
     }
 
     private AnimSet load(String set) {
+        BankSheetAnims.Sheet sheet = BankSheetAnims.SHEETS.get(set);
+        if (sheet != null) {
+            return sheet.set();
+        }
         return switch (set) {
             case "x-falcon" -> loadDir(set, paths.playerDir("x-falcon"));
             case "d1000" -> loadD1000();
@@ -196,7 +211,7 @@ public final class Assets implements Disposable {
         String file = src.files().getOrDefault(anim, "anim-" + anim + ".png");
         Path p = src.dir().resolve(file);
         if (!Files.exists(p)) {
-            return new SpriteFrame[0];
+            return cutSheetCell(src, anim);
         }
         Texture t = texture(p);
         AnimDef d = src.set().get(anim);
@@ -214,6 +229,79 @@ public final class Assets implements Disposable {
             out[i] = new SpriteFrame(r, ox, oy);
         }
         return out;
+    }
+
+    private SpriteFrame[] cutSheetCell(Source src, int sprite) {
+        Path p = src.dir().resolve("sprites.png");
+        if (!Files.exists(p)) {
+            return new SpriteFrame[0];
+        }
+        Texture t = texture(p);
+        int cellW = src.set().cellW();
+        int cellH = src.set().cellH();
+        int cols = Math.max(1, t.getWidth() / cellW);
+        TextureRegion r = new TextureRegion(t, (sprite % cols) * cellW, (sprite / cols) * cellH, cellW, cellH);
+        r.flip(false, true);
+        return new SpriteFrame[] {new SpriteFrame(r, src.set().originX(), src.set().originY())};
+    }
+
+    private SpriteFrame bankSprite(BankSheetAnims.Sheet sheet, int sprite) {
+        String key = sheet.stage() + "/" + sheet.state() + "/" + sheet.bank() + "#" + sprite;
+        if (bankSprites.containsKey(key)) {
+            return bankSprites.get(key);
+        }
+        SpriteFrame f = cutBankSprite(sheet, sprite);
+        bankSprites.put(key, f);
+        return f;
+    }
+
+    private SpriteFrame cutBankSprite(BankSheetAnims.Sheet sheet, int sprite) {
+        Path p = paths.bankSheet(sheet.stage(), sheet.state(), sheet.bank());
+        if (!Files.exists(p)) {
+            return null;
+        }
+        Texture t = textures.get(p + "#transparent");
+        Pixmap pix = new Pixmap(new FileHandle(p.toFile()));
+        int background = pix.getPixel(pix.getWidth() - 1, pix.getHeight() - 1);
+        int cx = (sprite % BankSheetAnims.COLUMNS) * BankSheetAnims.CELL_W;
+        int cy = (sprite / BankSheetAnims.COLUMNS) * BankSheetAnims.CELL_H;
+        int x0 = Integer.MAX_VALUE;
+        int y0 = Integer.MAX_VALUE;
+        int x1 = -1;
+        int y1 = -1;
+        for (int y = cy + BankSheetAnims.LABEL_H; y < Math.min(cy + BankSheetAnims.CELL_H, pix.getHeight()); y++) {
+            for (int x = cx; x < Math.min(cx + BankSheetAnims.CELL_W, pix.getWidth()); x++) {
+                if (pix.getPixel(x, y) != background) {
+                    x0 = Math.min(x0, x);
+                    y0 = Math.min(y0, y);
+                    x1 = Math.max(x1, x);
+                    y1 = Math.max(y1, y);
+                }
+            }
+        }
+        if (t == null) {
+            pix.setBlending(Pixmap.Blending.None);
+            for (int y = 0; y < pix.getHeight(); y++) {
+                for (int x = 0; x < pix.getWidth(); x++) {
+                    if (pix.getPixel(x, y) == background) {
+                        pix.drawPixel(x, y, 0);
+                    }
+                }
+            }
+            t = new Texture(pix);
+            t.setFilter(Texture.TextureFilter.Nearest, Texture.TextureFilter.Nearest);
+            textures.put(p + "#transparent", t);
+        }
+        pix.dispose();
+        if (x1 < 0) {
+            return null;
+        }
+        int w = x1 - x0 + 1;
+        int h = y1 - y0 + 1;
+        TextureRegion r = new TextureRegion(t, x0, y0, w, h);
+        r.flip(false, true);
+        Integer bottom = sheet.bottomFromOrigin().get(sprite);
+        return new SpriteFrame(r, w / 2, bottom == null ? h / 2 : h - bottom);
     }
 
     private void cutSabreBlock() {

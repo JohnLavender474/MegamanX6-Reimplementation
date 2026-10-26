@@ -55,6 +55,12 @@ public final class AnimSet {
                 anims.put(a.getInt("index"), new AnimDef(a.getInt("index"), List.copyOf(frames), loopTo));
             }
         }
+        JsonValue sheet = root.get("sheet");
+        if (anims.isEmpty() && sheet != null) {
+            for (int i = 0; i < sheet.getInt("sprites", 0); i++) {
+                anims.put(i, new AnimDef(i, List.of(new AnimDef.Frame(i, 256, 0)), null));
+            }
+        }
         return new AnimSet(cell.getInt(0), cell.getInt(1), origin.getInt(0), origin.getInt(1), anims);
     }
 

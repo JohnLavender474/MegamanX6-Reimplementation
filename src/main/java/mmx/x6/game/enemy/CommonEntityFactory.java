@@ -15,6 +15,9 @@ public class CommonEntityFactory implements EntityFactory {
             case "NightmareVirus" -> new NightmareVirus(w, r);
             case "LightCapsule" -> new LightCapsule(w, r);
             case "TeleporterCrystal" -> new TeleporterCrystal(w, r);
+            case "NightmareShadow", "main_26" -> new NightmareShadow(w, r);
+            case "IceSlide", "logic_7" -> new IceSlide(w, r);
+            case "NightmareBug" -> new NightmareBug(w, r);
             default -> null;
         };
     }

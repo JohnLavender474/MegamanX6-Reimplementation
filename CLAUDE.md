@@ -6,8 +6,10 @@ apply (no code comments except the `TODO` format below; drafts to paste go in fe
 ## What this repo is
 
 A playable approximation of Mega Man X6 (PlayStation) stages in Java 17 and LibGDX 1.14.2, with X in
-the Falcon Armor. It has four stages: the intro (to the D-1000), Commander Yammark, Rainy Turtloid
-(section 1) and Blaze Heatnix (section 1, with a stand-in boss). A stage select screen comes first.
+the Falcon Armor. It has seven stages: the intro (to the D-1000), Commander Yammark, Blizzard
+Wolfang (section 1), Blaze Heatnix (section 1, with a stand-in boss), Ground Scaravich (with the
+random section route), Rainy Turtloid (section 1) and Shield Sheldon (section 1). A stage select
+screen comes first.
 
 The behaviour follows the reverse-engineering (RE) docs of the sister repo `mmx-demake-tools` where
 they give data, and best guesses elsewhere. **Every guess, simplification and gap is listed in
@@ -21,7 +23,7 @@ No game data is in this repo. Everything loads at run time from the data root (b
 
 ```
 make run                     # ./gradlew run; the stage select screen
-make run STAGE=yammark       # intro, yammark, turtloid, heatnix: skip the select screen
+make run STAGE=yammark       # intro, yammark, wolfang, heatnix, scaravich, turtloid, sheldon: skip the select screen
 make test                    # ./gradlew test
 ./gradlew run -Dmmx.stage=heatnix -Dmmx.checkpoint=6
 ```
@@ -32,23 +34,23 @@ make test                    # ./gradlew test
 - Screenshots with no window input (for a visual check):
   `./gradlew run -Dmmx.stage=turtloid -Dmmx.checkpoint=5 -Dmmx.hold=1 -Dmmx.shot=/path/x.png
   -Dmmx.shotAfter=600,900` saves one PNG per update count and quits. `-Dmmx.hold` takes the X6
-  button bits (1 right, 2 left, 128 jump, 32 buster); `-Dmmx.jumpEvery=40` pulses the jump. Look at
-  the PNGs with the Read tool. Put them in the session scratchpad, not in the repo.
+  button bits (1 right, 2 left, 128 jump, 32 buster); `-Dmmx.jumpEvery=40` pulses the jump.
+- Look at the PNGs with the Read tool. Put them in the session scratchpad, not in the repo.
 
 ## Code layout (`src/main/java/mmx/x6/`)
 
 | package | what |
 |---|---|
 | `.` | `DesktopLauncher`, `X6Game` (screens, per-stage sound banks), `DataPaths` (data root; `stageTmx` prefers `assets/tmx/`) |
-| `stage` | `StageDef` (TMX, checkpoints, music, sound banks, Nightmare Effect, entity factory) and `Stages` (the four stages) |
+| `stage` | `StageDef` (TMX, checkpoints, music, sound banks, Nightmare Effect, entity factory) and `Stages` (the seven stages) |
 | `level` | `TmxLoader`, `Level`, `CollisionGrid`, `TileLayer`, `RecordDef`, `CameraZoneDef`, `Checkpoint`, `IntroCheckpoints` |
 | `physics` | `TerrainMover` (tile collision, slopes, solids), `TileRules` (collision values), `Body`, `Rect` |
 | `game` | `World` (one update; entity loop; weapons, contacts, solids, carry, pause), `CameraController` (follow, `CameraLimitEase`, BG layer modes), `CameraZones`, `Spawner` (spawn band, fixed records, checkpoint markers), `StageFlow` (death fade, restart, clear), `Damage`, `DamageTables`, `Progress` (lives, souls, Reploids, parts), `Entity`, `Solid`, `Weapon`, `CustomChanges` (the user's changes, `docs/custom-changes.md`) |
 | `game/player` | `Player` (all X steps), `PlayerConst`, `BusterShot`, `BusterPoints` (copied from the executable), `SabreSlash` |
-| `game/enemy` | shared objects (`BossGate`, `RescueReploid`, `NightmareVirus`, `LightCapsule`, `TeleporterCrystal`, `Projectile`), the intro enemies, `CommonEntityFactory`; one sub-package per stage with its factory |
+| `game/enemy` | shared objects (`BossGate`, `RescueReploid`, `NightmareVirus`, `LightCapsule`, `TeleporterCrystal`, `Projectile`, `IceSlide` (stage logic 7), `NightmareShadow`, `NightmareBug`), the intro enemies, `CommonEntityFactory`; one sub-package per stage with its factory |
 | `game/boss` | `Maverick` (warning, HP fill, hit invulnerability, death blink, explosion, boss soul), the D-1000 parts |
 | `game/fx` | explosions, debris, the boss explosion, death orbs |
-| `anim`, `render`, `screen`, `audio`, `input` | animation sets and players, drawing, screens, sound banks and music, buttons |
+| `anim`, `render`, `screen`, `audio`, `input` | animation sets and players (sprite-only sheets; `BankSheetAnims` cuts sprites from a numbered bank sheet), drawing, screens, sound banks and music, buttons |
 
 Tests (`src/test/java/mmx/x6/`): `game/Sim` (a headless world on an ASCII grid), `stage/StageRun`
 (a headless world on a real stage TMX: `at(stage, checkpoint)`, `until`, `runRight`, `find`),

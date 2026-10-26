@@ -26,6 +26,7 @@ public final class RescueReploid extends Entity {
 
     private final int id;
     private final boolean hover;
+    private final boolean setB;
     private final float startY;
     private State state = State.WAIT;
     private boolean right;
@@ -40,7 +41,8 @@ public final class RescueReploid extends Entity {
         this.y = r.y();
         this.startY = y;
         this.anim = new Animator(w.animSet(SET));
-        this.hover = !TileRules.isObjectSolid(w.grid.at(x, y + 17));
+        this.setB = (id & 0xF0) == 0x10;
+        this.hover = !setB && !TileRules.isObjectSolid(w.grid.at(x, y + 17));
         int status = w.progress.reploid(id);
         if (status == Progress.REPLOID_SAVED || status == Progress.REPLOID_DEAD || status == Progress.REPLOID_LOST) {
             state = State.GONE;
@@ -62,8 +64,15 @@ public final class RescueReploid extends Entity {
         caught = true;
     }
 
+    private int pick(int left, int rightAnim, int hoverLeft, int hoverRight, int bLeft, int bRight) {
+        if (setB) {
+            return right ? bRight : bLeft;
+        }
+        return hover ? (right ? hoverRight : hoverLeft) : (right ? rightAnim : left);
+    }
+
     private int idleAnim() {
-        return hover ? (right ? 14 : 5) : (right ? 11 : 0);
+        return pick(0, 11, 5, 14, 23, 30);
     }
 
     @Override
@@ -74,7 +83,7 @@ public final class RescueReploid extends Entity {
             case HEAL -> updateHeal(w);
             case TELEPORT -> {
                 if (--timer <= 0) {
-                    anim.play(8);
+                    anim.play(setB ? 29 : 8);
                     state = State.BEAM;
                 }
             }
@@ -102,12 +111,12 @@ public final class RescueReploid extends Entity {
                     damageTable = DamageTables.Table.NORMAL;
                     anim.play(infectedIdle());
                     state = State.ARMED;
-                    timer = 60;
+                    timer = setB ? 20 : 60;
                 }
             }
             case ARMED -> {
                 if (--timer <= 0) {
-                    anim.play(hover ? (right ? 16 : 7) : (right ? 13 : 2));
+                    anim.play(pick(2, 13, 7, 16, 26, 33));
                     state = State.ATTACK;
                 }
             }
@@ -119,7 +128,7 @@ public final class RescueReploid extends Entity {
                     right = w.player.x >= x;
                     anim.play(infectedIdle());
                     state = State.ARMED;
-                    timer = 60;
+                    timer = setB ? 20 : 60;
                 }
             }
             case GONE -> {
@@ -137,7 +146,7 @@ public final class RescueReploid extends Entity {
     }
 
     private int infectedIdle() {
-        return hover ? (right ? 22 : 21) : (right ? 20 : 19);
+        return pick(19, 20, 21, 22, 28, 35);
     }
 
     private void updateWait(World w) {
@@ -153,7 +162,7 @@ public final class RescueReploid extends Entity {
         }
         if (caught) {
             w.progress.setReploid(id, Progress.REPLOID_LOST);
-            anim.play(hover ? (right ? 15 : 6) : (right ? 12 : 1));
+            anim.play(pick(1, 12, 6, 15, 24, 31));
             state = State.CHANGE;
             timer = 130;
             return;
@@ -201,12 +210,21 @@ public final class RescueReploid extends Entity {
 
     private void startTeleport(World w) {
         right = w.player.x >= x;
-        anim.play(hover ? (right ? 18 : 10) : (right ? 17 : 9));
+        anim.play(pick(9, 17, 10, 18, 25, 32));
         state = State.TELEPORT;
         timer = 80;
     }
 
     private void fire(World w) {
+        if (setB) {
+            float bx = x + (right ? 28 : -28);
+            float by = y - 24;
+            w.sfx.play(2, 46);
+            w.add(new Projectile(w, SET, 27, bx, by, (w.player.x - bx) / 70, -3, 3, 4, 4)
+                    .hittable(2, DamageTables.Table.NORMAL).gravity(0.09375f, 6.5f).explodes().endsOnPlayer()
+                    .margin(16).priority(1).facing(false));
+            return;
+        }
         int[] m = MUZZLE[(id >> 4) & 7];
         float mx = x + (right ? m[2] : m[0]);
         float my = y + (right ? m[3] : m[1]);
@@ -223,7 +241,10 @@ public final class RescueReploid extends Entity {
 
     @Override
     public Rect hurtBox() {
-        return state == State.ARMED || state == State.ATTACK ? new Rect(x - 8, y - 10, 16, 20) : null;
+        if (state != State.ARMED && state != State.ATTACK) {
+            return null;
+        }
+        return setB ? new Rect(x - 16, y - 24, 32, 32) : new Rect(x - 8, y - 10, 16, 20);
     }
 
     @Override

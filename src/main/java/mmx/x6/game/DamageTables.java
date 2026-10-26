@@ -8,7 +8,7 @@ public final class DamageTables {
     private static final int D = DEFLECT;
     private static final int N = NO_EFFECT;
 
-    public enum Table { NORMAL, SABRE_ONLY, D1000, DEFLECT, MINOR, YAMMARK, SNAKE, GREY_BLOCK, ONE_HIT, TURTLOID }
+    public enum Table { NORMAL, SABRE_ONLY, D1000, DEFLECT, MINOR, YAMMARK, SNAKE, GREY_BLOCK, ONE_HIT, TURTLOID, WOLFANG, ICE_BLOCK, SHADOW, SCARAVICH, SCARAVICH_BALL, REFLECTOR, REFLECTOR_WAIT, NIGHTMARE_BUG, SHELDON }
 
     private static final int[] NORMAL = {
             3, 5, 4, 6, 6, 6, 5, N, 4, 7, 6, 6, 6, 6, 8, 6,
@@ -52,11 +52,60 @@ public final class DamageTables {
             4, 4, 3, 3, 1, 5, 1, 127, 3, 8, 4, 4, 15, 5, 15, 3,
             D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
 
+    private static final int[] SHELDON = {
+            1, 2, 2, 2, 5, 2, 2, N, 2, 1, 2, 2, 2, 8, 2, 2,
+            D, 8, 4, 4, 4, D, 8, D, 2, 2, 5, 2, 2, 2, 2, 2,
+            2, 2, 2, 8, 2, 2, 2, 2, 2, 2, 2, 2, D, 1, 4, 8,
+            2, 1, 2, 2, 1, D, 1, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
+
+    private static final int[] NIGHTMARE_BUG = {
+            D, 4, D, D, D, D, D, D, D, D, 4, D, D, D, D, D,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, D,
+            D, D, D, D, D, D, 4, N, D, D, D, N, N, D, D, N,
+            N, N, N, N, N, N, N, N, N, N, N, N, N, N, N, N};
+
+    private static final int[] REFLECTOR = {
+            3, 3, 3, 4, 6, 5, 7, N, 3, 7, 6, 6, 6, 8, 8, 8,
+            8, 8, 15, 10, 16, 1, 32, N, 4, 6, 4, 4, 4, 4, 4, 4,
+            3, 3, 6, 8, 8, 6, 4, 4, 4, 4, 4, 5, 8, 4, 7, 8,
+            4, 4, 2, 3, 6, 4, 4, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, N};
+
+    private static final int[] REFLECTOR_WAIT = {
+            3, N, N, N, N, N, N, N, N, 7, N, N, N, N, N, N,
+            N, N, 15, N, N, N, N, N, N, N, N, N, N, N, N, N,
+            N, N, N, N, N, N, N, N, N, N, N, N, N, N, N, N,
+            N, N, N, N, N, N, N, N, N, N, N, N, N, N, N, N,
+            N, N, N, N, N, N, N, N, N, N, N, N, N, N, N, N};
+
+    private static final int[] SCARAVICH = {
+            1, 5, 2, 2, 2, D, 2, N, 2, 1, 8, 2, 2, 2, D, 2,
+            2, 8, 4, 4, 4, D, 8, D, 1, 1, 2, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, D, 2, 2, 2, 2, 2, 2, 2, D, 1, 4, 8,
+            2, 1, 2, 2, 1, 2, 5, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
+
+    private static final int[] SCARAVICH_BALL = {
+            1, 2, 2, 2, 2, 2, 2, N, 2, 1, 2, 2, 2, 2, 2, 2,
+            2, 8, 4, 4, 4, D, 8, D, 2, 2, 5, 2, 2, 2, 2, 2,
+            2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 8, 1, 4, 8,
+            2, 1, 2, 2, 1, 2, 1, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
+
     private static final int[] TURTLOID = {
             1, 2, 5, 2, 2, 2, D, N, 2, 1, 2, 8, 2, 2, 2, D,
             2, 8, 4, 4, 4, D, 8, D, 1, 1, 2, 2, 2, 2, 2, 2,
             2, 5, 2, 2, 2, 2, 2, 2, 2, 2, D, 2, D, 1, 4, 8,
             2, 1, 2, 2, 3, 2, 1, 127, 3, 8, 4, 4, 15, 5, 15, 3,
+            D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
+
+    private static final int[] WOLFANG = {
+            1, 2, D, 5, 2, 2, 2, N, 2, 1, 2, D, 8, 2, 2, 2,
+            2, 8, 4, 4, 4, D, 8, D, 1, 1, 2, 2, 2, 2, 2, 2,
+            2, 2, 8, 2, 2, 2, 2, 2, 2, 2, 2, 2, D, 1, 4, 8,
+            2, 1, 2, 2, D, 2, 1, 127, 3, 8, 4, 4, 15, 5, 15, 3,
             D, D, D, D, D, D, D, D, D, D, D, D, D, D, D, 127};
 
     private DamageTables() {
@@ -74,6 +123,24 @@ public final class DamageTables {
             case YAMMARK -> YAMMARK[weaponId];
             case SNAKE -> SNAKE[weaponId];
             case TURTLOID -> TURTLOID[weaponId];
+            case SCARAVICH -> SCARAVICH[weaponId];
+            case SCARAVICH_BALL -> SCARAVICH_BALL[weaponId];
+            case REFLECTOR -> REFLECTOR[weaponId];
+            case REFLECTOR_WAIT -> REFLECTOR_WAIT[weaponId];
+            case NIGHTMARE_BUG -> NIGHTMARE_BUG[weaponId];
+            case SHELDON -> SHELDON[weaponId];
+            case WOLFANG -> WOLFANG[weaponId];
+            case ICE_BLOCK -> switch (weaponId) {
+                case 4, 13 -> 3;
+                case 55 -> 127;
+                case 7, 23 -> NO_EFFECT;
+                default -> DEFLECT;
+            };
+            case SHADOW -> switch (weaponId) {
+                case 7 -> 4;
+                case 16 -> 6;
+                default -> NO_EFFECT;
+            };
             case ONE_HIT -> 127;
             case GREY_BLOCK -> switch (weaponId) {
                 case 4, 35 -> 4;

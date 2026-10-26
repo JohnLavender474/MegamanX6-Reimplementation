@@ -22,7 +22,7 @@ class StageSmokeTest {
     private static final int UPDATES = 2000;
 
     @ParameterizedTest
-    @ValueSource(strings = {"intro", "yammark", "turtloid", "heatnix"})
+    @ValueSource(strings = {"intro", "yammark", "wolfang", "heatnix", "scaravich", "turtloid", "sheldon"})
     void everyCheckpointRuns(String key) throws IOException {
         assumeTrue(DataPaths.defaultRootExists());
         StageDef stage = Stages.byKey(key);

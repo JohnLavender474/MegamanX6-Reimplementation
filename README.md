@@ -6,7 +6,9 @@ A playable approximation of Mega Man X6 stages in Java and LibGDX, with X in the
 - Commander Yammark's stage, to the fight with Commander Yammark;
 - Rainy Turtloid's stage (section 1), to the fight with Rainy Turtloid;
 - Blaze Heatnix's stage (section 1), with all the Nightmare Snake fights, to a stand-in for Blaze
-  Heatnix (there is no data for him yet).
+  Heatnix (there is no data for him yet);
+- Blizzard Wolfang's stage (section 1), Ground Scaravich's stage (with the random section route)
+  and Shield Sheldon's stage (section 1), each to its boss fight.
 
 Each stage ends with a STAGE CLEAR screen. A stage select screen comes first.
 
@@ -19,12 +21,13 @@ where they give data, and best guesses elsewhere. Every guess and gap is listed 
 
 No game data is in this repo. The game reads the files that `mmx-demake-tools` extracts:
 
-- `tmx/m094-intro/`, `tmx/m095-commander-yammark-section-1/`, `tmx/m097-blaze-heatnix-section-1/`,
-  `tmx/m101-rainy-turtloid-section-1/` (map, tiles, collision). When the same folder is in
+- `tmx/m094-intro/`, `tmx/m095-commander-yammark-section-1/`, `tmx/m096-blizzard-wolfang-section-1/`,
+  `tmx/m097-blaze-heatnix-section-1/`, `tmx/m100-ground-scaravich/`,
+  `tmx/m101-rainy-turtloid-section-1/`, `tmx/m102-shield-sheldon-section-1/` (map, tiles, collision). When the same folder is in
   `assets/tmx/` of this repo (git ignores it), the game reads that copy instead. The Yammark and
   Turtloid copies there are made with a texture split (see `docs/gaps.md`, "TMX").
 - `sprites/players/x-falcon`, `sprites/players/x-shots`, `sprites/enemies/*`,
-  `sprites/banks/intro/intro-1_start/bank-1.png`
+  `sprites/banks/intro/intro-1_start/bank-1.png`, `sprites/banks/scaravich/scaravich-3_section/bank-5.png`
 - `sounds/` (VAB banks as WAV) and `music/bgm/` (XA tracks as WAV)
 
 The data root is `~/mmx-data/x6` by default. To use another place, pass it as the first program
@@ -39,7 +42,7 @@ make test
 ```
 
 `make run` and `make test` call `./gradlew run` and `./gradlew test`. `STAGE` (`intro`,
-`yammark`, `turtloid`, `heatnix`) skips the stage select screen.
+`yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`) skips the stage select screen.
 
 Java 17 or later (the build targets 17; it is tested on JDK 25). The Gradle wrapper downloads
 Gradle 9.1.0.
@@ -65,8 +68,8 @@ On the stage select screen, W and S choose and J (or Enter) starts.
 
 | property | effect |
 |---|---|
-| `-Dmmx.stage=KEY` | start this stage (`intro`, `yammark`, `turtloid`, `heatnix`) without the select screen |
-| `-Dmmx.checkpoint=N` | start at checkpoint N (intro 0–2, Yammark 0–3, Turtloid 0–5, Heatnix 0–7) |
+| `-Dmmx.stage=KEY` | start this stage (`intro`, `yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`) without the select screen |
+| `-Dmmx.checkpoint=N` | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3) |
 | `-Dmmx.startX=X -Dmmx.startY=Y` | start standing at a point, with wide camera limits |
 | `-Dmmx.debug=true` | start with the F1 view on |
 | `-Dmmx.hold=BITS` | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon) |

@@ -56,9 +56,9 @@ public final class SelectScreen extends ScreenAdapter {
         for (int i = 0; i < stages.size(); i++) {
             boolean on = i == index;
             String text = (on ? "> " : "  ") + stages.get(i).title() + (on ? " <" : "  ");
-            centred(text, H - 260 - i * 70, on ? 1f : 0.55f, on ? 1f : 0.6f, on ? 0.4f : 0.7f);
+            centred(text, H - 220 - i * 62, on ? 1f : 0.55f, on ? 1f : 0.6f, on ? 0.4f : 0.7f);
         }
-        centred("W / S  CHOOSE     J  START", 90, 0.5f, 0.6f, 0.7f);
+        centred("W / S  CHOOSE     J  START", 60, 0.5f, 0.6f, 0.7f);
         batch.end();
     }
 

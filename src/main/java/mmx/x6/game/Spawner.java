@@ -75,6 +75,21 @@ public final class Spawner {
         }
     }
 
+    public void spawnInRect(World w, int x0, int x1, int y0, int y1) {
+        for (RecordDef r : records) {
+            if (r.x() < x0 || r.x() > x1 || r.y() < y0 || r.y() > y1 || "CheckpointMarker".equals(r.name())
+                    || spawned.contains(r) || kept.contains(r) || !passesFilter(r)) {
+                continue;
+            }
+            Entity e = factory.create(w, r);
+            if (e != null) {
+                e.record = r;
+                spawned.add(r);
+                w.add(e);
+            }
+        }
+    }
+
     private void updateMarker(World w, RecordDef r) {
         int cp = r.id() & 0x7F;
         boolean reached = (r.id() & 0x80) != 0 ? w.player.y >= r.y() : w.player.x >= r.x();

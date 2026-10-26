@@ -92,6 +92,13 @@ public final class CameraController {
         return layer2Mode;
     }
 
+    public void setLayer1Offset(int ox, int oy) {
+        layer1Ox = ox;
+        layer1Oy = oy;
+        layer1X = target(layer1Mode, x, ox);
+        layer1Y = target(layer1Mode, y, oy, true);
+    }
+
     public void setLayer2Offset(int ox, int oy) {
         layer2Ox = ox;
         layer2Oy = oy;

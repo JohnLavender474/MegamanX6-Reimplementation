@@ -65,6 +65,10 @@ public final class TileRules {
         return v == 33;
     }
 
+    public static boolean isRope(int v) {
+        return v == 46;
+    }
+
     public static boolean isBar(int v) {
         return v >= 37 && v <= 45;
     }

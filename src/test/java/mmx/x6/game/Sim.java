@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Map;
 import mmx.x6.DataPaths;
 import mmx.x6.anim.AnimSet;
+import mmx.x6.anim.BankSheetAnims;
 import mmx.x6.anim.D1000Anims;
 import mmx.x6.anim.SabreBlockAnims;
 import mmx.x6.anim.ShotAnims;
@@ -88,6 +89,9 @@ public final class Sim {
         }
         if (name.equals("sabre-block")) {
             return SabreBlockAnims.SET;
+        }
+        if (BankSheetAnims.SHEETS.containsKey(name)) {
+            return BankSheetAnims.SHEETS.get(name).set();
         }
         if (name.equals("d1000")) {
             AnimSet merged = SETS.get(name);

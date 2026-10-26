@@ -68,6 +68,10 @@ public final class Player extends Entity {
     private int ladderTopRow;
     private int barRow;
     private int hangCooldown;
+    private float split;
+    private int ropeDash;
+    private int ropeDashDir;
+    private int ropeSound;
     private boolean blockedR;
     private boolean blockedL;
     private boolean clingR;
@@ -168,6 +172,29 @@ public final class Player extends Entity {
         anim.play(walk > 0 ? 8 : standAnim());
     }
 
+    public void startTeleport() {
+        endSlash();
+        dropCharge();
+        shotPose = 0;
+        split = 0;
+        speedX = speedY = gravity = 0;
+        body.hasBox = false;
+        step = PlayerStep.TELEPORT;
+    }
+
+    public void setSplit(float split) {
+        this.split = split;
+    }
+
+    public void endTeleport() {
+        split = 0;
+        x = body.x;
+        body.hasBox = true;
+        if (step == PlayerStep.TELEPORT) {
+            toStand();
+        }
+    }
+
     public void endEvent() {
         eventWalk = 0;
         if (step == PlayerStep.EVENT_HOLD) {
@@ -182,6 +209,13 @@ public final class Player extends Entity {
         body.y += dy;
         x = body.x;
         y = body.y;
+    }
+
+    public int slide(float dx) {
+        int f = world.mover.move(body, dx, 1, true, world.solids());
+        x = body.x;
+        y = body.y;
+        return f;
     }
 
     public void shove(float dx, float dy) {
@@ -248,7 +282,7 @@ public final class Player extends Entity {
     }
 
     public boolean grounded() {
-        return latch == 0 && step != PlayerStep.LADDER && step != PlayerStep.BAR;
+        return latch == 0 && step != PlayerStep.LADDER && step != PlayerStep.BAR && step != PlayerStep.ROPE;
     }
 
     public boolean locked() {
@@ -377,6 +411,7 @@ public final class Player extends Entity {
             case FALCON_DASH -> updateFalconDash();
             case LADDER -> updateLadder();
             case BAR -> updateBar();
+            case ROPE -> updateRope();
             case SABRE -> updateSabre();
             case HURT -> updateHurt();
             case DEAD -> updateDeath();
@@ -396,6 +431,8 @@ public final class Player extends Entity {
                     }
                 }
             }
+            case TELEPORT -> {
+            }
             default -> anim.tick();
         }
         if (step != PlayerStep.SABRE) {
@@ -411,7 +448,7 @@ public final class Player extends Entity {
                 kill();
             }
         }
-        x = body.x;
+        x = body.x + ((world.frame & 1) == 0 ? split : -split);
         y = body.y;
     }
 
@@ -1298,10 +1335,24 @@ public final class Player extends Entity {
     }
 
     private boolean tryHang() {
-        if (!isHeld(Buttons.UP) || hangCooldown > 0 || speedY > 0) {
+        if (!isHeld(Buttons.UP) || hangCooldown > 0) {
             return false;
         }
         float top = body.top();
+        if (TileRules.isRope(tileAt(body.x, top))) {
+            // TODO: the hang test point is not read; the rope is tested at the head, as the bars are, and the shooting pose 144 is not used (docs/gaps.md, "Rope hang")
+            body.x = ((int) body.x & ~15) + 8;
+            step = PlayerStep.ROPE;
+            speedX = speedY = gravity = 0;
+            airDashSpeed = airDashUsed = dashFlag = false;
+            ropeDash = ropeSound = 0;
+            play(160);
+            world.sfx.play(0, 38);
+            return true;
+        }
+        if (speedY > 0) {
+            return false;
+        }
         if (!TileRules.isBar(tileAt(body.x, top))) {
             return false;
         }
@@ -1314,6 +1365,60 @@ public final class Player extends Entity {
         play(163);
         world.sfx.play(0, 38);
         return true;
+    }
+
+    private void updateRope() {
+        anim.tick();
+        if (isPressed(Buttons.JUMP)) {
+            hangCooldown = 4;
+            ropeDash = 0;
+            if (isHeld(Buttons.DOWN)) {
+                toFall();
+            } else {
+                startJump(false);
+            }
+            return;
+        }
+        tryShoot(false);
+        int d = dir();
+        if (d != 0) {
+            faceRight = d > 0;
+        }
+        if (isPressed(Buttons.DASH) && ropeDash == 0) {
+            ropeDash = PlayerConst.DASH_TIME;
+            ropeDashDir = isHeld(Buttons.UP) ? -1 : 1;
+        }
+        float dy = 0;
+        if (ropeDash > 0) {
+            int held = ropeDashDir < 0 ? Buttons.UP : Buttons.DOWN;
+            if (--ropeDash == 0 || !isHeld(held)) {
+                ropeDash = 0;
+                world.sfx.play(1, 5);
+            } else {
+                dy = ropeDashDir * PlayerConst.HANG_DASH;
+            }
+        } else if (isHeld(Buttons.UP)) {
+            dy = -PlayerConst.ROPE_MOVE;
+        } else if (isHeld(Buttons.DOWN)) {
+            dy = PlayerConst.ROPE_MOVE;
+        }
+        if (dy != 0) {
+            float oldY = body.y;
+            int f = world.mover.move(body, 0, dy, false, world.solids());
+            if (!TileRules.isRope(tileAt(body.x, body.top()))) {
+                body.y = oldY;
+                ropeDash = 0;
+            } else if (++ropeSound % 21 == 0) {
+                world.sfx.play(0, 39);
+            }
+            if ((f & TerrainMover.FLOOR) != 0) {
+                ropeDash = 0;
+            }
+        }
+        if (!TileRules.isRope(tileAt(body.x, body.top()))) {
+            hangCooldown = 4;
+            toFall();
+        }
     }
 
     private void updateBar() {

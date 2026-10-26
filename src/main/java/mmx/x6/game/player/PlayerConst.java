@@ -17,6 +17,8 @@ public final class PlayerConst {
     public static final float LADDER_FIRST = 1.0f;
     public static final float LADDER = 1.5f;
     public static final float BAR_MOVE = 2.0f;
+    public static final float ROPE_MOVE = 1.5f;
+    public static final float HANG_DASH = 4.125f;
     public static final int FALCON_DASH_TIME = 18;
     public static final int MAX_HP = 32;
     public static final float BOX_OFF_X = 0;

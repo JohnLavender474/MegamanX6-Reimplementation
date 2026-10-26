@@ -159,6 +159,11 @@ public final class StageScreen extends ScreenAdapter {
             drawLayer1(cx, cy);
         }
         levelRenderer.draw(batch, level.art0Main(), cx, cy);
+        if (world.bgDark > 0) {
+            batch.setColor(0, 0, 0, world.bgDark);
+            batch.draw(assets.white(), 0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H);
+            batch.setColor(1, 1, 1, 1);
+        }
         List<Entity> drawn = new ArrayList<>(world.entities);
         drawn.sort(Comparator.comparingInt(Entity::drawPriority).reversed());
         for (Entity e : drawn) {
@@ -250,7 +255,7 @@ public final class StageScreen extends ScreenAdapter {
             }
         }
         hud.drawShapes(shapes, world);
-        float fade = world.flow.fade();
+        float fade = Math.max(world.flow.fade(), world.screenFade);
         if (fade > 0) {
             shapes.setColor(0, 0, 0, fade);
             shapes.rect(0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H);

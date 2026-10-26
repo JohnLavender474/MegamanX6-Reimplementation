@@ -3,7 +3,10 @@ package mmx.x6.stage;
 import java.util.List;
 import mmx.x6.game.enemy.IntroEntityFactory;
 import mmx.x6.game.enemy.heatnix.HeatnixEntityFactory;
+import mmx.x6.game.enemy.scaravich.ScaravichEntityFactory;
+import mmx.x6.game.enemy.sheldon.SheldonEntityFactory;
 import mmx.x6.game.enemy.turtloid.TurtloidEntityFactory;
+import mmx.x6.game.enemy.wolfang.WolfangEntityFactory;
 import mmx.x6.game.enemy.yammark.YammarkEntityFactory;
 import mmx.x6.level.Checkpoint;
 import mmx.x6.level.IntroCheckpoints;
@@ -50,7 +53,36 @@ public final class Stages {
                     turtloid(8784, 624, 8624, 528, 8624, 8624, 528)),
             16, 22, "m101-e05", "m101-e03", "m080-e02", 0, TurtloidEntityFactory::new);
 
-    public static final List<StageDef> ALL = List.of(INTRO, YAMMARK, TURTLOID, HEATNIX);
+    public static final StageDef WOLFANG = new StageDef("wolfang", "BLIZZARD WOLFANG", 2,
+            "m096-blizzard-wolfang-section-1", "blizzard-wolfang-section-1.tmx",
+            List.of(
+                    new Checkpoint(160, 1216, 0, 1184, 0, 4960, 224, 1184, true, 8),
+                    new Checkpoint(2960, 224, 2864, 224, 2864, 4960, 224, 224, true, 1),
+                    new Checkpoint(4480, 224, 4336, 224, 4336, 4960, 224, 1456, true, 1),
+                    new Checkpoint(4800, 1264, 4640, 1264, 4640, 4976, 1264, 1456, true, 8),
+                    new Checkpoint(5808, 1280, 5712, 1264, 5712, 5728, 1264, 1264, true, 8),
+                    new Checkpoint(6192, 304, 6016, 304, 6016, 6016, 304, 304, true, 1)),
+            13, 22, "m096-e05", "m096-e03", "m076-e02", 7, WolfangEntityFactory::new);
+
+    public static final StageDef SCARAVICH = new StageDef("scaravich", "GROUND SCARAVICH", 5,
+            "m100-ground-scaravich", "ground-scaravich.tmx",
+            List.of(
+                    new Checkpoint(64, 16, 0, 0, 0, 960, 0, 1200, true, 1),
+                    new Checkpoint(848, 720, 768, 704, 768, 960, 704, 1200, true, 1),
+                    new Checkpoint(1424, 1232, 1264, 1184, 1264, 1264, 1184, 1184, true, 16)),
+            15, 22, "m100-e05", null, "m079-e02", 4, ScaravichEntityFactory::new);
+
+    public static final StageDef SHELDON = new StageDef("sheldon", "SHIELD SHELDON", 7,
+            "m102-shield-sheldon-section-1", "shield-sheldon-section-1.tmx",
+            List.of(
+                    new Checkpoint(160, 256, 0, 256, 0, 2832, 256, 256, true, 1),
+                    new Checkpoint(4216, 368, 4160, 256, 4160, 4480, 256, 256, true, 1),
+                    new Checkpoint(3928, 888, 3840, 768, 3840, 4480, 768, 768, true, 1),
+                    new Checkpoint(4992, 368, 4832, 256, 4832, 4832, 256, 256, true, 1)),
+            17, 22, "m102-e05", null, "m081-e02", 1, SheldonEntityFactory::new);
+
+    public static final List<StageDef> ALL = List.of(INTRO, YAMMARK, WOLFANG, HEATNIX, SCARAVICH, TURTLOID,
+            SHELDON);
 
     private Stages() {
     }

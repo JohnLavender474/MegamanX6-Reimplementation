@@ -80,7 +80,11 @@ public final class DataPaths {
     }
 
     public Path bankSheet(String state, int bank) {
-        return root.resolve("sprites/banks/intro").resolve(state).resolve("bank-" + bank + ".png");
+        return bankSheet("intro", state, bank);
+    }
+
+    public Path bankSheet(String stage, String state, int bank) {
+        return root.resolve("sprites/banks").resolve(stage).resolve(state).resolve("bank-" + bank + ".png");
     }
 
     public Path soundBank(String folder) {

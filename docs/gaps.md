@@ -80,6 +80,11 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   open question 5). Objects with priority 0 or more are drawn behind X (higher first), and objects
   with a negative priority (the sabre slash, shots, the charge flash, explosions, debris) in front of
   X. `screen/StageScreen.java`
+- Rope hang: the hang test point is not read. The rope (tile 46, step 27) is tested at the head, as
+  the bars are. X snaps to the tile centre, climbs at 1.5 px/update, dashes at 4.125 for up to 30
+  updates and stops at the rope ends. The shooting pose (animation 144) is not used.
+  `game/player/Player.java` (`docs/players/air.md`, "Hang: rope and bar")
+
 - Respawn: the path from the death orbs back to the stage is not read; a 30-update black fade, then
   the restart at the last checkpoint. `game/StageFlow.java`
 - Sabre sound: X's slash sound is not named; the Magma Blade slash sound (bank 1, id 23) is used.
@@ -152,14 +157,20 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Turtloid BG layer 2: the cells beside the pagoda (layer 2 x 140–260, y 495–545) and beside the
   gate roof over the sea wall (x 1600–1970, y 255–300) show garbage with both texture blocks;
   probably VRAM that other art covers in play. Marked in the TMX (`TODO` layer).
+- TMX, Blizzard Wolfang: the boss room background above the floor (x 6320–6688, y 304–420) draws
+  as garbage blocks with the tiles of the export. The cause is probably the texture block, as in the
+  Yammark and Turtloid boss rooms; a split from a boss-room save state (`wolfang-6`, `wolfang-7`) is
+  needed in the tools' TMX export. Marked in the TMX (`TODO` layer).
 - Stage select, `Progress`: lives, souls, Reploid status and armour parts are kept for the session.
   Lives are shown and counted but a game over is not made; parts have no effect.
-- Nightmare Effect: fixed per stage (Yammark 0, Turtloid 0, Heatnix 4, the value of the Heatnix
-  save states). So the Heatnix grey blocks exist and the Nightmare Bugs do not; the rain of Effect 6,
-  the shadows of Effect 7 and the darkness of Effect 8 are not made. `stage/Stages.java`
+- Nightmare Effect: fixed per stage, from the save states of each stage (Yammark 0, Wolfang 7,
+  Heatnix 4, Scaravich 4, Turtloid 0, Sheldon 1). So the Heatnix and Scaravich grey blocks, the
+  Wolfang shadows and the Sheldon bugs exist; the rain of Effect 6, the crates of Effect 5, the fire
+  ring of Effect 3 and the darkness of Effect 8 are not made. `stage/Stages.java`
 - Items (main type 47), talk zones (Alia), palette cycles, scenery (Turtloid misc 20): not made.
 - Screen shake: `Rumble` and `Quake` / `Quake2` are not done (Monbando's slam, the grey block, the
-  rolls of Rainy Turtloid and Nightmare Snake).
+  rolls of Rainy Turtloid and Nightmare Snake, the ice block hops and rows, Blizzard Wolfang's
+  landing).
 - Shots that hit shots: the Worm Spider ball and the Sea Attacker bubble have 1 HP for weapons with
   `+0x9C` ≠ 0 (`docs/damage.md`); the buster passes through them, and they are made unhittable.
 - Solid objects: `World.solidObject` follows `SolidObject` (`docs/engine.md`, "Solid objects") after
@@ -229,6 +240,85 @@ Each line names what is guessed or missing, where it is in the code, and the sou
   until a gate pass ends before it holds X. The rising-room flame and the lava are BG layer 2 drawn
   in front of layer 0 at 60 % / 75 % alpha. `game/enemy/heatnix/NightmareSnake.java`
 - Nightmare Bug: not made (Nightmare Effect 4 deletes the records).
+
+## Blizzard Wolfang's stage
+
+- Ice slide: the slide (stage logic 7) starts when the player step changes to stand, crouch, land
+  or dash on collision 60; the real arm state reads the step each update. The slope push and the
+  foot-of-slope rule follow `docs/engine.md`, "Slippery floors and slopes (stage logic 7)".
+  `game/enemy/IceSlide.java`
+- Nightmare Shadow: the death draws two copies that move apart at 1 px/update; one flickering copy
+  stands in. `game/enemy/NightmareShadow.java` (`docs/enemies/nightmare-shadow.md`)
+- Wolfloid: X is the only player, so the slope wolves (`id` 0, 1) always use the cannon; Zero's
+  breath steps are not made. `game/enemy/wolfang/Wolfloid.java`
+- Ice stack block: the camera field `+0x2C` (+48 / −48 in the shaft) is not read, so the shaft camera
+  uses only the limits. `game/enemy/wolfang/IceShaftController.java`
+- Ice fall controller: the rumble loops (bank 5, ids 8 and 9) play once at the start of each fall;
+  their stop rules and the avalanche camera shake are not done. `game/enemy/wolfang/IceBlock.java`
+- Snow scenery (misc 23): drawn from the sprite-only export `enemy-cd98e86270` (sprite = `id`)
+  behind X, as the other objects; its draw order against the tiles and X is not read. The export of
+  `wolfang-6`/`-7` is wrong (banks 4–8 overwritten by the boss texture), so the `wolfang-5` export is
+  used. `game/enemy/wolfang/SnowScenery.java`
+- Blizzard Wolfang: boss level 0 only, so the floor ice spikes (`var` 16) and the wall spikes of the
+  wall runners (visual 20, `var` 32, 33) are not made (they exist at level 2 and 3). The trail images
+  (main 54 `var` 1) use flag `0x10` and the next bank's palette (semi-transparent [guess]); they are
+  drawn as plain blinking copies. The room walls, floor and ceiling are fixed lines from the room
+  origin, not terrain tests. The text box before the fight is not shown ("Maverick text").
+  `game/enemy/wolfang/BlizzardWolfang.java` (`docs/enemies/blizzard-wolfang.md`)
+- Nightmare Fire Ring (main 19): Nightmare Effect 3 only; the stage runs with effect 7, so it is
+  not made.
+
+## Ground Scaravich's stage
+
+- Scaravich routing: the poles, the roll (`route_tbl`), the section and return tables and the random
+  blocks follow `docs/stages/scaravich.md`; the block table (place and source of each block) is read
+  from the code with `~/mmx-data/x6/re/scaravich-crystals/probes/sections.py`. Guesses: `FadeOut(8)`
+  and `FadeIn(8)` take 32 updates each; the player faces the pole at a return point and right at a
+  section entry; the player's shots are not cleared at the teleport. The roll uses `rng % 12`, not
+  `GetRNG() % 12` (the tiny bias of the real roll is lost). The poles cleared, the row and the roll
+  phase are kept over a restart, as the doc says. `game/enemy/scaravich/Sections.java`,
+  `SectionTeleport.java`
+- Section goal: its boxes are not read (the drawn statue, 28 × 40 px, stands in), and its 60
+  updates of effects are an explosion every 8 updates and debris every 20. `SectionGoal.java`
+- Totem pole: the period of the heads is 40 also on Hard; the game here is always Normal. The base
+  is solid on all its height (the real one only while X is within 48 px; no other body comes near).
+  `TotemPole.java` (`docs/enemies/totem-pole.md`)
+- Falling rock and rock block: there is no sprite export of bank 5, so the sprites are cut from the
+  numbered bank sheet (`sprites/banks/scaravich/scaravich-3_section/bank-5.png`; 68 × 107 px cells,
+  the sprite at the top left under the label). The sheet loses the sprite origins: the rocks use the
+  centre of the drawn pixels, and the blocks put the bottom of the drawn pixels on the bottom of
+  their hurt box. `anim/BankSheetAnims.java`, `render/Assets.java`
+- Ground Scaravich: his hurt and contact boxes are not in the docs; a 40 × 52 px box over the drawn
+  body stands in. The walk-in sounds, the rolling sound timer, the text box, the stun (ids 1, 10,
+  54, no X weapon), the Hard balls (gold, purple) and the extra falling balls of boss levels 1–3 are
+  not made. `GroundScaravich.java`
+- Not made: the shaft tile animators and the room dimmer (stage logic 29), the palette cycles, the
+  talk zones, the items (main 47), stage object 26 and the hidden area (stage 21).
+
+## Shield Sheldon's stage
+
+- Laser puzzle: one class for all parts (main 13). The lasers are caught through their head box,
+  not through a probe in the weapon pool; the parts and the lasers update in the entity order, so
+  the on and off times can differ by 1–2 updates (the docs leave the order open). The draw pieces
+  are made each update from the sprite-only export `enemy-e5920c31ed`; the body piece of length L
+  that starts at P has its origin at P + 112 px along the laser, which the export's sprite bounds
+  show. `game/enemy/sheldon/LaserPuzzle.java`, `Laser.java`
+- Hidden glass floor: weapon id 44 (Zero's step 59) also shows a floor; X has no such weapon. When
+  the timer ends while X still stands on it, the floor starts again in the same update (the real one
+  in the next). `HiddenGlassFloor.java`
+- Guardian: two hurt boxes; the shield is the object itself and the body is a second object after it
+  in the list, so a shot meets the shield first, as in the game. The shot is not hittable (the real
+  one breaks from weapons with `+0x9C` set, the charged shots). The shared box globals (a Death
+  Guardian with normal boxes) are not copied. `Guardian.java`
+- Mettaur D2: its shot is not hittable (as the Guardian shot). `MettaurD2.java`
+- Shield Sheldon: the stun (ids 4, 13 and 35, no X weapon), the Hard speeds, the text box, the
+  rumbles and the warp-guard step 2 (not used) are not made. The plates, the image and the turrets
+  have no damage table in the game, so a shot that touches them stops and makes them react; here they
+  use the normal table with HP set back each update, which gives the same result. Their contact
+  damage is 0 (the docs say 1 after the scaling [likely]). The second shield of the high catch waits
+  for the first one; at `act4` 2 it flies to the floor point as the table says. `ShieldSheldon.java`
+- Not made: the start scenery (misc 14), the Nightmare crates (Nightmare Effect 5 only), the palette
+  cycles (stage logic 3), the talk zones, the item, the hidden area (stage 22).
 
 ## Skipped on purpose
 

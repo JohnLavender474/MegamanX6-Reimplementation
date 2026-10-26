@@ -59,6 +59,11 @@ public final class World {
     public boolean layer1Front;
     public float layer2Alpha = 1;
     public boolean layer2Front;
+    public float bgDark;
+    public float screenFade;
+    public int polesCleared;
+    public int routeRow;
+    public int rollPhase;
 
     private final Function<String, AnimSet> sets;
     private final List<Entity> pending = new ArrayList<>();
@@ -284,6 +289,8 @@ public final class World {
         layer1Front = false;
         layer2Alpha = 1;
         layer2Front = false;
+        bgDark = 0;
+        screenFade = 0;
         pauseOwner = null;
         sfx.useBossBank(false);
         music.play(stage.music());

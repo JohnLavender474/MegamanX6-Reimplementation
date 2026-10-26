@@ -97,4 +97,8 @@ public final class Animator {
     public boolean entered(int mask) {
         return flagEntered && (flag() & mask) != 0;
     }
+
+    public boolean enteredFlag(int value) {
+        return flagEntered && flag() == value;
+    }
 }
