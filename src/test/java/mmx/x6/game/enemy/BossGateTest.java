@@ -83,8 +83,16 @@ class BossGateTest {
         assertEquals(PlayerStep.GATE_WALK, s.world.player.step());
         assertTrue(s.world.player.faceRight);
         assertTrue(s.world.locked());
-        assertEquals(28, s.music.track());
         assertEquals(1, s.sfx.count(0, 16));
+    }
+
+    @Test
+    void gateDoesNotChangeTheMusic() {
+        Sim s = room(2);
+        int before = s.music.requests.size();
+        walkIn(s);
+        s.steps(300, RIGHT);
+        assertEquals(before, s.music.requests.size());
     }
 
     @Test

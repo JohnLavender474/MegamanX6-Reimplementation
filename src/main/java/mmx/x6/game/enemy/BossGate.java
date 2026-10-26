@@ -47,7 +47,6 @@ public final class BossGate extends Entity implements Solid {
                     w.clearEnemies();
                     p.startGate();
                     w.camera.easeSpeed = 2;
-                    w.music.play(28);
                     w.sfx.play(0, 16);
                     step = GateStep.OPEN;
                     onTrigger(w);
