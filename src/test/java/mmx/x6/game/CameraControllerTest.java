@@ -23,15 +23,58 @@ class CameraControllerTest {
     }
 
     @Test
-    void followCentresAndClamps() {
+    void followMovesAtMostEightPerUpdate() {
+        CameraController cam = new CameraController();
+        cam.reset(at(0, 944));
+        cam.setFollow(true);
+        cam.update(1000, 944 + 150);
+        assertEquals(8, cam.x());
+        cam.update(1000, 944 + 150);
+        assertEquals(16, cam.x());
+        cam.update(16 + 163, 944 + 150);
+        assertEquals(19, cam.x());
+    }
+
+    @Test
+    void followKeepsTheYDeadZone() {
+        CameraController cam = new CameraController();
+        cam.reset(at(0, 944));
+        cam.setFollow(true);
+        cam.update(160, 944 + 150);
+        assertEquals(944, cam.y());
+        cam.update(160, 944 + 175);
+        assertEquals(948, cam.y());
+        cam.update(160, 948 + 90);
+        assertEquals(942, cam.y());
+        cam.update(160, 942 + 300);
+        assertEquals(950, cam.y());
+    }
+
+    @Test
+    void followStopsAtTheLimits() {
         CameraController cam = new CameraController();
         cam.reset(IntroCheckpoints.ALL.get(0));
         cam.setFollow(true);
-        cam.update(1000, 1100);
-        assertEquals(840, cam.x());
-        assertEquals(929, cam.y());
-        cam.update(1000, 1200);
+        for (int i = 0; i < 40; i++) {
+            cam.update(1000, 1300);
+        }
         assertEquals(944, cam.y());
+    }
+
+    @Test
+    void openingLimitDoesNotSnapTheCamera() {
+        CameraController cam = new CameraController();
+        cam.reset(new Checkpoint(0, 0, 0, 944, 0, 0, 944, 944, true, 1));
+        cam.setFollow(true);
+        cam.update(400, 944 + 150);
+        cam.setTargets(-1, 2000, -1, -1);
+        cam.update(400, 944 + 150);
+        assertEquals(2000, cam.maxX());
+        assertEquals(0, cam.x());
+        cam.update(400, 944 + 150);
+        assertEquals(8, cam.x());
+        cam.update(400, 944 + 150);
+        assertEquals(16, cam.x());
     }
 
     @Test
@@ -43,16 +86,33 @@ class CameraControllerTest {
     }
 
     @Test
-    void limitsEaseTwoPerUpdate() {
+    void closingLimitMovesAtTheEaseSpeed() {
         CameraController cam = new CameraController();
         cam.reset(IntroCheckpoints.ALL.get(0));
+        cam.setFollow(true);
         cam.setTargets(1968, -1, -1, -1);
-        cam.update(0, 0);
-        assertEquals(2, cam.minX());
-        cam.update(0, 0);
+        cam.update(160, 944 + 150);
         assertEquals(4, cam.minX());
+        cam.update(164, 944 + 150);
+        assertEquals(4, cam.x());
+        assertEquals(8, cam.minX());
+        cam.easeSpeed = 2;
+        cam.update(168, 944 + 150);
+        assertEquals(10, cam.minX());
         assertEquals(1968, cam.targetMinX());
         assertEquals(5120, cam.targetMaxX());
+    }
+
+    @Test
+    void openingLimitsGoToTheTargetAsX6Does() {
+        assertEquals(3000, CameraController.easeMaxX(320, 3000, 0, 160, 0, 2));
+        assertEquals(402, CameraController.easeMaxX(320, 398, 380, 158, 20, 2));
+        assertEquals(0, CameraController.easeMinX(500, 0, 600, 150, 0, 2));
+        assertEquals(0, CameraController.easeMinX(500, 0, 600, 170, 0, 2));
+        assertEquals(2000, CameraController.easeMaxY(944, 2000, 944, 175, 0, 2));
+        assertEquals(946, CameraController.easeMaxY(944, 2000, 944, 171, 0, 2));
+        assertEquals(54, CameraController.easeMinY(944, 0, 900, 150, 0, 2));
+        assertEquals(890, CameraController.easeMinY(944, 0, 900, 90, -8, 2));
     }
 
     @Test
@@ -83,33 +143,25 @@ class CameraControllerTest {
 
     @Test
     void layerCapSixteen() {
-        CameraController cam = new CameraController();
-        cam.reset(at(0, 944));
-        cam.setFollow(true);
-        cam.update(560, 944 + 128);
-        assertEquals(400, cam.x());
-        assertEquals(16, cam.layer2X());
-        assertEquals(16, cam.layer1X());
+        assertEquals(16, CameraController.cap(0, 200));
+        assertEquals(16, CameraController.cap(0, 100));
     }
 
     @Test
     void layerSmallChangeGoesAtOnce() {
+        assertEquals(15, CameraController.cap(0, 15));
         CameraController cam = new CameraController();
         cam.reset(at(0, 944));
         cam.setFollow(true);
-        cam.update(160 + 30, 944 + 128);
-        assertEquals(15, cam.layer1X());
-        assertEquals(7, cam.layer2X());
+        cam.update(160 + 6, 944 + 128);
+        assertEquals(3, cam.layer1X());
+        assertEquals(1, cam.layer2X());
     }
 
     @Test
     void layerCapFarJump() {
-        CameraController cam = new CameraController();
-        cam.reset(at(0, 944));
-        cam.setFollow(true);
-        cam.update(160 + 1400, 944 + 128);
-        assertEquals(30, cam.layer2X());
-        assertEquals(380, cam.layer1X());
+        assertEquals(30, CameraController.cap(0, 350));
+        assertEquals(380, CameraController.cap(0, 700));
     }
 
     @Test
@@ -122,7 +174,7 @@ class CameraControllerTest {
         assertEquals(320, cam.layer1X());
         cam.setFollow(true);
         cam.update(5576 + 160 + 10, 224 + 128);
-        assertEquals(2793, cam.layer2X());
+        assertEquals(2792, cam.layer2X());
         assertEquals(320, cam.layer1X());
     }
 

@@ -20,7 +20,12 @@ class SheldonStageTest {
         StageRun r = StageRun.at(Stages.SHELDON, checkpoint);
         assertTrue(r.until(300, 0, w -> w.player.step() == PlayerStep.STAND));
         r.world.player.placeStanding(x, y);
-        r.steps(5, 0);
+        float[] last = {Float.NaN};
+        assertTrue(r.until(400, 0, w -> {
+            boolean still = w.camera.x() == last[0];
+            last[0] = w.camera.x();
+            return still;
+        }), "the camera catches up with X");
         return r;
     }
 

@@ -9,6 +9,9 @@ public final class CameraController {
     public static final int VIEW_H = 240;
     public static final int FOLLOW_X = 160;
     public static final int FOLLOW_Y = 171;
+    public static final int TOP_Y = 96;
+    public static final int FOLLOW_SPEED = 8;
+    public static final int START_EASE = 4;
 
     private float x;
     private float y;
@@ -36,7 +39,7 @@ public final class CameraController {
     private int tmxLayer2Ox;
     private int tmxLayer2Oy = 640;
 
-    public float easeSpeed = 2;
+    public float easeSpeed = START_EASE;
 
     public void configure(int mode1, int ox1, int oy1, int mode2, int ox2, int oy2) {
         layer1Mode = mode1;
@@ -54,7 +57,7 @@ public final class CameraController {
         maxX = tMaxX = cp.maxX();
         minY = tMinY = cp.minY();
         maxY = tMaxY = cp.maxY();
-        easeSpeed = 2;
+        easeSpeed = START_EASE;
         follow = false;
         lastPx = Float.NaN;
         lastPy = Float.NaN;
@@ -133,22 +136,26 @@ public final class CameraController {
 
     public void update(float px, float py) {
         int step = Math.max(1, Math.round(easeSpeed));
-        float dx = Float.isNaN(lastPx) ? 0 : px - lastPx;
-        float dy = Float.isNaN(lastPy) ? 0 : py - lastPy;
+        int ipx = (int) Math.floor(px);
+        int ipy = (int) Math.floor(py);
+        int dx = Float.isNaN(lastPx) ? 0 : ipx - (int) Math.floor(lastPx);
+        int dy = Float.isNaN(lastPy) ? 0 : ipy - (int) Math.floor(lastPy);
         lastPx = px;
         lastPy = py;
-        // TODO: only the y line (cam+0x2E, 171) is read; X is kept at screen x 160, and the follow has no dead zone (docs/gaps.md, "Camera follow")
-        float tx = follow ? px - FOLLOW_X : x;
-        float ty = follow ? py - FOLLOW_Y : y;
-        x = clamp(tx, minX, Math.max(minX, maxX));
-        y = clamp(ty, minY, Math.max(minY, maxY));
-        maxY = easeMax(maxY, tMaxY, y, py - y - FOLLOW_Y, dy, step);
-        // TODO: max y is read (0x80029180); min y, min x and max x use the same rule mirrored, which the docs mark [likely] (docs/gaps.md, "Camera limits")
-        minY = easeMin(minY, tMinY, y, FOLLOW_Y - (py - y), -dy, step);
-        maxX = easeMax(maxX, tMaxX, x, px - x - FOLLOW_X, dx, step);
-        minX = easeMin(minX, tMinX, x, FOLLOW_X - (px - x), -dx, step);
-        x = clamp(x, minX, Math.max(minX, maxX));
-        y = clamp(y, minY, Math.max(minY, maxY));
+        if (follow) {
+            int cx = (int) x;
+            int cy = (int) y;
+            cx += speedCap(followMove(ipx - cx, FOLLOW_X, FOLLOW_X));
+            cy += speedCap(followMove(ipy - cy, TOP_Y, FOLLOW_Y));
+            x = clamp(cx, minX, Math.max(minX, maxX));
+            y = clamp(cy, minY, Math.max(minY, maxY));
+            int cx2 = (int) x;
+            int cy2 = (int) y;
+            minX = easeMinX(minX, tMinX, cx2, ipx - cx2, dx, step);
+            maxX = easeMaxX(maxX, tMaxX, cx2, ipx - cx2, dx, step);
+            minY = easeMinY(minY, tMinY, cy2, ipy - cy2, dy, step);
+            maxY = easeMaxY(maxY, tMaxY, cy2, ipy - cy2, dy, step);
+        }
         layer1X = step(layer1Mode, layer1X, target(layer1Mode, x, layer1Ox), true);
         if (layer1Mode != 9) {
             layer1Y = step(layer1Mode, layer1Y, target(layer1Mode, y, layer1Oy, true), true);
@@ -198,30 +205,69 @@ public final class CameraController {
         return target - Math.signum(d) * 320;
     }
 
-    static int easeMax(int current, int target, float cam, float pastLine, float move, int step) {
-        if (current == target) {
-            return current;
+    static int followMove(int onScreen, int low, int high) {
+        if (onScreen - low < 0) {
+            return onScreen - low;
         }
-        if (target > cam) {
-            if (pastLine + 2 >= 4) {
-                return target;
-            }
-            return (int) Math.min(target, Math.floor(cam) + Math.max(0, move) + step);
-        }
-        return (int) Math.max(Math.floor(cam) - step, target);
+        return Math.max(0, onScreen - high);
     }
 
-    static int easeMin(int current, int target, float cam, float pastLine, float move, int step) {
+    static int speedCap(int move) {
+        return Math.max(-FOLLOW_SPEED, Math.min(FOLLOW_SPEED, move));
+    }
+
+    static int easeMinX(int current, int target, int cam, int onScreen, int move, int step) {
+        if (current == target || Math.abs(target - current) <= step) {
+            return target;
+        }
+        if (target >= cam) {
+            return Math.min(cam + step, target);
+        }
+        if (onScreen - FOLLOW_X < 0) {
+            return target;
+        }
+        int eased = cam + Math.min(0, move) - step;
+        return eased < target ? eased : target;
+    }
+
+    static int easeMaxX(int current, int target, int cam, int onScreen, int move, int step) {
+        if (current == target || Math.abs(target - current) <= step) {
+            return target;
+        }
+        if (target < cam) {
+            return Math.max(cam - step, target);
+        }
+        if (onScreen - FOLLOW_X + 2 >= 4) {
+            return target;
+        }
+        int eased = cam + Math.max(0, move) + step;
+        return eased > target ? eased : target;
+    }
+
+    static int easeMinY(int current, int target, int cam, int onScreen, int move, int step) {
+        if (current == target || Math.abs(target - current) <= step) {
+            return target;
+        }
+        if (target >= cam) {
+            return Math.min(cam + step, target);
+        }
+        if (onScreen - TOP_Y >= 0) {
+            return onScreen - TOP_Y;
+        }
+        return Math.max(cam + Math.min(0, move) - step, target);
+    }
+
+    static int easeMaxY(int current, int target, int cam, int onScreen, int move, int step) {
         if (current == target) {
             return current;
         }
         if (target < cam) {
-            if (pastLine + 2 >= 4) {
-                return target;
-            }
-            return (int) Math.max(target, Math.ceil(cam) - Math.max(0, move) - step);
+            return Math.max(cam - step, target);
         }
-        return (int) Math.min(Math.ceil(cam) + step, target);
+        if (onScreen - FOLLOW_Y + 2 >= 4) {
+            return target;
+        }
+        return Math.min(cam + Math.max(0, move) + step, target);
     }
 
     private static float clamp(float v, float lo, float hi) {

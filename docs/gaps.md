@@ -22,15 +22,19 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 ## Guesses in the code
 
-- Camera follow: only the y line is read (`cam+0x2E` = 171, the screen y where the camera keeps the
-  player). The x line (160) is a guess, and the follow has no dead zone or smoothing.
-  `game/CameraController.java` (`docs/engine.md`, "Camera")
-- Camera limits: `CameraLimitEase` (`0x80028EBC`) as `docs/engine.md` gives it for max y
-  (`0x80029180`): a limit moves relative to the camera; when the player is more than 1 px past the
-  follow line toward a farther target, the limit goes to the target at once; else it keeps up with
-  the player's move plus `cam+0x47`. Min y, min x and max x use the same rule mirrored (the docs mark
-  them [likely]). Before 2026-10-25 every limit moved 2 px per update, which made the Yammark rope
-  pan slow and killed X in the pit below it. `game/CameraController.java`
+- Camera follow: read from the code, not in the docs. The layer 0 mode 1 (`0x80029538`) keeps the
+  player between screen x 160 and 160 (`cam+0x30`, `+0x32`) and screen y 96 and 171 (`cam+0x2C`,
+  `+0x2E`), moves the camera at most `cam+0x48` = 8 px per update (`0x800295E8`, `0x800296A8`),
+  then clamps it to the limits (`0x8002820C`). Mode 0 (`0x800294B4`) sets `cam+0x47` = 4. All 21
+  checked save states agree. When `cam+0x44` (follow) is 0, the camera and its limits do not move.
+  Before 2026-10-26 the camera went to the player at once, so a limit that opened made the camera
+  jump. Not done: Nightmare Snake `var` 10 lowers the 171 line by 64. `game/CameraController.java`
+- Camera limits: `CameraLimitEase` (`0x80028EBC`), read from the code. Max y is as
+  `docs/engine.md` gives it. The other three differ from the docs' "same rule mirrored": a limit
+  within `cam+0x47` of its target goes to it at once; min x and max x, when the target is farther,
+  go to the target at once unless the eased value passes it (then they take the eased value); min y,
+  when the target is above the camera and the player is below screen y 96, takes the value player
+  screen y − 96 (a small number), as the code does. `game/CameraController.java`
 - Air dash start: the `x-falcon` export of animation 169 (frame set 1) shows other sprites (a few
   loose pixels), so X looked invisible for its 8 updates. The game still plays 169 for the timing,
   but the first frame of animation 171 is drawn. `render/Assets.java` (`docs/players/air.md`,
