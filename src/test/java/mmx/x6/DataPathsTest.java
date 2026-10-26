@@ -1,10 +1,13 @@
 package mmx.x6;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
+import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.io.TempDir;
 
@@ -24,6 +27,27 @@ class DataPathsTest {
         } finally {
             System.clearProperty("mmx.data");
         }
+    }
+
+    @Test
+    void movieFramePath() {
+        DataPaths p = new DataPaths(Path.of("/d"));
+        assertEquals(Path.of("/d/movies/x6op/frame-0007.png"), p.movieFrame("x6op", 7));
+        assertEquals(Path.of("/d/movies/caplogo/audio.wav"), p.movieAudio("caplogo"));
+        assertEquals(Path.of("/d/re/front-end/images/a.png"), p.frontEndImage("a.png"));
+    }
+
+    @Test
+    void frontEndIsMissingInAnEmptyRoot(@TempDir Path dir) {
+        assertFalse(new DataPaths(dir).frontEndExists());
+    }
+
+    @Test
+    void realFrontEndExists() {
+        Assumptions.assumeTrue(DataPaths.defaultRootExists());
+        DataPaths p = DataPaths.resolve(new String[0]);
+        assertTrue(p.frontEndExists());
+        assertTrue(Files.isRegularFile(p.movieFrame("x6op", 1517)));
     }
 
     @Test

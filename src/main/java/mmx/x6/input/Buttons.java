@@ -15,11 +15,12 @@ public final class Buttons {
     public static final int DASH = 0x100;
     public static final int WEAPON_NEXT = 0x200;
     public static final int WEAPON_PREV = 0x400;
+    public static final int START = 0x800;
 
     private static final int[][] KEYS = {
             {Keys.D, RIGHT}, {Keys.A, LEFT}, {Keys.W, UP}, {Keys.S, DOWN},
             {Keys.I, WEAPON}, {Keys.J, BUSTER}, {Keys.K, JUMP}, {Keys.L, DASH},
-            {Keys.O, WEAPON_NEXT}, {Keys.Q, WEAPON_PREV}};
+            {Keys.O, WEAPON_NEXT}, {Keys.Q, WEAPON_PREV}, {Keys.ENTER, START}};
 
     private int held;
     private int before;

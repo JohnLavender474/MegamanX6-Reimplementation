@@ -320,6 +320,45 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Not made: the start scenery (misc 14), the Nightmare crates (Nightmare Effect 5 only), the palette
   cycles (stage logic 3), the talk zones, the item, the hidden area (stage 22).
 
+## Front end
+
+Source: `docs/engine.md`, "Front end", and `~/mmx-data/x6/re/front-end/notes.md`. The order (logo,
+load, opening, title, menu), the fades (32 updates: `FadeTask` moves a level of 0–255 by the speed
+8 per update), the 600-update title, the menu rows, the menu sounds (bank 0, ids 12 and 34) and the
+18 001-update menu idle are from the code. `frontend/FrontEnd.java`, `screen/FrontEndScreen.java`
+
+- Logo: `BootTask` plays `CAPLOGO.STR` with the movie player directly; the 90 frames and the Start
+  skip are taken from `movie_table` row 0, which has the same file. `FrontEnd.java`
+- Load: the black load of stage 14 after the logo has no known length; 60 updates stand in. The
+  text "Now Loading..." is in a resident VRAM page, but no code that draws it is known. It is shown
+  16 px in from the bottom right, cut from `vram-512-256-clut7800.png` with the menu CLUT `0x7800`
+  (its real CLUT is not known). `FrontEnd.java`, `FrontEndText.java`, `FrontEndScreen.java`
+- Opening skip: the movie and its sound stop at the press and the title starts at once, as the
+  movie player's skip buttons (`movie_table`) suggest. The sound 34 comes from the front-end skip
+  rule; whether the movie player plays it is not known. `FrontEnd.java`
+- Presses during a fade do nothing (one rule for all phases). X6 likely takes Start during the
+  title fade-in: title sub-step 2 opens the skip lock together with `FadeIn(8)`, and the skip rule
+  only skips its own `FadeOut` while a fade runs. Here a Start in the first 32 title updates is
+  lost. `FrontEnd.java`
+- Movies: the frames run on the update count (4 updates per frame, 15 fps). The sound
+  (`audio.wav`) plays on its own clock, so the two can drift apart. `FrontEndScreen.java`
+- Title: after the 600 updates, X6 runs a demo (state 2) and then the member 0 picture (state 3).
+  Neither is made; the title goes back to the opening. A menu idle also goes to the opening.
+  `FrontEnd.java`
+- Blink: PRESS START BUTTON and the menu button line show 16 of each 32 updates; the phase (shown
+  while bit `0x10` of the phase's update count is clear) is a guess. `FrontEnd.java`
+- Menu: CONTINUE (state 7, memory card) and OPTION (state 8) have no screen; a pick on them does
+  nothing. The two new-game cheats (Ultimate Armor, Black Zero) are not made. `FrontEnd.java`
+- Music: no XA track plays on the title or the menu [likely: the stream play flag `0x800E2E5C` is 0
+  in `title-4_press-start` and `title-5_main-menu`, and 2 in a stage]. The stage select screen keeps
+  track 1.
+- Fade: X6 draws a subtractive rectangle with the fade level; here it is black with alpha
+  level / 255. `Fade.java`
+- Text sprites: `misc19-sprites.png` loses the sprite origins; the sizes and origins in
+  `FrontEndText` come from `re/front-end/scripts/draw_misc19.py` on `title-5_main-menu`.
+- Display: the 512 × 240 title and menu are stretched to the 4:3 window (x × 1.875, y × 3), as a
+  PS1 shows display mode 1.
+
 ## Skipped on purpose
 
 - Item drops (health, weapon energy, extra lives): the drop weights exist, the drops are out of

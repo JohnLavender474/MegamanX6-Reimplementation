@@ -83,6 +83,7 @@ public final class Stages {
 
     public static final List<StageDef> ALL = List.of(INTRO, YAMMARK, WOLFANG, HEATNIX, SCARAVICH, TURTLOID,
             SHELDON);
+    public static final List<StageDef> BOSSES = ALL.subList(1, ALL.size());
 
     private Stages() {
     }

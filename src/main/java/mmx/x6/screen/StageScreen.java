@@ -3,12 +3,10 @@ package mmx.x6.screen;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.ScreenAdapter;
-import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Pixmap;
-import com.badlogic.gdx.graphics.PixmapIO;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShaderProgram;
@@ -56,23 +54,23 @@ public final class StageScreen extends ScreenAdapter {
     private final ShapeRenderer shapes = new ShapeRenderer();
     private final OrthographicCamera viewCam = new OrthographicCamera();
     private final OrthographicCamera screenCam = new OrthographicCamera();
-    private final String shotPath = System.getProperty("mmx.shot");
-    private final int[] shotTimes = parseShots(System.getProperty("mmx.shotAfter", "30"));
-    private int shotIndex;
+    private final ShotClock shots = ShotClock.fromProperties();
     private final int scriptedHold = Integer.getInteger("mmx.hold", -1);
     private final int jumpEvery = Integer.getInteger("mmx.jumpEvery", 0);
 
     private final Runnable exit;
+    private final Runnable cleared;
     private final Hud hud = new Hud();
     private boolean debug = Boolean.getBoolean("mmx.debug");
     private int updates;
 
     public StageScreen(Assets assets, StageDef stage, Level level, Sfx sfx, MusicPlayer music, Progress progress,
-                       Runnable exit) {
+                       Runnable exit, Runnable cleared) {
         this.assets = assets;
         this.level = level;
         this.music = music;
         this.exit = exit;
+        this.cleared = cleared;
         this.world = new World(stage, level, assets::anim, sfx, music);
         world.progress = progress;
         Integer startCheckpoint = Integer.getInteger("mmx.checkpoint");
@@ -97,22 +95,10 @@ public final class StageScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-            exit.run();
+        if (keys()) {
             return;
         }
-        if (Gdx.input.isKeyJustPressed(Keys.F1)) {
-            debug = !debug;
-        }
-        if (world.flow.state() == StageFlow.State.CLEAR) {
-            if (Gdx.input.isKeyJustPressed(Keys.ANY_KEY)) {
-                exit.run();
-                return;
-            }
-        } else if (Gdx.input.isKeyJustPressed(Keys.R)) {
-            world.flow.restart(0);
-        }
-        int n = shotPath != null ? 1 : clock.advance(delta);
+        int n = shots.active() ? 1 : clock.advance(delta);
         for (int i = 0; i < n; i++) {
             if (scriptedHold >= 0) {
                 int dirs = scriptedHold & (Buttons.LEFT | Buttons.RIGHT | Buttons.UP | Buttons.DOWN);
@@ -130,11 +116,11 @@ public final class StageScreen extends ScreenAdapter {
         }
         music.update();
         drawWorld();
-        if (shotPath != null && updates >= shotTimes[shotIndex]) {
-            saveShot(shotTimes.length == 1 ? shotPath : shotPath.replace(".png", "-" + shotTimes[shotIndex] + ".png"));
-            if (++shotIndex >= shotTimes.length) {
+        String shot = shots.due(updates);
+        if (shot != null) {
+            saveShot(shot);
+            if (shots.finished()) {
                 Gdx.app.exit();
-                shotIndex = shotTimes.length - 1;
             }
         }
         ScreenUtils.clear(0, 0, 0, 1);
@@ -143,6 +129,25 @@ public final class StageScreen extends ScreenAdapter {
         screenBatch.draw(fbo.getColorBufferTexture(), 0, 0, LevelRenderer.VIEW_W * SCALE,
                 LevelRenderer.VIEW_H * SCALE, 0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H, false, true);
         screenBatch.end();
+    }
+
+    private boolean keys() {
+        if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+            exit.run();
+            return true;
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.F1)) {
+            debug = !debug;
+        }
+        if (world.flow.state() == StageFlow.State.CLEAR) {
+            if (Gdx.input.isKeyJustPressed(Keys.ANY_KEY)) {
+                cleared.run();
+                return true;
+            }
+        } else if (Gdx.input.isKeyJustPressed(Keys.R)) {
+            world.flow.restart(0);
+        }
+        return false;
     }
 
     private void drawWorld() {
@@ -166,6 +171,7 @@ public final class StageScreen extends ScreenAdapter {
         }
         List<Entity> drawn = new ArrayList<>(world.entities);
         drawn.sort(Comparator.comparingInt(Entity::drawPriority).reversed());
+        // TODO: the docs do not say which draw priorities are in front of X; negative ones are drawn in front (docs/gaps.md, "Draw order")
         for (Entity e : drawn) {
             if (e.drawPriority() >= 0) {
                 drawEntity(e, cx, cy);
@@ -281,21 +287,11 @@ public final class StageScreen extends ScreenAdapter {
         EntityRenderer.draw(batch, f, e.x, e.y, e.faceRight, cx, cy);
     }
 
-    private static int[] parseShots(String list) {
-        String[] parts = list.split(",");
-        int[] out = new int[parts.length];
-        for (int i = 0; i < parts.length; i++) {
-            out[i] = Integer.parseInt(parts[i].trim());
-        }
-        return out;
-    }
-
     private void saveShot(String path) {
         fbo.begin();
         Pixmap p = Pixmap.createFromFrameBuffer(0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H);
         fbo.end();
-        PixmapIO.writePNG(new FileHandle(path), p, 0, true);
-        p.dispose();
+        Shots.write(path, p);
     }
 
     @Override

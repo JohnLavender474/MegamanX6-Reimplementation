@@ -8,8 +8,9 @@ apply (no code comments except the `TODO` format below; drafts to paste go in fe
 A playable approximation of Mega Man X6 (PlayStation) stages in Java 17 and LibGDX 1.14.2, with X in
 the Falcon Armor. It has seven stages: the intro (to the D-1000), Commander Yammark, Blizzard
 Wolfang (section 1), Blaze Heatnix (section 1, with a stand-in boss), Ground Scaravich (with the
-random section route), Rainy Turtloid (section 1) and Shield Sheldon (section 1). A stage select
-screen comes first.
+random section route), Rainy Turtloid (section 1) and Shield Sheldon (section 1). The game boots as X6 does (logo, load,
+opening movie, title, menu); GAME START plays the intro, and a clear of a stage opens the stage
+select screen with the boss stages.
 
 The behaviour follows the reverse-engineering (RE) docs of the sister repo `mmx-demake-tools` where
 they give data, and best guesses elsewhere. **Every guess, simplification and gap is listed in
@@ -22,8 +23,8 @@ No game data is in this repo. Everything loads at run time from the data root (b
 ## Build, run, test
 
 ```
-make run                     # ./gradlew run; the stage select screen
-make run STAGE=yammark       # intro, yammark, wolfang, heatnix, scaravich, turtloid, sheldon: skip the select screen
+make run                     # ./gradlew run; the Capcom logo, then the front end
+make run STAGE=yammark       # intro, yammark, wolfang, heatnix, scaravich, turtloid, sheldon: skip the front end
 make test                    # ./gradlew test
 ./gradlew run -Dmmx.stage=heatnix -Dmmx.checkpoint=6
 ```
@@ -35,13 +36,16 @@ make test                    # ./gradlew test
   `./gradlew run -Dmmx.stage=turtloid -Dmmx.checkpoint=5 -Dmmx.hold=1 -Dmmx.shot=/path/x.png
   -Dmmx.shotAfter=600,900` saves one PNG per update count and quits. `-Dmmx.hold` takes the X6
   button bits (1 right, 2 left, 128 jump, 32 buster); `-Dmmx.jumpEvery=40` pulses the jump.
+  `-Dmmx.front=title` (or `logo`, `load`, `opening`, `menu`, `select`) starts the front end there; the
+  same shot options work on it.
 - Look at the PNGs with the Read tool. Put them in the session scratchpad, not in the repo.
 
 ## Code layout (`src/main/java/mmx/x6/`)
 
 | package | what |
 |---|---|
-| `.` | `DesktopLauncher`, `X6Game` (screens, per-stage sound banks), `DataPaths` (data root; `stageTmx` prefers `assets/tmx/`) |
+| `.` | `DesktopLauncher`, `X6Game` (screens, per-stage sound banks), `GameFlow` (which screen comes next), `DataPaths` (data root; `stageTmx` prefers `assets/tmx/`) |
+| `frontend` | `FrontEnd` (the X6 front-end states: logo, load, opening, title, menu; headless), `Fade` (`FadeIn`/`FadeOut`), `FrontEndText` (the misc 19 text table), `MovieFrames` (one PNG frame at a time); drawn by `screen/FrontEndScreen` |
 | `stage` | `StageDef` (TMX, checkpoints, music, sound banks, Nightmare Effect, entity factory) and `Stages` (the seven stages) |
 | `level` | `TmxLoader`, `Level`, `CollisionGrid`, `TileLayer`, `RecordDef`, `CameraZoneDef`, `Checkpoint`, `IntroCheckpoints` |
 | `physics` | `TerrainMover` (tile collision, slopes, solids), `TileRules` (collision values), `Body`, `Rect` |

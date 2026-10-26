@@ -91,6 +91,33 @@ public final class DataPaths {
         return root.resolve("sounds").resolve(folder);
     }
 
+    public Path movieDir(String name) {
+        return root.resolve("movies").resolve(name);
+    }
+
+    public Path movieFrame(String name, int i) {
+        return movieDir(name).resolve(String.format("frame-%04d.png", i));
+    }
+
+    public Path movieAudio(String name) {
+        return movieDir(name).resolve("audio.wav");
+    }
+
+    public Path frontEndImage(String file) {
+        return root.resolve("re/front-end/images").resolve(file);
+    }
+
+    public boolean frontEndExists() {
+        for (Path p : List.of(movieFrame("caplogo", 0), movieFrame("x6op", 0), movieAudio("caplogo"),
+                movieAudio("x6op"), frontEndImage("stage14-area0-layer0.png"), frontEndImage("misc19-sprites.png"),
+                frontEndImage("vram-512-256-clut7800.png"))) {
+            if (!Files.isRegularFile(p)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
     public Path songsJson() {
         return root.resolve("music/bgm/songs.json");
     }

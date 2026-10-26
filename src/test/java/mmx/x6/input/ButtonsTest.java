@@ -27,6 +27,13 @@ class ButtonsTest {
     }
 
     @Test
+    void enterIsStart() {
+        Buttons b = new Buttons();
+        b.sample(k -> k == Keys.ENTER);
+        assertEquals(Buttons.START, b.pressed() & Buttons.START);
+    }
+
+    @Test
     void oppositeDirectionsCancel() {
         Buttons b = new Buttons();
         Set<Integer> down = Set.of(Keys.A, Keys.D, Keys.W);
