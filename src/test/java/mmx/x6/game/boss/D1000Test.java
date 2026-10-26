@@ -9,6 +9,7 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.List;
+import mmx.x6.game.CustomChanges;
 import mmx.x6.game.Damage;
 import mmx.x6.game.Entity;
 import mmx.x6.game.Sim;
@@ -136,7 +137,8 @@ class D1000Test {
             s.step(0);
             lowest = Math.max(lowest, d.y);
         }
-        assertEquals(D1000.FLOOR_Y - 44, lowest, 0.001);
+        assertEquals(D1000.FLOOR_Y - 44 + CustomChanges.D1000_LANDING_DROP, lowest, 0.001);
+        assertEquals(384, lowest, 0.001);
     }
 
     @Test

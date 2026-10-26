@@ -1,6 +1,7 @@
 package mmx.x6.game.boss;
 
 import mmx.x6.anim.Animator;
+import mmx.x6.game.CustomChanges;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Entity;
 import mmx.x6.game.World;
@@ -17,7 +18,7 @@ public final class D1000 extends Entity {
     public static final float START_X = 6288;
     public static final float START_Y = 160;
     public static final float STAND_Y = 304;
-    public static final float CROUCH_Y = 372;
+    public static final float CROUCH_Y = 372 + CustomChanges.D1000_LANDING_DROP;
     public static final float FLOOR_Y = 416;
     public static final int MAX_HP = 32;
 

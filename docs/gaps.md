@@ -126,7 +126,8 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Floor height: the body lands at y 372 and stands at y 304. At 372 the bottom of the landed
   sprite (animation 8, 44 px below the origin) is on the floor at y 416. The sheet's crouched
   height (y 352) left the body 20 px above the floor. The terrain box is not used
-  (`docs/enemies/d-1000.md`, open question 8). Bombs land at y 416.
+  (`docs/enemies/d-1000.md`, open question 8). Bombs land at y 416. The user's custom change
+  lowers the landing by 12 px more (`docs/custom-changes.md`).
 - Animations: the sheet names only some of them. Used: 0 idle, 1 walk, 3 crouch shake, 4 charge,
   5 stun, 7 fall, 8 land, 9 stand up, 11 wreck; core 13 idle, 15 hit, 16 appear; core shot 19,
   bomb 14, fire pillar 20–22. The rest is a guess from the strips. `game/boss/D1000.java`
