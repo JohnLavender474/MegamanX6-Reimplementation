@@ -14,6 +14,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.nio.file.Path;
+import mmx.x6.AutoRun;
 import mmx.x6.DataPaths;
 import mmx.x6.audio.Sfx;
 import mmx.x6.frontend.FrontEnd;
@@ -94,7 +95,7 @@ public final class FrontEndScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+        if (!AutoRun.active() && Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
             Gdx.app.exit();
             return;
         }
@@ -111,10 +112,14 @@ public final class FrontEndScreen extends ScreenAdapter {
         }
         draw();
         Shots.saveWindow(shots, updates);
+        AutoRun.drawBorder(shapes, cam);
     }
 
     private int held() {
         if (scriptedHold < 0) {
+            if (AutoRun.active()) {
+                return 0;
+            }
             buttons.sample(Gdx.input::isKeyPressed);
             return buttons.held();
         }

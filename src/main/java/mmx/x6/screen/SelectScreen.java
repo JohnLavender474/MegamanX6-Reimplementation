@@ -7,9 +7,11 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.List;
 import java.util.function.Consumer;
+import mmx.x6.AutoRun;
 import mmx.x6.stage.StageDef;
 
 public final class SelectScreen extends ScreenAdapter {
@@ -23,6 +25,9 @@ public final class SelectScreen extends ScreenAdapter {
     private final BitmapFont font = new BitmapFont();
     private final GlyphLayout layout = new GlyphLayout();
     private final OrthographicCamera cam = new OrthographicCamera();
+    private final ShapeRenderer shapes = new ShapeRenderer();
+    private final ShotClock shots = ShotClock.fromProperties();
+    private int updates;
     private int index;
 
     public SelectScreen(List<StageDef> stages, int index, Consumer<StageDef> start) {
@@ -35,18 +40,7 @@ public final class SelectScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
-            Gdx.app.exit();
-            return;
-        }
-        if (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
-            index = (index + stages.size() - 1) % stages.size();
-        }
-        if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.DOWN)) {
-            index = (index + 1) % stages.size();
-        }
-        if (Gdx.input.isKeyJustPressed(Keys.J) || Gdx.input.isKeyJustPressed(Keys.ENTER)) {
-            start.accept(stages.get(index));
+        if (!AutoRun.active() && keys()) {
             return;
         }
         ScreenUtils.clear(0.02f, 0.03f, 0.08f, 1);
@@ -60,6 +54,26 @@ public final class SelectScreen extends ScreenAdapter {
         }
         centred("W / S  CHOOSE     J  START", 60, 0.5f, 0.6f, 0.7f);
         batch.end();
+        Shots.saveWindow(shots, ++updates);
+        AutoRun.drawBorder(shapes, cam);
+    }
+
+    private boolean keys() {
+        if (Gdx.input.isKeyJustPressed(Keys.ESCAPE)) {
+            Gdx.app.exit();
+            return true;
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
+            index = (index + stages.size() - 1) % stages.size();
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+            index = (index + 1) % stages.size();
+        }
+        if (Gdx.input.isKeyJustPressed(Keys.J) || Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+            start.accept(stages.get(index));
+            return true;
+        }
+        return false;
     }
 
     private void centred(String text, float y, float r, float g, float b) {
@@ -72,5 +86,6 @@ public final class SelectScreen extends ScreenAdapter {
     public void dispose() {
         batch.dispose();
         font.dispose();
+        shapes.dispose();
     }
 }

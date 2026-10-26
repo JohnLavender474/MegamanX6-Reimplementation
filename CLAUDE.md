@@ -38,6 +38,16 @@ make test                    # ./gradlew test
   button bits (1 right, 2 left, 128 jump, 32 buster); `-Dmmx.jumpEvery=40` pulses the jump.
   `-Dmmx.front=title` (or `logo`, `load`, `opening`, `menu`, `select`) starts the front end there; the
   same shot options work on it.
+- **Automated runs** (any run with `-Dmmx.shot`): keyboard input is off on every screen (only
+  `-Dmmx.hold` and `-Dmmx.jumpEvery` drive the game), a red border is drawn around the window, and
+  the window title ends with "AUTOMATED RUN! NO INPUT". `AutoRun` holds this rule. Every window that
+  Claude opens for a check must be an automated run, so that the user can tell it from their own
+  play and no key press changes it. A new screen must read keys only when `AutoRun.active()` is
+  false, and must call `AutoRun.drawBorder` after its last draw (after the screenshot is read), and
+  must save its shots and quit through `ShotClock` and `Shots`, so that no automated window stays
+  open. Each screen counts its updates from 0. From boot to the intro: `-Dmmx.hold=2048
+  -Dmmx.jumpEvery=40` (Start and Cross pulse); with no hold, the front end loops between the opening
+  and the title.
 - Look at the PNGs with the Read tool. Put them in the session scratchpad, not in the repo.
 
 ## Code layout (`src/main/java/mmx/x6/`)

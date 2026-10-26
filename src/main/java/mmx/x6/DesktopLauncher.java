@@ -18,7 +18,7 @@ public final class DesktopLauncher {
             return;
         }
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle("MMX6 Intro");
+        config.setTitle(AutoRun.title("MMX6 Intro"));
         config.setWindowedMode(960, 720);
         config.setResizable(false);
         config.useVsync(true);

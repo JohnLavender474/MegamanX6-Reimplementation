@@ -87,6 +87,6 @@ On the stage select screen, W and S choose and J (or Enter) starts.
 | `-Dmmx.debug=true` | start with the F1 view on |
 | `-Dmmx.hold=BITS` | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon) |
 | `-Dmmx.jumpEvery=N` | with `mmx.hold`: pulse jump and the held non-direction buttons every N updates |
-| `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG of the view after N updates and quit; with a list (`300,600`), one PNG per value (`FILE-300.png`, …). On the front end, the PNG is the whole window and `mmx.hold` and `mmx.jumpEvery` work too |
+| `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG of the view after N updates and quit; with a list (`300,600`), one PNG per value (`FILE-300.png`, …). On the front end, the PNG is the whole window and `mmx.hold` and `mmx.jumpEvery` work too. A shot run is an automated run: the keyboard is off, a red border marks the window and its title says "AUTOMATED RUN! NO INPUT" |
 
 Example: `./gradlew run -Dmmx.stage=intro -Dmmx.checkpoint=2` starts in the hallway before the D-1000.

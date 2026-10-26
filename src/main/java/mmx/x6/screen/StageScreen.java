@@ -16,6 +16,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
+import mmx.x6.AutoRun;
 import mmx.x6.audio.MusicPlayer;
 import mmx.x6.audio.Sfx;
 import mmx.x6.game.Entity;
@@ -60,6 +61,7 @@ public final class StageScreen extends ScreenAdapter {
 
     private final Runnable exit;
     private final Runnable cleared;
+    private final boolean auto = AutoRun.active();
     private final Hud hud = new Hud();
     private boolean debug = Boolean.getBoolean("mmx.debug");
     private int updates;
@@ -95,7 +97,7 @@ public final class StageScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
-        if (keys()) {
+        if (!auto && keys()) {
             return;
         }
         int n = shots.active() ? 1 : clock.advance(delta);
@@ -108,6 +110,8 @@ public final class StageScreen extends ScreenAdapter {
                 } else {
                     world.buttons.set(scriptedHold);
                 }
+            } else if (auto) {
+                world.buttons.set(0);
             } else {
                 world.buttons.sample(Gdx.input::isKeyPressed);
             }
@@ -129,6 +133,7 @@ public final class StageScreen extends ScreenAdapter {
         screenBatch.draw(fbo.getColorBufferTexture(), 0, 0, LevelRenderer.VIEW_W * SCALE,
                 LevelRenderer.VIEW_H * SCALE, 0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H, false, true);
         screenBatch.end();
+        AutoRun.drawBorder(shapes, screenCam);
     }
 
     private boolean keys() {
