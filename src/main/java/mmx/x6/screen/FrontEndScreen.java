@@ -7,6 +7,8 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.Pixmap;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,6 +42,7 @@ public final class FrontEndScreen extends ScreenAdapter {
     private final Buttons buttons = new Buttons();
     private final SpriteBatch batch = new SpriteBatch();
     private final ShapeRenderer shapes = new ShapeRenderer();
+    private final BitmapFont font = new BitmapFont();
     private final OrthographicCamera cam = new OrthographicCamera();
     private final MovieFrames logo;
     private final MovieFrames opening;
@@ -61,6 +64,7 @@ public final class FrontEndScreen extends ScreenAdapter {
         this.frontEnd = new FrontEnd(sfx, start);
         this.startGame = startGame;
         cam.setToOrtho(false, W, H);
+        font.getData().setScale(3);
         logo = new MovieFrames(i -> paths.movieFrame("caplogo", i));
         opening = new MovieFrames(i -> paths.movieFrame("x6op", i));
         background = load(paths.frontEndImage("stage14-area0-layer0.png"), false);
@@ -158,7 +162,10 @@ public final class FrontEndScreen extends ScreenAdapter {
         batch.setProjectionMatrix(cam.combined);
         batch.begin();
         Phase p = frontEnd.phase();
-        if (p == Phase.LOGO || p == Phase.OPENING) {
+        if (p == Phase.READY) {
+            drawCentered("Ready to play?", H / 2f + 60);
+            drawCentered("Press START", H / 2f - 30);
+        } else if (p == Phase.LOGO || p == Phase.OPENING) {
             Texture frame = (p == Phase.LOGO ? logo : opening).frame(frontEnd.movieFrame());
             if (frame != null) {
                 batch.draw(frame, 0, 0, W, H);
@@ -188,6 +195,11 @@ public final class FrontEndScreen extends ScreenAdapter {
         }
     }
 
+    private void drawCentered(String text, float y) {
+        GlyphLayout layout = new GlyphLayout(font, text);
+        font.draw(batch, layout, (W - layout.width) / 2, y);
+    }
+
     private void drawText(FrontEndText.Text t) {
         FrontEndText.Sprite s = FrontEndText.sprite(t.sprite());
         int[] r = FrontEndText.sheetRect(t.sprite(), t.orange());
@@ -215,5 +227,6 @@ public final class FrontEndScreen extends ScreenAdapter {
         vram.dispose();
         batch.dispose();
         shapes.dispose();
+        font.dispose();
     }
 }

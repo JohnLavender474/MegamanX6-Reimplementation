@@ -96,6 +96,11 @@ public final class FrontEnd {
         }
         phaseUpdates++;
         switch (phase) {
+            case READY -> {
+                if ((pressed & Buttons.START) != 0) {
+                    enter(Phase.LOGO);
+                }
+            }
             case LOGO -> {
                 if ((pressed & Buttons.START) != 0 || phaseUpdates >= LOGO_FRAMES * UPDATES_PER_FRAME) {
                     enter(Phase.LOAD);

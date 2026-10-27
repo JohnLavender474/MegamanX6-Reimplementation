@@ -38,6 +38,20 @@ class FrontEndTest {
     }
 
     @Test
+    void readyScreenWaitsForStartThenShowsTheLogo() {
+        FrontEnd fe = new FrontEnd(sfx, Phase.READY);
+        run(fe, 2000, 0);
+        assertEquals(Phase.READY, fe.phase());
+        run(fe, 10, Buttons.JUMP);
+        assertEquals(Phase.READY, fe.phase());
+        fe.update(Buttons.START);
+        assertEquals(Phase.LOGO, fe.phase());
+        assertEquals(0, fe.movieFrame());
+        fe.update(Buttons.START);
+        assertEquals(Phase.LOGO, fe.phase(), "a held Start does not also skip the logo");
+    }
+
+    @Test
     void logoPlaysNinetyFramesThenLoads() {
         FrontEnd fe = new FrontEnd(sfx, Phase.LOGO);
         run(fe, 359, 0);

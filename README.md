@@ -10,7 +10,7 @@ A playable approximation of Mega Man X6 stages in Java and LibGDX, with X in the
 - Blizzard Wolfang's stage (section 1), Ground Scaravich's stage (with the random section route)
   and Shield Sheldon's stage (section 1), each to its boss fight.
 
-The game boots as X6 does: the Capcom logo, a load screen, the opening movie, the title (PRESS
+The game boots on a "Ready to play? Press START" screen. After Start, it continues as X6 does: the Capcom logo, a load screen, the opening movie, the title (PRESS
 START) and the main menu. GAME START starts the intro stage. Each stage ends with a STAGE CLEAR
 screen; after it, the stage select screen shows the boss stages.
 
@@ -44,7 +44,7 @@ make test
 ```
 
 `make run` and `make test` call `./gradlew run` and `./gradlew test`. `make run` starts at the
-Capcom logo. `STAGE` (`intro`, `yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`)
+ready screen; Start (Enter) goes on to the Capcom logo. `STAGE` (`intro`, `yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`)
 skips the front end and the stage select screen.
 
 The front end reads the movies from `<data root>/movies/` and the title and menu pictures from
@@ -70,7 +70,7 @@ Gradle 9.1.0.
 | Enter | Start |
 | Esc | in the intro stage: back to the title; in a boss stage: back to the stage select screen; on the front end and the select screen: quit |
 
-On the front end, Enter is Start and K is Cross. Start skips the logo. Start or a face button (J, K,
+On the front end, Enter is Start and K is Cross. Start leaves the ready screen and skips the logo. Start or a face button (J, K,
 L, I) skips the opening. Start on the title opens the menu. On the menu, W and S choose and Enter or
 K picks; only GAME START has a screen.
 
@@ -81,7 +81,7 @@ On the stage select screen, W and S choose and J (or Enter) starts.
 | property | effect |
 |---|---|
 | `-Dmmx.stage=KEY` | start this stage (`intro`, `yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`) without the select screen |
-| `-Dmmx.front=NAME` | start the front end at `logo` (default), `load`, `opening`, `title` or `menu`; `select` starts at the stage select screen |
+| `-Dmmx.front=NAME` | start the front end at `ready` (default), `logo`, `load`, `opening`, `title` or `menu`; `select` starts at the stage select screen |
 | `-Dmmx.checkpoint=N` | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3) |
 | `-Dmmx.startX=X -Dmmx.startY=Y` | start standing at a point, with wide camera limits |
 | `-Dmmx.debug=true` | start with the F1 view on |

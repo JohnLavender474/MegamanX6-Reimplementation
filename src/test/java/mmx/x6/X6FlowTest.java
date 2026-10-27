@@ -11,10 +11,15 @@ import org.junit.jupiter.api.Test;
 class X6FlowTest {
 
     @Test
-    void bootStartsAtTheLogo() {
+    void bootStartsAtTheReadyScreen() {
         GameFlow f = new GameFlow(null, null);
         assertEquals(GameFlow.Screen.FRONT_END, f.first());
-        assertEquals(Phase.LOGO, f.frontStart());
+        assertEquals(Phase.READY, f.frontStart());
+    }
+
+    @Test
+    void frontPropertyCanStillStartAtTheLogo() {
+        assertEquals(Phase.LOGO, new GameFlow(null, "logo").frontStart());
     }
 
     @Test

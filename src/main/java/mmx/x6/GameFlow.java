@@ -17,7 +17,7 @@ public final class GameFlow {
 
     public GameFlow(String stageKey, String front) {
         this.stage = stageKey == null ? null : Stages.byKey(stageKey);
-        this.front = front == null ? "logo" : front.toLowerCase(Locale.ROOT);
+        this.front = front == null ? "ready" : front.toLowerCase(Locale.ROOT);
         this.frontStart = SELECT.equals(this.front) ? Phase.LOGO : Phase.valueOf(this.front.toUpperCase(Locale.ROOT));
     }
 
