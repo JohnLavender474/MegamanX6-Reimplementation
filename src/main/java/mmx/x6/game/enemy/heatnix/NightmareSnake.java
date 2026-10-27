@@ -103,6 +103,7 @@ public final class NightmareSnake extends Entity {
         }
         if (setUp && step != Step.END) {
             w.layer1Relative = true;
+            w.layer1OverMain = kind == 5;
             w.camera.setLayer1(512 - x, 512 - y);
             boolean near = !w.offScreen(x, y, 96, 96);
             w.layer1Alpha = ringShown && near && !(ringFlicker && (w.frame & 1) == 0) ? 1 : 0;
@@ -646,6 +647,7 @@ public final class NightmareSnake extends Entity {
 
     private void updateEnd(World w) {
         w.layer1Alpha = 0;
+        w.layer1OverMain = false;
         if (kind == 5 && w.player.x < 944) {
             if (w.player.y < 432) {
                 w.player.carry(0, 432 - w.player.y);

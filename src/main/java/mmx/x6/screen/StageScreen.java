@@ -165,10 +165,13 @@ public final class StageScreen extends ScreenAdapter {
         if (!world.layer2Front) {
             drawLayer2();
         }
-        if (!world.layer1Front) {
+        if (!world.layer1Front && !world.layer1OverMain) {
             drawLayer1(cx, cy);
         }
         levelRenderer.draw(batch, level.art0Main(), cx, cy);
+        if (world.layer1OverMain) {
+            drawLayer1(cx, cy);
+        }
         if (world.bgDark > 0) {
             batch.setColor(0, 0, 0, world.bgDark);
             batch.draw(assets.white(), 0, 0, LevelRenderer.VIEW_W, LevelRenderer.VIEW_H);

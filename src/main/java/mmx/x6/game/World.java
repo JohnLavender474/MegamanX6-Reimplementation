@@ -57,6 +57,7 @@ public final class World {
     public float layer1Alpha = 1;
     public boolean layer1Relative;
     public boolean layer1Front;
+    public boolean layer1OverMain;
     public float layer2Alpha = 1;
     public boolean layer2Front;
     public float bgDark;
@@ -298,6 +299,7 @@ public final class World {
         layer1Alpha = camera.layer1Mode() == 5 ? 0 : 1;
         layer1Relative = false;
         layer1Front = false;
+        layer1OverMain = false;
         layer2Alpha = 1;
         layer2Front = false;
         bgDark = 0;

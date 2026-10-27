@@ -44,12 +44,15 @@ class HeatnixStageTest {
         NightmareSnake s = snake(r, 5);
         assertEquals(127, r.world.bossHp);
         assertFalse(r.world.flag26);
+        assertTrue(r.world.layer1OverMain, "the ring is drawn in front of the main tiles");
         float x0 = s.x;
         r.steps(120, 0);
         assertTrue(Math.abs(s.x - x0) > 50, "the ring moves");
         assertTrue(s.x >= 400 && s.x <= 880, "x " + s.x);
         killGems(r, s);
         assertTrue(r.until(400, 0, w -> w.flag26));
+        r.step(0);
+        assertFalse(r.world.layer1OverMain, "the normal draw order comes back");
         BossGate gate = r.world.entities.stream().filter(e -> e instanceof BossGate g && g.record != null
                 && g.record.id() == 7).map(e -> (BossGate) e).findFirst().orElse(null);
         assertNotNull(gate);
