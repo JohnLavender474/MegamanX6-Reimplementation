@@ -47,8 +47,12 @@ public abstract class Entity {
         return true;
     }
 
-    public float damageTakenScale() {
+    public float damageTakenScale(int weaponId) {
         return 1;
+    }
+
+    public boolean hitBeforeOthers() {
+        return false;
     }
 
     public void onHurt(World w, int weaponId) {

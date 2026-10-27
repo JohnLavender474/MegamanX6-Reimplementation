@@ -10,11 +10,16 @@ public final class CustomChanges {
     public static final int SABRE_RECOVERY_SPEED = 2;
     public static final int D1000_LANDING_DROP = 12;
     public static final int[] SNAKE_BLOCKS = {416, 560, 720, 864};
-    public static final int SNAKE_HOP_TIME = 64;
+    public static final int SNAKE_HOP_TIME = 128;
     public static final int SNAKE_HOP_HEIGHT = 32;
     public static final int SNAKE_LAND_WAIT = 30;
-    public static final int SNAKE_SHOT_PAUSE = 40;
-    public static final float SNAKE_DAMAGE_SCALE = 3f;
+    public static final int SNAKE_SHOT_EVERY = 2;
+    public static final int SNAKE_GEM_BOX = 32;
+    public static final int SNAKE_SHOT_PAUSE = 120;
+    public static final int SNAKE_BALL_HOLD = 30;
+    public static final int SNAKE_BALL_GAP = 20;
+    public static final float SNAKE_BUSTER_SCALE = 4.5f;
+    public static final float SNAKE_SABRE_SCALE = 4f;
 
     private static final int TURTLOID_CEILING_ROW = 208 / 16;
     private static final int TURTLOID_OPEN_FROM = 4128 / 16;

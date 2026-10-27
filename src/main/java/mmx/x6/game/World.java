@@ -203,11 +203,22 @@ public final class World {
     }
 
     private void resolveWeapons() {
+        List<Entity> targets = new ArrayList<>(entities.size());
+        for (Entity t : entities) {
+            if (t.hitBeforeOthers()) {
+                targets.add(t);
+            }
+        }
+        for (Entity t : entities) {
+            if (!t.hitBeforeOthers()) {
+                targets.add(t);
+            }
+        }
         for (Entity e : entities) {
             if (e.dead || !(e instanceof Weapon wp)) {
                 continue;
             }
-            for (Entity t : entities) {
+            for (Entity t : targets) {
                 Rect box = wp.attackBox();
                 if (box == null || e.dead) {
                     break;
@@ -219,7 +230,7 @@ public final class World {
                 if (hb == null || !box.overlaps(hb) || !wp.canHit(t)) {
                     continue;
                 }
-                int r = Damage.hitObject(t, wp.weaponId(), wp.damageScale() * t.damageTakenScale());
+                int r = Damage.hitObject(t, wp.weaponId(), wp.damageScale() * t.damageTakenScale(wp.weaponId()));
                 if (r == Damage.NO_HIT) {
                     continue;
                 }

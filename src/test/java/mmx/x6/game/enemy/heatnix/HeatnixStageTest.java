@@ -7,8 +7,9 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import mmx.x6.game.CustomChanges;
+import mmx.x6.game.DamageTables;
+import mmx.x6.game.Entity;
 import mmx.x6.game.StageFlow;
 import mmx.x6.game.enemy.BossGate;
 import mmx.x6.game.enemy.Projectile;
@@ -67,89 +68,149 @@ class HeatnixStageTest {
         return r.world.entities.stream().filter(e -> e instanceof Projectile && !e.dead).count();
     }
 
-    @Test
-    void nextBlockIsNeverTheCurrentOne() {
-        Random rng = new Random(1);
-        for (int i = 0; i < 200; i++) {
-            int cur = i % 4;
-            int next = NightmareSnake.nextBlock(cur, rng);
-            assertTrue(next >= 0 && next < 4 && next != cur, "from " + cur + " to " + next);
+    private static List<NightmareSnake.HeldBall> balls(StageRun r) {
+        return r.world.entities.stream().filter(e -> e instanceof NightmareSnake.HeldBall && !e.dead)
+                .map(e -> (NightmareSnake.HeldBall) e).toList();
+    }
+
+    private static int waitForVolley(StageRun r, NightmareSnake s, int limit) {
+        int landings = 0;
+        float lastY = s.y;
+        for (int i = 0; i < limit; i++) {
+            r.world.player.hp = 32;
+            long before = shots(r);
+            r.step(0);
+            if (s.y >= 584 && lastY < 584) {
+                landings++;
+            }
+            lastY = s.y;
+            if (shots(r) > before) {
+                return landings;
+            }
         }
-        boolean[] seen = new boolean[4];
-        for (int i = 0; i < 200; i++) {
-            seen[NightmareSnake.nextBlock(-1, rng)] = true;
+        return -1;
+    }
+
+    private static void volleyWithTheGemInView(StageRun r, NightmareSnake s, Entity g) {
+        for (int volley = 0; volley < 6; volley++) {
+            assertTrue(waitForVolley(r, s, 800) >= 0);
+            if (g.x - 40 >= r.world.camera.x() && g.x + 40 <= r.world.camera.x() + 320) {
+                r.steps(CustomChanges.SNAKE_SHOT_PAUSE - 15, 0);
+                return;
+            }
         }
-        assertTrue(seen[0] && seen[1] && seen[2] && seen[3]);
+        throw new AssertionError("no volley with the gem in view");
     }
 
     @Test
-    void firstSnakeHopsBetweenTheRaisedParts() {
+    void firstSnakeHopsBackAndForth() {
         StageRun r = StageRun.at(Stages.HEATNIX, 0);
         NightmareSnake s = firstSnakeMoving(r);
         List<Integer> landings = new ArrayList<>();
         float lastY = s.y;
         float top = s.y;
-        for (int i = 0; i < 1500; i++) {
+        for (int i = 0; i < 3000; i++) {
             r.world.player.hp = 32;
             r.step(0);
             assertTrue(s.y <= 584.001f, "y " + s.y);
             assertTrue(s.x >= 415.999f && s.x <= 864.001f, "x " + s.x);
             top = Math.min(top, s.y);
             if (s.y >= 584 && lastY < 584) {
-                landings.add(Math.round(s.x));
+                landings.add(java.util.Arrays.binarySearch(CustomChanges.SNAKE_BLOCKS, Math.round(s.x)));
             }
             lastY = s.y;
         }
-        assertTrue(landings.size() >= 5, "landings " + landings);
-        for (int i = 0; i < landings.size(); i++) {
-            int x = landings.get(i);
-            assertTrue(x == 416 || x == 560 || x == 720 || x == 864, "landings " + landings);
-            if (i > 0) {
-                assertTrue(x != landings.get(i - 1), "landings " + landings);
+        assertTrue(landings.size() >= 8, "landings " + landings);
+        for (int i = 1; i < landings.size(); i++) {
+            int a = landings.get(i - 1);
+            int b = landings.get(i);
+            assertTrue(a >= 0 && b >= 0 && Math.abs(b - a) == 1, "landings " + landings);
+            if (i > 1) {
+                int before = landings.get(i - 2);
+                assertEquals(a == 0 || a == 3, b == before, "turns only at the ends: " + landings);
             }
         }
         assertEquals(584 - CustomChanges.SNAKE_HOP_HEIGHT, top, 1.0);
-        assertTrue(top - 71 >= r.world.camera.y(), "the top gem stays on screen");
+        assertTrue(top - 71 >= r.world.camera.y(), "the top gems stay on screen");
     }
 
     @Test
-    void firstSnakeStopsWhereItIsWhenTheGemsFire() {
+    void firstSnakeStopsAtThePeakEveryTwoHopsToFire() {
         StageRun r = StageRun.at(Stages.HEATNIX, 0);
         NightmareSnake s = firstSnakeMoving(r);
         for (int volley = 0; volley < 4; volley++) {
-            long before = shots(r);
-            int guard = 0;
-            while (shots(r) <= before && guard++ < 200) {
-                r.world.player.hp = 32;
-                before = shots(r);
-                r.step(0);
+            int landings = waitForVolley(r, s, 800);
+            if (volley > 0) {
+                assertEquals(CustomChanges.SNAKE_SHOT_EVERY, landings, "hops before volley " + volley);
             }
             float x0 = s.x;
             float y0 = s.y;
+            assertEquals(584 - CustomChanges.SNAKE_HOP_HEIGHT, y0, 0.001, "at the peak");
             for (int i = 1; i < CustomChanges.SNAKE_SHOT_PAUSE; i++) {
                 r.world.player.hp = 32;
                 r.step(0);
                 assertEquals(x0, s.x, 0.001, "update " + i + " of volley " + volley);
                 assertEquals(y0, s.y, 0.001, "update " + i + " of volley " + volley);
             }
-            assertTrue(r.until(CustomChanges.SNAKE_LAND_WAIT + 2, 0, w -> s.x != x0 || s.y != y0), "it moves again");
+            assertTrue(r.until(2, 0, w -> s.x != x0 || s.y != y0), "it moves again");
         }
     }
 
     @Test
-    void firstSnakeGemsTakeTripleDamage() {
+    void firstSnakeGemsTakeMoreBusterAndSabreDamage() {
         StageRun r = StageRun.at(Stages.HEATNIX, 0);
         NightmareSnake s = firstSnakeMoving(r);
-        long before = shots(r);
-        assertTrue(r.until(200, 0, w -> {
-            w.player.hp = 32;
-            return shots(r) > before;
-        }));
-        r.steps(20, 0);
-        NightmareSnake.Gem g = s.gems.get(0);
-        r.world.add(new BusterShot(r.world, 0, g.x - 24, g.y - 12, true));
+        NightmareSnake.Gem g = s.gems.get(2);
+        volleyWithTheGemInView(r, s, g);
+        r.world.add(new BusterShot(r.world, 0, g.x - 24, g.y + 2, true));
         r.steps(6, 0);
-        assertEquals(32 - 3, g.hp);
+        assertEquals(32 - 5, g.hp, "a lemon does 1 x 4.5");
+        int charge = Math.round(DamageTables.value(DamageTables.Table.SNAKE, 19) * g.damageTakenScale(19));
+        assertEquals(18, charge);
+        for (int sabre : new int[] {50, 51}) {
+            float scale = CustomChanges.SABRE_DAMAGE_SCALE * g.damageTakenScale(sabre);
+            assertEquals(charge, Math.round(DamageTables.value(DamageTables.Table.SNAKE, sabre) * scale), "sabre " + sabre);
+        }
+    }
+
+    @Test
+    void aShotOnAGemAndTheRingHitsTheGem() {
+        StageRun r = StageRun.at(Stages.HEATNIX, 0);
+        NightmareSnake s = firstSnakeMoving(r);
+        NightmareSnake.Gem g = s.gems.get(2);
+        volleyWithTheGemInView(r, s, g);
+        BusterShot b = new BusterShot(r.world, 0, g.x - 4, s.y + 34, true);
+        assertTrue(b.attackBox().overlaps(s.hurtBox()), "the shot touches the ring");
+        r.world.add(b);
+        r.steps(2, 0);
+        assertEquals(32 - 5, g.hp);
+    }
+
+    @Test
+    void firstSnakeBallsWaitThenFlyOneByOne() {
+        StageRun r = StageRun.at(Stages.HEATNIX, 0);
+        firstSnakeMoving(r);
+        assertTrue(r.until(800, 0, w -> {
+            w.player.hp = 32;
+            return balls(r).size() == 4;
+        }));
+        List<NightmareSnake.HeldBall> balls = balls(r);
+        float[][] start = new float[4][];
+        for (int i = 0; i < 4; i++) {
+            start[i] = new float[] {balls.get(i).x, balls.get(i).y};
+        }
+        int hold = CustomChanges.SNAKE_BALL_HOLD;
+        int gap = CustomChanges.SNAKE_BALL_GAP;
+        for (int t = 1; t <= hold + 3 * gap + 2; t++) {
+            r.world.player.hp = 32;
+            r.step(0);
+            for (int i = 0; i < 4; i++) {
+                NightmareSnake.HeldBall b = balls.get(i);
+                boolean moved = b.dead || b.x != start[i][0] || b.y != start[i][1];
+                boolean released = t > hold + i * gap;
+                assertEquals(released, moved, "ball " + i + " at update " + t);
+            }
+        }
     }
 
     @Test
