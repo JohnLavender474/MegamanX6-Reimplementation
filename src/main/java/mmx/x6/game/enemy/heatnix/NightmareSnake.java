@@ -2,7 +2,9 @@ package mmx.x6.game.enemy.heatnix;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import mmx.x6.anim.Animator;
+import mmx.x6.game.CustomChanges;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Entity;
 import mmx.x6.game.World;
@@ -28,6 +30,7 @@ public final class NightmareSnake extends Entity {
     private static final int[][] JET_OFS = {{-84, -11}, {82, -18}, {26, 70}, {-4, -83}};
     private static final int[] HOP_RIGHT = {1953, 2241};
     private static final int[] HOP_LEFT = {2400, 2112};
+    private static final int FLOOR_Y = 584;
 
     final int kind;
     final List<Gem> gems = new ArrayList<>();
@@ -49,6 +52,11 @@ public final class NightmareSnake extends Entity {
     private int pickRight;
     private int pickLeft;
     private float flameY;
+    private int block = -1;
+    private float hopFromX;
+    private float hopToX;
+    private int hopTimer;
+    private int shotPause;
     private final List<KillBox> killBoxes = new ArrayList<>();
 
     public NightmareSnake(World w, RecordDef r) {
@@ -59,6 +67,15 @@ public final class NightmareSnake extends Entity {
         this.body = new Body(x, y, 0, -8, 64, 64);
         this.contactDamage = 8;
         this.damageTable = DamageTables.Table.DEFLECT;
+    }
+
+    static int nextBlock(int current, Random rng) {
+        int n = CustomChanges.SNAKE_BLOCKS.length;
+        if (current < 0) {
+            return rng.nextInt(n);
+        }
+        int next = rng.nextInt(n - 1);
+        return next >= current ? next + 1 : next;
     }
 
     public Step step() {
@@ -319,6 +336,14 @@ public final class NightmareSnake extends Entity {
         if (kind == 5 && w.player.y < 432) {
             w.player.carry(0, 432 - w.player.y);
         }
+        if (kind == 5 && canShoot && w.frame % 120 == 0) {
+            shotPause = CustomChanges.SNAKE_SHOT_PAUSE;
+        }
+        if (shotPause > 0) {
+            waiting = true;
+            shotPause--;
+            return;
+        }
         if (timer > 0) {
             waiting = true;
             timer--;
@@ -330,7 +355,7 @@ public final class NightmareSnake extends Entity {
         waiting = false;
         switch (kind) {
             case 4 -> moveWalls(w);
-            case 5 -> moveRoll(w, false);
+            case 5 -> moveHop(w);
             case 6 -> moveHops(w);
             case 7 -> moveRoll(w, true);
             case 8, 9 -> moveMagma(w);
@@ -373,6 +398,27 @@ public final class NightmareSnake extends Entity {
             wallHit(w);
             vx = 1;
             dir = 1;
+        }
+    }
+
+    private void moveHop(World w) {
+        int time = CustomChanges.SNAKE_HOP_TIME;
+        if (hopTimer == 0) {
+            block = nextBlock(block, w.rng);
+            hopFromX = x;
+            hopToX = CustomChanges.SNAKE_BLOCKS[block];
+            dir = hopToX > hopFromX ? 1 : 3;
+        }
+        hopTimer++;
+        float t = hopTimer / (float) time;
+        x = hopFromX + (hopToX - hopFromX) * t;
+        y = FLOOR_Y - 4 * CustomChanges.SNAKE_HOP_HEIGHT * t * (1 - t);
+        if (hopTimer >= time) {
+            x = hopToX;
+            y = FLOOR_Y;
+            hopTimer = 0;
+            w.sfx.play(2, 24);
+            timer = CustomChanges.SNAKE_LAND_WAIT;
         }
     }
 
@@ -684,6 +730,11 @@ public final class NightmareSnake extends Entity {
                 w.add(new Projectile(w, SET, 9, x, y, v[0], v[1], 4, 6, 6)
                         .hittable(2, DamageTables.Table.NORMAL).explodes().endsOnPlayer().margin(96));
             }
+        }
+
+        @Override
+        public float damageTakenScale() {
+            return parent.kind == 5 ? CustomChanges.SNAKE_DAMAGE_SCALE : 1;
         }
 
         @Override

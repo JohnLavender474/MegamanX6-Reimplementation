@@ -219,7 +219,7 @@ public final class World {
                 if (hb == null || !box.overlaps(hb) || !wp.canHit(t)) {
                     continue;
                 }
-                int r = Damage.hitObject(t, wp.weaponId(), wp.damageScale());
+                int r = Damage.hitObject(t, wp.weaponId(), wp.damageScale() * t.damageTakenScale());
                 if (r == Damage.NO_HIT) {
                     continue;
                 }

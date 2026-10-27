@@ -47,6 +47,10 @@ public abstract class Entity {
         return true;
     }
 
+    public float damageTakenScale() {
+        return 1;
+    }
+
     public void onHurt(World w, int weaponId) {
     }
 

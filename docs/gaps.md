@@ -244,7 +244,8 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Nightmare Snake: `var` 4 (wall run), 6 (hops) and 7 (roll with gravity) follow the short notes
   in `~/mmx-data/x6/re/heatnix-mini-boss/pseudo.c`; their sub-steps are not read. The snake waits
   until a gate pass ends before it holds X. The rising-room flame and the lava are BG layer 2 drawn
-  in front of layer 0 at 60 % / 75 % alpha. `game/enemy/heatnix/NightmareSnake.java`
+  in front of layer 0 at 60 % / 75 % alpha. The first snake (`var` 5) hops in place of the X6
+  roll: a custom change (`docs/custom-changes.md`). `game/enemy/heatnix/NightmareSnake.java`
 - Nightmare Bug: not made (Nightmare Effect 4 deletes the records).
 
 ## Blizzard Wolfang's stage
