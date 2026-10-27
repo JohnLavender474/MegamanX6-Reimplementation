@@ -161,6 +161,7 @@ public final class Player extends Entity {
         shotPose = 0;
         this.faceRight = faceRight;
         eventWalk = walk;
+        speedX = 0;
         if (step != PlayerStep.DEAD) {
             step = PlayerStep.EVENT_HOLD;
             anim.play(walk > 0 ? 8 : standAnim());

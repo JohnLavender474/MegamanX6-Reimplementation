@@ -48,6 +48,22 @@ class PlayerMovementTest {
     }
 
     @Test
+    void eventInTheAirFallsStraightDown() {
+        Sim s = flat();
+        s.step(DASH | RIGHT | JUMP);
+        s.steps(6, RIGHT | JUMP);
+        assertTrue(p(s).speedX > 0);
+        p(s).startEvent(true, 0);
+        float x0 = p(s).x;
+        for (int i = 0; i < 60; i++) {
+            s.step(RIGHT);
+            assertEquals(x0, p(s).x, 0.001);
+        }
+        assertEquals(PlayerStep.EVENT_HOLD, p(s).step());
+        assertEquals(160 - 21, p(s).y, 0.001);
+    }
+
+    @Test
     void fullJumpHeight() {
         Sim s = flat();
         float y0 = p(s).y;
