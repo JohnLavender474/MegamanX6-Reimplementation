@@ -68,7 +68,12 @@ Earlier community work helped as a source of facts:
 We used their facts and checked each one against the disc and the save states. We
 did not copy their code.
 
-The full credits are in `docs/prior-work.md` in `mmx-demake-tools`.
+The full credits are in [`docs/re/findings/prior-work.md`](docs/re/findings/prior-work.md).
+
+A copy of the study is in [`docs/re/`](docs/re/): the results (the behaviour sheets,
+the engine notes, the specs and the process log) in `findings/`, and the work behind
+them (notes and probe scripts per topic) in `work/`. Its `README.md` tells how the two
+parts relate.
 
 ## Play
 

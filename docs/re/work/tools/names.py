@@ -1,0 +1,9 @@
+NAMES={
+0x800179A4:'SetAnime',0x80017A04:'AnimeTick',0x8002D2B0:'MoveObject',0x8002D230:'MoveObject2',
+0x8002F288:'CollideCheck',0x8002EE10:'CornerCheck',0x800304D8:'TerrainBoxSetup',0x80031474:'ContactWeapon',
+0x800315CC:'ApplyWeaponHit',0x800319EC:'WeaponHitReaction',0x80030ECC:'ContactMega',0x80030DC0:'PlayerDamageScale',
+0x8002D654:'BoxOverlap',0x8002CBFC:'OffScreenCheck2',0x8002CCB0:'DisplayCheck',0x8002CA14:'DeleteObject',
+0x8002CA54:'DeleteObject2',0x8002C9B0:'DeleteObject3',0x8002C458:'GetVisualObject',0x8002C530:'GetMiscObject',
+0x80016C48:'PlaySound',0x8004E654:'DropItem',0x8004E680:'DropItemRoll',0x80049E50:'SpawnExplosion',
+0x80049E70:'SpawnExplosion2',0x800477E4:'SpawnJunk',0x8002D2D4:'GetRNG',0x80040290:'HitReactionDispatch',
+}

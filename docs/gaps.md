@@ -1,7 +1,7 @@
 # Gaps and TODOs
 
 Each line names what is guessed or missing, where it is in the code, and the source doc
-(`~/IdeaProjects/mmx-demake-tools/docs/`). Code `TODO` comments point here.
+(`~/IdeaProjects/mmx-demake-tools/docs/`, copied to [`docs/re/findings/`](re/findings/)). Code `TODO` comments point here.
 
 ## From the spec
 
@@ -242,7 +242,7 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 - Blaze Heatnix: no behaviour sheet and no sprite export (no save state reached his room). A
   stand-in (shapes, 32 HP, it only hovers) ends the stage. `game/enemy/heatnix/BlazeHeatnix.java`
 - Nightmare Snake: `var` 4 (wall run), 6 (hops) and 7 (roll with gravity) follow the short notes
-  in `~/mmx-data/x6/re/heatnix-mini-boss/pseudo.c`; their sub-steps are not read. The snake waits
+  in [`~/mmx-data/x6/re/heatnix-mini-boss/pseudo.c`](re/work/heatnix-mini-boss/pseudo.c); their sub-steps are not read. The snake waits
   until a gate pass ends before it holds X. The rising-room flame and the lava are BG layer 2 drawn
   in front of layer 0 at 60 % / 75 % alpha. The first snake (`var` 5) hops in place of the X6
   roll: a custom change (`docs/custom-changes.md`). `game/enemy/heatnix/NightmareSnake.java`
@@ -279,7 +279,7 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 - Scaravich routing: the poles, the roll (`route_tbl`), the section and return tables and the random
   blocks follow `docs/stages/scaravich.md`; the block table (place and source of each block) is read
-  from the code with `~/mmx-data/x6/re/scaravich-crystals/probes/sections.py`. Guesses: `FadeOut(8)`
+  from the code with [`~/mmx-data/x6/re/scaravich-crystals/probes/sections.py`](re/work/scaravich-crystals/probes/sections.py). Guesses: `FadeOut(8)`
   and `FadeIn(8)` take 32 updates each; the player faces the pole at a return point and right at a
   section entry; the player's shots are not cleared at the teleport. The roll uses `rng % 12`, not
   `GetRNG() % 12` (the tiny bias of the real roll is lost). The poles cleared, the row and the roll
@@ -329,7 +329,7 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 ## Front end
 
-Source: `docs/engine.md`, "Front end", and `~/mmx-data/x6/re/front-end/notes.md`. The order (logo,
+Source: `docs/engine.md`, "Front end", and [`~/mmx-data/x6/re/front-end/notes.md`](re/work/front-end/notes.md). The order (logo,
 load, opening, title, menu), the fades (32 updates: `FadeTask` moves a level of 0–255 by the speed
 8 per update), the 600-update title, the menu rows, the menu sounds (bank 0, ids 12 and 34) and the
 18 001-update menu idle are from the code. `frontend/FrontEnd.java`, `screen/FrontEndScreen.java`

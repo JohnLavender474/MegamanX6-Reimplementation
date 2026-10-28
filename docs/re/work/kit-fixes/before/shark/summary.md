@@ -1,0 +1,220 @@
+# RE kit: main type 56
+
+- Object: main type 56
+- State: `shark-7_boss.state.gz` (SHA-1 `1992027342c0cbc98d3375dfb9806570930d060d`), stage 4 area 1
+- Class: main, type 56; entry function 0x800f4230
+- Functions walked: 100; state tables: 13
+
+## Engine helpers called
+
+| address | name | note | called from |
+|---|---|---|---|
+| 0x80012d9c | Rumble | controller vibration (likely) | 0x800f2884, 0x800f2a04, 0x800f2d98, 0x800f5430, 0x800f56f0 |
+| 0x80016c48 | PlaySound | PlaySound(bank, id, obj): sound effect request | 0x800f2468, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f2d98, 0x800f3180, 0x800f3290, 0x800f42c8, 0x800f46cc, 0x800f472c, 0x800f4848, 0x800f4934, 0x800f4a18, 0x800f4c28, 0x800f4e4c, 0x800f4f58, 0x800f50ec, 0x800f51f0, 0x800f52fc, 0x800f53c8, 0x800f5430, 0x800f55f8, 0x800f56f0, 0x800f5884, 0x800f59ac, 0x800f5aa8, 0x800f5c00, 0x800f5d3c, 0x800f5e48, 0x800f6118, 0x800f64bc |
+| 0x8001750c | StopSound | StopSound(bank, id): stop a sound; (255, 0) stops all (High Max's kill) | 0x800f42c8, 0x800f4934, 0x800f5b9c |
+| 0x800179a4 | SetAnime | SetAnime(obj, n): start animation n of obj+0x30; load frame to +0x44 | 0x800f1f80, 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2c38, 0x800f2d98, 0x800f42c8, 0x800f4674, 0x800f46cc, 0x800f472c, 0x800f4934, 0x800f4a18, 0x800f4b14, 0x800f4d00, 0x800f4db0, 0x800f4dfc, 0x800f4f58, 0x800f4fa8, 0x800f5094, 0x800f50ec, 0x800f51f0, 0x800f52c0, 0x800f5430, 0x800f5530, 0x800f55f8, 0x800f56f0, 0x800f5764, 0x800f5814, 0x800f5884, 0x800f58e8, 0x800f59ac, 0x800f5a1c, 0x800f5b9c, 0x800f5c00, 0x800f5d3c, 0x800f5da4, 0x800f6118, 0x800f6180, 0x800f61d4, 0x800f6220, 0x800f64bc, 0x800f6524, 0x800f6578 |
+| 0x800179d0 | SetAnimeFrame | SetAnimeFrame(obj, n, frame): start animation n of obj+0x30 at frame `frame` | 0x800f2884, 0x800f2a04, 0x800f5e48 |
+| 0x80017a04 | AnimeTick | duration - 1; at 0 move by next (relative) and load the frame | 0x800f5eec, 0x800f62ac, 0x800f668c |
+| 0x80021760 | TextOpen | open a text message window (likely) | 0x800f472c |
+| 0x80025fd8 | BossLevel | game+0x8F = 3 in stage 12, else boss_level_tbl[game+0x8D + character] | 0x800f45a0 |
+| 0x8002943c | Quake2 | screen shake variant: camera work +0x36/+0x45/+0x3E/+0x3C/+0x3A, flag 0x10 | 0x800f2d98, 0x800f5430 |
+| 0x8002c3f8 | GetSysObject | first free slot of the stage-logic class (96 x 0x30 at 0x8009B7B0), cleared; used for engine objects 24 and 26 | 0x800f4360, 0x800f4504 |
+| 0x8002c9b0 | DeleteObject3 | zero bytes 0..7 of the object | 0x800f2340, 0x800f4454 |
+| 0x8002ccb0 | DisplayCheck | DisplayCheck(obj, rx, ry): display = 1 if inside [-rx, W+rx) x [-ry, 240+ry) | 0x800f2340, 0x800f42c8, 0x800f4360 |
+| 0x8002d230 | MoveObject2 | x += vx; y -= vy; vx += facing accel; vy -= gravity; clamp vy | 0x800f4674, 0x800f472c, 0x800f4a18, 0x800f4b14, 0x800f4be4, 0x800f4c28, 0x800f4d00, 0x800f4db0, 0x800f4dfc, 0x800f5094, 0x800f51f0, 0x800f5884, 0x800f5c00 |
+| 0x8002d2b0 | MoveObject | x += vx; y -= vy | 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f5430, 0x800f56f0, 0x800f5814 |
+| 0x8002d2d4 | GetRNG | random number | 0x800f4d00, 0x800f4fa8, 0x800f50ec, 0x800f5aa8 |
+| 0x8002f288 | CollideCheck | terrain collision from the move since prev_x/prev_y; sets collide_flags | 0x800f4230 |
+| 0x8003d308 | PlayerEvent | PlayerEvent(step, facing): mega+0xD0 = 1, +0xD1 = step, +0xD2 = facing, +0x7A = 1, game.player_lock = 1 | 0x800f42c8, 0x800f44cc, 0x800f4504, 0x800f45a0 |
+| 0x8003d330 | PlayerEventEnd | mega+0xD0 = 0, +0x7A = 0, game.player_lock = 0: the event step ends | 0x800f48cc |
+| 0x80040290 | HitReactionDispatch | engine sub-state 0: hit reaction by +0x63 through 0x80011574 | 0x800f4230, 0x800f4ad8 |
+| 0x80040488 | HpBarShow | show the HP bar (likely) | 0x800f47c8 |
+| 0x80040498 | HpBarBusy | HP bar busy (likely) | 0x800f480c |
+| 0x80065944 | rsin | Psy-Q GTE sine (4096 = 1.0) | 0x800f25f0, 0x800f2738, 0x800f2c38 |
+| 0x80065a14 | rcos | Psy-Q GTE cosine (4096 = 1.0) | 0x800f25f0, 0x800f2738, 0x800f2c38 |
+| 0x80065b74 | ratan2 | Psy-Q GTE arc tangent | 0x800f25f0, 0x800f2738, 0x800f2c38, 0x800f3180 |
+| 0x800f213c | SharkMain | overlay 07: Metal Shark Player state 1; stun ids 6/15/42, id 35 pops him out of the floor | 0x800f4230 |
+| 0x800f2ee4 | SharkKickMain | overlay 07: main 56 var 1-3 side kick (state 3), 24 HP | 0x800f4230 |
+| 0x800f33f8 | SharkThink | overlay 07: Metal Shark Player pattern pick; tables 0x800F8F7C (high HP), 0x800F8FFC (low HP) | 0x800f48cc, 0x800f4a9c, 0x800f4c88, 0x800f4ee0, 0x800f5254, 0x800f5580, 0x800f5934, 0x800f5c64 |
+| 0x800f4144 | SharkSprtSet1 | overlay 07: texture 0x540, bank + 1 palette and sprite data | 0x800f4934, 0x800f5d3c, 0x800f6118, 0x800f64bc |
+| 0x800f67d0 | SharkKick | SharkKick(boss, var): main 56 var 1-3, copies the boss graphics, +0x80 = boss | 0x800f5aa8 |
+| 0x800f6880 | SharkDebris | SharkDebris(obj, var, x, y): visual 22 | 0x800f2468, 0x800f2884, 0x800f2a04, 0x800f2d98, 0x800f5430, 0x800f5764 |
+| 0x800f6948 | SharkPiece | SharkPiece(obj, var, angle): visual 22 var 32 forming piece; counts 0x800F9868 | 0x800f3014, 0x800f6008, 0x800f63ac |
+| 0x800f6a1c | SharkShot | SharkShot(obj, var): visual 22 at obj (the anchor, var 0) | 0x800f50ec |
+| 0x800f6ad0 | SharkBeamShot | SharkBeamShot(kick, var): visual 22 var 48; kick act4 = 1 | 0x800f5e48 |
+| 0x800f6c70 | SharkSpark | SharkSpark(obj, angle, x, y): visual 22 var 64 | 0x800f3180 |
+| 0x800f6d4c | SharkBee | SharkBee(obj, angle): visual 22 var 80; counts 0x800F986A | 0x800f3290 |
+| 0x800f6e48 | SharkFacePlayer | overlay 07: flip = 0x40 when x < player x | 0x800f2884, 0x800f4d00, 0x800f4f58, 0x800f5094, 0x800f52c0, 0x800f55f8, 0x800f5df8 |
+| 0x800f6e78 | SharkSprtSet0 | overlay 07: texture 0x140, own bank palette and sprite data | 0x800f4a18, 0x800f5da4, 0x800f6180, 0x800f6524 |
+| 0x800f6f60 | SharkSoul | SharkSoul(var): main 15 (Nightmare Virus) with var 0x10 / 0x11 | 0x800f2340 |
+
+## Calls to unnamed code outside the walk
+
+| address | called from |
+|---|---|
+
+## State tables
+
+| table | used by | targets |
+|---|---|---|
+| 0x800f95cc | 0x800f4230 | 0x800f1f80, 0x800f213c, 0x800f428c, 0x800f2ee4, 0x800f4454, 0x80040290, 0x800f5c94, 0x800f4490, 0x800f48f8, 0x800f4cc4, 0x800f4f1c, 0x800f5284, 0x800f55bc, 0x800f5970, 0x800f4ad8 |
+| 0x800f9608 | 0x800f428c | 0x800f42c8, 0x800f4360, 0x800f2340 |
+| 0x800f9614 | 0x800f4cc4 | 0x800f4d00, 0x800f4db0, 0x800f4dfc, 0x800f4e4c, 0x800f2468, 0x800f4ee0 |
+| 0x800f962c | 0x800f4f1c | 0x800f4f58, 0x800f4fa8, 0x800f5094, 0x800f50ec, 0x800f51f0, 0x800f5254 |
+| 0x800f9644 | 0x800f5284 | 0x800f52c0, 0x800f52fc, 0x800f25f0, 0x800f53c8, 0x800f5430, 0x800f5530, 0x800f5580 |
+| 0x800f9660 | 0x800f55bc | 0x800f55f8, 0x800f5648, 0x800f2738, 0x800f56f0, 0x800f5764, 0x800f2884, 0x800f2a04, 0x800f5814, 0x800f5884, 0x800f58e8, 0x800f5934 |
+| 0x800f968c | 0x800f5970 | 0x800f59ac, 0x800f5a1c, 0x800f2c38, 0x800f5aa8, 0x800f5b9c, 0x800f5c00, 0x800f5c64 |
+| 0x800f96a8 | 0x800f4490 | 0x800f44cc, 0x800f4504, 0x800f45a0, 0x800f2d98, 0x800f4674, 0x800f46cc, 0x800f472c, 0x800f47c8, 0x800f480c, 0x800f4848, 0x800f48cc |
+| 0x800f96d4 | 0x800f48f8 | 0x800f4934, 0x800f49d8, 0x800f4a18, 0x800f4a9c |
+| 0x800f96e4 | 0x800f4ad8 | 0x800f4b14, 0x800f4be4, 0x800f4c28, 0x800f4c88, 0x80040290, 0x800f5c94, 0x800f5c9c, 0x800f5f7c, 0x800f6318 |
+| 0x800f9708 | 0x800f5c9c | 0x800f5cd8, 0x800f3014, 0x800f5d28, 0x800f5d3c, 0x800f5da4, 0x800f5df8, 0x800f5e48, 0x800f5ebc, 0x800f5eec |
+| 0x800f972c | 0x800f5f7c | 0x800f5fb8, 0x800f6008, 0x800f6118, 0x800f6180, 0x800f61d4, 0x800f3180, 0x800f6220, 0x800f62ac |
+| 0x800f974c | 0x800f6318 | 0x800f6354, 0x800f63ac, 0x800f64bc, 0x800f6524, 0x800f6578, 0x800f3290, 0x800f65c4, 0x800f668c |
+
+## Neighbour entries (likely shots and effects of this object)
+
+| class | type | function |
+|---|---|---|
+
+## Animation tables
+
+### Table 0x800f952c (41 animations)
+
+| # | sprites | ticks | flags | loop to |
+|---|---|---|---|---|
+| 0 | 37 | 1 | 0 | hold |
+| 1 | 37 38 39 40 41 42 42 43 27 27 | 4 8 6 4 10 1 5 24 8 1 | 0 0 0 0 0 2 0 0 0 1 | hold |
+| 2 | 0 1 2 3 4 5 | 12 12 9 10 13 7 | 0 1 0 0 0 0 | 0 |
+| 3 | 6 7 7 | 4 9 1 | 0 0 1 | hold |
+| 4 | 8 | 1 | 0 | hold |
+| 5 | 9 | 1 | 0 | hold |
+| 6 | 8 9 | 6 6 | 0 0 | 0 |
+| 7 | 7 6 6 | 4 9 1 | 0 0 1 | hold |
+| 8 | 10 11 12 13 13 13 13 | 4 8 4 5 1 9 1 | 0 0 0 0 1 0 2 | hold |
+| 9 | 95 94 92 91 90 88 87 86 85 84 82 81 100 98 97 96 | 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 | 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 | 0 |
+| 10 | 6 7 8 | 4 6 1 | 0 0 1 | hold |
+| 11 | 9 14 15 16 16 17 17 | 2 4 4 3 1 6 6 | 0 0 0 0 0 0 0 | 5 |
+| 12 | 14 27 27 | 6 5 1 | 0 0 1 | hold |
+| 13 | 6 7 8 9 | 4 6 2 2 | 0 0 0 0 | hold |
+| 14 | 14 15 16 | 4 4 4 | 0 0 0 | hold |
+| 15 | 6 7 8 | 4 6 2 | 0 0 1 | hold |
+| 16 | 9 14 15 16 17 | 2 4 4 4 4 | 0 0 0 0 0 | hold |
+| 17 | 9 31 32 32 33 | 18 22 1 3 4 | 0 0 2 0 1 | 3 |
+| 18 | 44 115 | 1 1 | 0 0 | 0 |
+| 19 | 45 116 45 116 46 117 46 117 | 1 1 1 1 1 1 1 1 | 0 0 0 0 0 1 0 0 | 6 |
+| 20 | 47 48 49 50 | 4 6 2 2 | 0 0 0 0 | 0 |
+| 21 | 53 118 | 1 1 | 0 0 | 0 |
+| 22 | 54 119 | 1 1 | 0 0 | 0 |
+| 23 | 55 55 137 105 138 106 139 107 140 108 141 109 142 110 143 111 144 112 145 113 146 114 147 56 148 57 149 58 150 59 151 59 | 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 | 0 1 15 15 15 15 15 2 15 15 15 3 15 15 15 4 15 15 15 5 15 15 15 6 15 15 15 7 15 15 15 16 | 30 |
+| 24 | 59 151 59 150 58 149 57 148 56 147 114 146 113 145 112 144 111 143 110 142 109 141 108 140 107 139 106 138 105 137 55 55 | 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 | 15 15 15 15 15 15 15 6 15 15 15 5 15 15 15 4 15 15 15 3 15 15 15 2 15 15 15 1 15 0 15 16 | hold |
+| 25 | 61 120 62 121 63 122 64 123 | 1 1 1 1 1 1 1 1 | 0 0 0 0 0 0 0 0 | 0 |
+| 26 | 65 124 66 125 67 126 68 127 69 128 69 128 70 129 71 130 72 131 | 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 1 | 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 | 10 |
+| 27 | 73 132 | 1 1 | 0 0 | 0 |
+| 28 | 34 35 36 | 2 2 2 | 0 0 0 | 0 |
+| 29 | 80 | 1 | 0 | hold |
+| 30 | 79 | 1 | 0 | hold |
+| 31 | 78 | 1 | 0 | hold |
+| 32 | 101 102 103 104 104 | 4 4 4 4 1 | 0 0 0 0 1 | hold |
+| 33 | 28 29 30 29 | 6 6 6 6 | 0 0 0 0 | 0 |
+| 34 | 0 1 2 0 1 2 0 1 2 0 1 2 2 | 2 2 2 2 2 2 3 3 3 4 4 4 1 | 0 0 0 0 0 0 0 0 0 0 0 0 1 | hold |
+| 35 | 3 4 5 3 4 5 3 4 5 3 4 5 5 | 2 2 2 2 2 2 3 3 3 4 4 4 1 | 0 0 0 0 0 0 0 0 0 0 0 0 1 | hold |
+| 36 | 6 7 8 6 7 8 6 7 8 6 7 8 8 | 2 2 2 2 2 2 3 3 3 4 4 4 1 | 0 0 0 0 0 0 0 0 0 0 0 0 1 | hold |
+| 37 | 9 10 11 12 | 3 3 3 3 | 0 0 0 0 | 0 |
+| 38 | 19 20 20 21 22 23 24 25 26 | 6 1 3 3 3 3 3 3 3 | 0 1 0 0 0 0 0 0 0 | 2 |
+| 39 | 14 27 27 0 1 2 3 4 5 | 4 3 1 12 12 9 10 13 7 | 0 0 1 0 0 0 0 0 0 | 3 |
+| 40 | 39 36 143 8 0 | 224 8 16 101 256 | 255 0 0 199 0 | hold |
+
+Note: cut: animation 41 uses sprite 166; the sprite set has 153
+
+## Object fields used
+
+| offset | name | reads | writes | functions |
+|---|---|---|---|---|
+| 0x2 | var | 2 | 0 | 0x800f1f80, 0x800f4454 |
+| 0x3 | display | 0 | 20 | 0x800f1f80, 0x800f2340, 0x800f2884, 0x800f2d98, 0x800f5764, 0x800f5d3c, 0x800f5eec, 0x800f6118, 0x800f62ac, 0x800f64bc, 0x800f668c |
+| 0x4 | state | 1 | 6 | 0x800f1f80, 0x800f4230, 0x800f5eec, 0x800f62ac, 0x800f668c |
+| 0x5 | step | 1 | 5 | 0x800f1f80, 0x800f428c, 0x800f42c8, 0x800f4360 |
+| 0x6 | step2 | 85 | 75 | 0x800f1f80, 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f2d98, 0x800f3014, 0x800f3180, 0x800f3290, 0x800f4490, 0x800f44cc, 0x800f4504, 0x800f45a0, 0x800f4674, 0x800f46cc, 0x800f472c, 0x800f47c8, 0x800f480c, 0x800f4848, 0x800f48f8, 0x800f4934, 0x800f49d8, 0x800f4a18, 0x800f4ad8, 0x800f4b14, 0x800f4be4, 0x800f4c28, 0x800f4cc4, 0x800f4d00, 0x800f4db0, 0x800f4dfc, 0x800f4e4c, 0x800f4f1c, 0x800f4f58, 0x800f4fa8, 0x800f5094, 0x800f50ec, 0x800f51f0, 0x800f5284, 0x800f52c0, 0x800f52fc, 0x800f53c8, 0x800f5430, 0x800f5530, 0x800f55bc, 0x800f55f8, 0x800f5648, 0x800f56f0, 0x800f5764, 0x800f5814, 0x800f5884, 0x800f58e8, 0x800f5970, 0x800f59ac, 0x800f5a1c, 0x800f5aa8, 0x800f5b9c, 0x800f5c00, 0x800f5c9c, 0x800f5cd8, 0x800f5d28, 0x800f5d3c, 0x800f5da4, 0x800f5df8, 0x800f5e48, 0x800f5ebc, 0x800f5eec, 0x800f5f7c, 0x800f5fb8, 0x800f6008, 0x800f6118, 0x800f6180, 0x800f61d4, 0x800f6220, 0x800f6318, 0x800f6354, 0x800f63ac, 0x800f64bc, 0x800f6524, 0x800f6578, 0x800f65c4 |
+| 0x7 | act4 | 2 | 7 | 0x800f1f80, 0x800f3290, 0x800f45a0, 0x800f5aa8, 0x800f5b9c, 0x800f5ebc, 0x800f65c4, 0x800f668c |
+| 0x8 | x | 2 | 0 | 0x800f2d98, 0x800f4230 |
+| 0xa | x.px | 35 | 9 | 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f2d98, 0x800f3014, 0x800f3180, 0x800f4360, 0x800f4b14, 0x800f5430, 0x800f5764, 0x800f59ac, 0x800f6008, 0x800f63ac |
+| 0xc | y | 2 | 0 | 0x800f2d98, 0x800f4230 |
+| 0xe | y.px | 32 | 12 | 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f2d98, 0x800f3014, 0x800f3180, 0x800f4360, 0x800f4934, 0x800f4b14, 0x800f4e4c, 0x800f5430, 0x800f5764, 0x800f5814, 0x800f6008, 0x800f63ac |
+| 0x14 | layer | 0 | 1 | 0x800f1f80 |
+| 0x15 | flip | 11 | 19 | 0x800f1f80, 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f3014, 0x800f3180, 0x800f3290, 0x800f4b14, 0x800f4e4c, 0x800f59ac, 0x800f5a1c, 0x800f6008, 0x800f63ac |
+| 0x16 | priority | 0 | 4 | 0x800f1f80 |
+| 0x18 | prev_x | 0 | 2 | 0x800f2d98, 0x800f4230 |
+| 0x1c | prev_y | 0 | 2 | 0x800f2d98, 0x800f4230 |
+| 0x20 | speed_x | 3 | 19 | 0x800f1f80, 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f2d98, 0x800f49d8, 0x800f4b14, 0x800f4d00, 0x800f4e4c, 0x800f4fa8, 0x800f53c8, 0x800f56f0, 0x800f5814, 0x800f5b9c |
+| 0x24 | speed_y | 4 | 19 | 0x800f1f80, 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f2d98, 0x800f4674, 0x800f49d8, 0x800f4b14, 0x800f4be4, 0x800f4d00, 0x800f4db0, 0x800f4e4c, 0x800f4fa8, 0x800f5094, 0x800f53c8, 0x800f56f0, 0x800f5814, 0x800f5b9c |
+| 0x28 | accel_x | 0 | 10 | 0x800f1f80, 0x800f2468, 0x800f2d98, 0x800f49d8, 0x800f4b14, 0x800f4d00, 0x800f4e4c, 0x800f4fa8, 0x800f5814, 0x800f5b9c |
+| 0x2c | gravity | 0 | 10 | 0x800f1f80, 0x800f2468, 0x800f2d98, 0x800f49d8, 0x800f4b14, 0x800f4d00, 0x800f4e4c, 0x800f4fa8, 0x800f5814, 0x800f5b9c |
+| 0x30 | anime_table | 0 | 1 | 0x800f1f80 |
+| 0x3c | sprite_data | 0 | 1 | 0x800f1f80 |
+| 0x40 | tex_cord | 0 | 1 | 0x800f1f80 |
+| 0x42 | clut_cord | 3 | 4 | 0x800f1f80, 0x800f2340, 0x800f42c8, 0x800f4360 |
+| 0x45 | anime.flag | 18 | 0 | 0x800f3180, 0x800f3290, 0x800f46cc, 0x800f4e4c, 0x800f4fa8, 0x800f50ec, 0x800f5254, 0x800f52fc, 0x800f5530, 0x800f5648, 0x800f5764, 0x800f58e8, 0x800f5a1c, 0x800f5aa8, 0x800f5c64, 0x800f5da4, 0x800f6180, 0x800f6524 |
+| 0x50 | attack_box | 0 | 8 | 0x800f1f80, 0x800f5df8, 0x800f5ebc, 0x800f61d4, 0x800f6220, 0x800f6578, 0x800f65c4 |
+| 0x54 | hurt_box | 0 | 8 | 0x800f1f80, 0x800f5df8, 0x800f5ebc, 0x800f61d4, 0x800f6220, 0x800f6578, 0x800f65c4 |
+| 0x58 | damage_table | 0 | 1 | 0x800f1f80 |
+| 0x5c | hp | 1 | 5 | 0x800f1f80, 0x800f4848 |
+| 0x60 | contact_damage | 0 | 8 | 0x800f1f80, 0x800f2884, 0x800f2a04, 0x800f4934, 0x800f4b14, 0x800f53c8, 0x800f5530, 0x800f5764 |
+| 0x61 | iframes | 2 | 4 | 0x800f1f80, 0x800f42c8, 0x800f4360 |
+| 0x67 | latch | 0 | 1 | 0x800f1f80 |
+| 0x68 | terrain_box | 0 | 9 | 0x800f1f80, 0x800f2468, 0x800f4674, 0x800f4934, 0x800f4be4, 0x800f4e4c, 0x800f5764, 0x800f5814 |
+| 0x70 | collide_flags | 15 | 0 | 0x800f2468, 0x800f25f0, 0x800f2738, 0x800f2a04, 0x800f472c, 0x800f4a18, 0x800f4c28, 0x800f4dfc, 0x800f51f0, 0x800f5430, 0x800f56f0, 0x800f5884, 0x800f5c00 |
+| 0x7c | work.7C | 24 | 36 | 0x800f2468, 0x800f25f0, 0x800f2884, 0x800f2a04, 0x800f2d98, 0x800f3180, 0x800f42c8, 0x800f4360, 0x800f4504, 0x800f45a0, 0x800f4934, 0x800f49d8, 0x800f4a18, 0x800f4a9c, 0x800f4c28, 0x800f4c88, 0x800f4e4c, 0x800f4ee0, 0x800f53c8, 0x800f5530, 0x800f5580, 0x800f5764, 0x800f58e8, 0x800f5934, 0x800f5df8, 0x800f5e48, 0x800f5ebc, 0x800f5eec, 0x800f6220, 0x800f62ac, 0x800f65c4, 0x800f668c |
+| 0x7e | work.7E | 11 | 18 | 0x800f2340, 0x800f2884, 0x800f2a04, 0x800f3290, 0x800f42c8, 0x800f4360, 0x800f480c, 0x800f4848, 0x800f5764, 0x800f5cd8, 0x800f5eec, 0x800f5fb8, 0x800f6220, 0x800f6354, 0x800f65c4 |
+| 0x80 | work.80 | 3 | 3 | 0x800f2340, 0x800f4360, 0x800f4454, 0x800f4504, 0x800f45a0 |
+| 0x84 | work.84 | 6 | 6 | 0x800f2340, 0x800f25f0, 0x800f2738, 0x800f2c38, 0x800f52fc, 0x800f5648, 0x800f5a1c |
+| 0x86 | self+0x86 | 10 | 8 | 0x800f25f0, 0x800f2738, 0x800f2884, 0x800f2a04, 0x800f2c38, 0x800f3290, 0x800f52fc, 0x800f5648, 0x800f5814, 0x800f5a1c, 0x800f65c4 |
+| 0x88 | work.88 | 0 | 1 | 0x800f2340 |
+| 0x8a | work.8A | 0 | 1 | 0x800f1f80 |
+| 0x8b | self+0x8b | 0 | 1 | 0x800f1f80 |
+| 0x8c | work.8C | 0 | 2 | 0x800f1f80, 0x800f2340 |
+| 0x8d | self+0x8d | 0 | 4 | 0x800f1f80, 0x800f2884, 0x800f2a04, 0x800f5764 |
+| 0x8e | self+0x8e | 1 | 4 | 0x800f1f80, 0x800f2468, 0x800f4934, 0x800f4e4c |
+| 0x90 | self+0x90 | 0 | 1 | 0x800f2340 |
+| 0x94 | self+0x94 | 0 | 1 | 0x800f2340 |
+
+## Globals and data
+
+| address | name | used by |
+|---|---|---|
+| 0x1f80009c | stage_object_table+0x8 | 0x800f1f80 |
+| 0x8007555c | dmg_tbl_shark | 0x800f1f80 |
+| 0x8008eafc | text_open | 0x800f47c8 |
+| 0x800970a0 | mega | 0x800f3180, 0x800f42c8, 0x800f52fc, 0x800f5648 |
+| 0x800970a2 | mega.var | 0x800f5aa8 |
+| 0x800970a5 | mega.var+0x3 | 0x800f4504 |
+| 0x800970aa | mega.x.px | 0x800f2468, 0x800f2a04, 0x800f3014, 0x800f4b14 |
+| 0x800970b4 | mega.layer | 0x800f1f80 |
+| 0x800971f8 | camera_layer0 | 0x800f2d98, 0x800f3014, 0x800f52fc, 0x800f5648, 0x800f5a1c, 0x800f6008, 0x800f63ac |
+| 0x8009721e | cam.target_min_x | 0x800f2c38, 0x800f59ac |
+| 0x80097420 | frame_count | 0x800f2468, 0x800f5764 |
+| 0x800cced0 | game | 0x800f4504, 0x800f45a0, 0x800f472c |
+| 0x800ccedc | game.stage | 0x800f1f80 |
+| 0x800ccf38 | game.difficulty | 0x800f5aa8 |
+| 0x800ccf5c | boss_hp_max | 0x800f4848 |
+| 0x800ccf5f | game.boss_level | 0x800f3290, 0x800f5cd8, 0x800f5fb8, 0x800f6354 |
+| 0x800e9a6c |  | 0x800f45a0 |
+| 0x800e9a70 |  | 0x800f5cd8, 0x800f5fb8 |
+| 0x800e9a74 |  | 0x800f6354 |
+| 0x800e9a7c |  | 0x800f3290 |
+| 0x800f907c |  | 0x800f2468, 0x800f4674, 0x800f4934, 0x800f4be4, 0x800f5814 |
+| 0x800f9080 |  | 0x800f4e4c |
+| 0x800f9084 |  | 0x800f5764 |
+| 0x800f9088 |  | 0x800f1f80 |
+| 0x800f908c |  | 0x800f1f80 |
+| 0x800f90b8 |  | 0x800f5df8 |
+| 0x800f90bc |  | 0x800f5df8 |
+| 0x800f90c0 |  | 0x800f61d4 |
+| 0x800f90c4 |  | 0x800f61d4 |
+| 0x800f90c8 |  | 0x800f6578 |
+| 0x800f90cc |  | 0x800f6578 |
+| 0x800f952c |  | 0x800f1f80 |
+| 0x800f9868 | shark_pieces | 0x800f1f80, 0x800f5d3c, 0x800f6118, 0x800f64bc |
+| 0x800f986a | shark_bees | 0x800f1f80, 0x800f3290, 0x800f65c4 |
+| 0x800f986c | shark_bees+0x2 | 0x800f2468 |
+| 0x800f9870 | shark_bees+0x6 | 0x800f2468 |
+| 0x800f9874 | shark_fight_time | 0x800f1f80, 0x800f2340 |
