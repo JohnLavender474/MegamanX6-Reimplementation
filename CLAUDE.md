@@ -47,7 +47,7 @@ make dist                    # dist-linux and dist-windows: executables in game-
   same shot options work on it.
 - **Automated runs** (any run with `-Dmmx.shot`): keyboard and controller input are off on every screen (only
   `-Dmmx.hold` and `-Dmmx.jumpEvery` drive the game), a red border is drawn around the window, and
-  the window title ends with "AUTOMATED RUN! NO INPUT". `AutoRun` holds this rule. Every window that
+  the window title is only "AUTOMATED RUN! NO INPUT". `AutoRun` holds this rule. Every window that
   Claude opens for a check must be an automated run, so that the user can tell it from their own
   play and no key press changes it. A new screen must read keys only when `AutoRun.active()` is
   false, and must call `AutoRun.drawBorder` after its last draw (after the screenshot is read), and

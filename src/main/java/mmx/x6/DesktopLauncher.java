@@ -18,7 +18,7 @@ public final class DesktopLauncher {
             return;
         }
         Lwjgl3ApplicationConfiguration config = new Lwjgl3ApplicationConfiguration();
-        config.setTitle(AutoRun.title("Mega Man X6 (vibe-coded)"));
+        config.setTitle(AutoRun.title("Mega Man X6: (AI-Assisted) Reimplementation"));
         config.setWindowedMode(960, 720);
         config.setResizable(false);
         config.useVsync(true);

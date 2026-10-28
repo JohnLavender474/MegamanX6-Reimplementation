@@ -18,7 +18,7 @@ class AutoRunTest {
     void aShotRunIsAutomated() {
         System.setProperty("mmx.shot", "/tmp/x.png");
         assertTrue(AutoRun.active());
-        assertEquals("MMX6 - AUTOMATED RUN! NO INPUT", AutoRun.title("MMX6"));
+        assertEquals("AUTOMATED RUN! NO INPUT", AutoRun.title("MMX6"));
     }
 
     @Test

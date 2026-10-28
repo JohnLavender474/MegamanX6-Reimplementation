@@ -15,7 +15,7 @@ public final class AutoRun {
     }
 
     public static String title(String base) {
-        return active() ? base + " - AUTOMATED RUN! NO INPUT" : base;
+        return active() ? "AUTOMATED RUN! NO INPUT" : base;
     }
 
     public static void drawBorder(ShapeRenderer shapes, Camera cam) {
