@@ -9,11 +9,11 @@ public final class DesktopLauncher {
     }
 
     public static void main(String[] args) {
-        DataPaths paths = DataPaths.resolve(args);
+        DataPaths paths = DataPaths.assets();
         try {
             paths.validate();
         } catch (DataRootException e) {
-            System.err.println("mmx-x6: " + e.getMessage());
+            System.err.println("MegamanX6-Reimplementation: " + e.getMessage());
             System.exit(1);
             return;
         }

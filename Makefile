@@ -1,4 +1,4 @@
-.PHONY: run test
+.PHONY: run test assets
 
 STAGE ?=
 
@@ -7,3 +7,6 @@ run:
 
 test:
 	./gradlew test
+
+assets:
+	python3 tools/import_assets.py

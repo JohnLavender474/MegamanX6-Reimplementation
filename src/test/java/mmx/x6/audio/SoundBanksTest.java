@@ -15,8 +15,8 @@ import org.junit.jupiter.api.io.TempDir;
 class SoundBanksTest {
 
     private static SoundBanks real() {
-        assumeTrue(DataPaths.defaultRootExists());
-        return SoundBanks.load(DataPaths.resolve(new String[0]));
+        assumeTrue(DataPaths.assetsExist());
+        return SoundBanks.load(DataPaths.assets());
     }
 
     @Test

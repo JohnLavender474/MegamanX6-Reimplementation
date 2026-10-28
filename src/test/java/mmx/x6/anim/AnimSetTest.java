@@ -11,8 +11,8 @@ class AnimSetTest {
 
     @Test
     void parsesTheJunkroidSet() throws Exception {
-        assumeTrue(DataPaths.defaultRootExists());
-        DataPaths p = DataPaths.resolve(new String[0]);
+        assumeTrue(DataPaths.assetsExist());
+        DataPaths p = DataPaths.assets();
         AnimSet s = AnimSet.parse(Files.readString(p.enemyDir("junkroid").resolve("animations.json")));
         assertEquals(66, s.cellW());
         assertEquals(61, s.cellH());

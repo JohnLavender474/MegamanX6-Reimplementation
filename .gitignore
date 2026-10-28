@@ -2,9 +2,5 @@ build/
 .gradle/
 .idea/
 *.iml
-.superpowers/
-*.png
-*.wav
-*.tmx
 *.state.gz
 *.bin

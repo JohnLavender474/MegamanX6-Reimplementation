@@ -5,12 +5,15 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import mmx.x6.DataPaths;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class TmxLoaderTest {
 
@@ -18,8 +21,8 @@ class TmxLoaderTest {
 
     @BeforeAll
     static void load() throws Exception {
-        if (DataPaths.defaultRootExists()) {
-            level = TmxLoader.load(DataPaths.resolve(new String[0]).tmx());
+        if (DataPaths.assetsExist()) {
+            level = TmxLoader.load(DataPaths.assets().tmx());
         }
     }
 
@@ -34,6 +37,28 @@ class TmxLoaderTest {
 
     private static RecordDef record(int index) {
         return level().records().stream().filter(r -> r.index() == index).findFirst().orElseThrow();
+    }
+
+    @Test
+    void collisionTilesetFromAnExternalTsx(@TempDir Path dir) throws Exception {
+        Files.createDirectories(dir.resolve("tmx"));
+        Files.createDirectories(dir.resolve("tsx"));
+        Files.writeString(dir.resolve("tsx/a-tiles.tsx"), "<?xml version=\"1.0\"?>\n"
+                + "<tileset name=\"tiles\" tilewidth=\"16\" tileheight=\"16\" tilecount=\"4\" columns=\"2\"/>\n");
+        Files.writeString(dir.resolve("tsx/collision.tsx"), "<?xml version=\"1.0\"?>\n"
+                + "<tileset name=\"collision\" tilewidth=\"16\" tileheight=\"16\" tilecount=\"64\" columns=\"8\"/>\n");
+        StringBuilder layers = new StringBuilder();
+        for (String name : List.of("art 2 background", "art 1 decoration", "art 0 main", "art 0 front")) {
+            layers.append("<layer name=\"").append(name).append("\" width=\"2\" height=\"1\"><data encoding=\"csv\">1,0</data></layer>\n");
+        }
+        layers.append("<layer name=\"collision\" width=\"2\" height=\"1\"><data encoding=\"csv\">0,62</data></layer>\n");
+        Path tmx = dir.resolve("tmx/a.tmx");
+        Files.writeString(tmx, "<?xml version=\"1.0\"?>\n<map width=\"2\" height=\"1\">\n"
+                + "<tileset firstgid=\"1\" source=\"../tsx/a-tiles.tsx\"/>\n"
+                + "<tileset firstgid=\"5\" source=\"../tsx/collision.tsx\"/>\n" + layers + "</map>\n");
+        Level l = TmxLoader.load(tmx);
+        assertEquals(0, l.collision().raw(0, 0));
+        assertEquals(57, l.collision().raw(1, 0));
     }
 
     @Test

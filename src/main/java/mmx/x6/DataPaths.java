@@ -6,7 +6,8 @@ import java.util.List;
 
 public final class DataPaths {
 
-    private static final Path LOCAL_TMX = Path.of("assets", "tmx");
+    private static final Path ASSETS = Path.of("assets");
+    private static final String INTRO_TMX = "intro.tmx";
 
     private final Path root;
 
@@ -14,29 +15,19 @@ public final class DataPaths {
         this.root = root;
     }
 
-    public static DataPaths resolve(String[] args) {
-        String property = System.getProperty("mmx.data");
-        if (property != null && !property.isBlank()) {
-            return new DataPaths(Path.of(property));
-        }
-        if (args.length > 0 && !args[0].isBlank()) {
-            return new DataPaths(Path.of(args[0]));
-        }
-        return new DataPaths(defaultRoot());
+    public static DataPaths assets() {
+        return new DataPaths(ASSETS);
     }
 
-    public static boolean defaultRootExists() {
-        return Files.isRegularFile(new DataPaths(defaultRoot()).tmx());
-    }
-
-    private static Path defaultRoot() {
-        return Path.of(System.getProperty("user.home"), "mmx-data", "x6");
+    public static boolean assetsExist() {
+        return Files.isRegularFile(assets().tmx());
     }
 
     public void validate() throws DataRootException {
         for (Path p : List.of(tmx(), tilesPng(), playerDir("x-falcon"), songsJson())) {
             if (!Files.exists(p)) {
-                throw new DataRootException("data root " + root + " is missing " + p);
+                throw new DataRootException("assets folder " + root + " is missing " + p
+                        + "; copy the assets with `make assets`");
             }
         }
     }
@@ -46,29 +37,19 @@ public final class DataPaths {
     }
 
     public Path tmx() {
-        return tmx("m094-intro", "intro.tmx");
+        return tmx(INTRO_TMX);
     }
 
     public Path tilesPng() {
-        return tilesPng("m094-intro");
+        return tilesPng(INTRO_TMX);
     }
 
-    public Path tmx(String dir, String file) {
-        return root.resolve("tmx").resolve(dir).resolve(file);
+    public Path tmx(String file) {
+        return root.resolve("tiled/tmx").resolve(file);
     }
 
-    public Path tilesPng(String dir) {
-        return root.resolve("tmx").resolve(dir).resolve("tiles.png");
-    }
-
-    public Path stageTmx(String dir, String file) {
-        Path local = LOCAL_TMX.resolve(dir).resolve(file);
-        return Files.isRegularFile(local) ? local : tmx(dir, file);
-    }
-
-    public Path stageTiles(String dir) {
-        Path local = LOCAL_TMX.resolve(dir).resolve("tiles.png");
-        return Files.isRegularFile(local) ? local : tilesPng(dir);
+    public Path tilesPng(String tmxFile) {
+        return root.resolve("tiled/png").resolve(tmxFile.replaceFirst("\\.tmx$", "") + "-tiles.png");
     }
 
     public Path playerDir(String name) {
@@ -104,7 +85,7 @@ public final class DataPaths {
     }
 
     public Path frontEndImage(String file) {
-        return root.resolve("re/front-end/images").resolve(file);
+        return root.resolve("sprites/frontend").resolve(file);
     }
 
     public boolean frontEndExists() {
@@ -119,10 +100,10 @@ public final class DataPaths {
     }
 
     public Path songsJson() {
-        return root.resolve("music/bgm/songs.json");
+        return root.resolve("music/songs.json");
     }
 
     public Path musicRecord(String file) {
-        return root.resolve("music/bgm").resolve(file);
+        return root.resolve("music").resolve(file);
     }
 }

@@ -22,10 +22,10 @@ class StagesTest {
 
     @Test
     void everyStageLoads() throws IOException {
-        assumeTrue(DataPaths.defaultRootExists());
-        DataPaths p = DataPaths.resolve(new String[0]);
+        assumeTrue(DataPaths.assetsExist());
+        DataPaths p = DataPaths.assets();
         for (StageDef s : Stages.ALL) {
-            Level level = TmxLoader.load(p.tmx(s.tmxDir(), s.tmxFile()));
+            Level level = TmxLoader.load(p.tmx(s.tmxFile()));
             assertFalse(level.records().isEmpty(), s.key());
             long markers = level.records().stream().filter(r -> r.name().equals("CheckpointMarker")).count();
             assertEquals(s.checkpoints().size() - 1, markers, s.key());
@@ -34,9 +34,9 @@ class StagesTest {
 
     @Test
     void heatnixFixedRecords() throws IOException {
-        assumeTrue(DataPaths.defaultRootExists());
-        DataPaths p = DataPaths.resolve(new String[0]);
-        Level level = TmxLoader.load(p.tmx(Stages.HEATNIX.tmxDir(), Stages.HEATNIX.tmxFile()));
+        assumeTrue(DataPaths.assetsExist());
+        DataPaths p = DataPaths.assets();
+        Level level = TmxLoader.load(p.tmx(Stages.HEATNIX.tmxFile()));
         assertEquals(3, level.fixedRecords().size());
         assertEquals("BossGate", level.fixedRecords().get(2).name());
         assertEquals(7, level.fixedRecords().get(2).id());

@@ -153,13 +153,13 @@ Each line names what is guessed or missing, where it is in the code, and the sou
 
 - TMX: the Yammark and Turtloid exports of `~/mmx-data/x6/tmx` have no texture split, so the parts
   after their texture swap (Yammark camera zone `id` 132 at (592, 1568); Turtloid zone `id` 136 at
-  (3648, 224)) drew with the wrong texture block (for example both boss rooms). The copies in
-  `assets/tmx/` are made again by `mmxdemake.tmx` from a scratch copy of the catalog with these
+  (3648, 224)) drew with the wrong texture block (for example both boss rooms). The maps in
+  `assets/tiled/tmx/` are made again by `mmxdemake.tmx` from a scratch copy of the catalog with these
   splits (texture `0x16`, regions set by eye from both drawings): Yammark `[0, 592, 1100, 6656,
   2304]`, `[1, 592, 1100, 6656, 2304]`, `[2, 700, 700, 6656, 2304]`; Turtloid `[0, 3520, 0, 9472,
   1536]`, `[1, 3520, 0, 9472, 1536]`, `[2, 4400, 576, 9472, 1536]`. The tools catalog
   (`catalog/stages.json`) is not changed. A few BG cells keep a few wrong colours (the palettes come
-  from the start state). `DataPaths.stageTmx`
+  from the start state). `make assets` never replaces these maps. `tools/import_assets.py`
 - Turtloid BG layer 2: the cells beside the pagoda (layer 2 x 140–260, y 495–545) and beside the
   gate roof over the sea wall (x 1600–1970, y 255–300) show garbage with both texture blocks;
   probably VRAM that other art covers in play. Marked in the TMX (`TODO` layer).

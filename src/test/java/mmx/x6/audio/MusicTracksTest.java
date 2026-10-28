@@ -11,8 +11,8 @@ import org.junit.jupiter.api.Test;
 class MusicTracksTest {
 
     private static Map<Integer, MusicTrack> tracks() {
-        assumeTrue(DataPaths.defaultRootExists());
-        return MusicTracks.load(DataPaths.resolve(new String[0]));
+        assumeTrue(DataPaths.assetsExist());
+        return MusicTracks.load(DataPaths.assets());
     }
 
     @Test

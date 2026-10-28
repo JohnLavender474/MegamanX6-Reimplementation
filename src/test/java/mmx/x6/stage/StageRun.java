@@ -18,10 +18,10 @@ public final class StageRun {
     public final Sim.RecordingMusic music = new Sim.RecordingMusic();
 
     private StageRun(StageDef stage, int checkpoint) {
-        assumeTrue(DataPaths.defaultRootExists());
-        DataPaths p = DataPaths.resolve(new String[0]);
+        assumeTrue(DataPaths.assetsExist());
+        DataPaths p = DataPaths.assets();
         try {
-            world = new World(stage, TmxLoader.load(p.tmx(stage.tmxDir(), stage.tmxFile())), Sim::set, sfx, music);
+            world = new World(stage, TmxLoader.load(p.tmx(stage.tmxFile())), Sim::set, sfx, music);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

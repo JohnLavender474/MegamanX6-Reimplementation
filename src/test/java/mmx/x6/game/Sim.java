@@ -83,7 +83,7 @@ public final class Sim {
     }
 
     public static AnimSet set(String name) {
-        assumeTrue(DataPaths.defaultRootExists());
+        assumeTrue(DataPaths.assetsExist());
         if (name.equals("shots")) {
             return ShotAnims.SET;
         }
@@ -102,7 +102,7 @@ public final class Sim {
             return merged;
         }
         return SETS.computeIfAbsent(name, n -> {
-            DataPaths p = DataPaths.resolve(new String[0]);
+            DataPaths p = DataPaths.assets();
             try {
                 java.nio.file.Path dir = n.equals("x-falcon") ? p.playerDir(n) : p.enemyDir(n);
                 AnimSet parsed = AnimSet.parse(Files.readString(dir.resolve("animations.json")));

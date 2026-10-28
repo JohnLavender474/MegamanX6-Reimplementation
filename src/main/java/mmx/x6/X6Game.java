@@ -94,11 +94,11 @@ public final class X6Game extends Game {
         lastIndex = Math.max(0, Stages.BOSSES.indexOf(stage));
         Level level;
         try {
-            level = TmxLoader.load(paths.stageTmx(stage.tmxDir(), stage.tmxFile()));
+            level = TmxLoader.load(paths.tmx(stage.tmxFile()));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        assets.useTiles(paths.stageTiles(stage.tmxDir()));
+        assets.useTiles(paths.tilesPng(stage.tmxFile()));
         if (sfx != null) {
             sfx.dispose();
         }

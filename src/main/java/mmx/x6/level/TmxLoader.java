@@ -22,21 +22,13 @@ public final class TmxLoader {
     }
 
     public static Level load(Path tmx) throws IOException {
-        Document doc;
-        try (InputStream in = Files.newInputStream(tmx)) {
-            DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-            f.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-            doc = f.newDocumentBuilder().parse(in);
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new IOException("cannot parse " + tmx + ": " + e.getMessage(), e);
-        }
-        Element map = doc.getDocumentElement();
+        Element map = parse(tmx);
         int width = intAttr(map, "width");
         int height = intAttr(map, "height");
 
         int collisionFirstGid = -1;
         for (Element ts : children(map, "tileset")) {
-            if ("collision".equals(ts.getAttribute("name"))) {
+            if ("collision".equals(tilesetName(tmx, ts))) {
                 collisionFirstGid = intAttr(ts, "firstgid");
             }
         }
@@ -87,6 +79,25 @@ public final class TmxLoader {
                 require(layers, "art 1 decoration", tmx), require(layers, "art 0 main", tmx),
                 require(layers, "art 0 front", tmx), new CollisionGrid(width, height, values),
                 List.copyOf(records), List.copyOf(zones), List.copyOf(fixed));
+    }
+
+    private static Element parse(Path xml) throws IOException {
+        try (InputStream in = Files.newInputStream(xml)) {
+            DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
+            f.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
+            Document doc = f.newDocumentBuilder().parse(in);
+            return doc.getDocumentElement();
+        } catch (ParserConfigurationException | SAXException e) {
+            throw new IOException("cannot parse " + xml + ": " + e.getMessage(), e);
+        }
+    }
+
+    private static String tilesetName(Path tmx, Element ts) throws IOException {
+        String source = ts.getAttribute("source");
+        if (source.isEmpty()) {
+            return ts.getAttribute("name");
+        }
+        return parse(tmx.resolveSibling(source).normalize()).getAttribute("name");
     }
 
     private static TileLayer require(Map<String, TileLayer> layers, String name, Path tmx) throws IOException {

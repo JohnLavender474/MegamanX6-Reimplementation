@@ -1,4 +1,4 @@
-# Working notes for Claude: mmx-x6
+# Working notes for Claude: MegamanX6-Reimplementation
 
 Write in plain, technical English (ASD-STE100), as the docs here do. The user's global rules also
 apply (no code comments except the `TODO` format below; drafts to paste go in fenced blocks).
@@ -16,9 +16,7 @@ The behaviour follows the reverse-engineering (RE) docs of the sister repo `mmx-
 they give data, and best guesses elsewhere. **Every guess, simplification and gap is listed in
 `docs/gaps.md`.** The changes that differ from X6 on purpose (the user's design choices) are in
 `docs/custom-changes.md`, with their values in `game/CustomChanges.java`. The design and plans are in `docs/superpowers/specs/` and
-`docs/superpowers/plans/`. `README.md` has the keys and the debug options.
-
-No game data is in this repo. Everything loads at run time from the data root (below).
+`docs/superpowers/plans/`. `README.md` has the keys, the debug options and a short account of how the data was made.
 
 ## Build, run, test
 
@@ -30,7 +28,7 @@ make test                    # ./gradlew test
 ```
 
 - Test results are in `build/test-results/test/*.xml`. With `-q`, Gradle prints only failures.
-- Tests that need the real data call `Assumptions.assumeTrue(DataPaths.defaultRootExists())`, so the
+- Tests that need the real data call `Assumptions.assumeTrue(DataPaths.assetsExist())`, so the
   build passes on a machine with no data.
 - Screenshots with no window input (for a visual check):
   `./gradlew run -Dmmx.stage=turtloid -Dmmx.checkpoint=5 -Dmmx.hold=1 -Dmmx.shot=/path/x.png
@@ -52,19 +50,19 @@ make test                    # ./gradlew test
 
 ## Code layout (`src/main/java/mmx/x6/`)
 
-| package | what |
-|---|---|
-| `.` | `DesktopLauncher`, `X6Game` (screens, per-stage sound banks), `GameFlow` (which screen comes next), `DataPaths` (data root; `stageTmx` prefers `assets/tmx/`) |
-| `frontend` | `FrontEnd` (the ready screen, then the X6 front-end states: logo, load, opening, title, menu; headless), `Fade` (`FadeIn`/`FadeOut`), `FrontEndText` (the misc 19 text table), `MovieFrames` (one PNG frame at a time); drawn by `screen/FrontEndScreen` |
-| `stage` | `StageDef` (TMX, checkpoints, music, sound banks, Nightmare Effect, entity factory) and `Stages` (the seven stages) |
-| `level` | `TmxLoader`, `Level`, `CollisionGrid`, `TileLayer`, `RecordDef`, `CameraZoneDef`, `Checkpoint`, `IntroCheckpoints` |
-| `physics` | `TerrainMover` (tile collision, slopes, solids), `TileRules` (collision values), `Body`, `Rect` |
-| `game` | `World` (one update; entity loop; weapons, contacts, solids, carry, pause), `CameraController` (follow, `CameraLimitEase`, BG layer modes), `CameraZones`, `Spawner` (spawn band, fixed records, checkpoint markers), `StageFlow` (death fade, restart, clear), `Damage`, `DamageTables`, `Progress` (lives, souls, Reploids, parts), `Entity`, `Solid`, `Weapon`, `CustomChanges` (the user's changes, `docs/custom-changes.md`) |
-| `game/player` | `Player` (all X steps), `PlayerConst`, `BusterShot`, `BusterPoints` (copied from the executable), `SabreSlash` |
-| `game/enemy` | shared objects (`BossGate`, `RescueReploid`, `NightmareVirus`, `LightCapsule`, `TeleporterCrystal`, `Projectile`, `IceSlide` (stage logic 7), `NightmareShadow`, `NightmareBug`), the intro enemies, `CommonEntityFactory`; one sub-package per stage with its factory |
-| `game/boss` | `Maverick` (warning, HP fill, hit invulnerability, death blink, explosion, boss soul), the D-1000 parts |
-| `game/fx` | explosions, debris, the boss explosion, death orbs |
-| `anim`, `render`, `screen`, `audio`, `input` | animation sets and players (sprite-only sheets; `BankSheetAnims` cuts sprites from a numbered bank sheet), drawing, screens, sound banks and music, buttons (`Controls`: keyboard and controller each frame, with the session `Bindings`) |
+| package                                      | what                                                                                                                                                                                                                                                                                                                                                                                                                              |
+|----------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `.`                                          | `DesktopLauncher`, `X6Game` (screens, per-stage sound banks), `GameFlow` (which screen comes next), `DataPaths` (the `assets/` paths)                                                                                                                                                                                                                                                                                             |
+| `frontend`                                   | `FrontEnd` (the ready screen, then the X6 front-end states: logo, load, opening, title, menu; headless), `Fade` (`FadeIn`/`FadeOut`), `FrontEndText` (the misc 19 text table), `MovieFrames` (one PNG frame at a time); drawn by `screen/FrontEndScreen`                                                                                                                                                                          |
+| `stage`                                      | `StageDef` (TMX, checkpoints, music, sound banks, Nightmare Effect, entity factory) and `Stages` (the seven stages)                                                                                                                                                                                                                                                                                                               |
+| `level`                                      | `TmxLoader`, `Level`, `CollisionGrid`, `TileLayer`, `RecordDef`, `CameraZoneDef`, `Checkpoint`, `IntroCheckpoints`                                                                                                                                                                                                                                                                                                                |
+| `physics`                                    | `TerrainMover` (tile collision, slopes, solids), `TileRules` (collision values), `Body`, `Rect`                                                                                                                                                                                                                                                                                                                                   |
+| `game`                                       | `World` (one update; entity loop; weapons, contacts, solids, carry, pause), `CameraController` (follow, `CameraLimitEase`, BG layer modes), `CameraZones`, `Spawner` (spawn band, fixed records, checkpoint markers), `StageFlow` (death fade, restart, clear), `Damage`, `DamageTables`, `Progress` (lives, souls, Reploids, parts), `Entity`, `Solid`, `Weapon`, `CustomChanges` (the user's changes, `docs/custom-changes.md`) |
+| `game/player`                                | `Player` (all X steps), `PlayerConst`, `BusterShot`, `BusterPoints` (copied from the executable), `SabreSlash`                                                                                                                                                                                                                                                                                                                    |
+| `game/enemy`                                 | shared objects (`BossGate`, `RescueReploid`, `NightmareVirus`, `LightCapsule`, `TeleporterCrystal`, `Projectile`, `IceSlide` (stage logic 7), `NightmareShadow`, `NightmareBug`), the intro enemies, `CommonEntityFactory`; one sub-package per stage with its factory                                                                                                                                                            |
+| `game/boss`                                  | `Maverick` (warning, HP fill, hit invulnerability, death blink, explosion, boss soul), the D-1000 parts                                                                                                                                                                                                                                                                                                                           |
+| `game/fx`                                    | explosions, debris, the boss explosion, death orbs                                                                                                                                                                                                                                                                                                                                                                                |
+| `anim`, `render`, `screen`, `audio`, `input` | animation sets and players (sprite-only sheets; `BankSheetAnims` cuts sprites from a numbered bank sheet), drawing, screens, sound banks and music, buttons (`Controls`: keyboard and controller each frame, with the session `Bindings`)                                                                                                                                                                                         |
 
 Tests (`src/test/java/mmx/x6/`): `game/Sim` (a headless world on an ASCII grid), `stage/StageRun`
 (a headless world on a real stage TMX: `at(stage, checkpoint)`, `until`, `runRight`, `find`),
@@ -104,23 +102,30 @@ Tests (`src/test/java/mmx/x6/`): `game/Sim` (a headless world on an ASCII grid),
   `object-names.json`, `helpers.json` with names of RAM addresses). Do not edit the tools repo or
   its catalog unless the user asks; propose changes to the user.
 
-### The data root: `~/mmx-data/x6/` (override: `-Dmmx.data=<path>` or the first program argument)
+### The assets: `assets/`
 
-| folder | what |
-|---|---|
-| `tmx/mNNN-<name>/` | Tiled maps made by `mmxdemake.tmx`: `<name>.tmx`, `tiles.png`, `collision.png`; `summary.txt` lists them. Layers: `art 2 background`, `art 1 decoration` (with `x6_mode`, `x6_offset_*`), `art 0 main`, `art 0 front`, `collision`; object groups `records`, `fixed records`, `camera zones` |
-| `sprites/enemies/<name>/`, `sprites/players/<name>/` | exports: `animations.json` (frames with sprite, ticks, flag; `loop_to`; cell and origin) and one `anim-N.png` strip per animation; `enemy-<hash>` folders are unnamed exports |
-| `sprites/banks/<stage>/<state>/` | raw sprite bank sheets |
-| `sounds/mNNN-eKK/` | VAB banks as WAV with `bank.json` (slot, sound words, programs and tones); `summary.txt` |
-| `music/bgm/` | XA music as WAV and `songs.json` (track → record, start, end) |
-| `dumps/*.state.gz` | PCSXR save states named `<stage>-<n>_<what>` |
-| `extracted/retail/` | the disc files: `iso/SLUS_013.95` (the executable), `rock_bin/NN.bin` (overlays), `rock_dat/`, `index.json` |
-| `re/<topic>/` | RE work folders: `notes.md`, pseudocode, kits, scripts, `doc-changes.md` |
-| `stages/`, `tiles/`, `collision/`, `renders*/`, `probe/`, `preview/`, `notes/` | stage drawings (`stage.ora`, `objects.json`), tile and collision sheets, probes |
-| `disc/` | the disc image |
+The game reads nothing else. `make assets` (`tools/import_assets.py`) copies the data root into it:
+`sprites/` (`players/`, `enemies/`, `banks/`, `stages/`, and `frontend/` from `re/front-end/images/`),
+`sounds/`, `music/` (from `music/bgm/`), `movies/`, and `tiled/tmx/`, `tiled/tsx/`, `tiled/png/` (from
+`tmx/`: each embedded tileset moves out to `<map>-tiles.tsx` or `collision.tsx`). It keeps files that
+exist (`--update` replaces them) and never replaces a map in `tiled/tmx/`.
 
-The project's own TMX copies are in `assets/tmx/` (git ignores them, with `*.png` and `*.wav`). The
-game reads a copy there before the data root. The user annotates them in Tiled (a `TODO` point
+### The data root: `~/mmx-data/x6/` (the source of `make assets`)
+
+| folder                                                                         | what                                                                                                                                                                                                                                                                                         |
+|--------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `tmx/mNNN-<name>/`                                                             | Tiled maps made by `mmxdemake.tmx`: `<name>.tmx`, `tiles.png`, `collision.png`; `summary.txt` lists them. Layers: `art 2 background`, `art 1 decoration` (with `x6_mode`, `x6_offset_*`), `art 0 main`, `art 0 front`, `collision`; object groups `records`, `fixed records`, `camera zones` |
+| `sprites/enemies/<name>/`, `sprites/players/<name>/`                           | exports: `animations.json` (frames with sprite, ticks, flag; `loop_to`; cell and origin) and one `anim-N.png` strip per animation; `enemy-<hash>` folders are unnamed exports                                                                                                                |
+| `sprites/banks/<stage>/<state>/`                                               | raw sprite bank sheets                                                                                                                                                                                                                                                                       |
+| `sounds/mNNN-eKK/`                                                             | VAB banks as WAV with `bank.json` (slot, sound words, programs and tones); `summary.txt`                                                                                                                                                                                                     |
+| `music/bgm/`                                                                   | XA music as WAV and `songs.json` (track → record, start, end)                                                                                                                                                                                                                                |
+| `dumps/*.state.gz`                                                             | PCSXR save states named `<stage>-<n>_<what>`                                                                                                                                                                                                                                                 |
+| `extracted/retail/`                                                            | the disc files: `iso/SLUS_013.95` (the executable), `rock_bin/NN.bin` (overlays), `rock_dat/`, `index.json`                                                                                                                                                                                  |
+| `re/<topic>/`                                                                  | RE work folders: `notes.md`, pseudocode, kits, scripts, `doc-changes.md`                                                                                                                                                                                                                     |
+| `stages/`, `tiles/`, `collision/`, `renders*/`, `probe/`, `preview/`, `notes/` | stage drawings (`stage.ora`, `objects.json`), tile and collision sheets, probes                                                                                                                                                                                                              |
+| `disc/`                                                                        | the disc image                                                                                                                                                                                                                                                                               |
+
+The project's maps are in `assets/tiled/tmx/`. The user annotates them in Tiled (a `TODO` point
 layer). The Yammark and Turtloid copies are made again with a texture split (`docs/gaps.md`, "TMX").
 
 ### Reading the real game
@@ -184,7 +189,7 @@ These come from bugs that the user found in play (2026-10-23 to 2026-10-25).
   add a test with `Sim` or `StageRun`; run `StageSmokeTest`; take screenshots; add the gaps.
 - New stage: add a `StageDef` to `Stages` (checkpoints from the stage doc's `checkpoint_start_tbl`
   table, music from `stage_music`, banks from the save states), copy or make its TMX in
-  `assets/tmx/`, check the texture swap, then the objects.
+  `assets/tiled/tmx/` (with its `.tsx` and tile sheet), check the texture swap, then the objects.
 - Bug report from the user: find the root cause in the docs and the real code first (save states,
   disassembly), then fix, then add a test that fails without the fix. Say which of these it is: a
   defect in the docs or data, a gap that was filled with a guess, or a mistake against the docs.

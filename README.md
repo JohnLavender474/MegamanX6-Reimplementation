@@ -1,97 +1,117 @@
-# mmx-x6
+# Mega Man X6 (vibe-coded)
 
-A playable approximation of Mega Man X6 stages in Java and LibGDX, with X in the Falcon Armor:
+A fan remake of stages from Mega Man X6 (PlayStation, 2001), written in Java with
+the help of AI.
 
-- the intro stage, from the beam-in to the death of the D-1000;
-- Commander Yammark's stage, to the fight with Commander Yammark;
-- Rainy Turtloid's stage (section 1), to the fight with Rainy Turtloid;
-- Blaze Heatnix's stage (section 1), with all the Nightmare Snake fights, to a stand-in for Blaze
-  Heatnix (there is no data for him yet);
-- Blizzard Wolfang's stage (section 1), Ground Scaravich's stage (with the random section route)
-  and Shield Sheldon's stage (section 1), each to its boss fight.
+This is not an emulator and not a port. The game code is new. The graphics, sounds,
+music and maps come from the original disc, and the enemy and boss behaviour is
+rebuilt from a study of the original game.
 
-The game boots on a "Ready to play? Press START" screen. After Start, it continues as X6 does: the Capcom logo, a load screen, the opening movie, the title (PRESS
-START) and the main menu. GAME START starts the intro stage. Each stage ends with a STAGE CLEAR
-screen; after it, the stage select screen shows the boss stages.
+## What you can play
 
-The behaviour follows the reverse-engineering docs in `~/IdeaProjects/mmx-demake-tools/docs/`
-where they give data, and best guesses elsewhere. Every guess and gap is listed in
-[`docs/gaps.md`](docs/gaps.md). The design is in `docs/superpowers/specs/`, the build plan in
-`docs/superpowers/plans/`.
+The game starts as X6 does: the Capcom logo, the opening movie, the title screen and
+the main menu. GAME START plays the intro stage. After the intro, a stage select
+screen opens with these stages:
 
-## Data
+| stage             | how much                                                          |
+|-------------------|-------------------------------------------------------------------|
+| Intro             | the full stage, to the fight with the D-1000                      |
+| Commander Yammark | the full stage and the boss fight                                 |
+| Blizzard Wolfang  | section 1 and the boss fight                                      |
+| Blaze Heatnix     | section 1 with all Nightmare Snake fights; the boss is a stand-in |
+| Ground Scaravich  | the stage with its random section route, and the boss fight       |
+| Rainy Turtloid    | section 1 and the boss fight                                      |
+| Shield Sheldon    | section 1 and the boss fight                                      |
 
-No game data is in this repo. The game reads the files that `mmx-demake-tools` extracts:
+What is not here yet: Zero, the weapons that you get from the bosses, the second
+sections of most stages, the Nightmare (Gate) stages, the pause menu, special weapons, 
+and much more.
 
-- `tmx/m094-intro/`, `tmx/m095-commander-yammark-section-1/`, `tmx/m096-blizzard-wolfang-section-1/`,
-  `tmx/m097-blaze-heatnix-section-1/`, `tmx/m100-ground-scaravich/`,
-  `tmx/m101-rainy-turtloid-section-1/`, `tmx/m102-shield-sheldon-section-1/` (map, tiles, collision). When the same folder is in
-  `assets/tmx/` of this repo (git ignores it), the game reads that copy instead. The Yammark and
-  Turtloid copies there are made with a texture split (see `docs/gaps.md`, "TMX").
-- `sprites/players/x-falcon`, `sprites/players/x-shots`, `sprites/enemies/*`,
-  `sprites/banks/intro/intro-1_start/bank-1.png`, `sprites/banks/scaravich/scaravich-3_section/bank-5.png`
-- `sounds/` (VAB banks as WAV) and `music/bgm/` (XA tracks as WAV)
+## How close it is to X6
 
-The data root is `~/mmx-data/x6` by default. To use another place, pass it as the first program
-argument or as `-Dmmx.data=<path>`. A missing file stops the game with one error line.
+Where the study of the game gives exact values (speeds, timers, damage, enemy
+patterns), the remake uses them. Where it does not, the remake uses a best guess.
+Each guess and each missing part is listed in [`docs/gaps.md`](docs/gaps.md).
 
-## Run
+Some changes from X6 are on purpose, for example the "Ready to play? Press START"
+screen at boot and the options screen where you can change the keys. They are listed
+in [`docs/custom-changes.md`](docs/custom-changes.md).
+
+## How the data was made
+
+1. **The disc.** The source is a copy of Mega Man X6 (USA, v1.1). Its checksum
+   matches the Redump preservation database, so we know it is a clean copy.
+2. **Extraction.** The tools take the disc apart: the 9 files on the disc, the 59
+   code overlays and the 243 data members in the game's main archive.
+3. **Decoding.** The tools turn each kind of data into normal files:
+   - the stages into maps for the Tiled map editor (tiles, collision, enemy
+     placement and camera zones);
+   - the sprites into picture strips with their animation timing;
+   - the sound banks into WAV files, and the streamed music into WAV tracks;
+   - the logo and opening movies into picture frames and a soundtrack;
+   - the menu text into tables.
+4. **The study of the game (reverse engineering).** To learn how each enemy, boss,
+   item and the camera work, we read the game's machine code and its memory at
+   points in play. The memory comes from about 90 emulator save states, taken at
+   known places in each stage. The results are written as one behaviour sheet per
+   object (about 60 enemies and bosses), plus notes on the engine, damage and
+   sound. Each fact has a confidence tag: certain, likely or guess.
+
+Earlier community work helped as a source of facts:
+
+- [`mmx6`](https://github.com/anzaldoivan/mmx6): a decompilation of X6
+- [`MegaManX6Recomp`](https://github.com/mstan/MegaManX6Recomp): a recompilation of X6
+- [`MegaManX6_PS1_Modding`](https://github.com/Kuumba123/MegaManX6_PS1_Modding): Kuumba123's X6 modding notes
+- [Redump](http://redump.org/): the disc preservation database
+
+We used their facts and checked each one against the disc and the save states. We
+did not copy their code.
+
+The full credits are in `docs/prior-work.md` in `mmx-demake-tools`.
+
+## Play
+
+You need Java 17 or later and the data in `assets/`. Then:
 
 ```
 make run
-make run STAGE=turtloid
-make test
 ```
 
-`make run` and `make test` call `./gradlew run` and `./gradlew test`. `make run` starts at the
-ready screen; Start (Enter) goes on to the Capcom logo. `STAGE` (`intro`, `yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`)
-skips the front end and the stage select screen.
+`make run STAGE=yammark` goes directly to a stage (`intro`, `yammark`, `wolfang`,
+`heatnix`, `scaravich`, `turtloid` or `sheldon`).
 
-The front end reads the movies from `<data root>/movies/` and the title and menu pictures from
-`<data root>/re/front-end/images/`. When they are missing, the game starts at the stage select
-screen.
+## Controls
 
-Java 17 or later (the build targets 17; it is tested on JDK 25). The Gradle wrapper downloads
-Gradle 9.1.0.
+A controller and the keyboard work at the same time. You can change both on the
+OPTION screen of the main menu.
 
-## Keys
+| key     | controller | action                                               |
+|---------|------------|------------------------------------------------------|
+| W A S D | D-pad      | move, climb, aim                                     |
+| K       | Cross      | jump (in the air: Falcon dash)                       |
+| J       | Square     | buster; hold to charge                               |
+| L       | Circle     | dash                                                 |
+| I       | Triangle   | Z-Saber                                              |
+| Q / O   | L1 / R1    | change weapon (no effect yet)                        |
+| Enter   | Start      | Start                                                |
+| R       |            | restart the stage                                    |
+| F1      |            | show collision and hit boxes                         |
+| Esc     |            | go back (stage select or title); quit from the menus |
 
-| key | action |
-|---|---|
-| W A S D | move, climb, aim the crouch |
-| K | jump (in the air: Falcon dash) |
-| J | buster; hold to charge |
-| L | dash |
-| I | Z-Saber (the triangle button) |
-| Q | left trigger: previous weapon (no effect yet) |
-| O | right trigger: next weapon (no effect yet) |
-| R | restart the stage |
-| F1 | debug view: collision, boxes, slash boxes |
-| Enter | Start |
-| Esc | in the intro stage: back to the title; in a boss stage: back to the stage select screen; on the front end and the select screen: quit |
-
-On the front end, Enter is Start and K is Cross. Start leaves the ready screen and skips the logo. Start or a face button (J, K,
-L, I) skips the opening. Start on the title opens the menu. On the menu, W and S choose and Enter or
-K picks. GAME START starts the game. OPTION opens the options screen, where you can rebind the keys and
-the controller buttons for the current session (CONTROLLER SETTINGS needs a connected controller).
-
-The keys above are the defaults. A controller works with the keyboard at the same time: its D-pad
-moves, and the bottom, right, left and top face buttons are Cross (jump), Circle (dash), Square
-(buster) and Triangle (weapon).
-
-On the stage select screen, Up and Down choose, and Start, Cross or Square starts.
+On the menus, W and S (or Up and Down) choose, and Enter or K picks.
 
 ## Debug options
 
-| property | effect |
-|---|---|
-| `-Dmmx.stage=KEY` | start this stage (`intro`, `yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`) without the select screen |
-| `-Dmmx.front=NAME` | start the front end at `ready` (default), `logo`, `load`, `opening`, `title`, `menu` or `options`; `select` starts at the stage select screen |
-| `-Dmmx.checkpoint=N` | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3) |
-| `-Dmmx.startX=X -Dmmx.startY=Y` | start standing at a point, with wide camera limits |
-| `-Dmmx.debug=true` | start with the F1 view on |
-| `-Dmmx.hold=BITS` | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon) |
-| `-Dmmx.jumpEvery=N` | with `mmx.hold`: pulse jump and the held non-direction buttons every N updates |
-| `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG of the view after N updates and quit; with a list (`300,600`), one PNG per value (`FILE-300.png`, …). On the front end, the PNG is the whole window and `mmx.hold` and `mmx.jumpEvery` work too. A shot run is an automated run: the keyboard is off, a red border marks the window and its title says "AUTOMATED RUN! NO INPUT" |
+For developers, these Java properties change how the game starts
+(`./gradlew run -Dmmx.stage=intro -Dmmx.checkpoint=2`):
 
-Example: `./gradlew run -Dmmx.stage=intro -Dmmx.checkpoint=2` starts in the hallway before the D-1000.
+| property                            | effect                                                                                                                                                    |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `-Dmmx.stage=KEY`                   | start this stage without the select screen                                                                                                                |
+| `-Dmmx.front=NAME`                  | start the front end at `ready` (default), `logo`, `load`, `opening`, `title`, `menu` or `options`; `select` starts at the stage select screen             |
+| `-Dmmx.checkpoint=N`                | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3)                                        |
+| `-Dmmx.startX=X -Dmmx.startY=Y`     | start standing at a point, with wide camera limits                                                                                                        |
+| `-Dmmx.debug=true`                  | start with the F1 view on                                                                                                                                 |
+| `-Dmmx.hold=BITS`                   | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon, 2048 Start) |
+| `-Dmmx.jumpEvery=N`                 | with `mmx.hold`: pulse jump and the held non-direction buttons every N updates                                                                            |
+| `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG after N updates and quit (a list such as `300,600` saves one PNG each); keyboard and controller are off, and a red border marks the window     |

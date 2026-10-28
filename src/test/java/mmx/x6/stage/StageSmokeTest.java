@@ -24,12 +24,12 @@ class StageSmokeTest {
     @ParameterizedTest
     @ValueSource(strings = {"intro", "yammark", "wolfang", "heatnix", "scaravich", "turtloid", "sheldon"})
     void everyCheckpointRuns(String key) throws IOException {
-        assumeTrue(DataPaths.defaultRootExists());
+        assumeTrue(DataPaths.assetsExist());
         StageDef stage = Stages.byKey(key);
-        DataPaths p = DataPaths.resolve(new String[0]);
+        DataPaths p = DataPaths.assets();
         Map<String, Integer> seen = new TreeMap<>();
         for (int cp = 0; cp < stage.checkpoints().size(); cp++) {
-            Level level = TmxLoader.load(p.tmx(stage.tmxDir(), stage.tmxFile()));
+            Level level = TmxLoader.load(p.tmx(stage.tmxFile()));
             World w = new World(stage, level, Sim::set, Sfx.NONE, new Sim.RecordingMusic());
             w.flow.restart(cp);
             float startX = w.player.x;
