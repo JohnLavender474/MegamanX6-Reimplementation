@@ -1,0 +1,79 @@
+{
+  "states": {
+    "heatnix-1_start": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-6e15315f49",
+        "enemy-7f9bbc9a47",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 52
+        }
+      ],
+      "state_sha1": "200340c52e4237622a65f401feed3316575c5e1e"
+    },
+    "heatnix-2_mini-boss": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-6e15315f49",
+        "enemy-7f9bbc9a47",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 52
+        },
+        {
+          "class": "stage",
+          "reason": "Rescue Reploid: set-B animations 26, 27, 33 drawn with the live source sprites (docs/TODO.md); removed by hand",
+          "type": 4
+        }
+      ],
+      "state_sha1": "7e6ef1a4f80ea529d2cd7abc5e544d1b495ceb54"
+    },
+    "heatnix-4_cave": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-6e15315f49",
+        "enemy-7f9bbc9a47",
+        "enemy-8df182908d",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 52
+        }
+      ],
+      "state_sha1": "d220a32e31639b9bb763dd7e20a5f263fe3f6fc2"
+    }
+  }
+}

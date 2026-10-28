@@ -1,0 +1,130 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": 0
+    }
+  ],
+  "cell": [
+    32,
+    96
+  ],
+  "fps": 60,
+  "id": "enemy-9b2c8df370",
+  "origin": [
+    16,
+    32
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 6,
+      "state": "turtloid-7_boss.state.gz",
+      "state_sha1": "c5ad398fbefe0432adae509eba86c488cbf70cda",
+      "table": "0x800f6084",
+      "type": 5
+    }
+  ]
+}

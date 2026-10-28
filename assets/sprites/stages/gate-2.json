@@ -1,0 +1,24 @@
+{
+  "states": {
+    "gate-3_stage-2": {
+      "area": 0,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-a96f0b9d66",
+        "enemy-c3301f6267",
+        "enemy-eb6483d4fb"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 55
+        }
+      ],
+      "state_sha1": "992d5d0609e736bba918340805dd9c642d889217"
+    }
+  }
+}

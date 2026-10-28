@@ -1,0 +1,129 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 5,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 5,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 2,
+          "sprite": 4,
+          "ticks": 3
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    64,
+    48
+  ],
+  "fps": 60,
+  "id": "enemy-f386f3428b",
+  "origin": [
+    32,
+    24
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 21,
+      "state": "scaravich-9_high-max.state.gz",
+      "state_sha1": "da83005129fab54f10d61056e5f6730827d8e262",
+      "table": "0x800ec5f8",
+      "type": 12
+    }
+  ]
+}

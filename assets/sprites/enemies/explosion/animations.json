@@ -1,0 +1,129 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 14,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 96
+        }
+      ],
+      "index": 0,
+      "loop_to": 17
+    }
+  ],
+  "cell": [
+    64,
+    81
+  ],
+  "fps": 60,
+  "id": "enemy-15e7a09888",
+  "origin": [
+    32,
+    50
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "effect",
+      "found": "live",
+      "sprites": "live",
+      "stage": 5,
+      "state": "scaravich-13_boss-death.state.gz",
+      "state_sha1": "9845f45b1dd6cd57117ed1d731492a9f3b2d450a",
+      "table": "0x80077d54",
+      "type": 4
+    }
+  ]
+}

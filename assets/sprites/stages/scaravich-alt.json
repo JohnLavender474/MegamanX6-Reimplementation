@@ -1,0 +1,132 @@
+{
+  "states": {
+    "scaravich-5_alt-arrival": {
+      "area": 0,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-6c0e9e20ab",
+        "enemy-8df182908d",
+        "enemy-a96f0b9d66",
+        "enemy-bf38650355",
+        "enemy-e809e4309e"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 53
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 55
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 63
+        }
+      ],
+      "state_sha1": "d8d5470f990408c7b6aa7578ef7096770c48b80d"
+    },
+    "scaravich-7_alt-ledge": {
+      "area": 0,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-6c0e9e20ab",
+        "enemy-8df182908d",
+        "enemy-a96f0b9d66",
+        "enemy-bf38650355",
+        "enemy-e809e4309e"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 53
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 55
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 63
+        }
+      ],
+      "state_sha1": "1c83b71ab3f4e85ba1b0567fe08dea4089a543c7"
+    },
+    "scaravich-8_alt-gates": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-6c0e9e20ab",
+        "enemy-8df182908d",
+        "enemy-a96f0b9d66",
+        "enemy-bf38650355",
+        "enemy-e809e4309e"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 53
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 55
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 63
+        }
+      ],
+      "state_sha1": "b32cf41c9be4d45cf1b5c2194253102981df218e"
+    },
+    "scaravich-9_high-max": {
+      "area": 0,
+      "enemies": [
+        "enemy-1b0293f642",
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-a96f0b9d66",
+        "enemy-f386f3428b"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 12
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 31
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 37
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 53
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 63
+        }
+      ],
+      "state_sha1": "da83005129fab54f10d61056e5f6730827d8e262"
+    }
+  }
+}

@@ -1,0 +1,83 @@
+{
+  "states": {
+    "gate-1_before-boss": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 60
+        },
+        {
+          "reason": "bank 2 drawn from cells that the boss pack (member 135) covers; wrong search export enemy-6d90265515 removed by hand (docs/TODO.md)",
+          "type": 6
+        },
+        {
+          "reason": "bank 4 drawn from cells that the boss pack (member 135) covers; wrong search export enemy-80ea7f5439 removed by hand (docs/TODO.md)",
+          "type": 13
+        },
+        {
+          "reason": "bank 1 drawn from cells that the boss pack (member 135) covers; wrong search export enemy-71ce84488a, enemy-9b63092464 removed by hand (docs/TODO.md)",
+          "type": 15
+        },
+        {
+          "reason": "bank 3 drawn from cells that the boss pack (member 135) covers; wrong search export enemy-51c2def92c removed by hand (docs/TODO.md)",
+          "type": 18
+        },
+        {
+          "reason": "bank 5 drawn from cells that the boss pack (member 135) covers; wrong search export enemy-5e5c1e01f6 removed by hand (docs/TODO.md)",
+          "type": 33
+        },
+        {
+          "reason": "bank 6 drawn from cells that the boss pack (member 135) covers; wrong search export enemy-4c7523f990 removed by hand (docs/TODO.md)",
+          "type": 34
+        }
+      ],
+      "state_sha1": "585948ebe43e9241ae0828aff8654b2e9b98ea04"
+    },
+    "gate-2_nightmare-mother": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-c99ffb5c2b"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 60",
+          "type": 6
+        },
+        {
+          "reason": "cells overwritten by type 60",
+          "type": 18
+        },
+        {
+          "reason": "cells overwritten by type 60",
+          "type": 13
+        },
+        {
+          "reason": "cells overwritten by type 60",
+          "type": 33
+        },
+        {
+          "reason": "cells overwritten by type 60",
+          "type": 34
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "bank 1 drawn from cells that the boss pack (member 135) covers; wrong search export enemy-71ce84488a, enemy-9b63092464 removed by hand (docs/TODO.md)",
+          "type": 15
+        }
+      ],
+      "state_sha1": "ea402436237a753f57ec7e0561ee2e2e12fd31db"
+    }
+  }
+}

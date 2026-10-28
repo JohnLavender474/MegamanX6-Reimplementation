@@ -1,0 +1,31 @@
+{
+  "animations": [],
+  "cell": [
+    78,
+    64
+  ],
+  "id": "enemy-d69cdcfc32",
+  "origin": [
+    39,
+    32
+  ],
+  "sheet": {
+    "columns": 6,
+    "file": "sprites.png",
+    "sprites": 6
+  },
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": null,
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-5_alia-text.state.gz",
+      "state_sha1": "995b2bdf10abb725043dfb9078502d128523bf13",
+      "type": 22
+    }
+  ]
+}

@@ -1,0 +1,31 @@
+{
+  "animations": [],
+  "cell": [
+    78,
+    64
+  ],
+  "id": "enemy-c387275119",
+  "origin": [
+    39,
+    32
+  ],
+  "sheet": {
+    "columns": 4,
+    "file": "sprites.png",
+    "sprites": 4
+  },
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": null,
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-6_high-max-text.state.gz",
+      "state_sha1": "4eace6e04eb87433f06d29ee9a1d3ed06d3aa7f9",
+      "type": 22
+    }
+  ]
+}

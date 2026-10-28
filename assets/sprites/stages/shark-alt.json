@@ -1,0 +1,37 @@
+{
+  "states": {
+    "shark-10_alt": {
+      "area": 1,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-a96f0b9d66",
+        "enemy-e32b3dd423"
+      ],
+      "skipped": [
+        {
+          "reason": "no live object and no table found by the search",
+          "type": 28
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 53
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 55
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 63
+        }
+      ],
+      "state_sha1": "114fb5c590494f5a3bc9dc0ee53f3e58ec1371f6"
+    }
+  }
+}

@@ -1,0 +1,168 @@
+{
+ "member": 118,
+ "entry": 4,
+ "slot": 5,
+ "body_type": "0x20505",
+ "sounds": [
+  "0x00000000",
+  "0x00000000",
+  "0x00000000",
+  "0x0e100085",
+  "0x00000000",
+  "0x0e000000",
+  "0x0e000085"
+ ],
+ "ids": [
+  {
+   "id": 0,
+   "word": "0x00000000",
+   "kind": "sequence",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 0,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 1,
+   "word": "0x00000000",
+   "kind": "sequence",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 0,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 2,
+   "word": "0x00000000",
+   "kind": "sequence",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 0,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 3,
+   "word": "0x0e100085",
+   "kind": "tone",
+   "vab": 5,
+   "program": 0,
+   "flag": 0,
+   "tone": 1,
+   "priority": 0,
+   "voice": 14,
+   "mode": 0,
+   "vag": 2,
+   "file": "vag-02.wav"
+  },
+  {
+   "id": 4,
+   "word": "0x00000000",
+   "kind": "sequence",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 0,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 5,
+   "word": "0x0e000000",
+   "kind": "sequence",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 14,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 6,
+   "word": "0x0e000085",
+   "kind": "tone",
+   "vab": 5,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 14,
+   "mode": 0,
+   "vag": 1,
+   "file": "vag-01.wav"
+  }
+ ],
+ "volume": 127,
+ "pan": 64,
+ "programs": [
+  {
+   "number": 0,
+   "volume": 127,
+   "pan": 64,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 100,
+     "pan": 64,
+     "center": 90,
+     "fine": 0,
+     "note_min": 60,
+     "note_max": 60,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 1
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 100,
+     "pan": 64,
+     "center": 102,
+     "fine": 57,
+     "note_min": 61,
+     "note_max": 61,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 2
+    }
+   ]
+  }
+ ],
+ "vags": [
+  {
+   "index": 1,
+   "file": "vag-01.wav",
+   "samples": 9800,
+   "loop_start": 168
+  },
+  {
+   "index": 2,
+   "file": "vag-02.wav",
+   "samples": 56,
+   "loop_start": null
+  }
+ ],
+ "sample_rate": 44100,
+ "same_as": "m099-e05"
+}

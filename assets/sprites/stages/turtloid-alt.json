@@ -1,0 +1,117 @@
+{
+  "states": {
+    "turtloid-4_alt": {
+      "area": 1,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-4db73b9e4d",
+        "enemy-62d9963d2c",
+        "enemy-9b0ee535de",
+        "enemy-9e1a96d9a9",
+        "enemy-a96f0b9d66",
+        "enemy-c11dd314d5",
+        "enemy-cbdbb6cf1e"
+      ],
+      "skipped": [
+        {
+          "reason": "no live object and no table found by the search",
+          "type": 0
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 53
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 55
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 63
+        }
+      ],
+      "state_sha1": "3d5b09f2d6a79604570c202d0b6a4aea4e18ee97"
+    },
+    "turtloid-5_zero": {
+      "area": 1,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-71f965d1d8",
+        "enemy-91c2f0b113",
+        "enemy-a96f0b9d66",
+        "enemy-c5b13b7c51"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 53",
+          "type": 10
+        },
+        {
+          "reason": "cells overwritten by type 53",
+          "type": 14
+        },
+        {
+          "reason": "cells overwritten by type 53",
+          "type": 0
+        },
+        {
+          "reason": "cells overwritten by type 53",
+          "type": 18
+        },
+        {
+          "reason": "cells overwritten by type 53",
+          "type": 26
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 55
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 63
+        }
+      ],
+      "state_sha1": "5dfdbc61a0b9d360c98b7f97595bc798c0a42e4c"
+    },
+    "turtloid-8_high-max": {
+      "area": 1,
+      "enemies": [
+        "enemy-1b0293f642",
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-8d46c82582",
+        "enemy-95e94dc4ec",
+        "enemy-a96f0b9d66",
+        "enemy-e147ed9d4f"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 10
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 14
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 0
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 18
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 53
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 63
+        }
+      ],
+      "state_sha1": "bb46cb457a5eac74b57c2afa5dd61e08fad618ef"
+    }
+  }
+}

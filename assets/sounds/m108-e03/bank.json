@@ -1,0 +1,152 @@
+{
+ "member": 108,
+ "entry": 3,
+ "slot": 5,
+ "body_type": "0x20505",
+ "sounds": [
+  "0x20008085",
+  "0x02200085",
+  "0x23308085"
+ ],
+ "ids": [
+  {
+   "id": 0,
+   "word": "0x20008085",
+   "kind": "tone",
+   "vab": 5,
+   "program": 0,
+   "flag": 1,
+   "tone": 0,
+   "priority": 0,
+   "voice": 0,
+   "mode": 1,
+   "vag": 1,
+   "file": "vag-01.wav"
+  },
+  {
+   "id": 1,
+   "word": "0x02200085",
+   "kind": "tone",
+   "vab": 5,
+   "program": 0,
+   "flag": 0,
+   "tone": 2,
+   "priority": 0,
+   "voice": 2,
+   "mode": 0,
+   "vag": 2,
+   "file": "vag-02.wav"
+  },
+  {
+   "id": 2,
+   "word": "0x23308085",
+   "kind": "tone",
+   "vab": 5,
+   "program": 0,
+   "flag": 1,
+   "tone": 3,
+   "priority": 0,
+   "voice": 3,
+   "mode": 1,
+   "vag": 3,
+   "file": "vag-03.wav"
+  }
+ ],
+ "volume": 127,
+ "pan": 64,
+ "programs": [
+  {
+   "number": 0,
+   "volume": 127,
+   "pan": 64,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 80,
+     "pan": 0,
+     "center": 59,
+     "fine": 0,
+     "note_min": 48,
+     "note_max": 48,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 1
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 80,
+     "pan": 127,
+     "center": 59,
+     "fine": 30,
+     "note_min": 48,
+     "note_max": 48,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 1
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 110,
+     "pan": 64,
+     "center": 60,
+     "fine": 0,
+     "note_min": 49,
+     "note_max": 49,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 2
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 115,
+     "pan": 0,
+     "center": 61,
+     "fine": 0,
+     "note_min": 50,
+     "note_max": 50,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 3
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 115,
+     "pan": 127,
+     "center": 61,
+     "fine": 59,
+     "note_min": 50,
+     "note_max": 50,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 3
+    }
+   ]
+  }
+ ],
+ "vags": [
+  {
+   "index": 1,
+   "file": "vag-01.wav",
+   "samples": 19404,
+   "loop_start": null
+  },
+  {
+   "index": 2,
+   "file": "vag-02.wav",
+   "samples": 21924,
+   "loop_start": null
+  },
+  {
+   "index": 3,
+   "file": "vag-03.wav",
+   "samples": 28728,
+   "loop_start": null
+  }
+ ],
+ "sample_rate": 44100
+}

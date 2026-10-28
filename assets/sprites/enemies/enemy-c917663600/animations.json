@@ -1,0 +1,72 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    32,
+    64
+  ],
+  "fps": 60,
+  "id": "enemy-c917663600",
+  "origin": [
+    16,
+    32
+  ],
+  "sources": [
+    {
+      "area": 1,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-8_boss-stun.state.gz",
+      "state_sha1": "7cb9d3575b2c229442a22e3f2b1fc58a24a0b3d9",
+      "table": "0x800f8dc8",
+      "type": 35
+    }
+  ]
+}

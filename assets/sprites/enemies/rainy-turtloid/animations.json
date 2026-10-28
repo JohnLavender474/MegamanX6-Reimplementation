@@ -1,0 +1,1364 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 14,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 3
+        }
+      ],
+      "index": 0,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 65,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 66,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 67,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 68,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 69,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 70,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 71,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 72,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 73,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 74,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 75,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 76,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 77,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 78,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 79,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 80,
+          "ticks": 3
+        }
+      ],
+      "index": 1,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 12
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 65,
+          "ticks": 12
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 34,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 33,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 57,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 56,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 57,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 39,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 61,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 61,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 63,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 40,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 62,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 62,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 64,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 25,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 111,
+          "ticks": 13
+        },
+        {
+          "flag": 0,
+          "sprite": 112,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 113,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 112,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 113,
+          "ticks": 28
+        },
+        {
+          "flag": 0,
+          "sprite": 113,
+          "ticks": 30
+        }
+      ],
+      "index": 7,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 114,
+          "ticks": 13
+        },
+        {
+          "flag": 0,
+          "sprite": 115,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 116,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 115,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 116,
+          "ticks": 28
+        },
+        {
+          "flag": 0,
+          "sprite": 117,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 118,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 117,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 118,
+          "ticks": 16
+        }
+      ],
+      "index": 8,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 114,
+          "ticks": 13
+        },
+        {
+          "flag": 0,
+          "sprite": 115,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 116,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 115,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 116,
+          "ticks": 28
+        },
+        {
+          "flag": 0,
+          "sprite": 117,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 118,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 117,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 118,
+          "ticks": 16
+        }
+      ],
+      "index": 9,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 22
+        },
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 24
+        },
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 26
+        },
+        {
+          "flag": 0,
+          "sprite": 19,
+          "ticks": 20
+        },
+        {
+          "flag": 0,
+          "sprite": 20,
+          "ticks": 22
+        },
+        {
+          "flag": 0,
+          "sprite": 21,
+          "ticks": 24
+        }
+      ],
+      "index": 10,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 22
+        },
+        {
+          "flag": 0,
+          "sprite": 23,
+          "ticks": 24
+        },
+        {
+          "flag": 0,
+          "sprite": 24,
+          "ticks": 26
+        },
+        {
+          "flag": 0,
+          "sprite": 24,
+          "ticks": 20
+        },
+        {
+          "flag": 0,
+          "sprite": 23,
+          "ticks": 22
+        },
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 24
+        }
+      ],
+      "index": 11,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 25,
+          "ticks": 22
+        },
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 24
+        },
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 26
+        },
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 20
+        },
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 22
+        },
+        {
+          "flag": 0,
+          "sprite": 25,
+          "ticks": 24
+        }
+      ],
+      "index": 12,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 32,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 33,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 34,
+          "ticks": 4
+        }
+      ],
+      "index": 13,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 35,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 39,
+          "ticks": 4
+        }
+      ],
+      "index": 14,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 36,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 40,
+          "ticks": 4
+        }
+      ],
+      "index": 15,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 34,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 33,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 32,
+          "ticks": 4
+        }
+      ],
+      "index": 16,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 39,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 35,
+          "ticks": 4
+        }
+      ],
+      "index": 17,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 40,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 36,
+          "ticks": 4
+        }
+      ],
+      "index": 18,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 41,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 42,
+          "ticks": 10
+        },
+        {
+          "flag": 0,
+          "sprite": 44,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 45,
+          "ticks": 4
+        },
+        {
+          "flag": 1,
+          "sprite": 45,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 44,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 43,
+          "ticks": 3
+        }
+      ],
+      "index": 19,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 46,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 48,
+          "ticks": 10
+        },
+        {
+          "flag": 0,
+          "sprite": 52,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 52,
+          "ticks": 4
+        },
+        {
+          "flag": 1,
+          "sprite": 52,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 52,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 50,
+          "ticks": 3
+        }
+      ],
+      "index": 20,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 47,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 49,
+          "ticks": 10
+        },
+        {
+          "flag": 0,
+          "sprite": 53,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 53,
+          "ticks": 4
+        },
+        {
+          "flag": 1,
+          "sprite": 53,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 53,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 51,
+          "ticks": 3
+        }
+      ],
+      "index": 21,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 28,
+          "ticks": 1
+        },
+        {
+          "flag": 1,
+          "sprite": 29,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 30,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 31,
+          "ticks": 1
+        }
+      ],
+      "index": 22,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 81,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 85,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 89,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 93,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 82,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 86,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 90,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 94,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 83,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 87,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 91,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 95,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 84,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 88,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 92,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 96,
+          "ticks": 2
+        }
+      ],
+      "index": 23,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 97,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 98,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 99,
+          "ticks": 2
+        }
+      ],
+      "index": 24,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 100,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 101,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 102,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 103,
+          "ticks": 2
+        }
+      ],
+      "index": 25,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 104,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 105,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 106,
+          "ticks": 2
+        }
+      ],
+      "index": 26,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 107,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 108,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 109,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 110,
+          "ticks": 2
+        }
+      ],
+      "index": 27,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 2
+        }
+      ],
+      "index": 28,
+      "loop_to": null,
+      "set": 1
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 4
+        }
+      ],
+      "index": 29,
+      "loop_to": null,
+      "set": 1
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 14,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 3
+        }
+      ],
+      "index": 30,
+      "loop_to": 0,
+      "set": 1
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 19,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 20,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 21,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 23,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 24,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 25,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 28,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 29,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 30,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 31,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 32,
+          "ticks": 3
+        }
+      ],
+      "index": 31,
+      "loop_to": 0,
+      "set": 1
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 34,
+          "ticks": 1
+        }
+      ],
+      "index": 32,
+      "loop_to": null,
+      "set": 1
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 2
+        }
+      ],
+      "index": 33,
+      "loop_to": 4,
+      "set": 2
+    }
+  ],
+  "cell": [
+    205,
+    205
+  ],
+  "fps": 60,
+  "id": "enemy-520fe16c6e",
+  "origin": [
+    83,
+    96
+  ],
+  "sets": [
+    {
+      "animations": [
+        28,
+        29,
+        30,
+        31,
+        32
+      ],
+      "palette": 0,
+      "set": 1,
+      "texture": "0x0140"
+    },
+    {
+      "animations": [
+        33
+      ],
+      "palette": 1,
+      "set": 2,
+      "texture": "0x0540"
+    }
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 14,
+      "class": "main",
+      "found": "live",
+      "sets": [
+        {
+          "entry": 15,
+          "palette": "0x7948",
+          "set": 1,
+          "texture": "0x0140"
+        },
+        {
+          "entry": 16,
+          "palette": "0x794c",
+          "set": 2,
+          "texture": "0x0540"
+        }
+      ],
+      "sprites": "live",
+      "stage": 6,
+      "state": "turtloid-7_boss.state.gz",
+      "state_sha1": "c5ad398fbefe0432adae509eba86c488cbf70cda",
+      "table": "0x800f689c",
+      "type": 57
+    }
+  ]
+}

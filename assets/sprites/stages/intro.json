@@ -1,0 +1,140 @@
+{
+  "states": {
+    "intro-1_start": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-43b4084bcf",
+        "enemy-74267a1363",
+        "enemy-9cc07eae09"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 55
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 48
+        }
+      ],
+      "state_sha1": "47d49d7ef2cc64495b91e87ce18bc55abf7d2929"
+    },
+    "intro-2_junkroid": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-43b4084bcf",
+        "enemy-74267a1363",
+        "enemy-9cc07eae09"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 55
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 48
+        }
+      ],
+      "state_sha1": "4d8f191b6b2fd1e204690ad2076a83851cfeb8d5"
+    },
+    "intro-3_boss": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-250854b686",
+        "enemy-30419fd669",
+        "enemy-43b4084bcf",
+        "enemy-9cc07eae09",
+        "enemy-f15c898594"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 48",
+          "type": 5
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 55
+        },
+        {
+          "reason": "sprite data of set 1 (entry 16)",
+          "table": "0x800fb138",
+          "type": 48
+        }
+      ],
+      "state_sha1": "a35a84fc9767b61d51fecbe6cd24bf9720fbe5ee"
+    },
+    "intro-4_hunters-text": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-1c667fc53d",
+        "enemy-30419fd669",
+        "enemy-43b4084bcf",
+        "enemy-74267a1363",
+        "enemy-9cc07eae09",
+        "enemy-ea99b706db"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 55
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 48
+        }
+      ],
+      "state_sha1": "d15439d2bcf2e681b8366fb2add8be7dfcdcb06d"
+    },
+    "intro-5_alia-text": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-30419fd669",
+        "enemy-43b4084bcf",
+        "enemy-9cc07eae09",
+        "enemy-a9450055c5",
+        "enemy-b4b052dab4",
+        "enemy-d69cdcfc32"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 55
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 48
+        }
+      ],
+      "state_sha1": "995b2bdf10abb725043dfb9078502d128523bf13"
+    },
+    "intro-6_high-max-text": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-1b0293f642",
+        "enemy-30419fd669",
+        "enemy-43b4084bcf",
+        "enemy-9cc07eae09",
+        "enemy-c387275119",
+        "enemy-ea99b706db"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 5
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 48
+        }
+      ],
+      "state_sha1": "4eace6e04eb87433f06d29ee9a1d3ed06d3aa7f9"
+    }
+  }
+}

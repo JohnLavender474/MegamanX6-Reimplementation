@@ -1,0 +1,99 @@
+{
+  "states": {
+    "yammark-1_start": {
+      "area": 0,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-6c0e9e20ab",
+        "enemy-8fb20ed962",
+        "enemy-a96f0b9d66",
+        "enemy-b28bcb6919",
+        "enemy-efd9270cec",
+        "enemy-f2948c4428"
+      ],
+      "skipped": [
+        {
+          "reason": "no live object and no table found by the search",
+          "type": 7
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 49
+        }
+      ],
+      "state_sha1": "697358bffd35fe39ff9233a880cf24d12b886b6c"
+    },
+    "yammark-2_boss": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-a96f0b9d66",
+        "enemy-c7cfecfbf7"
+      ],
+      "skipped": [
+        {
+          "reason": "no live object and no table found by the search",
+          "type": 7
+        },
+        {
+          "reason": "cells overwritten by type 49",
+          "type": 3
+        },
+        {
+          "reason": "cells overwritten by type 49",
+          "type": 4
+        },
+        {
+          "reason": "cells overwritten by type 49",
+          "type": 23
+        },
+        {
+          "reason": "cells overwritten by type 49",
+          "type": 28
+        },
+        {
+          "reason": "cells overwritten by type 49",
+          "type": 37
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        }
+      ],
+      "state_sha1": "165ad075ae9edae6d2b82037c513bddef1e6ee83"
+    },
+    "yammark-3_caterpirade": {
+      "area": 0,
+      "enemies": [
+        "enemy-2cfeb7a4f3",
+        "enemy-363dce0a1a",
+        "enemy-6c0e9e20ab",
+        "enemy-8fb20ed962",
+        "enemy-a96f0b9d66",
+        "enemy-b28bcb6919",
+        "enemy-efd9270cec",
+        "enemy-f2948c4428"
+      ],
+      "skipped": [
+        {
+          "reason": "no live object and no table found by the search",
+          "type": 7
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 49
+        }
+      ],
+      "state_sha1": "eb47e7dea70a84414b2e9ee94b8fe0e26cc9ae24"
+    }
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "states": {
+    "gate-4_before-gate": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-304e0899c6",
+        "enemy-43b4084bcf",
+        "enemy-9b0ee535de",
+        "enemy-c11dd314d5",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 59
+        }
+      ],
+      "state_sha1": "f51fcc1d7dd4d15662dc4a3ecd18beb124cd7419"
+    },
+    "gate-5_gate-fight": {
+      "area": 0,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-304e0899c6",
+        "enemy-43b4084bcf",
+        "enemy-db764876a4"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 59",
+          "type": 9
+        },
+        {
+          "reason": "cells overwritten by type 59",
+          "type": 28
+        },
+        {
+          "reason": "cells overwritten by type 59",
+          "type": 14
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        }
+      ],
+      "state_sha1": "68a442ae9239e06c8539d8eea50087a0bfce575b"
+    }
+  }
+}

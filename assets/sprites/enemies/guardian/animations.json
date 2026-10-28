@@ -1,0 +1,668 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 3,
+          "ticks": 3
+        }
+      ],
+      "index": 0,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 11,
+          "ticks": 3
+        }
+      ],
+      "index": 1,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 14,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 1
+        },
+        {
+          "flag": 1,
+          "sprite": 17,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 19,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 20,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 21,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 23,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 24,
+          "ticks": 2
+        },
+        {
+          "flag": 2,
+          "sprite": 25,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 25,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 9
+        },
+        {
+          "flag": 1,
+          "sprite": 26,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 28,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 29,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 30,
+          "ticks": 2
+        },
+        {
+          "flag": 1,
+          "sprite": 26,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 31,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 32,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 33,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 34,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 35,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 36,
+          "ticks": 3
+        }
+      ],
+      "index": 5,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 23,
+          "ticks": 2
+        },
+        {
+          "flag": 2,
+          "sprite": 22,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 21,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 20,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 19,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 39,
+          "ticks": 1
+        },
+        {
+          "flag": 1,
+          "sprite": 39,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 39,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 40,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 41,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 42,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 43,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 44,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 45,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 46,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 47,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 48,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 49,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 50,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 51,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 52,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 53,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 54,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 55,
+          "ticks": 2
+        }
+      ],
+      "index": 7,
+      "loop_to": 2
+    },
+    {
+      "frames": [
+        {
+          "flag": 1,
+          "sprite": 56,
+          "ticks": 1
+        }
+      ],
+      "index": 8,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 1,
+          "sprite": 57,
+          "ticks": 1
+        }
+      ],
+      "index": 9,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 1,
+          "sprite": 58,
+          "ticks": 1
+        }
+      ],
+      "index": 10,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 1,
+          "sprite": 59,
+          "ticks": 1
+        }
+      ],
+      "index": 11,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 23,
+          "ticks": 2
+        },
+        {
+          "flag": 2,
+          "sprite": 22,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 21,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 20,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 19,
+          "ticks": 10
+        },
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 18,
+          "ticks": 1
+        }
+      ],
+      "index": 12,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    99,
+    58
+  ],
+  "fps": 60,
+  "id": "enemy-6575747cb9",
+  "origin": [
+    44,
+    32
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-16_death-guardian.state.gz",
+      "state_sha1": "ebbb24e5d705fdc172d4e32b09c32d5148b3206d",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-1_lemons.state.gz",
+      "state_sha1": "068a884c44bee4b9b21e0428f1e0c0f12b10cabc",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-2_half-charge.state.gz",
+      "state_sha1": "97c1793a13e8296e580fcf5368ab978f1a035360",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-3_full-charge.state.gz",
+      "state_sha1": "21bb0968b9a3df2981266f455f9a550778736701",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-4_no-armor.state.gz",
+      "state_sha1": "078a4852bb23c8f77ab4d0d29aa0a0afcd1b95eb",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-5_nightmare-hidden.state.gz",
+      "state_sha1": "53c925a529745fbf49fe27799cccdab3d5736138",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-6_tile-shown.state.gz",
+      "state_sha1": "30a84a4ee7ae3b8cb97d2351487bac96270b9ef3",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-7_lasers.state.gz",
+      "state_sha1": "9839227b25dbb23eaef623c7fdb4423cd6d8dbe9",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-8_lower-1.state.gz",
+      "state_sha1": "10fb073bd1eb85e9b9f8ea523f9ffccd1b3cd0fb",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 7,
+      "state": "sheldon-9_lower-2.state.gz",
+      "state_sha1": "e1ff87902b91d65054845264971de8b38b83ab09",
+      "table": "0x800fc428",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 6,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 22,
+      "state": "sheldon-10_section-2.state.gz",
+      "state_sha1": "eaba461bff47e5a8aa6e6c0e0d39ca535f44bc2f",
+      "table": "0x800f3704",
+      "type": 30
+    },
+    {
+      "area": 0,
+      "bank": 6,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 22,
+      "state": "sheldon-11_laser-shot.state.gz",
+      "state_sha1": "133d8f1d9bd8925ead66dcf5bbd36e92a909a872",
+      "table": "0x800f3704",
+      "type": 30
+    }
+  ]
+}

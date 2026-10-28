@@ -1,0 +1,215 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    32,
+    45
+  ],
+  "fps": 60,
+  "id": "enemy-e809e4309e",
+  "origin": [
+    16,
+    21
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 5,
+      "state": "scaravich-10_section-4-sabre.state.gz",
+      "state_sha1": "dccc4481ff38a22b574128714e3adb9475679934",
+      "table": "0x800f58d8",
+      "type": 12
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 5,
+      "state": "scaravich-2_totem-section.state.gz",
+      "state_sha1": "4a226ab149b8d7615ddae50e76d304794ad53bb3",
+      "table": "0x800f58d8",
+      "type": 12
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 5,
+      "state": "scaravich-3_section.state.gz",
+      "state_sha1": "0cd8b347b4debfe55d0c372852dbfe19711d0a97",
+      "table": "0x800f58d8",
+      "type": 12
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 5,
+      "state": "scaravich-4_low-path.state.gz",
+      "state_sha1": "545abddd6a8da05dde910b3f554080e1be4b5862",
+      "table": "0x800f58d8",
+      "type": 12
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 21,
+      "state": "scaravich-5_alt-arrival.state.gz",
+      "state_sha1": "d8d5470f990408c7b6aa7578ef7096770c48b80d",
+      "table": "0x800ec3c8",
+      "type": 12
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 21,
+      "state": "scaravich-7_alt-ledge.state.gz",
+      "state_sha1": "1c83b71ab3f4e85ba1b0567fe08dea4089a543c7",
+      "table": "0x800ec3c8",
+      "type": 12
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 21,
+      "state": "scaravich-8_alt-gates.state.gz",
+      "state_sha1": "b32cf41c9be4d45cf1b5c2194253102981df218e",
+      "table": "0x800ec3c8",
+      "type": 12
+    }
+  ]
+}

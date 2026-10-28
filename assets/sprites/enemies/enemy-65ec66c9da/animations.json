@@ -1,0 +1,479 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 25,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 28,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 29,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 28,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 6
+        },
+        {
+          "flag": 2,
+          "sprite": 30,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 30,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 31,
+          "ticks": 2
+        },
+        {
+          "flag": 1,
+          "sprite": 32,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 31,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 30,
+          "ticks": 6
+        },
+        {
+          "flag": 1,
+          "sprite": 26,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 26,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 28,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 29,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 28,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 27,
+          "ticks": 2
+        }
+      ],
+      "index": 4,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 33,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 34,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 35,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 36,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 35,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 34,
+          "ticks": 5
+        },
+        {
+          "flag": 0,
+          "sprite": 33,
+          "ticks": 6
+        },
+        {
+          "flag": 2,
+          "sprite": 37,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 39,
+          "ticks": 20
+        },
+        {
+          "flag": 1,
+          "sprite": 39,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 38,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 37,
+          "ticks": 6
+        },
+        {
+          "flag": 1,
+          "sprite": 33,
+          "ticks": 1
+        }
+      ],
+      "index": 7,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 8
+        }
+      ],
+      "index": 8,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 4
+        }
+      ],
+      "index": 9,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 2
+        }
+      ],
+      "index": 10,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 3,
+          "sprite": 14,
+          "ticks": 1
+        },
+        {
+          "flag": 5,
+          "sprite": 15,
+          "ticks": 1
+        },
+        {
+          "flag": 7,
+          "sprite": 16,
+          "ticks": 1
+        },
+        {
+          "flag": 9,
+          "sprite": 17,
+          "ticks": 1
+        },
+        {
+          "flag": 11,
+          "sprite": 18,
+          "ticks": 1
+        },
+        {
+          "flag": 13,
+          "sprite": 19,
+          "ticks": 1
+        },
+        {
+          "flag": 15,
+          "sprite": 20,
+          "ticks": 1
+        },
+        {
+          "flag": 15,
+          "sprite": 21,
+          "ticks": 1
+        },
+        {
+          "flag": 15,
+          "sprite": 22,
+          "ticks": 1
+        },
+        {
+          "flag": 15,
+          "sprite": 23,
+          "ticks": 1
+        }
+      ],
+      "index": 11,
+      "loop_to": 7
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 40,
+          "ticks": 1
+        }
+      ],
+      "index": 12,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 41,
+          "ticks": 1
+        }
+      ],
+      "index": 13,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 42,
+          "ticks": 1
+        }
+      ],
+      "index": 14,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 43,
+          "ticks": 1
+        }
+      ],
+      "index": 15,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 24,
+          "ticks": 1
+        }
+      ],
+      "index": 16,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    256,
+    127
+  ],
+  "fps": 60,
+  "id": "enemy-65ec66c9da",
+  "origin": [
+    128,
+    63
+  ],
+  "sources": [
+    {
+      "area": 1,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-7_boss.state.gz",
+      "state_sha1": "1992027342c0cbc98d3375dfb9806570930d060d",
+      "table": "0x800f8638",
+      "type": 16
+    },
+    {
+      "area": 1,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-8_boss-stun.state.gz",
+      "state_sha1": "7cb9d3575b2c229442a22e3f2b1fc58a24a0b3d9",
+      "table": "0x800f8638",
+      "type": 16
+    },
+    {
+      "area": 1,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-9_boss-revive.state.gz",
+      "state_sha1": "c07a3a19e6bcc6b475e2bcc24ad84d2187dedbb6",
+      "table": "0x800f8638",
+      "type": 16
+    }
+  ]
+}

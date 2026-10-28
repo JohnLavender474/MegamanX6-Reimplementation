@@ -1,0 +1,284 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 20
+        },
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 20
+        }
+      ],
+      "index": 0,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 15
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 2
+        },
+        {
+          "flag": 1,
+          "sprite": 8,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 15
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 5
+        },
+        {
+          "flag": 2,
+          "sprite": 1,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 14,
+          "ticks": 2
+        }
+      ],
+      "index": 2,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 16
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 2
+        },
+        {
+          "flag": 1,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 2
+        }
+      ],
+      "index": 3,
+      "loop_to": 3
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 19,
+          "ticks": 1
+        }
+      ],
+      "index": 7,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 20,
+          "ticks": 1
+        }
+      ],
+      "index": 8,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 21,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 22,
+          "ticks": 2
+        }
+      ],
+      "index": 9,
+      "loop_to": 0
+    }
+  ],
+  "cell": [
+    42,
+    46
+  ],
+  "fps": 60,
+  "id": "enemy-9e1a96d9a9",
+  "origin": [
+    19,
+    26
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 6,
+      "state": "turtloid-1.state.gz",
+      "state_sha1": "da8082595c9fc59c1fff107999f384a674b9a63d",
+      "table": "0x800f5c28",
+      "type": 10
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 6,
+      "state": "turtloid-2_mid.state.gz",
+      "state_sha1": "7a68e6e00140207ee3a3c50918944fedb3e710d4",
+      "table": "0x800f5c28",
+      "type": 10
+    },
+    {
+      "area": 0,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 6,
+      "state": "turtloid-3_mid.state.gz",
+      "state_sha1": "bc89bec79ebd5dd44852cab3cc890c5ebfc15a0b",
+      "table": "0x800f5c28",
+      "type": 10
+    },
+    {
+      "area": 1,
+      "bank": 4,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 21,
+      "state": "turtloid-4_alt.state.gz",
+      "state_sha1": "3d5b09f2d6a79604570c202d0b6a4aea4e18ee97",
+      "table": "0x800ef928",
+      "type": 10
+    }
+  ]
+}

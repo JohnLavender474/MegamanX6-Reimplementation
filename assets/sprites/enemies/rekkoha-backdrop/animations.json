@@ -1,0 +1,38 @@
+{
+  "animations": [],
+  "cell": [
+    256,
+    64
+  ],
+  "id": "enemy-c61736d6e0",
+  "origin": [
+    128,
+    64
+  ],
+  "sheet": {
+    "columns": 2,
+    "file": "sprites.png",
+    "sprites": 2
+  },
+  "sources": [
+    {
+      "area": 0,
+      "class": "effect",
+      "data": "0x8013d86c",
+      "found": "live",
+      "note": "sprite-only; screen.png = the 2 x 5 grid at y 64..320 (effect var 0 scrolls it up 8 px per update)",
+      "palette": "0x7e50",
+      "scratch_dir": "0x3c entry 0",
+      "sprites": "live",
+      "sprites_used": [
+        83,
+        84
+      ],
+      "stage": 3,
+      "state": "heatnix-3_rekkoha.state.gz",
+      "state_sha1": "f26dadb1e7dfcadf820275a583375f4aeb845a8b",
+      "texture": "0x1e00",
+      "type": 17
+    }
+  ]
+}

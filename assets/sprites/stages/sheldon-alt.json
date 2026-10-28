@@ -1,0 +1,111 @@
+{
+  "states": {
+    "sheldon-10_section-2": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-2dadc31ecb",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 53
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 55
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 63
+        }
+      ],
+      "state_sha1": "eaba461bff47e5a8aa6e6c0e0d39ca535f44bc2f"
+    },
+    "sheldon-11_laser-shot": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-2dadc31ecb",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-61922ae859",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-e5920c31ed"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 53
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 55
+        },
+        {
+          "reason": "update function is in neither the stage overlay nor the main program",
+          "type": 63
+        }
+      ],
+      "state_sha1": "133d8f1d9bd8925ead66dcf5bbd36e92a909a872"
+    },
+    "sheldon-12_high-max": {
+      "area": 0,
+      "enemies": [
+        "enemy-1b0293f642",
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-9504756be1",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 5
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 30
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 27
+        },
+        {
+          "reason": "cells overwritten by type 55",
+          "type": 22
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 53
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 63
+        }
+      ],
+      "state_sha1": "db523cdcfae261f754b5b8bd5712ed2a723429e0"
+    }
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    58,
+    57
+  ],
+  "fps": 60,
+  "id": "enemy-62d9963d2c",
+  "origin": [
+    26,
+    27
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-1_x-sabre.state.gz",
+      "state_sha1": "fce8419abfd1b14892451a1459fd5e4a4c3bfa52",
+      "table": "0x800f6db8",
+      "type": 26
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-2_ice-slope.state.gz",
+      "state_sha1": "9fe41277436027d7fe980750634fcbdd7ac8afd1",
+      "table": "0x800f6db8",
+      "type": 26
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-3_falling-ice.state.gz",
+      "state_sha1": "7a3a9a1b7d8520a56eb02742dc0bb36027f99492",
+      "table": "0x800f6db8",
+      "type": 26
+    },
+    {
+      "area": 0,
+      "bank": 7,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-5_ice-pit.state.gz",
+      "state_sha1": "0b1d405ebeb62ae58a007d761d5f6fe2f8f8cf39",
+      "table": "0x800f6db8",
+      "type": 26
+    },
+    {
+      "area": 0,
+      "bank": 13,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 6,
+      "state": "turtloid-1.state.gz",
+      "state_sha1": "da8082595c9fc59c1fff107999f384a674b9a63d",
+      "table": "0x800f6350",
+      "type": 26
+    },
+    {
+      "area": 0,
+      "bank": 13,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 6,
+      "state": "turtloid-2_mid.state.gz",
+      "state_sha1": "7a68e6e00140207ee3a3c50918944fedb3e710d4",
+      "table": "0x800f6350",
+      "type": 26
+    },
+    {
+      "area": 0,
+      "bank": 13,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 6,
+      "state": "turtloid-3_mid.state.gz",
+      "state_sha1": "bc89bec79ebd5dd44852cab3cc890c5ebfc15a0b",
+      "table": "0x800f6350",
+      "type": 26
+    },
+    {
+      "area": 1,
+      "bank": 13,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 21,
+      "state": "turtloid-4_alt.state.gz",
+      "state_sha1": "3d5b09f2d6a79604570c202d0b6a4aea4e18ee97",
+      "table": "0x800f0050",
+      "type": 26
+    }
+  ]
+}

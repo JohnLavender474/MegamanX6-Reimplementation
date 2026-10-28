@@ -1,0 +1,93 @@
+{
+ "member": 111,
+ "entry": 10,
+ "slot": 5,
+ "body_type": "0x20505",
+ "sounds": [
+  "0x00000085",
+  "0x00100085"
+ ],
+ "ids": [
+  {
+   "id": 0,
+   "word": "0x00000085",
+   "kind": "tone",
+   "vab": 5,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 0,
+   "mode": 0,
+   "vag": 1,
+   "file": "vag-01.wav"
+  },
+  {
+   "id": 1,
+   "word": "0x00100085",
+   "kind": "tone",
+   "vab": 5,
+   "program": 0,
+   "flag": 0,
+   "tone": 1,
+   "priority": 0,
+   "voice": 0,
+   "mode": 0,
+   "vag": 2,
+   "file": "vag-02.wav"
+  }
+ ],
+ "volume": 127,
+ "pan": 64,
+ "programs": [
+  {
+   "number": 0,
+   "volume": 127,
+   "pan": 64,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 90,
+     "pan": 64,
+     "center": 66,
+     "fine": 57,
+     "note_min": 48,
+     "note_max": 48,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 1
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 67,
+     "fine": 57,
+     "note_min": 49,
+     "note_max": 49,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 2
+    }
+   ]
+  }
+ ],
+ "vags": [
+  {
+   "index": 1,
+   "file": "vag-01.wav",
+   "samples": 10304,
+   "loop_start": null
+  },
+  {
+   "index": 2,
+   "file": "vag-02.wav",
+   "samples": 15680,
+   "loop_start": null
+  }
+ ],
+ "sample_rate": 44100,
+ "same_as": "m106-e12"
+}

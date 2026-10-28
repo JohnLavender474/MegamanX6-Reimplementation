@@ -1,0 +1,72 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    72,
+    64
+  ],
+  "fps": 60,
+  "id": "enemy-95e94dc4ec",
+  "origin": [
+    32,
+    32
+  ],
+  "sources": [
+    {
+      "area": 1,
+      "bank": 13,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 21,
+      "state": "turtloid-8_high-max.state.gz",
+      "state_sha1": "bb46cb457a5eac74b57c2afa5dd61e08fad618ef",
+      "table": "0x800f0050",
+      "type": 26
+    }
+  ]
+}

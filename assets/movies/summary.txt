@@ -1,0 +1,2 @@
+CAPLOGO.STR: file 243, 93 frames, 320x240, 15 fps, audio
+X6OP.STR: file 244, 1527 frames, 320x240, 15 fps, audio

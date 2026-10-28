@@ -1,0 +1,115 @@
+{
+  "animations": [],
+  "cell": [
+    230,
+    230
+  ],
+  "id": "enemy-e5920c31ed",
+  "origin": [
+    115,
+    115
+  ],
+  "sheet": {
+    "columns": 8,
+    "file": "sprites.png",
+    "sprites": 250
+  },
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 7,
+      "state": "sheldon-16_death-guardian.state.gz",
+      "state_sha1": "ebbb24e5d705fdc172d4e32b09c32d5148b3206d",
+      "type": 7
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 7,
+      "state": "sheldon-7_lasers.state.gz",
+      "state_sha1": "9839227b25dbb23eaef623c7fdb4423cd6d8dbe9",
+      "type": 7
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 7,
+      "state": "sheldon-8_lower-1.state.gz",
+      "state_sha1": "10fb073bd1eb85e9b9f8ea523f9ffccd1b3cd0fb",
+      "type": 7
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 22,
+      "state": "sheldon-11_laser-shot.state.gz",
+      "state_sha1": "133d8f1d9bd8925ead66dcf5bbd36e92a909a872",
+      "type": 7
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "visual",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 7,
+      "state": "sheldon-16_death-guardian.state.gz",
+      "state_sha1": "ebbb24e5d705fdc172d4e32b09c32d5148b3206d",
+      "type": 11
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "visual",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 7,
+      "state": "sheldon-7_lasers.state.gz",
+      "state_sha1": "9839227b25dbb23eaef623c7fdb4423cd6d8dbe9",
+      "type": 11
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "visual",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 7,
+      "state": "sheldon-8_lower-1.state.gz",
+      "state_sha1": "10fb073bd1eb85e9b9f8ea523f9ffccd1b3cd0fb",
+      "type": 11
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "visual",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 22,
+      "state": "sheldon-11_laser-shot.state.gz",
+      "state_sha1": "133d8f1d9bd8925ead66dcf5bbd36e92a909a872",
+      "type": 11
+    }
+  ]
+}

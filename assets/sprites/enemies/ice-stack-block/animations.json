@@ -1,0 +1,231 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 1
+        },
+        {
+          "flag": 1,
+          "sprite": 15,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 1
+        },
+        {
+          "flag": 1,
+          "sprite": 17,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 2
+        },
+        {
+          "flag": 1,
+          "sprite": 14,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 1
+        }
+      ],
+      "index": 7,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    63,
+    63
+  ],
+  "fps": 60,
+  "id": "enemy-583d456ecb",
+  "origin": [
+    31,
+    32
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 2,
+      "state": "wolfang-5_ice-pit.state.gz",
+      "state_sha1": "0b1d405ebeb62ae58a007d761d5f6fe2f8f8cf39",
+      "table": "0x800f6b6c",
+      "type": 7
+    }
+  ]
+}

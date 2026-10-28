@@ -1,0 +1,211 @@
+{
+  "states": {
+    "shark-1_ride": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-9782d63f15",
+        "enemy-a96f0b9d66",
+        "enemy-e32b3dd423",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [],
+      "state_sha1": "fcf098dcbeb64cf58e6131364bb12e806937d130"
+    },
+    "shark-2_section-2": {
+      "area": 1,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-4185141b5a",
+        "enemy-46d9e2249f",
+        "enemy-4c32312ebb",
+        "enemy-74e4e39589",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 56
+        }
+      ],
+      "state_sha1": "2ed5581179aa6acd6cf436aac85487b11ea49bd0"
+    },
+    "shark-3_press-low": {
+      "area": 1,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-4185141b5a",
+        "enemy-46d9e2249f",
+        "enemy-4c32312ebb",
+        "enemy-74e4e39589",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 56
+        }
+      ],
+      "state_sha1": "c901b37523ed252dad59d7542b3f69d262053ad8"
+    },
+    "shark-4_mini-boss": {
+      "area": 1,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-4185141b5a",
+        "enemy-46d9e2249f",
+        "enemy-4c32312ebb",
+        "enemy-74e4e39589",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 56
+        }
+      ],
+      "state_sha1": "edbd4700710484154fd2fb9a071f9361b0a7f3b7"
+    },
+    "shark-5_after-mini-boss": {
+      "area": 1,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-4185141b5a",
+        "enemy-46d9e2249f",
+        "enemy-4c32312ebb",
+        "enemy-74e4e39589",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 56
+        }
+      ],
+      "state_sha1": "4ff2a983946819b868f04787c0109ceffcfd05f3"
+    },
+    "shark-6_before-boss": {
+      "area": 1,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-4185141b5a",
+        "enemy-46d9e2249f",
+        "enemy-4c32312ebb",
+        "enemy-74e4e39589",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 56
+        }
+      ],
+      "state_sha1": "6a0f62f391efbd29e1f944e6f868f4dba522a849"
+    },
+    "shark-7_boss": {
+      "area": 1,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-3f9602d9d5",
+        "enemy-65ec66c9da",
+        "enemy-a96f0b9d66",
+        "enemy-c5fe34fa82"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 56",
+          "type": 27
+        },
+        {
+          "reason": "cells overwritten by type 56",
+          "type": 35
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        }
+      ],
+      "state_sha1": "1992027342c0cbc98d3375dfb9806570930d060d"
+    },
+    "shark-8_boss-stun": {
+      "area": 1,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-49a226c55a",
+        "enemy-65ec66c9da",
+        "enemy-a96f0b9d66",
+        "enemy-c5fe34fa82",
+        "enemy-c917663600"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "type 56: table 0x800f952c: animation 0 uses sprite 37, bank 14 has 13",
+          "table": "0x800f952c",
+          "type": 56
+        }
+      ],
+      "state_sha1": "7cb9d3575b2c229442a22e3f2b1fc58a24a0b3d9"
+    },
+    "shark-9_boss-revive": {
+      "area": 1,
+      "enemies": [
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-3f9602d9d5",
+        "enemy-65ec66c9da",
+        "enemy-a96f0b9d66",
+        "enemy-c5fe34fa82"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 56",
+          "type": 27
+        },
+        {
+          "reason": "cells overwritten by type 56",
+          "type": 35
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "sprite data of set 1 (entry 15)",
+          "table": "0x800f952c",
+          "type": 56
+        }
+      ],
+      "state_sha1": "c07a3a19e6bcc6b475e2bcc24ad84d2187dedbb6"
+    }
+  }
+}

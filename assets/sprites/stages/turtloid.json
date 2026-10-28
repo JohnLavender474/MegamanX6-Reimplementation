@@ -1,0 +1,98 @@
+{
+  "states": {
+    "turtloid-1": {
+      "area": 0,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-62d9963d2c",
+        "enemy-9b0ee535de",
+        "enemy-9e1a96d9a9",
+        "enemy-a96f0b9d66",
+        "enemy-c11dd314d5",
+        "enemy-cbdbb6cf1e",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 57
+        }
+      ],
+      "state_sha1": "da8082595c9fc59c1fff107999f384a674b9a63d"
+    },
+    "turtloid-2_mid": {
+      "area": 0,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-62d9963d2c",
+        "enemy-6f4f843e93",
+        "enemy-9b0ee535de",
+        "enemy-9e1a96d9a9",
+        "enemy-a96f0b9d66",
+        "enemy-c11dd314d5",
+        "enemy-cbdbb6cf1e",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 57
+        }
+      ],
+      "state_sha1": "7a68e6e00140207ee3a3c50918944fedb3e710d4"
+    },
+    "turtloid-3_mid": {
+      "area": 0,
+      "enemies": [
+        "enemy-363dce0a1a",
+        "enemy-4db73b9e4d",
+        "enemy-62d9963d2c",
+        "enemy-9b0ee535de",
+        "enemy-9e1a96d9a9",
+        "enemy-a96f0b9d66",
+        "enemy-c11dd314d5",
+        "enemy-cbdbb6cf1e",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 57
+        }
+      ],
+      "state_sha1": "bc89bec79ebd5dd44852cab3cc890c5ebfc15a0b"
+    },
+    "turtloid-7_boss": {
+      "area": 0,
+      "enemies": [
+        "enemy-0c4b3324db",
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-520fe16c6e",
+        "enemy-878762bcce",
+        "enemy-9b2c8df370",
+        "enemy-a7c74031f5",
+        "enemy-a96f0b9d66"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 57",
+          "type": 10
+        },
+        {
+          "reason": "cells overwritten by type 57",
+          "type": 14
+        },
+        {
+          "reason": "cells overwritten by type 57",
+          "type": 28
+        },
+        {
+          "reason": "cells overwritten by type 57",
+          "type": 18
+        }
+      ],
+      "state_sha1": "c5ad398fbefe0432adae509eba86c488cbf70cda"
+    }
+  }
+}

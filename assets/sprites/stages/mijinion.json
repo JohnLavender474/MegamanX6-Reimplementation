@@ -1,0 +1,98 @@
+{
+ "states": {
+  "mijinion-1_start": {
+   "area": 0,
+   "enemies": [
+    "enemy-304e0899c6",
+    "enemy-363dce0a1a",
+    "enemy-78c8f556f5",
+    "enemy-a96f0b9d66",
+    "enemy-c3301f6267",
+    "enemy-ef4d46bae1",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 58
+    },
+    {
+     "type": 24,
+     "reason": "effect 11 live source: a duplicate of illumina whose drone animations use robot sprites; removed by hand (docs/TODO.md)"
+    }
+   ],
+   "state_sha1": "3d6f112b3fc09675ec608e19bc3c935f8d449506"
+  },
+  "mijinion-2_illumina-helpers": {
+   "area": 0,
+   "enemies": [
+    "enemy-304e0899c6",
+    "enemy-363dce0a1a",
+    "enemy-78c8f556f5",
+    "enemy-a96f0b9d66",
+    "enemy-c3301f6267",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "cells overwritten by type 24",
+     "type": 24
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 58
+    },
+    {
+     "type": 24,
+     "reason": "effect 11 live source: a duplicate of illumina whose drone animations use robot sprites; removed by hand (docs/TODO.md)"
+    },
+    {
+     "type": 24,
+     "reason": "a duplicate of illumina whose robot animations use drone sprites; removed by hand (docs/TODO.md)"
+    }
+   ],
+   "state_sha1": "d4d3f533583adc4daf98ad9d9cb742eed247cf06"
+  },
+  "mijinion-3_boss-fight": {
+   "area": 0,
+   "enemies": [
+    "enemy-30419fd669",
+    "enemy-363dce0a1a",
+    "enemy-a96f0b9d66",
+    "enemy-b75a43c056",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "cells overwritten by type 58",
+     "type": 11
+    },
+    {
+     "reason": "cells overwritten by type 58",
+     "type": 19
+    },
+    {
+     "reason": "cells overwritten by type 58",
+     "type": 24
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "bank 3 cells overwritten (boss state; not marked by the tool, docs/TODO.md); removed by hand",
+     "type": 8
+    }
+   ],
+   "state_sha1": "fc50684428d3f921983d2730df60915ac9755ac2"
+  }
+ }
+}

@@ -1,0 +1,209 @@
+{
+  "states": {
+    "sheldon-1_lemons": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "type 32: table 0x800fc6e4: animation 0 uses sprite 164, bank 11 has 2",
+          "table": "0x800fc6e4",
+          "type": 32
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "068a884c44bee4b9b21e0428f1e0c0f12b10cabc"
+    },
+    "sheldon-2_half-charge": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "type 32: table 0x800fc6e4: animation 0 uses sprite 164, bank 11 has 2",
+          "table": "0x800fc6e4",
+          "type": 32
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "97c1793a13e8296e580fcf5368ab978f1a035360"
+    },
+    "sheldon-3_full-charge": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "type 32: table 0x800fc6e4: animation 0 uses sprite 164, bank 11 has 2",
+          "table": "0x800fc6e4",
+          "type": 32
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "21bb0968b9a3df2981266f455f9a550778736701"
+    },
+    "sheldon-4_no-armor": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "type 32: table 0x800fc6e4: animation 0 uses sprite 164, bank 11 has 2",
+          "table": "0x800fc6e4",
+          "type": 32
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "078a4852bb23c8f77ab4d0d29aa0a0afcd1b95eb"
+    },
+    "sheldon-5_nightmare-hidden": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-61922ae859",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "type 32: table 0x800fc6e4: animation 0 uses sprite 164, bank 11 has 2",
+          "table": "0x800fc6e4",
+          "type": 32
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "53c925a529745fbf49fe27799cccdab3d5736138"
+    },
+    "sheldon-6_tile-shown": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-61922ae859",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "type 32: table 0x800fc6e4: animation 0 uses sprite 164, bank 11 has 2",
+          "table": "0x800fc6e4",
+          "type": 32
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "30a84a4ee7ae3b8cb97d2351487bac96270b9ef3"
+    },
+    "sheldon-7_lasers": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "type 32: table 0x800fc6e4: animation 0 uses sprite 164, bank 11 has 2",
+          "table": "0x800fc6e4",
+          "type": 32
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "9839227b25dbb23eaef623c7fdb4423cd6d8dbe9"
+    }
+  }
+}

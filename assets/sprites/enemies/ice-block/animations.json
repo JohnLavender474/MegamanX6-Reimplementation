@@ -1,0 +1,233 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 8
+        }
+      ],
+      "index": 0,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 11,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 12,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 13,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 14,
+          "ticks": 8
+        },
+        {
+          "flag": 0,
+          "sprite": 15,
+          "ticks": 8
+        }
+      ],
+      "index": 1,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 16,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 17,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 18,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 19,
+          "ticks": 1
+        }
+      ],
+      "index": 7,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 20,
+          "ticks": 1
+        }
+      ],
+      "index": 8,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    96,
+    96
+  ],
+  "fps": 60,
+  "id": "enemy-3362eccf5a",
+  "origin": [
+    48,
+    48
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 5,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-1_x-sabre.state.gz",
+      "state_sha1": "fce8419abfd1b14892451a1459fd5e4a4c3bfa52",
+      "table": "0x800f6cbc",
+      "type": 17
+    },
+    {
+      "area": 0,
+      "bank": 5,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-2_ice-slope.state.gz",
+      "state_sha1": "9fe41277436027d7fe980750634fcbdd7ac8afd1",
+      "table": "0x800f6cbc",
+      "type": 17
+    },
+    {
+      "area": 0,
+      "bank": 5,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-3_falling-ice.state.gz",
+      "state_sha1": "7a3a9a1b7d8520a56eb02742dc0bb36027f99492",
+      "table": "0x800f6cbc",
+      "type": 17
+    },
+    {
+      "area": 0,
+      "bank": 5,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-5_ice-pit.state.gz",
+      "state_sha1": "0b1d405ebeb62ae58a007d761d5f6fe2f8f8cf39",
+      "table": "0x800f6cbc",
+      "type": 17
+    }
+  ]
+}

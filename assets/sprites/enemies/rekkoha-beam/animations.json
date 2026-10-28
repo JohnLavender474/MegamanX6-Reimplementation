@@ -1,0 +1,76 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 1,
+          "sprite": 0,
+          "ticks": 1
+        },
+        {
+          "flag": 2,
+          "sprite": 1,
+          "ticks": 1
+        },
+        {
+          "flag": 3,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": 0
+    },
+    {
+      "frames": [
+        {
+          "flag": 1,
+          "sprite": 3,
+          "ticks": 1
+        },
+        {
+          "flag": 2,
+          "sprite": 4,
+          "ticks": 1
+        },
+        {
+          "flag": 3,
+          "sprite": 5,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": 0
+    }
+  ],
+  "cell": [
+    32,
+    255
+  ],
+  "fps": 60,
+  "id": "enemy-56bb20f5e7",
+  "origin": [
+    16,
+    128
+  ],
+  "sources": [
+    {
+      "also": "effect type 26 (0x801EE254) uses table animation 12",
+      "area": 0,
+      "bank": null,
+      "class": "weapon",
+      "entry": 15,
+      "found": "live",
+      "sprites": "live",
+      "stage": 3,
+      "state": "heatnix-3_rekkoha.state.gz",
+      "state_sha1": "f26dadb1e7dfcadf820275a583375f4aeb845a8b",
+      "table": "0x8007798c",
+      "table_animations": [
+        11,
+        12
+      ],
+      "type": 44
+    }
+  ]
+}

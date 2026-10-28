@@ -1,0 +1,118 @@
+m075-e02: slot 2, 17 samples, 52 sound words
+m076-e02: slot 2, 17 samples, 40 sound words
+m077-e02: slot 2, 17 samples, 40 sound words
+m078-e02: slot 2, 23 samples, 120 sound words
+m079-e02: slot 2, 14 samples, 56 sound words
+m080-e02: slot 2, 19 samples, 121 sound words
+m081-e02: slot 2, 22 samples, 102 sound words
+m082-e02: slot 2, 20 samples, 79 sound words
+m085-e04: slot 0, 23 samples, 44 sound words
+m085-e11: slot 1, 23 samples, 32 sound words
+m085-e13: slot 3, 14 samples, 18 sound words
+m086-e04: slot 0, 23 samples, 44 sound words, same as m085-e04
+m086-e11: slot 1, 29 samples, 38 sound words
+m086-e13: slot 3, 13 samples, 18 sound words
+m087-e04: slot 0, 23 samples, 44 sound words, same as m085-e04
+m087-e11: slot 1, 29 samples, 38 sound words
+m087-e13: slot 3, 13 samples, 18 sound words, same as m086-e13
+m088-e04: slot 0, 23 samples, 44 sound words, same as m085-e04
+m088-e11: slot 1, 17 samples, 19 sound words
+m088-e13: slot 3, 13 samples, 18 sound words, same as m086-e13
+m089-e04: slot 0, 23 samples, 44 sound words, same as m085-e04
+m089-e11: slot 1, 29 samples, 38 sound words
+m089-e13: slot 3, 13 samples, 18 sound words, same as m086-e13
+m094-e03: slot 5, 1 samples, 1 sound words
+m094-e05: slot 2, 7 samples, 34 sound words
+m095-e03: slot 2, 11 samples, 67 sound words
+m096-e03: slot 5, 3 samples, 10 sound words
+m096-e05: slot 2, 10 samples, 81 sound words
+m097-e05: slot 5, 2 samples, 4 sound words
+m097-e07: slot 2, 10 samples, 83 sound words
+m098-e05: slot 2, 20 samples, 83 sound words
+m099-e05: slot 5, 2 samples, 7 sound words
+m099-e07: slot 2, 19 samples, 83 sound words
+m100-e05: slot 2, 14 samples, 85 sound words
+m101-e03: slot 5, 3 samples, 6 sound words
+m101-e05: slot 2, 10 samples, 86 sound words
+m102-e05: slot 2, 11 samples, 83 sound words
+m103-e05: slot 2, 21 samples, 83 sound words
+m104-e05: slot 2, 10 samples, 89 sound words
+m105-e03: slot 2, 10 samples, 89 sound words, same as m104-e05
+m106-e10: slot 0, 23 samples, 44 sound words, same as m085-e04
+m106-e12: slot 5, 2 samples, 2 sound words
+m107-e04: slot 0, 23 samples, 44 sound words, same as m085-e04
+m107-e06: slot 5, 1 samples, 1 sound words
+m108-e03: slot 5, 3 samples, 3 sound words
+m110-e08: slot 0, 23 samples, 44 sound words, same as m085-e04
+m110-e10: slot 5, 2 samples, 2 sound words, same as m106-e12
+m111-e08: slot 0, 23 samples, 44 sound words, same as m085-e04
+m111-e10: slot 5, 2 samples, 2 sound words, same as m106-e12
+m112-e03: slot 5, 2 samples, 4 sound words
+m112-e05: slot 2, 7 samples, 89 sound words
+m113-e03: slot 5, 2 samples, 5 sound words
+m113-e05: slot 2, 17 samples, 67 sound words
+m114-e03: slot 5, 2 samples, 5 sound words, same as m113-e03
+m114-e05: slot 2, 17 samples, 67 sound words, same as m113-e05
+m115-e03: slot 2, 11 samples, 67 sound words, same as m095-e03
+m116-e03: slot 5, 3 samples, 10 sound words, same as m096-e03
+m116-e05: slot 2, 10 samples, 81 sound words, same as m096-e05
+m117-e04: slot 5, 2 samples, 4 sound words, same as m097-e05
+m117-e06: slot 2, 10 samples, 83 sound words, same as m097-e07
+m118-e04: slot 5, 2 samples, 7 sound words, same as m099-e05
+m118-e06: slot 2, 20 samples, 83 sound words, same as m098-e05
+m119-e04: slot 2, 14 samples, 85 sound words, same as m100-e05
+m120-e03: slot 5, 3 samples, 6 sound words, same as m101-e03
+m120-e05: slot 2, 10 samples, 86 sound words, same as m101-e05
+m121-e04: slot 2, 11 samples, 83 sound words, same as m102-e05
+m122-e04: slot 2, 21 samples, 83 sound words, same as m103-e05
+m123-e01: slot 2, 15 samples, 105 sound words
+m124-e01: slot 2, 17 samples, 129 sound words
+m125-e01: slot 2, 17 samples, 52 sound words, same as m075-e02
+m126-e01: slot 2, 17 samples, 40 sound words, same as m076-e02
+m127-e01: slot 2, 17 samples, 40 sound words, same as m077-e02
+m128-e01: slot 2, 23 samples, 120 sound words, same as m078-e02
+m129-e01: slot 2, 14 samples, 56 sound words, same as m079-e02
+m130-e01: slot 2, 19 samples, 121 sound words, same as m080-e02
+m131-e01: slot 2, 22 samples, 102 sound words, same as m081-e02
+m132-e01: slot 2, 20 samples, 79 sound words, same as m082-e02
+m133-e01: slot 2, 12 samples, 137 sound words
+m134-e01: slot 2, 16 samples, 123 sound words
+m135-e01: slot 2, 8 samples, 113 sound words
+m136-e01: slot 2, 17 samples, 129 sound words, same as m124-e01
+m137-e01: slot 2, 13 samples, 142 sound words
+m138-e01: slot 2, 14 samples, 154 sound words
+m139-e01: slot 2, 17 samples, 129 sound words, same as m124-e01
+m140-e01: slot 2, 21 samples, 93 sound words
+m141-e00: slot 2, 8 samples, 8 sound words
+m142-e00: slot 2, 8 samples, 8 sound words, same as m141-e00
+m143-e00: slot 2, 8 samples, 8 sound words, same as m141-e00
+m144-e00: slot 2, 8 samples, 8 sound words, same as m141-e00
+m145-e00: slot 2, 8 samples, 8 sound words, same as m141-e00
+m146-e00: slot 2, 8 samples, 8 sound words, same as m141-e00
+m147-e00: slot 2, 8 samples, 8 sound words, same as m141-e00
+m148-e00: slot 2, 8 samples, 8 sound words, same as m141-e00
+m149-e04: slot 0, 11 samples, 15 sound words
+m149-e06: slot 5, 16 samples, 6 sound words
+m150-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m150-e06: slot 5, 16 samples, 6 sound words, same as m149-e06
+m151-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m151-e06: slot 5, 12 samples, 6 sound words
+m152-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m153-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m153-e06: slot 5, 12 samples, 6 sound words
+m154-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m154-e06: slot 5, 6 samples, 6 sound words
+m155-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m155-e06: slot 5, 9 samples, 6 sound words
+m156-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m156-e06: slot 5, 9 samples, 6 sound words, same as m155-e06
+m157-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m157-e06: slot 5, 9 samples, 6 sound words, same as m155-e06
+m158-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m159-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m159-e06: slot 5, 12 samples, 6 sound words
+m160-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+m160-e06: slot 5, 12 samples, 6 sound words, same as m159-e06
+m161-e04: slot 0, 11 samples, 15 sound words, same as m149-e04
+116 banks (55 unique), 716 samples (60 looped), 46 members not archives
+772 sound ids (695 with a file, 20 sequences)

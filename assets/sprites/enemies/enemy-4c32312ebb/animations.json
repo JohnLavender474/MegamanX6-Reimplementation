@@ -1,0 +1,120 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 1
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    32,
+    62
+  ],
+  "fps": 60,
+  "id": "enemy-4c32312ebb",
+  "origin": [
+    16,
+    32
+  ],
+  "sources": [
+    {
+      "area": 1,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-2_section-2.state.gz",
+      "state_sha1": "2ed5581179aa6acd6cf436aac85487b11ea49bd0",
+      "table": "0x800f8dc8",
+      "type": 35
+    },
+    {
+      "area": 1,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-3_press-low.state.gz",
+      "state_sha1": "c901b37523ed252dad59d7542b3f69d262053ad8",
+      "table": "0x800f8dc8",
+      "type": 35
+    },
+    {
+      "area": 1,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-4_mini-boss.state.gz",
+      "state_sha1": "edbd4700710484154fd2fb9a071f9361b0a7f3b7",
+      "table": "0x800f8dc8",
+      "type": 35
+    },
+    {
+      "area": 1,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-5_after-mini-boss.state.gz",
+      "state_sha1": "4ff2a983946819b868f04787c0109ceffcfd05f3",
+      "table": "0x800f8dc8",
+      "type": 35
+    },
+    {
+      "area": 1,
+      "bank": 7,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-6_before-boss.state.gz",
+      "state_sha1": "6a0f62f391efbd29e1f944e6f868f4dba522a849",
+      "table": "0x800f8dc8",
+      "type": 35
+    }
+  ]
+}

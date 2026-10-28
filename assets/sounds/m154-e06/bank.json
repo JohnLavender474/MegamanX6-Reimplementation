@@ -1,0 +1,373 @@
+{
+ "member": 154,
+ "entry": 6,
+ "slot": 5,
+ "body_type": "0x20505",
+ "sounds": [
+  "0x000180c0",
+  "0x010181c0",
+  "0x020182c0",
+  "0x030183c0",
+  "0x040184c0",
+  "0x050185c0"
+ ],
+ "ids": [
+  {
+   "id": 0,
+   "word": "0x000180c0",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 1,
+   "tone": 0,
+   "priority": 1,
+   "voice": 0,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 1,
+   "word": "0x010181c0",
+   "kind": "tone",
+   "vab": 0,
+   "program": 1,
+   "flag": 1,
+   "tone": 0,
+   "priority": 1,
+   "voice": 1,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 2,
+   "word": "0x020182c0",
+   "kind": "tone",
+   "vab": 0,
+   "program": 2,
+   "flag": 1,
+   "tone": 0,
+   "priority": 1,
+   "voice": 2,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 3,
+   "word": "0x030183c0",
+   "kind": "tone",
+   "vab": 0,
+   "program": 3,
+   "flag": 1,
+   "tone": 0,
+   "priority": 1,
+   "voice": 3,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 4,
+   "word": "0x040184c0",
+   "kind": "tone",
+   "vab": 0,
+   "program": 4,
+   "flag": 1,
+   "tone": 0,
+   "priority": 1,
+   "voice": 4,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 5,
+   "word": "0x050185c0",
+   "kind": "tone",
+   "vab": 0,
+   "program": 5,
+   "flag": 1,
+   "tone": 0,
+   "priority": 1,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  }
+ ],
+ "volume": 80,
+ "pan": 64,
+ "programs": [
+  {
+   "number": 1,
+   "volume": 80,
+   "pan": 64,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 65,
+     "fine": 0,
+     "note_min": 0,
+     "note_max": 65,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 3
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 71,
+     "fine": 0,
+     "note_min": 66,
+     "note_max": 71,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 4
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 77,
+     "fine": 0,
+     "note_min": 72,
+     "note_max": 120,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 5
+    }
+   ]
+  },
+  {
+   "number": 2,
+   "volume": 70,
+   "pan": 64,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 0,
+     "center": 55,
+     "fine": 10,
+     "note_min": 0,
+     "note_max": 55,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 2
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 0,
+     "center": 67,
+     "fine": 10,
+     "note_min": 56,
+     "note_max": 120,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 1
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 127,
+     "center": 55,
+     "fine": 0,
+     "note_min": 0,
+     "note_max": 55,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 2
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 127,
+     "center": 67,
+     "fine": 0,
+     "note_min": 56,
+     "note_max": 120,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 1
+    }
+   ]
+  },
+  {
+   "number": 3,
+   "volume": 80,
+   "pan": 64,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 96,
+     "center": 54,
+     "fine": 0,
+     "note_min": 0,
+     "note_max": 53,
+     "adsr1": 33023,
+     "adsr2": 24524,
+     "vag": 6
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 32,
+     "center": 66,
+     "fine": 0,
+     "note_min": 54,
+     "note_max": 120,
+     "adsr1": 33023,
+     "adsr2": 24524,
+     "vag": 6
+    }
+   ]
+  },
+  {
+   "number": 4,
+   "volume": 45,
+   "pan": 34,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 65,
+     "fine": 10,
+     "note_min": 0,
+     "note_max": 65,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 3
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 71,
+     "fine": 10,
+     "note_min": 66,
+     "note_max": 71,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 4
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 77,
+     "fine": 10,
+     "note_min": 72,
+     "note_max": 120,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 5
+    }
+   ]
+  },
+  {
+   "number": 5,
+   "volume": 55,
+   "pan": 94,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 65,
+     "fine": 10,
+     "note_min": 0,
+     "note_max": 65,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 3
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 71,
+     "fine": 10,
+     "note_min": 66,
+     "note_max": 71,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 4
+    },
+    {
+     "priority": 0,
+     "mode": 4,
+     "volume": 127,
+     "pan": 64,
+     "center": 77,
+     "fine": 10,
+     "note_min": 72,
+     "note_max": 120,
+     "adsr1": 33023,
+     "adsr2": 20490,
+     "vag": 5
+    }
+   ]
+  }
+ ],
+ "vags": [
+  {
+   "index": 1,
+   "file": "vag-01.wav",
+   "samples": 19992,
+   "loop_start": 12012
+  },
+  {
+   "index": 2,
+   "file": "vag-02.wav",
+   "samples": 20104,
+   "loop_start": 11984
+  },
+  {
+   "index": 3,
+   "file": "vag-03.wav",
+   "samples": 19880,
+   "loop_start": 12068
+  },
+  {
+   "index": 4,
+   "file": "vag-04.wav",
+   "samples": 19964,
+   "loop_start": 12012
+  },
+  {
+   "index": 5,
+   "file": "vag-05.wav",
+   "samples": 19880,
+   "loop_start": 12068
+  },
+  {
+   "index": 6,
+   "file": "vag-06.wav",
+   "samples": 11984,
+   "loop_start": null
+  }
+ ],
+ "sample_rate": 44100
+}

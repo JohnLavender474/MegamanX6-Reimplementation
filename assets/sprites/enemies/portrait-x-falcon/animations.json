@@ -1,0 +1,43 @@
+{
+  "animations": [],
+  "cell": [
+    78,
+    64
+  ],
+  "id": "enemy-ea99b706db",
+  "origin": [
+    39,
+    32
+  ],
+  "sheet": {
+    "columns": 6,
+    "file": "sprites.png",
+    "sprites": 6
+  },
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": null,
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-4_hunters-text.state.gz",
+      "state_sha1": "d15439d2bcf2e681b8366fb2add8be7dfcdcb06d",
+      "type": 22
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": null,
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-6_high-max-text.state.gz",
+      "state_sha1": "4eace6e04eb87433f06d29ee9a1d3ed06d3aa7f9",
+      "type": 22
+    }
+  ]
+}

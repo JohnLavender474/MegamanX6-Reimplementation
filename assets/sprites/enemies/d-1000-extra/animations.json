@@ -1,0 +1,31 @@
+{
+  "animations": [],
+  "cell": [
+    211,
+    229
+  ],
+  "id": "enemy-250854b686",
+  "origin": [
+    88,
+    128
+  ],
+  "sheet": {
+    "columns": 8,
+    "file": "sprites.png",
+    "sprites": 49
+  },
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "visual",
+      "entry": 16,
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-3_boss.state.gz",
+      "state_sha1": "a35a84fc9767b61d51fecbe6cd24bf9720fbe5ee",
+      "type": 1
+    }
+  ]
+}

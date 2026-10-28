@@ -1,0 +1,164 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 3
+        }
+      ],
+      "index": 0,
+      "loop_to": 0
+    }
+  ],
+  "cell": [
+    32,
+    32
+  ],
+  "fps": 60,
+  "id": "enemy-78c8f556f5",
+  "origin": [
+    16,
+    16
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 6,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-1_x-sabre.state.gz",
+      "state_sha1": "fce8419abfd1b14892451a1459fd5e4a4c3bfa52",
+      "table": "0x800f6d58",
+      "type": 19
+    },
+    {
+      "area": 0,
+      "bank": 6,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-2_ice-slope.state.gz",
+      "state_sha1": "9fe41277436027d7fe980750634fcbdd7ac8afd1",
+      "table": "0x800f6d58",
+      "type": 19
+    },
+    {
+      "area": 0,
+      "bank": 6,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-3_falling-ice.state.gz",
+      "state_sha1": "7a3a9a1b7d8520a56eb02742dc0bb36027f99492",
+      "table": "0x800f6d58",
+      "type": 19
+    },
+    {
+      "area": 0,
+      "bank": 6,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 2,
+      "state": "wolfang-5_ice-pit.state.gz",
+      "state_sha1": "0b1d405ebeb62ae58a007d761d5f6fe2f8f8cf39",
+      "table": "0x800f6d58",
+      "type": 19
+    },
+    {
+      "area": 0,
+      "bank": 5,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 8,
+      "state": "mijinion-1_start.state.gz",
+      "state_sha1": "3d6f112b3fc09675ec608e19bc3c935f8d449506",
+      "table": "0x800fc078",
+      "type": 19
+    },
+    {
+      "area": 0,
+      "bank": 5,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 8,
+      "state": "mijinion-2_illumina-helpers.state.gz",
+      "state_sha1": "d4d3f533583adc4daf98ad9d9cb742eed247cf06",
+      "table": "0x800fc078",
+      "type": 19
+    }
+  ]
+}

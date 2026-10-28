@@ -1,0 +1,235 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 1
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 6
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 4
+        },
+        {
+          "flag": 1,
+          "sprite": 3,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 15
+        },
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 6
+        },
+        {
+          "flag": 2,
+          "sprite": 1,
+          "ticks": 6
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 8,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 9,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 10,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 2
+        }
+      ],
+      "index": 7,
+      "loop_to": 0
+    }
+  ],
+  "cell": [
+    66,
+    61
+  ],
+  "fps": 60,
+  "id": "enemy-166c7c6f8f",
+  "origin": [
+    32,
+    29
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 0,
+      "state": "intro-1_start.state.gz",
+      "state_sha1": "47d49d7ef2cc64495b91e87ce18bc55abf7d2929",
+      "table": "0x800fab24",
+      "type": 1
+    },
+    {
+      "area": 0,
+      "bank": 3,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 0,
+      "state": "intro-2_junkroid.state.gz",
+      "state_sha1": "4d8f191b6b2fd1e204690ad2076a83851cfeb8d5",
+      "table": "0x800fab24",
+      "type": 1
+    },
+    {
+      "area": 0,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 0,
+      "state": "intro-3_boss.state.gz",
+      "state_sha1": "a35a84fc9767b61d51fecbe6cd24bf9720fbe5ee",
+      "table": "0x800fab24",
+      "type": 1
+    },
+    {
+      "area": 0,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 0,
+      "state": "intro-4_hunters-text.state.gz",
+      "state_sha1": "d15439d2bcf2e681b8366fb2add8be7dfcdcb06d",
+      "table": "0x800fab24",
+      "type": 1
+    },
+    {
+      "area": 0,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 0,
+      "state": "intro-5_alia-text.state.gz",
+      "state_sha1": "995b2bdf10abb725043dfb9078502d128523bf13",
+      "table": "0x800fab24",
+      "type": 1
+    },
+    {
+      "area": 0,
+      "bank": 3,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 0,
+      "state": "intro-6_high-max-text.state.gz",
+      "state_sha1": "4eace6e04eb87433f06d29ee9a1d3ed06d3aa7f9",
+      "table": "0x800fab24",
+      "type": 1
+    },
+    {
+      "area": 0,
+      "bank": 6,
+      "class": "main",
+      "found": "live",
+      "sprites": "bank",
+      "stage": 4,
+      "state": "shark-1_ride.state.gz",
+      "state_sha1": "fcf098dcbeb64cf58e6131364bb12e806937d130",
+      "table": "0x800f3860",
+      "type": 1
+    },
+    {
+      "area": 1,
+      "bank": 6,
+      "class": "main",
+      "found": "search",
+      "sprites": "bank",
+      "stage": 20,
+      "state": "shark-10_alt.state.gz",
+      "state_sha1": "114fb5c590494f5a3bc9dc0ee53f3e58ec1371f6",
+      "table": "0x800f2ec8",
+      "type": 1
+    }
+  ]
+}

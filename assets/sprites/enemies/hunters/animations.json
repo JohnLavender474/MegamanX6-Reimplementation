@@ -1,0 +1,31 @@
+{
+  "animations": [],
+  "cell": [
+    52,
+    112
+  ],
+  "id": "enemy-1c667fc53d",
+  "origin": [
+    14,
+    48
+  ],
+  "sheet": {
+    "columns": 8,
+    "file": "sprites.png",
+    "sprites": 16
+  },
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 6,
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-4_hunters-text.state.gz",
+      "state_sha1": "d15439d2bcf2e681b8366fb2add8be7dfcdcb06d",
+      "type": 8
+    }
+  ]
+}

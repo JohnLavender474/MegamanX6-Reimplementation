@@ -1,0 +1,164 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 12
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 12
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 1
+        }
+      ],
+      "index": 7,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    48,
+    64
+  ],
+  "fps": 60,
+  "id": "enemy-4185141b5a",
+  "origin": [
+    24,
+    32
+  ],
+  "sources": [
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-2_section-2.state.gz",
+      "state_sha1": "2ed5581179aa6acd6cf436aac85487b11ea49bd0",
+      "table": "0x800f8d08",
+      "type": 11
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-3_press-low.state.gz",
+      "state_sha1": "c901b37523ed252dad59d7542b3f69d262053ad8",
+      "table": "0x800f8d08",
+      "type": 11
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-4_mini-boss.state.gz",
+      "state_sha1": "edbd4700710484154fd2fb9a071f9361b0a7f3b7",
+      "table": "0x800f8d08",
+      "type": 11
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-5_after-mini-boss.state.gz",
+      "state_sha1": "4ff2a983946819b868f04787c0109ceffcfd05f3",
+      "table": "0x800f8d08",
+      "type": 11
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-6_before-boss.state.gz",
+      "state_sha1": "6a0f62f391efbd29e1f944e6f868f4dba522a849",
+      "table": "0x800f8d08",
+      "type": 11
+    }
+  ]
+}

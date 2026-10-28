@@ -1,0 +1,2478 @@
+{
+ "name": "zero-sabre",
+ "fps": 60,
+ "cell": [
+  147,
+  124
+ ],
+ "origin": [
+  91,
+  64
+ ],
+ "note": "Sabre hit objects (weapon ids 24-31, 35-42, 48). Each strip uses the same cell and origin as players/zero, so it lines up with the Zero animation of the same frame. A frame flag 1-90 is the box index in 0x801EE414 (box_long: 0x801EE580, with part 0x800000). The object draws with CLUT 0x7801; PaletteSlotLoad copies palette `palette` of the list into that slot. Palette 4: part 0x400000 or Black Zero; 5: part 0x1000000; 8: id 26 in Zero step 55.",
+ "palette_list": "0x80103000",
+ "palettes": {
+  "3": [
+   "0000",
+   "ffff",
+   "efdc",
+   "e3b8",
+   "d7b4",
+   "cf90",
+   "c36c",
+   "bb2a",
+   "b2e8",
+   "aac6",
+   "a2a4",
+   "a3df",
+   "8e3f",
+   "88bd",
+   "8873",
+   "8c49"
+  ],
+  "4": [
+   "0000",
+   "ffff",
+   "fbdb",
+   "f7d7",
+   "f3d3",
+   "efcf",
+   "ebac",
+   "e789",
+   "e346",
+   "d704",
+   "cac2",
+   "a3df",
+   "8e3f",
+   "88bd",
+   "8873",
+   "8c49"
+  ],
+  "5": [
+   "0000",
+   "ffff",
+   "fb9d",
+   "f75c",
+   "f31a",
+   "eeb9",
+   "ea78",
+   "e655",
+   "e213",
+   "ddf2",
+   "d9b1",
+   "a3df",
+   "8e3f",
+   "88bd",
+   "8873",
+   "8c49"
+  ],
+  "6": [
+   "0000",
+   "df33",
+   "c66d",
+   "b5e9",
+   "a588",
+   "9947",
+   "fbde",
+   "fbd9",
+   "fb94",
+   "f350",
+   "e6ee",
+   "dead",
+   "ce2a",
+   "c1c7",
+   "b985",
+   "da4f"
+  ],
+  "7": [
+   "0000",
+   "fbde",
+   "ef59",
+   "e2d5",
+   "d272",
+   "c610",
+   "b9ad",
+   "a529",
+   "98c6",
+   "8000",
+   "cf25",
+   "c264",
+   "b5a3",
+   "cef9",
+   "b635",
+   "a98f"
+  ],
+  "8": [
+   "0000",
+   "ffff",
+   "cbff",
+   "8fff",
+   "937e",
+   "92de",
+   "95fe",
+   "8978",
+   "90f2",
+   "846c",
+   "844b",
+   "a3df",
+   "8e3f",
+   "88bd",
+   "8873",
+   "8c49"
+  ]
+ },
+ "animations": [
+  {
+   "index": 112,
+   "weapon_ids": [
+    24
+   ],
+   "sabre_tbl": {
+    "24": [
+     112,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": 88,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-112.png",
+    "4": "anim-112-palette-4.png",
+    "5": "anim-112-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 1,
+     "sprite": 62,
+     "ticks": 1,
+     "box": {
+      "ox": 12,
+      "oy": 0,
+      "w": 16,
+      "h": 8
+     },
+     "box_long": {
+      "ox": 0,
+      "oy": 0,
+      "w": 28,
+      "h": 8
+     }
+    },
+    {
+     "flag": 2,
+     "sprite": 64,
+     "ticks": 1,
+     "box": {
+      "ox": -52,
+      "oy": -6,
+      "w": 78,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -64,
+      "oy": -6,
+      "w": 90,
+      "h": 16
+     }
+    },
+    {
+     "flag": 3,
+     "sprite": 66,
+     "ticks": 1,
+     "box": {
+      "ox": -56,
+      "oy": -20,
+      "w": 78,
+      "h": 32
+     },
+     "box_long": {
+      "ox": -68,
+      "oy": -20,
+      "w": 90,
+      "h": 32
+     }
+    },
+    {
+     "flag": 4,
+     "sprite": 68,
+     "ticks": 2,
+     "box": {
+      "ox": -56,
+      "oy": -20,
+      "w": 60,
+      "h": 32
+     },
+     "box_long": {
+      "ox": -68,
+      "oy": -20,
+      "w": 72,
+      "h": 32
+     }
+    },
+    {
+     "flag": 5,
+     "sprite": 70,
+     "ticks": 2,
+     "box": {
+      "ox": -32,
+      "oy": -20,
+      "w": 36,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -44,
+      "oy": -20,
+      "w": 48,
+      "h": 16
+     }
+    },
+    {
+     "flag": 6,
+     "sprite": 72,
+     "ticks": 2,
+     "box": {
+      "ox": -20,
+      "oy": -20,
+      "w": 24,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -32,
+      "oy": -20,
+      "w": 36,
+      "h": 16
+     }
+    },
+    {
+     "flag": 6,
+     "sprite": 74,
+     "ticks": 10,
+     "box": {
+      "ox": -20,
+      "oy": -20,
+      "w": 24,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -32,
+      "oy": -20,
+      "w": 36,
+      "h": 16
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 121,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 113,
+   "weapon_ids": [
+    25
+   ],
+   "sabre_tbl": {
+    "25": [
+     113,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": 89,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-113.png",
+    "4": "anim-113-palette-4.png",
+    "5": "anim-113-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 7,
+     "sprite": 76,
+     "ticks": 2,
+     "box": {
+      "ox": -20,
+      "oy": -34,
+      "w": 20,
+      "h": 15
+     },
+     "box_long": {
+      "ox": -32,
+      "oy": -34,
+      "w": 32,
+      "h": 15
+     }
+    },
+    {
+     "flag": 8,
+     "sprite": 78,
+     "ticks": 1,
+     "box": {
+      "ox": -48,
+      "oy": -34,
+      "w": 47,
+      "h": 34
+     },
+     "box_long": {
+      "ox": -60,
+      "oy": -34,
+      "w": 59,
+      "h": 34
+     }
+    },
+    {
+     "flag": 9,
+     "sprite": 80,
+     "ticks": 1,
+     "box": {
+      "ox": -63,
+      "oy": -34,
+      "w": 66,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -75,
+      "oy": -34,
+      "w": 78,
+      "h": 56
+     }
+    },
+    {
+     "flag": 10,
+     "sprite": 82,
+     "ticks": 2,
+     "box": {
+      "ox": -63,
+      "oy": -34,
+      "w": 96,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -75,
+      "oy": -34,
+      "w": 108,
+      "h": 56
+     }
+    },
+    {
+     "flag": 11,
+     "sprite": 84,
+     "ticks": 2,
+     "box": {
+      "ox": -20,
+      "oy": -2,
+      "w": 50,
+      "h": 23
+     },
+     "box_long": {
+      "ox": -32,
+      "oy": -2,
+      "w": 62,
+      "h": 23
+     }
+    },
+    {
+     "flag": 12,
+     "sprite": 86,
+     "ticks": 2,
+     "box": {
+      "ox": 8,
+      "oy": -3,
+      "w": 22,
+      "h": 22
+     },
+     "box_long": {
+      "ox": -4,
+      "oy": -3,
+      "w": 34,
+      "h": 22
+     }
+    },
+    {
+     "flag": 13,
+     "sprite": 88,
+     "ticks": 3,
+     "box": {
+      "ox": 10,
+      "oy": -2,
+      "w": 20,
+      "h": 18
+     },
+     "box_long": {
+      "ox": -2,
+      "oy": -2,
+      "w": 32,
+      "h": 18
+     }
+    },
+    {
+     "flag": 13,
+     "sprite": 90,
+     "ticks": 10,
+     "box": {
+      "ox": 10,
+      "oy": -2,
+      "w": 20,
+      "h": 18
+     },
+     "box_long": {
+      "ox": -2,
+      "oy": -2,
+      "w": 32,
+      "h": 18
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 121,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 114,
+   "weapon_ids": [
+    26
+   ],
+   "sabre_tbl": {
+    "26": [
+     114,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": 90,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-114.png",
+    "4": "anim-114-palette-4.png",
+    "5": "anim-114-palette-5.png",
+    "8": "anim-114-palette-8.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 14,
+     "sprite": 92,
+     "ticks": 2,
+     "box": {
+      "ox": -8,
+      "oy": 4,
+      "w": 30,
+      "h": 15
+     },
+     "box_long": {
+      "ox": -20,
+      "oy": 4,
+      "w": 42,
+      "h": 15
+     }
+    },
+    {
+     "flag": 15,
+     "sprite": 94,
+     "ticks": 1,
+     "box": {
+      "ox": -58,
+      "oy": -1,
+      "w": 78,
+      "h": 25
+     },
+     "box_long": {
+      "ox": -70,
+      "oy": -1,
+      "w": 90,
+      "h": 25
+     }
+    },
+    {
+     "flag": 16,
+     "sprite": 96,
+     "ticks": 1,
+     "box": {
+      "ox": -74,
+      "oy": -60,
+      "w": 91,
+      "h": 85
+     },
+     "box_long": {
+      "ox": -86,
+      "oy": -60,
+      "w": 103,
+      "h": 85
+     }
+    },
+    {
+     "flag": 17,
+     "sprite": 98,
+     "ticks": 2,
+     "box": {
+      "ox": -74,
+      "oy": -63,
+      "w": 84,
+      "h": 88
+     },
+     "box_long": {
+      "ox": -86,
+      "oy": -63,
+      "w": 96,
+      "h": 88
+     }
+    },
+    {
+     "flag": 18,
+     "sprite": 100,
+     "ticks": 2,
+     "box": {
+      "ox": -60,
+      "oy": -63,
+      "w": 44,
+      "h": 41
+     },
+     "box_long": {
+      "ox": -72,
+      "oy": -63,
+      "w": 56,
+      "h": 41
+     }
+    },
+    {
+     "flag": 19,
+     "sprite": 102,
+     "ticks": 3,
+     "box": {
+      "ox": -41,
+      "oy": -63,
+      "w": 24,
+      "h": 37
+     },
+     "box_long": {
+      "ox": -53,
+      "oy": -63,
+      "w": 36,
+      "h": 37
+     }
+    },
+    {
+     "flag": 20,
+     "sprite": 104,
+     "ticks": 12,
+     "box": {
+      "ox": -32,
+      "oy": -61,
+      "w": 16,
+      "h": 35
+     },
+     "box_long": {
+      "ox": -44,
+      "oy": -61,
+      "w": 28,
+      "h": 35
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 121,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 115,
+   "weapon_ids": [
+    27
+   ],
+   "sabre_tbl": {
+    "27": [
+     115,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-115.png",
+    "4": "anim-115-palette-4.png",
+    "5": "anim-115-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 29,
+     "sprite": 171,
+     "ticks": 2,
+     "box": {
+      "ox": -8,
+      "oy": -47,
+      "w": 27,
+      "h": 18
+     },
+     "box_long": {
+      "ox": -20,
+      "oy": -47,
+      "w": 39,
+      "h": 18
+     }
+    },
+    {
+     "flag": 30,
+     "sprite": 173,
+     "ticks": 2,
+     "box": {
+      "ox": -46,
+      "oy": -50,
+      "w": 64,
+      "h": 46
+     },
+     "box_long": {
+      "ox": -58,
+      "oy": -50,
+      "w": 76,
+      "h": 46
+     }
+    },
+    {
+     "flag": 31,
+     "sprite": 175,
+     "ticks": 2,
+     "box": {
+      "ox": -68,
+      "oy": -50,
+      "w": 82,
+      "h": 74
+     },
+     "box_long": {
+      "ox": -80,
+      "oy": -50,
+      "w": 94,
+      "h": 74
+     }
+    },
+    {
+     "flag": 31,
+     "sprite": 177,
+     "ticks": 2,
+     "box": {
+      "ox": -68,
+      "oy": -50,
+      "w": 82,
+      "h": 74
+     },
+     "box_long": {
+      "ox": -80,
+      "oy": -50,
+      "w": 94,
+      "h": 74
+     }
+    },
+    {
+     "flag": 32,
+     "sprite": 179,
+     "ticks": 3,
+     "box": {
+      "ox": -64,
+      "oy": 4,
+      "w": 50,
+      "h": 22
+     },
+     "box_long": {
+      "ox": -76,
+      "oy": 4,
+      "w": 62,
+      "h": 22
+     }
+    },
+    {
+     "flag": 33,
+     "sprite": 181,
+     "ticks": 4,
+     "box": {
+      "ox": -48,
+      "oy": 8,
+      "w": 36,
+      "h": 17
+     },
+     "box_long": {
+      "ox": -60,
+      "oy": 8,
+      "w": 48,
+      "h": 17
+     }
+    },
+    {
+     "flag": 34,
+     "sprite": 183,
+     "ticks": 2,
+     "box": {
+      "ox": -41,
+      "oy": 8,
+      "w": 28,
+      "h": 17
+     },
+     "box_long": {
+      "ox": -53,
+      "oy": 8,
+      "w": 40,
+      "h": 17
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 146,
+     "ticks": 2
+    },
+    {
+     "flag": 0,
+     "sprite": 148,
+     "ticks": 2
+    },
+    {
+     "flag": 0,
+     "sprite": 150,
+     "ticks": 2
+    },
+    {
+     "flag": 0,
+     "sprite": 150,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 116,
+   "weapon_ids": [
+    28
+   ],
+   "sabre_tbl": {
+    "28": [
+     116,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-116.png",
+    "4": "anim-116-palette-4.png",
+    "5": "anim-116-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 35,
+     "sprite": 107,
+     "ticks": 2,
+     "box": {
+      "ox": -13,
+      "oy": -40,
+      "w": 29,
+      "h": 18
+     },
+     "box_long": {
+      "ox": -25,
+      "oy": -40,
+      "w": 41,
+      "h": 18
+     }
+    },
+    {
+     "flag": 35,
+     "sprite": 107,
+     "ticks": 2,
+     "box": {
+      "ox": -13,
+      "oy": -40,
+      "w": 29,
+      "h": 18
+     },
+     "box_long": {
+      "ox": -25,
+      "oy": -40,
+      "w": 41,
+      "h": 18
+     }
+    },
+    {
+     "flag": 36,
+     "sprite": 109,
+     "ticks": 2,
+     "box": {
+      "ox": -48,
+      "oy": -42,
+      "w": 64,
+      "h": 42
+     },
+     "box_long": {
+      "ox": -60,
+      "oy": -42,
+      "w": 76,
+      "h": 42
+     }
+    },
+    {
+     "flag": 37,
+     "sprite": 111,
+     "ticks": 2,
+     "box": {
+      "ox": -72,
+      "oy": -42,
+      "w": 80,
+      "h": 74
+     },
+     "box_long": {
+      "ox": -84,
+      "oy": -42,
+      "w": 92,
+      "h": 74
+     }
+    },
+    {
+     "flag": 38,
+     "sprite": 113,
+     "ticks": 2,
+     "box": {
+      "ox": -72,
+      "oy": -42,
+      "w": 72,
+      "h": 74
+     },
+     "box_long": {
+      "ox": -84,
+      "oy": -42,
+      "w": 84,
+      "h": 74
+     }
+    },
+    {
+     "flag": 39,
+     "sprite": 115,
+     "ticks": 3,
+     "box": {
+      "ox": -66,
+      "oy": 12,
+      "w": 50,
+      "h": 20
+     },
+     "box_long": {
+      "ox": -78,
+      "oy": 12,
+      "w": 62,
+      "h": 20
+     }
+    },
+    {
+     "flag": 40,
+     "sprite": 117,
+     "ticks": 4,
+     "box": {
+      "ox": -52,
+      "oy": 15,
+      "w": 36,
+      "h": 17
+     },
+     "box_long": {
+      "ox": -64,
+      "oy": 15,
+      "w": 48,
+      "h": 17
+     }
+    },
+    {
+     "flag": 41,
+     "sprite": 119,
+     "ticks": 2,
+     "box": {
+      "ox": -48,
+      "oy": 16,
+      "w": 32,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -60,
+      "oy": 16,
+      "w": 44,
+      "h": 16
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 121,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 123,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 117,
+   "weapon_ids": [
+    30
+   ],
+   "sabre_tbl": {
+    "30": [
+     117,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-117.png",
+    "4": "anim-117-palette-4.png",
+    "5": "anim-117-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 21,
+     "sprite": 97,
+     "ticks": 1,
+     "box": {
+      "ox": -17,
+      "oy": -30,
+      "w": 25,
+      "h": 14
+     },
+     "box_long": {
+      "ox": -29,
+      "oy": -30,
+      "w": 37,
+      "h": 14
+     }
+    },
+    {
+     "flag": 22,
+     "sprite": 99,
+     "ticks": 1,
+     "box": {
+      "ox": -68,
+      "oy": -32,
+      "w": 76,
+      "h": 47
+     },
+     "box_long": {
+      "ox": -80,
+      "oy": -32,
+      "w": 88,
+      "h": 47
+     }
+    },
+    {
+     "flag": 23,
+     "sprite": 101,
+     "ticks": 2,
+     "box": {
+      "ox": -68,
+      "oy": -32,
+      "w": 72,
+      "h": 64
+     },
+     "box_long": {
+      "ox": -80,
+      "oy": -32,
+      "w": 84,
+      "h": 64
+     }
+    },
+    {
+     "flag": 24,
+     "sprite": 103,
+     "ticks": 1,
+     "box": {
+      "ox": -68,
+      "oy": -32,
+      "w": 65,
+      "h": 64
+     },
+     "box_long": {
+      "ox": -80,
+      "oy": -32,
+      "w": 77,
+      "h": 64
+     }
+    },
+    {
+     "flag": 25,
+     "sprite": 105,
+     "ticks": 2,
+     "box": {
+      "ox": -64,
+      "oy": 12,
+      "w": 44,
+      "h": 21
+     },
+     "box_long": {
+      "ox": -76,
+      "oy": 12,
+      "w": 56,
+      "h": 21
+     }
+    },
+    {
+     "flag": 26,
+     "sprite": 107,
+     "ticks": 2,
+     "box": {
+      "ox": -61,
+      "oy": 15,
+      "w": 40,
+      "h": 18
+     },
+     "box_long": {
+      "ox": -73,
+      "oy": 15,
+      "w": 52,
+      "h": 18
+     }
+    },
+    {
+     "flag": 27,
+     "sprite": 109,
+     "ticks": 3,
+     "box": {
+      "ox": -52,
+      "oy": 16,
+      "w": 32,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -64,
+      "oy": 16,
+      "w": 44,
+      "h": 16
+     }
+    },
+    {
+     "flag": 28,
+     "sprite": 111,
+     "ticks": 2,
+     "box": {
+      "ox": -52,
+      "oy": 4,
+      "w": 27,
+      "h": 11
+     },
+     "box_long": {
+      "ox": -64,
+      "oy": 4,
+      "w": 39,
+      "h": 11
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 111,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 119,
+   "weapon_ids": [
+    29
+   ],
+   "sabre_tbl": {
+    "29": [
+     119,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-119.png",
+    "4": "anim-119-palette-4.png",
+    "5": "anim-119-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 42,
+     "sprite": 156,
+     "ticks": 2,
+     "box": {
+      "ox": -53,
+      "oy": -52,
+      "w": 53,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -65,
+      "oy": -52,
+      "w": 65,
+      "h": 56
+     }
+    },
+    {
+     "flag": 43,
+     "sprite": 158,
+     "ticks": 2,
+     "box": {
+      "ox": -56,
+      "oy": -50,
+      "w": 52,
+      "h": 76
+     },
+     "box_long": {
+      "ox": -68,
+      "oy": -50,
+      "w": 64,
+      "h": 76
+     }
+    },
+    {
+     "flag": 44,
+     "sprite": 160,
+     "ticks": 2,
+     "box": {
+      "ox": -56,
+      "oy": -48,
+      "w": 64,
+      "h": 90
+     },
+     "box_long": {
+      "ox": -68,
+      "oy": -48,
+      "w": 76,
+      "h": 90
+     }
+    },
+    {
+     "flag": 45,
+     "sprite": 162,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": 0,
+      "w": 85,
+      "h": 45
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": 0,
+      "w": 97,
+      "h": 45
+     }
+    },
+    {
+     "flag": 46,
+     "sprite": 164,
+     "ticks": 2,
+     "box": {
+      "ox": -14,
+      "oy": -14,
+      "w": 65,
+      "h": 58
+     },
+     "box_long": {
+      "ox": -26,
+      "oy": -14,
+      "w": 77,
+      "h": 58
+     }
+    },
+    {
+     "flag": 47,
+     "sprite": 166,
+     "ticks": 2,
+     "box": {
+      "ox": 8,
+      "oy": -36,
+      "w": 48,
+      "h": 68
+     },
+     "box_long": {
+      "ox": -4,
+      "oy": -36,
+      "w": 60,
+      "h": 68
+     }
+    },
+    {
+     "flag": 48,
+     "sprite": 168,
+     "ticks": 2,
+     "box": {
+      "ox": -10,
+      "oy": -51,
+      "w": 63,
+      "h": 41
+     },
+     "box_long": {
+      "ox": -22,
+      "oy": -51,
+      "w": 75,
+      "h": 41
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 168,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 120,
+   "weapon_ids": [
+    35
+   ],
+   "sabre_tbl": {
+    "35": [
+     120,
+     7,
+     0,
+     0
+    ]
+   },
+   "zero_animation": null,
+   "palette": 7,
+   "palette_files": {
+    "7": "anim-120.png"
+   },
+   "loop_to": 4,
+   "frames": [
+    {
+     "flag": 73,
+     "sprite": 39,
+     "ticks": 2,
+     "box": {
+      "ox": -35,
+      "oy": -23,
+      "w": 25,
+      "h": 20
+     },
+     "box_long": null
+    },
+    {
+     "flag": 74,
+     "sprite": 41,
+     "ticks": 3,
+     "box": {
+      "ox": -21,
+      "oy": 1,
+      "w": 16,
+      "h": 60
+     },
+     "box_long": null
+    },
+    {
+     "flag": 74,
+     "sprite": 43,
+     "ticks": 3,
+     "box": {
+      "ox": -21,
+      "oy": 1,
+      "w": 16,
+      "h": 60
+     },
+     "box_long": null
+    },
+    {
+     "flag": 74,
+     "sprite": 45,
+     "ticks": 3,
+     "box": {
+      "ox": -21,
+      "oy": 1,
+      "w": 16,
+      "h": 60
+     },
+     "box_long": null
+    },
+    {
+     "flag": 74,
+     "sprite": 47,
+     "ticks": 3,
+     "box": {
+      "ox": -21,
+      "oy": 1,
+      "w": 16,
+      "h": 60
+     },
+     "box_long": null
+    },
+    {
+     "flag": 74,
+     "sprite": 47,
+     "ticks": 96,
+     "box": {
+      "ox": -21,
+      "oy": 1,
+      "w": 16,
+      "h": 60
+     },
+     "box_long": null
+    }
+   ]
+  },
+  {
+   "index": 121,
+   "weapon_ids": [
+    42
+   ],
+   "sabre_tbl": {
+    "42": [
+     121,
+     3,
+     0,
+     0
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-121.png",
+    "4": "anim-121-palette-4.png",
+    "5": "anim-121-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 83,
+     "sprite": 74,
+     "ticks": 1,
+     "box": {
+      "ox": -52,
+      "oy": -56,
+      "w": 68,
+      "h": 56
+     },
+     "box_long": null
+    },
+    {
+     "flag": 84,
+     "sprite": 76,
+     "ticks": 1,
+     "box": {
+      "ox": -56,
+      "oy": -48,
+      "w": 48,
+      "h": 66
+     },
+     "box_long": null
+    },
+    {
+     "flag": 85,
+     "sprite": 78,
+     "ticks": 1,
+     "box": {
+      "ox": -56,
+      "oy": -28,
+      "w": 62,
+      "h": 64
+     },
+     "box_long": null
+    },
+    {
+     "flag": 86,
+     "sprite": 80,
+     "ticks": 1,
+     "box": {
+      "ox": -44,
+      "oy": 1,
+      "w": 72,
+      "h": 39
+     },
+     "box_long": null
+    },
+    {
+     "flag": 87,
+     "sprite": 82,
+     "ticks": 1,
+     "box": {
+      "ox": -16,
+      "oy": -16,
+      "w": 66,
+      "h": 56
+     },
+     "box_long": null
+    },
+    {
+     "flag": 88,
+     "sprite": 84,
+     "ticks": 1,
+     "box": {
+      "ox": 10,
+      "oy": -35,
+      "w": 46,
+      "h": 67
+     },
+     "box_long": null
+    },
+    {
+     "flag": 89,
+     "sprite": 86,
+     "ticks": 1,
+     "box": {
+      "ox": -8,
+      "oy": -54,
+      "w": 64,
+      "h": 64
+     },
+     "box_long": null
+    },
+    {
+     "flag": 90,
+     "sprite": 88,
+     "ticks": 1,
+     "box": {
+      "ox": -32,
+      "oy": -56,
+      "w": 74,
+      "h": 39
+     },
+     "box_long": null
+    },
+    {
+     "flag": 0,
+     "sprite": 88,
+     "ticks": 1
+    }
+   ]
+  },
+  {
+   "index": 123,
+   "weapon_ids": [
+    36
+   ],
+   "sabre_tbl": {
+    "36": [
+     123,
+     3,
+     0,
+     0
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-123.png",
+    "4": "anim-123-palette-4.png",
+    "5": "anim-123-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 75,
+     "sprite": 56,
+     "ticks": 1,
+     "box": {
+      "ox": 0,
+      "oy": -16,
+      "w": 16,
+      "h": 16
+     },
+     "box_long": null
+    },
+    {
+     "flag": 76,
+     "sprite": 58,
+     "ticks": 2,
+     "box": {
+      "ox": -66,
+      "oy": -8,
+      "w": 92,
+      "h": 32
+     },
+     "box_long": null
+    },
+    {
+     "flag": 76,
+     "sprite": 58,
+     "ticks": 96,
+     "box": {
+      "ox": -66,
+      "oy": -8,
+      "w": 92,
+      "h": 32
+     },
+     "box_long": null
+    }
+   ]
+  },
+  {
+   "index": 126,
+   "weapon_ids": [
+    37
+   ],
+   "sabre_tbl": {
+    "37": [
+     126,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-126.png",
+    "4": "anim-126-palette-4.png",
+    "5": "anim-126-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 55,
+     "sprite": 25,
+     "ticks": 1,
+     "box": {
+      "ox": 8,
+      "oy": 10,
+      "w": 25,
+      "h": 19
+     },
+     "box_long": {
+      "ox": -4,
+      "oy": 10,
+      "w": 37,
+      "h": 19
+     }
+    },
+    {
+     "flag": 56,
+     "sprite": 27,
+     "ticks": 1,
+     "box": {
+      "ox": -60,
+      "oy": 6,
+      "w": 91,
+      "h": 20
+     },
+     "box_long": {
+      "ox": -72,
+      "oy": 6,
+      "w": 103,
+      "h": 20
+     }
+    },
+    {
+     "flag": 57,
+     "sprite": 29,
+     "ticks": 2,
+     "box": {
+      "ox": -68,
+      "oy": -8,
+      "w": 97,
+      "h": 36
+     },
+     "box_long": {
+      "ox": -80,
+      "oy": -8,
+      "w": 109,
+      "h": 36
+     }
+    },
+    {
+     "flag": 57,
+     "sprite": 31,
+     "ticks": 1,
+     "box": {
+      "ox": -68,
+      "oy": -8,
+      "w": 97,
+      "h": 36
+     },
+     "box_long": {
+      "ox": -80,
+      "oy": -8,
+      "w": 109,
+      "h": 36
+     }
+    },
+    {
+     "flag": 58,
+     "sprite": 33,
+     "ticks": 2,
+     "box": {
+      "ox": -66,
+      "oy": -8,
+      "w": 37,
+      "h": 13
+     },
+     "box_long": {
+      "ox": -78,
+      "oy": -8,
+      "w": 49,
+      "h": 13
+     }
+    },
+    {
+     "flag": 59,
+     "sprite": 35,
+     "ticks": 3,
+     "box": {
+      "ox": -54,
+      "oy": -8,
+      "w": 25,
+      "h": 10
+     },
+     "box_long": {
+      "ox": -66,
+      "oy": -8,
+      "w": 37,
+      "h": 10
+     }
+    },
+    {
+     "flag": 60,
+     "sprite": 37,
+     "ticks": 10,
+     "box": {
+      "ox": -48,
+      "oy": -8,
+      "w": 24,
+      "h": 8
+     },
+     "box_long": {
+      "ox": -60,
+      "oy": -8,
+      "w": 36,
+      "h": 8
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 37,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 127,
+   "weapon_ids": [
+    38
+   ],
+   "sabre_tbl": {
+    "38": [
+     127,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-127.png",
+    "4": "anim-127-palette-4.png",
+    "5": "anim-127-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 1
+    },
+    {
+     "flag": 61,
+     "sprite": 53,
+     "ticks": 1,
+     "box": {
+      "ox": -4,
+      "oy": -40,
+      "w": 24,
+      "h": 13
+     },
+     "box_long": {
+      "ox": -16,
+      "oy": -40,
+      "w": 36,
+      "h": 13
+     }
+    },
+    {
+     "flag": 62,
+     "sprite": 55,
+     "ticks": 1,
+     "box": {
+      "ox": -49,
+      "oy": -40,
+      "w": 66,
+      "h": 37
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": -40,
+      "w": 78,
+      "h": 37
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 57,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 59,
+     "ticks": 1,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 64,
+     "sprite": 61,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -14,
+      "w": 40,
+      "h": 30
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -14,
+      "w": 52,
+      "h": 30
+     }
+    },
+    {
+     "flag": 65,
+     "sprite": 63,
+     "ticks": 2,
+     "box": {
+      "ox": -49,
+      "oy": 0,
+      "w": 34,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": 0,
+      "w": 46,
+      "h": 16
+     }
+    },
+    {
+     "flag": 66,
+     "sprite": 65,
+     "ticks": 12,
+     "box": {
+      "ox": -42,
+      "oy": 0,
+      "w": 27,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -54,
+      "oy": 0,
+      "w": 39,
+      "h": 16
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 2
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 128,
+   "weapon_ids": [
+    39
+   ],
+   "sabre_tbl": {
+    "39": [
+     128,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-128.png",
+    "4": "anim-128-palette-4.png",
+    "5": "anim-128-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 1
+    },
+    {
+     "flag": 61,
+     "sprite": 53,
+     "ticks": 1,
+     "box": {
+      "ox": -4,
+      "oy": -40,
+      "w": 24,
+      "h": 13
+     },
+     "box_long": {
+      "ox": -16,
+      "oy": -40,
+      "w": 36,
+      "h": 13
+     }
+    },
+    {
+     "flag": 62,
+     "sprite": 55,
+     "ticks": 1,
+     "box": {
+      "ox": -49,
+      "oy": -40,
+      "w": 66,
+      "h": 37
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": -40,
+      "w": 78,
+      "h": 37
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 57,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 59,
+     "ticks": 1,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 64,
+     "sprite": 61,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -14,
+      "w": 40,
+      "h": 30
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -14,
+      "w": 52,
+      "h": 30
+     }
+    },
+    {
+     "flag": 65,
+     "sprite": 63,
+     "ticks": 2,
+     "box": {
+      "ox": -49,
+      "oy": 0,
+      "w": 34,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": 0,
+      "w": 46,
+      "h": 16
+     }
+    },
+    {
+     "flag": 66,
+     "sprite": 65,
+     "ticks": 12,
+     "box": {
+      "ox": -42,
+      "oy": 0,
+      "w": 27,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -54,
+      "oy": 0,
+      "w": 39,
+      "h": 16
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 2
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 129,
+   "weapon_ids": [
+    40
+   ],
+   "sabre_tbl": {
+    "40": [
+     129,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-129.png",
+    "4": "anim-129-palette-4.png",
+    "5": "anim-129-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 1
+    },
+    {
+     "flag": 61,
+     "sprite": 53,
+     "ticks": 1,
+     "box": {
+      "ox": -4,
+      "oy": -40,
+      "w": 24,
+      "h": 13
+     },
+     "box_long": {
+      "ox": -16,
+      "oy": -40,
+      "w": 36,
+      "h": 13
+     }
+    },
+    {
+     "flag": 62,
+     "sprite": 55,
+     "ticks": 1,
+     "box": {
+      "ox": -49,
+      "oy": -40,
+      "w": 66,
+      "h": 37
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": -40,
+      "w": 78,
+      "h": 37
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 57,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 59,
+     "ticks": 1,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 64,
+     "sprite": 61,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -14,
+      "w": 40,
+      "h": 30
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -14,
+      "w": 52,
+      "h": 30
+     }
+    },
+    {
+     "flag": 65,
+     "sprite": 63,
+     "ticks": 2,
+     "box": {
+      "ox": -49,
+      "oy": 0,
+      "w": 34,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": 0,
+      "w": 46,
+      "h": 16
+     }
+    },
+    {
+     "flag": 66,
+     "sprite": 65,
+     "ticks": 12,
+     "box": {
+      "ox": -42,
+      "oy": 0,
+      "w": 27,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -54,
+      "oy": 0,
+      "w": 39,
+      "h": 16
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 2
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 130,
+   "weapon_ids": [
+    41
+   ],
+   "sabre_tbl": {
+    "41": [
+     130,
+     3,
+     1,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 3,
+   "palette_files": {
+    "3": "anim-130.png",
+    "4": "anim-130-palette-4.png",
+    "5": "anim-130-palette-5.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 1
+    },
+    {
+     "flag": 61,
+     "sprite": 53,
+     "ticks": 1,
+     "box": {
+      "ox": -4,
+      "oy": -40,
+      "w": 24,
+      "h": 13
+     },
+     "box_long": {
+      "ox": -16,
+      "oy": -40,
+      "w": 36,
+      "h": 13
+     }
+    },
+    {
+     "flag": 62,
+     "sprite": 55,
+     "ticks": 1,
+     "box": {
+      "ox": -49,
+      "oy": -40,
+      "w": 66,
+      "h": 37
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": -40,
+      "w": 78,
+      "h": 37
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 57,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 63,
+     "sprite": 59,
+     "ticks": 1,
+     "box": {
+      "ox": -55,
+      "oy": -40,
+      "w": 69,
+      "h": 56
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -40,
+      "w": 81,
+      "h": 56
+     }
+    },
+    {
+     "flag": 64,
+     "sprite": 61,
+     "ticks": 2,
+     "box": {
+      "ox": -55,
+      "oy": -14,
+      "w": 40,
+      "h": 30
+     },
+     "box_long": {
+      "ox": -67,
+      "oy": -14,
+      "w": 52,
+      "h": 30
+     }
+    },
+    {
+     "flag": 65,
+     "sprite": 63,
+     "ticks": 2,
+     "box": {
+      "ox": -49,
+      "oy": 0,
+      "w": 34,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -61,
+      "oy": 0,
+      "w": 46,
+      "h": 16
+     }
+    },
+    {
+     "flag": 66,
+     "sprite": 65,
+     "ticks": 12,
+     "box": {
+      "ox": -42,
+      "oy": 0,
+      "w": 27,
+      "h": 16
+     },
+     "box_long": {
+      "ox": -54,
+      "oy": 0,
+      "w": 39,
+      "h": 16
+     }
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 2
+    },
+    {
+     "flag": 0,
+     "sprite": 51,
+     "ticks": 96
+    }
+   ]
+  },
+  {
+   "index": 132,
+   "weapon_ids": [
+    48
+   ],
+   "sabre_tbl": {
+    "48": [
+     132,
+     6,
+     0,
+     1
+    ]
+   },
+   "zero_animation": null,
+   "palette": 6,
+   "palette_files": {
+    "6": "anim-132.png"
+   },
+   "loop_to": null,
+   "frames": [
+    {
+     "flag": 67,
+     "sprite": 6,
+     "ticks": 1,
+     "box": {
+      "ox": -48,
+      "oy": -26,
+      "w": 24,
+      "h": 10
+     },
+     "box_long": null
+    },
+    {
+     "flag": 67,
+     "sprite": 8,
+     "ticks": 2,
+     "box": {
+      "ox": -48,
+      "oy": -26,
+      "w": 24,
+      "h": 10
+     },
+     "box_long": null
+    },
+    {
+     "flag": 68,
+     "sprite": 10,
+     "ticks": 2,
+     "box": {
+      "ox": -52,
+      "oy": -24,
+      "w": 42,
+      "h": 42
+     },
+     "box_long": null
+    },
+    {
+     "flag": 69,
+     "sprite": 12,
+     "ticks": 2,
+     "box": {
+      "ox": -24,
+      "oy": -4,
+      "w": 58,
+      "h": 34
+     },
+     "box_long": null
+    },
+    {
+     "flag": 70,
+     "sprite": 14,
+     "ticks": 2,
+     "box": {
+      "ox": 24,
+      "oy": -32,
+      "w": 31,
+      "h": 48
+     },
+     "box_long": null
+    },
+    {
+     "flag": 71,
+     "sprite": 16,
+     "ticks": 2,
+     "box": {
+      "ox": 24,
+      "oy": -32,
+      "w": 31,
+      "h": 16
+     },
+     "box_long": null
+    },
+    {
+     "flag": 72,
+     "sprite": 18,
+     "ticks": 2,
+     "box": {
+      "ox": 24,
+      "oy": -32,
+      "w": 31,
+      "h": 8
+     },
+     "box_long": null
+    },
+    {
+     "flag": 72,
+     "sprite": 20,
+     "ticks": 8,
+     "box": {
+      "ox": 24,
+      "oy": -32,
+      "w": 31,
+      "h": 8
+     },
+     "box_long": null
+    },
+    {
+     "flag": 0,
+     "sprite": 22,
+     "ticks": 4
+    },
+    {
+     "flag": 0,
+     "sprite": 22,
+     "ticks": 60
+    }
+   ]
+  }
+ ],
+ "skipped": [
+  {
+   "index": 118,
+   "ids": [
+    31
+   ],
+   "reason": "not in the Zero export (see its skipped list)"
+  }
+ ],
+ "source": {
+  "state": "scaravich-10_section-4-sabre.state.gz",
+  "state_sha1": "dccc4481ff38a22b574128714e3adb9475679934",
+  "live": {
+   "zero_step": 48,
+   "zero_animation": 88,
+   "weapon_id": 24,
+   "object_animation": 112,
+   "frame_flag": 6,
+   "box_ptr": "0x801ee42c",
+   "clut": "0x7801"
+  }
+ }
+}

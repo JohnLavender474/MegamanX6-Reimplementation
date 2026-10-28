@@ -1,0 +1,700 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 61,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 62,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 63,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 64,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 65,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 66,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 67,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 63,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 64,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 65,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 66,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 67,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 61,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 62,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 1,
+          "sprite": 68,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 69,
+          "ticks": 4
+        },
+        {
+          "flag": 2,
+          "sprite": 70,
+          "ticks": 4
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 70,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 69,
+          "ticks": 4
+        },
+        {
+          "flag": 1,
+          "sprite": 68,
+          "ticks": 4
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 61,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 62,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 67,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 66,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 65,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 64,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 63,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 67,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 66,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 65,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 64,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 63,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 58,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 1
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 61,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 60,
+          "ticks": 3
+        },
+        {
+          "flag": 0,
+          "sprite": 62,
+          "ticks": 2
+        },
+        {
+          "flag": 0,
+          "sprite": 59,
+          "ticks": 1
+        },
+        {
+          "flag": 2,
+          "sprite": 58,
+          "ticks": 2
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    30,
+    64
+  ],
+  "fps": 60,
+  "id": "enemy-30419fd669",
+  "origin": [
+    15,
+    32
+  ],
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-3_boss.state.gz",
+      "state_sha1": "a35a84fc9767b61d51fecbe6cd24bf9720fbe5ee",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-4_hunters-text.state.gz",
+      "state_sha1": "d15439d2bcf2e681b8366fb2add8be7dfcdcb06d",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-5_alia-text.state.gz",
+      "state_sha1": "995b2bdf10abb725043dfb9078502d128523bf13",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 0,
+      "state": "intro-6_high-max-text.state.gz",
+      "state_sha1": "4eace6e04eb87433f06d29ee9a1d3ed06d3aa7f9",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 1,
+      "state": "yammark-2_boss.state.gz",
+      "state_sha1": "165ad075ae9edae6d2b82037c513bddef1e6ee83",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 2,
+      "state": "wolfang-6_boss-warning.state.gz",
+      "state_sha1": "d52eadc6bf7ff990afd74461830c40b884eb3b52",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 2,
+      "state": "wolfang-7_boss-fight.state.gz",
+      "state_sha1": "93b62b93d2f85faffec3f8fbde1fe8bec5ee1379",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 3,
+      "state": "heatnix-1_start.state.gz",
+      "state_sha1": "200340c52e4237622a65f401feed3316575c5e1e",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 3,
+      "state": "heatnix-2_mini-boss.state.gz",
+      "state_sha1": "7e6ef1a4f80ea529d2cd7abc5e544d1b495ceb54",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 3,
+      "state": "heatnix-4_cave.state.gz",
+      "state_sha1": "d220a32e31639b9bb763dd7e20a5f263fe3f6fc2",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-5_after-mini-boss.state.gz",
+      "state_sha1": "4ff2a983946819b868f04787c0109ceffcfd05f3",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-6_before-boss.state.gz",
+      "state_sha1": "6a0f62f391efbd29e1f944e6f868f4dba522a849",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-7_boss.state.gz",
+      "state_sha1": "1992027342c0cbc98d3375dfb9806570930d060d",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-8_boss-stun.state.gz",
+      "state_sha1": "7cb9d3575b2c229442a22e3f2b1fc58a24a0b3d9",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-9_boss-revive.state.gz",
+      "state_sha1": "c07a3a19e6bcc6b475e2bcc24ad84d2187dedbb6",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 5,
+      "state": "scaravich-10_section-4-sabre.state.gz",
+      "state_sha1": "dccc4481ff38a22b574128714e3adb9475679934",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 5,
+      "state": "scaravich-11_boss.state.gz",
+      "state_sha1": "79b2daecc6016a2f379fa09f6dc8ae28b1624f76",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 5,
+      "state": "scaravich-13_boss-death.state.gz",
+      "state_sha1": "9845f45b1dd6cd57117ed1d731492a9f3b2d450a",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 6,
+      "state": "turtloid-7_boss.state.gz",
+      "state_sha1": "c5ad398fbefe0432adae509eba86c488cbf70cda",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 7,
+      "state": "sheldon-17_boss.state.gz",
+      "state_sha1": "5293ee697fb583b34f534de928235e2e9df006f3",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 8,
+      "state": "mijinion-3_boss-fight.state.gz",
+      "state_sha1": "fc50684428d3f921983d2730df60915ac9755ac2",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 16,
+      "state": "gate-1_before-boss.state.gz",
+      "state_sha1": "585948ebe43e9241ae0828aff8654b2e9b98ea04",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 16,
+      "state": "gate-2_nightmare-mother.state.gz",
+      "state_sha1": "ea402436237a753f57ec7e0561ee2e2e12fd31db",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 18,
+      "state": "gate-4_before-gate.state.gz",
+      "state_sha1": "f51fcc1d7dd4d15662dc4a3ecd18beb124cd7419",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 18,
+      "state": "gate-5_gate-fight.state.gz",
+      "state_sha1": "68a442ae9239e06c8539d8eea50087a0bfce575b",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 21,
+      "state": "scaravich-8_alt-gates.state.gz",
+      "state_sha1": "b32cf41c9be4d45cf1b5c2194253102981df218e",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 21,
+      "state": "scaravich-9_high-max.state.gz",
+      "state_sha1": "da83005129fab54f10d61056e5f6730827d8e262",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 21,
+      "state": "turtloid-5_zero.state.gz",
+      "state_sha1": "5dfdbc61a0b9d360c98b7f97595bc798c0a42e4c",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 21,
+      "state": "turtloid-8_high-max.state.gz",
+      "state_sha1": "bb46cb457a5eac74b57c2afa5dd61e08fad618ef",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 22,
+      "state": "sheldon-12_high-max.state.gz",
+      "state_sha1": "db523cdcfae261f754b5b8bd5712ed2a723429e0",
+      "table": "0x80078dcc",
+      "type": 8
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 22,
+      "state": "mijinion-4_dynamo.state.gz",
+      "state_sha1": "304866452aea348f0d8d335237bd04c9a2538f7f",
+      "table": "0x80078dcc",
+      "type": 8
+    }
+  ]
+}

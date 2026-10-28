@@ -1,0 +1,297 @@
+{
+ "member": 143,
+ "entry": 0,
+ "slot": 2,
+ "body_type": "0x20000",
+ "sounds": [
+  "0x05000080",
+  "0x05100080",
+  "0x05200080",
+  "0x05300080",
+  "0x05400080",
+  "0x05500080",
+  "0x05600080",
+  "0x05700080"
+ ],
+ "ids": [
+  {
+   "id": 0,
+   "word": "0x05000080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 0,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 1,
+   "word": "0x05100080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 1,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 2,
+   "word": "0x05200080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 2,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 3,
+   "word": "0x05300080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 3,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 4,
+   "word": "0x05400080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 4,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 5,
+   "word": "0x05500080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 5,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 6,
+   "word": "0x05600080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 6,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  },
+  {
+   "id": 7,
+   "word": "0x05700080",
+   "kind": "tone",
+   "vab": 0,
+   "program": 0,
+   "flag": 0,
+   "tone": 7,
+   "priority": 0,
+   "voice": 5,
+   "mode": 0,
+   "vag": null,
+   "file": null
+  }
+ ],
+ "volume": 127,
+ "pan": 64,
+ "programs": [
+  {
+   "number": 0,
+   "volume": 127,
+   "pan": 64,
+   "tones": [
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 72,
+     "fine": 0,
+     "note_min": 60,
+     "note_max": 60,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 1
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 73,
+     "fine": 0,
+     "note_min": 61,
+     "note_max": 61,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 2
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 74,
+     "fine": 0,
+     "note_min": 62,
+     "note_max": 62,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 3
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 75,
+     "fine": 0,
+     "note_min": 63,
+     "note_max": 63,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 4
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 76,
+     "fine": 0,
+     "note_min": 65,
+     "note_max": 64,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 5
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 77,
+     "fine": 0,
+     "note_min": 66,
+     "note_max": 65,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 6
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 78,
+     "fine": 0,
+     "note_min": 67,
+     "note_max": 66,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 7
+    },
+    {
+     "priority": 0,
+     "mode": 0,
+     "volume": 110,
+     "pan": 64,
+     "center": 79,
+     "fine": 0,
+     "note_min": 68,
+     "note_max": 67,
+     "adsr1": 33023,
+     "adsr2": 8128,
+     "vag": 8
+    }
+   ]
+  }
+ ],
+ "vags": [
+  {
+   "index": 1,
+   "file": "vag-01.wav",
+   "samples": 48608,
+   "loop_start": null
+  },
+  {
+   "index": 2,
+   "file": "vag-02.wav",
+   "samples": 45808,
+   "loop_start": null
+  },
+  {
+   "index": 3,
+   "file": "vag-03.wav",
+   "samples": 50288,
+   "loop_start": null
+  },
+  {
+   "index": 4,
+   "file": "vag-04.wav",
+   "samples": 44856,
+   "loop_start": null
+  },
+  {
+   "index": 5,
+   "file": "vag-05.wav",
+   "samples": 52472,
+   "loop_start": null
+  },
+  {
+   "index": 6,
+   "file": "vag-06.wav",
+   "samples": 51492,
+   "loop_start": null
+  },
+  {
+   "index": 7,
+   "file": "vag-07.wav",
+   "samples": 54880,
+   "loop_start": null
+  },
+  {
+   "index": 8,
+   "file": "vag-08.wav",
+   "samples": 50512,
+   "loop_start": null
+  }
+ ],
+ "sample_rate": 44100,
+ "same_as": "m141-e00"
+}

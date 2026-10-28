@@ -1,0 +1,17 @@
+{
+  "states": {
+    "shark-1_ride": {
+      "area": 0,
+      "enemies": [
+        "enemy-166c7c6f8f",
+        "enemy-363dce0a1a",
+        "enemy-46d9e2249f",
+        "enemy-9782d63f15",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [],
+      "state_sha1": "fcf098dcbeb64cf58e6131364bb12e806937d130"
+    }
+  }
+}

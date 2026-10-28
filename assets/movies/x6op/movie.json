@@ -1,0 +1,25 @@
+{
+ "name": "X6OP.STR",
+ "file": 244,
+ "lba": 195658,
+ "sectors": 15272,
+ "width": 320,
+ "height": 240,
+ "fps": 15.0,
+ "frames": 1527,
+ "seconds": 101.8,
+ "audio": {
+  "rate": 37800,
+  "channels": 2,
+  "wav": "audio.wav"
+ },
+ "game": [
+  {
+   "row": 1,
+   "play_frames": 1518,
+   "field_6": 80,
+   "field_8": 1,
+   "skip_buttons": "0x08f0"
+  }
+ ]
+}

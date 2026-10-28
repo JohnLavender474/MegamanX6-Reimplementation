@@ -1,0 +1,67 @@
+{
+  "animations": [],
+  "cell": [
+    256,
+    256
+  ],
+  "id": "enemy-cd98e86270",
+  "origin": [
+    128,
+    128
+  ],
+  "sheet": {
+    "columns": 8,
+    "file": "sprites.png",
+    "sprites": 8
+  },
+  "sources": [
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 8,
+      "found": "live",
+      "sprites": "live",
+      "stage": 2,
+      "state": "wolfang-1_x-sabre.state.gz",
+      "state_sha1": "fce8419abfd1b14892451a1459fd5e4a4c3bfa52",
+      "type": 23
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 8,
+      "found": "live",
+      "sprites": "live",
+      "stage": 2,
+      "state": "wolfang-2_ice-slope.state.gz",
+      "state_sha1": "9fe41277436027d7fe980750634fcbdd7ac8afd1",
+      "type": 23
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 8,
+      "found": "live",
+      "sprites": "live",
+      "stage": 2,
+      "state": "wolfang-3_falling-ice.state.gz",
+      "state_sha1": "7a3a9a1b7d8520a56eb02742dc0bb36027f99492",
+      "type": 23
+    },
+    {
+      "area": 0,
+      "bank": null,
+      "class": "misc",
+      "entry": 8,
+      "found": "live",
+      "sprites": "live",
+      "stage": 2,
+      "state": "wolfang-5_ice-pit.state.gz",
+      "state_sha1": "0b1d405ebeb62ae58a007d761d5f6fe2f8f8cf39",
+      "type": 23
+    }
+  ]
+}

@@ -1,0 +1,304 @@
+{
+  "states": {
+    "sheldon-16_death-guardian": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-2dadc31ecb",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-e5920c31ed",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "ebbb24e5d705fdc172d4e32b09c32d5148b3206d"
+    },
+    "sheldon-17_boss": {
+      "area": 0,
+      "enemies": [
+        "enemy-0d386ba53d",
+        "enemy-30419fd669",
+        "enemy-363dce0a1a",
+        "enemy-a96f0b9d66",
+        "enemy-bff67c81a6"
+      ],
+      "skipped": [
+        {
+          "reason": "cells overwritten by type 51",
+          "type": 5
+        },
+        {
+          "reason": "cells overwritten by type 51",
+          "type": 28
+        },
+        {
+          "reason": "cells overwritten by type 51",
+          "type": 30
+        },
+        {
+          "reason": "cells overwritten by type 51",
+          "type": 27
+        },
+        {
+          "reason": "cells overwritten by type 51",
+          "type": 32
+        },
+        {
+          "reason": "cells overwritten by type 51",
+          "type": 22
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        }
+      ],
+      "state_sha1": "5293ee697fb583b34f534de928235e2e9df006f3"
+    },
+    "sheldon-1_lemons": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "068a884c44bee4b9b21e0428f1e0c0f12b10cabc"
+    },
+    "sheldon-2_half-charge": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "97c1793a13e8296e580fcf5368ab978f1a035360"
+    },
+    "sheldon-3_full-charge": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "21bb0968b9a3df2981266f455f9a550778736701"
+    },
+    "sheldon-4_no-armor": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "078a4852bb23c8f77ab4d0d29aa0a0afcd1b95eb"
+    },
+    "sheldon-5_nightmare-hidden": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-61922ae859",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "53c925a529745fbf49fe27799cccdab3d5736138"
+    },
+    "sheldon-6_tile-shown": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-61922ae859",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "30a84a4ee7ae3b8cb97d2351487bac96270b9ef3"
+    },
+    "sheldon-7_lasers": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-e5920c31ed",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "9839227b25dbb23eaef623c7fdb4423cd6d8dbe9"
+    },
+    "sheldon-8_lower-1": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-2dadc31ecb",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-e5920c31ed",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "10fb073bd1eb85e9b9f8ea523f9ffccd1b3cd0fb"
+    },
+    "sheldon-9_lower-2": {
+      "area": 0,
+      "enemies": [
+        "enemy-07d032a495",
+        "enemy-30445534f9",
+        "enemy-363dce0a1a",
+        "enemy-3c4d6ef799",
+        "enemy-46d9e2249f",
+        "enemy-4cfc820dcf",
+        "enemy-61922ae859",
+        "enemy-6575747cb9",
+        "enemy-74267a1363",
+        "enemy-a96f0b9d66",
+        "enemy-efd9270cec"
+      ],
+      "skipped": [
+        {
+          "reason": "no texture loaded",
+          "type": 0
+        },
+        {
+          "reason": "no texture loaded",
+          "type": 51
+        }
+      ],
+      "state_sha1": "e1ff87902b91d65054845264971de8b38b83ab09"
+    }
+  }
+}

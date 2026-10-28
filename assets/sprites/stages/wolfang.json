@@ -1,0 +1,185 @@
+{
+ "states": {
+  "wolfang-1_x-sabre": {
+   "area": 0,
+   "enemies": [
+    "enemy-3362eccf5a",
+    "enemy-363dce0a1a",
+    "enemy-62d9963d2c",
+    "enemy-78c8f556f5",
+    "enemy-a96f0b9d66",
+    "enemy-cd98e86270",
+    "enemy-e04851721f",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no live object and no table found by the search",
+     "type": 6
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 54
+    }
+   ],
+   "state_sha1": "fce8419abfd1b14892451a1459fd5e4a4c3bfa52"
+  },
+  "wolfang-2_ice-slope": {
+   "area": 0,
+   "enemies": [
+    "enemy-192ddfd08b",
+    "enemy-3362eccf5a",
+    "enemy-363dce0a1a",
+    "enemy-62d9963d2c",
+    "enemy-78c8f556f5",
+    "enemy-a96f0b9d66",
+    "enemy-bd435676eb",
+    "enemy-cd98e86270",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 54
+    }
+   ],
+   "state_sha1": "9fe41277436027d7fe980750634fcbdd7ac8afd1"
+  },
+  "wolfang-3_falling-ice": {
+   "area": 0,
+   "enemies": [
+    "enemy-3362eccf5a",
+    "enemy-363dce0a1a",
+    "enemy-62d9963d2c",
+    "enemy-78c8f556f5",
+    "enemy-a96f0b9d66",
+    "enemy-cd98e86270",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no live object and no table found by the search",
+     "type": 6
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 54
+    }
+   ],
+   "state_sha1": "7a3a9a1b7d8520a56eb02742dc0bb36027f99492"
+  },
+  "wolfang-5_ice-pit": {
+   "area": 0,
+   "enemies": [
+    "enemy-3362eccf5a",
+    "enemy-363dce0a1a",
+    "enemy-583d456ecb",
+    "enemy-62d9963d2c",
+    "enemy-78c8f556f5",
+    "enemy-a96f0b9d66",
+    "enemy-bd435676eb",
+    "enemy-cd98e86270",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 54
+    }
+   ],
+   "state_sha1": "0b1d405ebeb62ae58a007d761d5f6fe2f8f8cf39"
+  },
+  "wolfang-6_boss-warning": {
+   "area": 0,
+   "enemies": [
+    "enemy-30419fd669",
+    "enemy-363dce0a1a",
+    "enemy-6757bcd2a2",
+    "enemy-a96f0b9d66",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no live object and no table found by the search",
+     "type": 6
+    },
+    {
+     "reason": "cells overwritten by type 54",
+     "type": 17
+    },
+    {
+     "reason": "cells overwritten by type 54",
+     "type": 19
+    },
+    {
+     "reason": "cells overwritten by type 54",
+     "type": 26
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "class": "misc",
+     "type": 23,
+     "reason": "misc 23 entry 8: cells overwritten by type 54 (boss texture); removed by hand"
+    }
+   ],
+   "state_sha1": "d52eadc6bf7ff990afd74461830c40b884eb3b52"
+  },
+  "wolfang-7_boss-fight": {
+   "area": 0,
+   "enemies": [
+    "enemy-30419fd669",
+    "enemy-363dce0a1a",
+    "enemy-6757bcd2a2",
+    "enemy-a96f0b9d66",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no live object and no table found by the search",
+     "type": 6
+    },
+    {
+     "reason": "cells overwritten by type 54",
+     "type": 17
+    },
+    {
+     "reason": "cells overwritten by type 54",
+     "type": 19
+    },
+    {
+     "reason": "cells overwritten by type 54",
+     "type": 26
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "class": "misc",
+     "type": 23,
+     "reason": "misc 23 entry 8: cells overwritten by type 54 (boss texture); removed by hand"
+    }
+   ],
+   "state_sha1": "93b62b93d2f85faffec3f8fbde1fe8bec5ee1379"
+  }
+ }
+}

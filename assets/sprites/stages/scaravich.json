@@ -1,0 +1,173 @@
+{
+ "states": {
+  "scaravich-10_section-4-sabre": {
+   "area": 0,
+   "enemies": [
+    "enemy-30419fd669",
+    "enemy-363dce0a1a",
+    "enemy-6c0e9e20ab",
+    "enemy-8df182908d",
+    "enemy-a96f0b9d66",
+    "enemy-bf38650355",
+    "enemy-e809e4309e",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 50
+    }
+   ],
+   "state_sha1": "dccc4481ff38a22b574128714e3adb9475679934"
+  },
+  "scaravich-11_boss": {
+   "area": 0,
+   "enemies": [
+    "enemy-30419fd669",
+    "enemy-363dce0a1a",
+    "enemy-a96f0b9d66",
+    "enemy-dd72564fdd"
+   ],
+   "skipped": [
+    {
+     "reason": "cells overwritten by type 50",
+     "type": 12
+    },
+    {
+     "reason": "cells overwritten by type 50",
+     "type": 28
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "cells overwritten by type 50 (removed by hand: the export showed boss pixels)",
+     "type": 31
+    },
+    {
+     "reason": "cells overwritten by type 50 (removed by hand: the export showed boss pixels)",
+     "type": 37
+    },
+    {
+     "class": "stage",
+     "reason": "cells overwritten by type 50 (removed by hand: the export showed boss pixels)",
+     "type": 12
+    }
+   ],
+   "state_sha1": "79b2daecc6016a2f379fa09f6dc8ae28b1624f76"
+  },
+  "scaravich-13_boss-death": {
+   "area": 0,
+   "enemies": [
+    "enemy-15e7a09888",
+    "enemy-30419fd669",
+    "enemy-363dce0a1a",
+    "enemy-a96f0b9d66",
+    "enemy-dd72564fdd"
+   ],
+   "skipped": [
+    {
+     "reason": "cells overwritten by type 50",
+     "type": 12
+    },
+    {
+     "reason": "cells overwritten by type 50",
+     "type": 28
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "cells overwritten by type 50 (removed by hand: the export showed boss pixels)",
+     "type": 31
+    },
+    {
+     "reason": "cells overwritten by type 50 (removed by hand: the export showed boss pixels)",
+     "type": 37
+    },
+    {
+     "reason": "cells overwritten by type 50 (removed by hand: the export showed boss pixels)",
+     "type": 12,
+     "class": "stage"
+    }
+   ],
+   "state_sha1": "9845f45b1dd6cd57117ed1d731492a9f3b2d450a"
+  },
+  "scaravich-2_totem-section": {
+   "area": 0,
+   "enemies": [
+    "enemy-363dce0a1a",
+    "enemy-6c0e9e20ab",
+    "enemy-8df182908d",
+    "enemy-a96f0b9d66",
+    "enemy-bf38650355",
+    "enemy-e809e4309e",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 50
+    }
+   ],
+   "state_sha1": "4a226ab149b8d7615ddae50e76d304794ad53bb3"
+  },
+  "scaravich-3_section": {
+   "area": 0,
+   "enemies": [
+    "enemy-363dce0a1a",
+    "enemy-5ba77f9e34",
+    "enemy-6c0e9e20ab",
+    "enemy-8df182908d",
+    "enemy-a96f0b9d66",
+    "enemy-bf38650355",
+    "enemy-e809e4309e",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 50
+    }
+   ],
+   "state_sha1": "0cd8b347b4debfe55d0c372852dbfe19711d0a97"
+  },
+  "scaravich-4_low-path": {
+   "area": 0,
+   "enemies": [
+    "enemy-363dce0a1a",
+    "enemy-6c0e9e20ab",
+    "enemy-8df182908d",
+    "enemy-a96f0b9d66",
+    "enemy-bf38650355",
+    "enemy-e809e4309e",
+    "enemy-efd9270cec"
+   ],
+   "skipped": [
+    {
+     "reason": "no texture loaded",
+     "type": 0
+    },
+    {
+     "reason": "no texture loaded",
+     "type": 50
+    }
+   ],
+   "state_sha1": "545abddd6a8da05dde910b3f554080e1be4b5862"
+  }
+ }
+}

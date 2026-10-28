@@ -1,0 +1,140 @@
+{
+  "animations": [
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 0,
+          "ticks": 12
+        }
+      ],
+      "index": 0,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 1,
+          "ticks": 12
+        }
+      ],
+      "index": 1,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 2,
+          "ticks": 1
+        }
+      ],
+      "index": 2,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 3,
+          "ticks": 1
+        }
+      ],
+      "index": 3,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 4,
+          "ticks": 1
+        }
+      ],
+      "index": 4,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 5,
+          "ticks": 1
+        }
+      ],
+      "index": 5,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 6,
+          "ticks": 1
+        }
+      ],
+      "index": 6,
+      "loop_to": null
+    },
+    {
+      "frames": [
+        {
+          "flag": 0,
+          "sprite": 7,
+          "ticks": 1
+        }
+      ],
+      "index": 7,
+      "loop_to": null
+    }
+  ],
+  "cell": [
+    48,
+    64
+  ],
+  "fps": 60,
+  "id": "enemy-c5fe34fa82",
+  "origin": [
+    24,
+    32
+  ],
+  "sources": [
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-7_boss.state.gz",
+      "state_sha1": "1992027342c0cbc98d3375dfb9806570930d060d",
+      "table": "0x800f8d08",
+      "type": 11
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-8_boss-stun.state.gz",
+      "state_sha1": "7cb9d3575b2c229442a22e3f2b1fc58a24a0b3d9",
+      "table": "0x800f8d08",
+      "type": 11
+    },
+    {
+      "area": 1,
+      "bank": null,
+      "class": "stage",
+      "found": "live",
+      "sprites": "live",
+      "stage": 4,
+      "state": "shark-9_boss-revive.state.gz",
+      "state_sha1": "c07a3a19e6bcc6b475e2bcc24ad84d2187dedbb6",
+      "table": "0x800f8d08",
+      "type": 11
+    }
+  ]
+}
