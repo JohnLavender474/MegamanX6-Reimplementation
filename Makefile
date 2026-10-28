@@ -1,4 +1,4 @@
-.PHONY: run test assets
+.PHONY: run test assets docs
 
 STAGE ?=
 
@@ -10,3 +10,6 @@ test:
 
 assets:
 	python3 tools/import_assets.py
+
+docs:
+	python3 tools/import_docs.py

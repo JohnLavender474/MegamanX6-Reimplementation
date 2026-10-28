@@ -98,6 +98,14 @@ Tests (`src/test/java/mmx/x6/`): `game/Sim` (a headless world on an ASCII grid),
 - `damage.md`, `sound.md`, `objects-legend.md`, `re-guide.md` (the confidence tags [certain],
   [likely], [guess] and how sheets are written), `TODO.md`.
 - The docs change often (the RE work goes on). See "Rules from experience", rule 1.
+- `make docs` (`tools/import_docs.py`) copies these docs to `docs/re/findings/`, and the `.md`,
+  `.py`, `.sh`, `.c` and `.h` files of the data root's `re/<topic>/`, `notes/` and `stages/` to
+  `docs/re/work/<topic>/`, `work/notes/` and `work/stages/`. It replaces both folders as a whole,
+  leaves out the old docs snapshots in `re/` and all `.dis` files, and changes a path
+  in backticks to a copied file into a relative link (`docs/re/README.md`). The copies are for
+  reading only: the tools repo and the data root are the masters, so do not edit the copies, and
+  diff against the tools repo's git history for rule 1. Run `make docs` when the user asks for new
+  docs.
 - The tools catalog `catalog/` (`stages.json` with `texture_split`, `enemies.json`,
   `object-names.json`, `helpers.json` with names of RAM addresses). Do not edit the tools repo or
   its catalog unless the user asks; propose changes to the user.
