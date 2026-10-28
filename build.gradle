@@ -31,6 +31,17 @@ application {
     mainClass = 'mmx.x6.DesktopLauncher'
 }
 
+jar {
+    archiveFileName = "${appName}-${projectVersion}.jar"
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+    dependsOn configurations.runtimeClasspath
+    from { configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) } }
+    exclude 'META-INF/INDEX.LIST', 'META-INF/*.SF', 'META-INF/*.DSA', 'META-INF/*.RSA', 'META-INF/maven/**'
+    manifest {
+        attributes 'Main-Class': application.mainClass
+    }
+}
+
 run {
     workingDir = rootDir
     systemProperties System.getProperties().findAll { it.key.toString().startsWith('mmx.') }
