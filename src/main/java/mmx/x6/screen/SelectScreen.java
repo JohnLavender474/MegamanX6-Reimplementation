@@ -12,6 +12,8 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import java.util.List;
 import java.util.function.Consumer;
 import mmx.x6.AutoRun;
+import mmx.x6.input.Buttons;
+import mmx.x6.input.Controls;
 import mmx.x6.stage.StageDef;
 
 public final class SelectScreen extends ScreenAdapter {
@@ -19,6 +21,10 @@ public final class SelectScreen extends ScreenAdapter {
     private static final int W = 960;
     private static final int H = 720;
 
+    private static final int PICK = Buttons.START | Buttons.JUMP | Buttons.BUSTER;
+
+    private final Controls controls;
+    private final Buttons buttons = new Buttons();
     private final List<StageDef> stages;
     private final Consumer<StageDef> start;
     private final SpriteBatch batch = new SpriteBatch();
@@ -30,16 +36,20 @@ public final class SelectScreen extends ScreenAdapter {
     private int updates;
     private int index;
 
-    public SelectScreen(List<StageDef> stages, int index, Consumer<StageDef> start) {
+    public SelectScreen(Controls controls, List<StageDef> stages, int index, Consumer<StageDef> start) {
+        this.controls = controls;
         this.stages = stages;
         this.index = index;
         this.start = start;
         font.getData().setScale(3);
         cam.setToOrtho(false, W, H);
+        controls.poll();
+        buttons.set(controls.held(Gdx.input::isKeyPressed));
     }
 
     @Override
     public void render(float delta) {
+        controls.poll();
         if (!AutoRun.active() && keys()) {
             return;
         }
@@ -52,7 +62,7 @@ public final class SelectScreen extends ScreenAdapter {
             String text = (on ? "> " : "  ") + stages.get(i).title() + (on ? " <" : "  ");
             centred(text, H - 220 - i * 62, on ? 1f : 0.55f, on ? 1f : 0.6f, on ? 0.4f : 0.7f);
         }
-        centred("W / S  CHOOSE     J  START", 60, 0.5f, 0.6f, 0.7f);
+        centred("UP / DOWN  CHOOSE     START  PLAY", 60, 0.5f, 0.6f, 0.7f);
         batch.end();
         Shots.saveWindow(shots, ++updates);
         AutoRun.drawBorder(shapes, cam);
@@ -63,13 +73,14 @@ public final class SelectScreen extends ScreenAdapter {
             Gdx.app.exit();
             return true;
         }
-        if (Gdx.input.isKeyJustPressed(Keys.W) || Gdx.input.isKeyJustPressed(Keys.UP)) {
+        buttons.set(controls.held(Gdx.input::isKeyPressed));
+        if (buttons.isPressed(Buttons.UP)) {
             index = (index + stages.size() - 1) % stages.size();
         }
-        if (Gdx.input.isKeyJustPressed(Keys.S) || Gdx.input.isKeyJustPressed(Keys.DOWN)) {
+        if (buttons.isPressed(Buttons.DOWN)) {
             index = (index + 1) % stages.size();
         }
-        if (Gdx.input.isKeyJustPressed(Keys.J) || Gdx.input.isKeyJustPressed(Keys.ENTER)) {
+        if ((buttons.pressed() & PICK) != 0) {
             start.accept(stages.get(index));
             return true;
         }

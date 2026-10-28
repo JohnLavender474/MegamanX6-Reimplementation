@@ -25,6 +25,7 @@ import mmx.x6.frontend.MovieFrames;
 import mmx.x6.frontend.Phase;
 import mmx.x6.game.StepClock;
 import mmx.x6.input.Buttons;
+import mmx.x6.input.Controls;
 
 public final class FrontEndScreen extends ScreenAdapter {
 
@@ -39,6 +40,7 @@ public final class FrontEndScreen extends ScreenAdapter {
     private final FrontEnd frontEnd;
     private final Runnable startGame;
     private final StepClock clock = new StepClock();
+    private final Controls controls;
     private final Buttons buttons = new Buttons();
     private final SpriteBatch batch = new SpriteBatch();
     private final ShapeRenderer shapes = new ShapeRenderer();
@@ -59,8 +61,9 @@ public final class FrontEndScreen extends ScreenAdapter {
     private Music music;
     private boolean gameStarted;
 
-    public FrontEndScreen(DataPaths paths, Sfx sfx, Phase start, Runnable startGame) {
+    public FrontEndScreen(DataPaths paths, Sfx sfx, Controls controls, Phase start, Runnable startGame) {
         this.paths = paths;
+        this.controls = controls;
         this.frontEnd = new FrontEnd(sfx, start);
         this.startGame = startGame;
         cam.setToOrtho(false, W, H);
@@ -103,6 +106,7 @@ public final class FrontEndScreen extends ScreenAdapter {
             Gdx.app.exit();
             return;
         }
+        controls.poll();
         int n = shots.active() ? 1 : clock.advance(delta);
         for (int i = 0; i < n && !gameStarted; i++) {
             frontEnd.update(held());
@@ -124,7 +128,7 @@ public final class FrontEndScreen extends ScreenAdapter {
             if (AutoRun.active()) {
                 return 0;
             }
-            buttons.sample(Gdx.input::isKeyPressed);
+            buttons.set(controls.held(Gdx.input::isKeyPressed));
             return buttons.held();
         }
         int dirs = scriptedHold & (Buttons.LEFT | Buttons.RIGHT | Buttons.UP | Buttons.DOWN);

@@ -28,7 +28,9 @@ import mmx.x6.game.player.Player;
 import mmx.x6.game.StepClock;
 import mmx.x6.game.Weapon;
 import mmx.x6.game.World;
+import mmx.x6.input.Bindings;
 import mmx.x6.input.Buttons;
+import mmx.x6.input.Controls;
 import mmx.x6.level.Checkpoint;
 import mmx.x6.level.Level;
 import mmx.x6.render.Assets;
@@ -43,6 +45,7 @@ public final class StageScreen extends ScreenAdapter {
     private static final int SCALE = 3;
 
     private final Assets assets;
+    private final Controls controls;
     private final Level level;
     private final MusicPlayer music;
     private final World world;
@@ -66,9 +69,10 @@ public final class StageScreen extends ScreenAdapter {
     private boolean debug = Boolean.getBoolean("mmx.debug");
     private int updates;
 
-    public StageScreen(Assets assets, StageDef stage, Level level, Sfx sfx, MusicPlayer music, Progress progress,
+    public StageScreen(Assets assets, Controls controls, StageDef stage, Level level, Sfx sfx, MusicPlayer music, Progress progress,
                        Runnable exit, Runnable cleared) {
         this.assets = assets;
+        this.controls = controls;
         this.level = level;
         this.music = music;
         this.exit = exit;
@@ -97,6 +101,7 @@ public final class StageScreen extends ScreenAdapter {
 
     @Override
     public void render(float delta) {
+        controls.poll();
         if (!auto && keys()) {
             return;
         }
@@ -113,7 +118,7 @@ public final class StageScreen extends ScreenAdapter {
             } else if (auto) {
                 world.buttons.set(0);
             } else {
-                world.buttons.sample(Gdx.input::isKeyPressed);
+                world.buttons.set(controls.held(Gdx.input::isKeyPressed));
             }
             world.update();
             updates++;
@@ -145,7 +150,7 @@ public final class StageScreen extends ScreenAdapter {
             debug = !debug;
         }
         if (world.flow.state() == StageFlow.State.CLEAR) {
-            if (Gdx.input.isKeyJustPressed(Keys.ANY_KEY)) {
+            if (Gdx.input.isKeyJustPressed(Keys.ANY_KEY) || controls.padPressed() != Bindings.NONE) {
                 cleared.run();
                 return true;
             }

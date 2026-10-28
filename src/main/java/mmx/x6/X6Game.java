@@ -11,6 +11,9 @@ import mmx.x6.audio.GdxSounds;
 import mmx.x6.audio.Sfx;
 import mmx.x6.audio.SoundBanks;
 import mmx.x6.game.Progress;
+import mmx.x6.input.Bindings;
+import mmx.x6.input.Controls;
+import mmx.x6.input.GdxPads;
 import mmx.x6.level.Level;
 import mmx.x6.level.TmxLoader;
 import mmx.x6.render.Assets;
@@ -31,6 +34,7 @@ public final class X6Game extends Game {
     private CachedSfx sfx;
     private GdxMusicPlayer music;
     private int lastIndex;
+    private Controls controls;
 
     public X6Game(DataPaths paths) {
         this.paths = paths;
@@ -39,6 +43,7 @@ public final class X6Game extends Game {
     @Override
     public void create() {
         assets = new Assets(paths);
+        controls = new Controls(new Bindings(), new GdxPads());
         music = new GdxMusicPlayer(paths);
         flow = new GameFlow(System.getProperty("mmx.stage"), System.getProperty("mmx.front"));
         switch (flow.first()) {
@@ -63,7 +68,7 @@ public final class X6Game extends Game {
             return;
         }
         music.stop();
-        swap(new FrontEndScreen(paths, systemSfx(), flow.frontStart(),
+        swap(new FrontEndScreen(paths, systemSfx(), controls, flow.frontStart(),
                 () -> Gdx.app.postRunnable(this::startGame)));
     }
 
@@ -82,7 +87,7 @@ public final class X6Game extends Game {
 
     private void showSelect() {
         music.play(SELECT_MUSIC);
-        swap(new SelectScreen(Stages.BOSSES, lastIndex, s -> Gdx.app.postRunnable(() -> startStage(s))));
+        swap(new SelectScreen(controls, Stages.BOSSES, lastIndex, s -> Gdx.app.postRunnable(() -> startStage(s))));
     }
 
     private void startStage(StageDef stage) {
@@ -99,7 +104,7 @@ public final class X6Game extends Game {
         }
         sfx = new CachedSfx(SoundBanks.load(paths, stage.bank2(), stage.bank5(), stage.bossBank2()),
                 GdxSounds::load, System.err::println);
-        swap(new StageScreen(assets, stage, level, sfx, music, progress,
+        swap(new StageScreen(assets, controls, stage, level, sfx, music, progress,
                 () -> Gdx.app.postRunnable(() -> show(flow.afterStageEscape(stage))),
                 () -> Gdx.app.postRunnable(() -> show(flow.afterStageClear(stage)))));
     }

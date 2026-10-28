@@ -74,7 +74,11 @@ On the front end, Enter is Start and K is Cross. Start leaves the ready screen a
 L, I) skips the opening. Start on the title opens the menu. On the menu, W and S choose and Enter or
 K picks; only GAME START has a screen.
 
-On the stage select screen, W and S choose and J (or Enter) starts.
+The keys above are the defaults. A controller works with the keyboard at the same time: its D-pad
+moves, and the bottom, right, left and top face buttons are Cross (jump), Circle (dash), Square
+(buster) and Triangle (weapon).
+
+On the stage select screen, Up and Down choose, and Start, Cross or Square starts.
 
 ## Debug options
 

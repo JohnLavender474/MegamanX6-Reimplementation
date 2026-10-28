@@ -1,8 +1,5 @@
 package mmx.x6.input;
 
-import com.badlogic.gdx.Input.Keys;
-import java.util.function.IntPredicate;
-
 public final class Buttons {
 
     public static final int RIGHT = 0x1;
@@ -17,23 +14,8 @@ public final class Buttons {
     public static final int WEAPON_PREV = 0x400;
     public static final int START = 0x800;
 
-    private static final int[][] KEYS = {
-            {Keys.D, RIGHT}, {Keys.A, LEFT}, {Keys.W, UP}, {Keys.S, DOWN},
-            {Keys.I, WEAPON}, {Keys.J, BUSTER}, {Keys.K, JUMP}, {Keys.L, DASH},
-            {Keys.O, WEAPON_NEXT}, {Keys.Q, WEAPON_PREV}, {Keys.ENTER, START}};
-
     private int held;
     private int before;
-
-    public void sample(IntPredicate keyDown) {
-        int now = 0;
-        for (int[] k : KEYS) {
-            if (keyDown.test(k[0])) {
-                now |= k[1];
-            }
-        }
-        set(now);
-    }
 
     public void set(int now) {
         if ((now & (LEFT | RIGHT)) == (LEFT | RIGHT)) {

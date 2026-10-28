@@ -36,9 +36,9 @@ make test                    # ./gradlew test
   `./gradlew run -Dmmx.stage=turtloid -Dmmx.checkpoint=5 -Dmmx.hold=1 -Dmmx.shot=/path/x.png
   -Dmmx.shotAfter=600,900` saves one PNG per update count and quits. `-Dmmx.hold` takes the X6
   button bits (1 right, 2 left, 128 jump, 32 buster); `-Dmmx.jumpEvery=40` pulses the jump.
-  `-Dmmx.front=title` (or `ready`, `logo`, `load`, `opening`, `menu`, `select`) starts the front end there; the
+  `-Dmmx.front=title` (or `ready`, `logo`, `load`, `opening`, `menu`, `options`, `select`) starts the front end there; the
   same shot options work on it.
-- **Automated runs** (any run with `-Dmmx.shot`): keyboard input is off on every screen (only
+- **Automated runs** (any run with `-Dmmx.shot`): keyboard and controller input are off on every screen (only
   `-Dmmx.hold` and `-Dmmx.jumpEvery` drive the game), a red border is drawn around the window, and
   the window title ends with "AUTOMATED RUN! NO INPUT". `AutoRun` holds this rule. Every window that
   Claude opens for a check must be an automated run, so that the user can tell it from their own
@@ -64,7 +64,7 @@ make test                    # ./gradlew test
 | `game/enemy` | shared objects (`BossGate`, `RescueReploid`, `NightmareVirus`, `LightCapsule`, `TeleporterCrystal`, `Projectile`, `IceSlide` (stage logic 7), `NightmareShadow`, `NightmareBug`), the intro enemies, `CommonEntityFactory`; one sub-package per stage with its factory |
 | `game/boss` | `Maverick` (warning, HP fill, hit invulnerability, death blink, explosion, boss soul), the D-1000 parts |
 | `game/fx` | explosions, debris, the boss explosion, death orbs |
-| `anim`, `render`, `screen`, `audio`, `input` | animation sets and players (sprite-only sheets; `BankSheetAnims` cuts sprites from a numbered bank sheet), drawing, screens, sound banks and music, buttons |
+| `anim`, `render`, `screen`, `audio`, `input` | animation sets and players (sprite-only sheets; `BankSheetAnims` cuts sprites from a numbered bank sheet), drawing, screens, sound banks and music, buttons (`Controls`: keyboard and controller each frame, with the session `Bindings`) |
 
 Tests (`src/test/java/mmx/x6/`): `game/Sim` (a headless world on an ASCII grid), `stage/StageRun`
 (a headless world on a real stage TMX: `at(stage, checkpoint)`, `until`, `runRight`, `find`),
