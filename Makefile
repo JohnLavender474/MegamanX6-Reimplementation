@@ -1,4 +1,4 @@
-.PHONY: run test assets docs
+.PHONY: run test assets docs dist dist-linux dist-windows
 
 STAGE ?=
 
@@ -13,3 +13,15 @@ assets:
 
 docs:
 	python3 tools/import_docs.py
+
+dist: dist-linux dist-windows
+
+dist-linux:
+	rm -f build/libs/*.jar
+	./gradlew jar
+	./tools/build_game.sh linux64
+
+dist-windows:
+	rm -f build/libs/*.jar
+	./gradlew jar
+	./tools/build_game.sh windows64

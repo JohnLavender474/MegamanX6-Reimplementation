@@ -25,7 +25,14 @@ make run                     # ./gradlew run; the ready screen, then (Start) the
 make run STAGE=yammark       # intro, yammark, wolfang, heatnix, scaravich, turtloid, sheldon: skip the front end
 make test                    # ./gradlew test
 ./gradlew run -Dmmx.stage=heatnix -Dmmx.checkpoint=6
+make dist                    # dist-linux and dist-windows: executables in build/dist/ (tools/build_game.sh)
 ```
+
+- `make dist-linux` and `make dist-windows` delete the old JAR, build the fat JAR
+  (`build/libs/<appName>-<projectVersion>.jar`, from `gradle.properties`), then run
+  `tools/build_game.sh`. That script copies the method of the sister repo Megaman-Maverick: packr
+  4.0.0 with an OpenLogic JRE 17 (both downloaded once to `build/dist/cache/`), `--resources assets`
+  (the launcher starts in its own folder, so `DataPaths` finds `assets/`), then a zip.
 
 - Test results are in `build/test-results/test/*.xml`. With `-q`, Gradle prints only failures.
 - Tests that need the real data call `Assumptions.assumeTrue(DataPaths.assetsExist())`, so the

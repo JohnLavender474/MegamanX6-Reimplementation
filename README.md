@@ -86,6 +86,20 @@ make run
 `make run STAGE=yammark` goes directly to a stage (`intro`, `yammark`, `wolfang`,
 `heatnix`, `scaravich`, `turtloid` or `sheldon`).
 
+## Build executables
+
+```
+make dist           # both
+make dist-linux     # build/dist/MegamanX6-<version>-linux64/ and .zip
+make dist-windows   # build/dist/MegamanX6-<version>-windows64/ and .zip
+```
+
+Each bundle holds a launcher (`MegamanX6` or `MegamanX6.exe`), the game JAR, a Java 17
+runtime and the `assets/` folder, so the player does not need Java. The version is
+`projectVersion` in `gradle.properties`. The first build downloads packr and the Java
+runtimes to `build/dist/cache/`; it needs `curl`, `tar`, `unzip` and `zip`. You can make
+both bundles on Linux.
+
 ## Controls
 
 A controller and the keyboard work at the same time. You can change both on the
