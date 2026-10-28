@@ -354,8 +354,8 @@ load, opening, title, menu), the fades (32 updates: `FadeTask` moves a level of 
   `FrontEnd.java`
 - Blink: PRESS START BUTTON and the menu button line show 16 of each 32 updates; the phase (shown
   while bit `0x10` of the phase's update count is clear) is a guess. `FrontEnd.java`
-- Menu: CONTINUE (state 7, memory card) and OPTION (state 8) have no screen; a pick on them does
-  nothing. The two new-game cheats (Ultimate Armor, Black Zero) are not made. `FrontEnd.java`
+- Menu: CONTINUE (state 7, memory card) has no screen; a pick on it does nothing. OPTION (state 8)
+  opens a custom screen in place of X6's (`docs/custom-changes.md`). The two new-game cheats (Ultimate Armor, Black Zero) are not made. `FrontEnd.java`
 - Music: no XA track plays on the title or the menu [likely: the stream play flag `0x800E2E5C` is 0
   in `title-4_press-start` and `title-5_main-menu`, and 2 in a stage]. The stage select screen keeps
   track 1.

@@ -16,16 +16,20 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.ScreenUtils;
 import java.nio.file.Path;
+import java.util.List;
 import mmx.x6.AutoRun;
 import mmx.x6.DataPaths;
 import mmx.x6.audio.Sfx;
 import mmx.x6.frontend.FrontEnd;
 import mmx.x6.frontend.FrontEndText;
 import mmx.x6.frontend.MovieFrames;
+import mmx.x6.frontend.OptionsMenu;
 import mmx.x6.frontend.Phase;
 import mmx.x6.game.StepClock;
+import mmx.x6.input.Bindings;
 import mmx.x6.input.Buttons;
 import mmx.x6.input.Controls;
+import mmx.x6.input.RawInput;
 
 public final class FrontEndScreen extends ScreenAdapter {
 
@@ -64,7 +68,7 @@ public final class FrontEndScreen extends ScreenAdapter {
     public FrontEndScreen(DataPaths paths, Sfx sfx, Controls controls, Phase start, Runnable startGame) {
         this.paths = paths;
         this.controls = controls;
-        this.frontEnd = new FrontEnd(sfx, start);
+        this.frontEnd = new FrontEnd(sfx, start, controls.bindings());
         this.startGame = startGame;
         cam.setToOrtho(false, W, H);
         font.getData().setScale(3);
@@ -107,9 +111,10 @@ public final class FrontEndScreen extends ScreenAdapter {
             return;
         }
         controls.poll();
+        RawInput raw = raw();
         int n = shots.active() ? 1 : clock.advance(delta);
         for (int i = 0; i < n && !gameStarted; i++) {
-            frontEnd.update(held());
+            frontEnd.update(held(), i == 0 ? raw : new RawInput(Bindings.NONE, Bindings.NONE, raw.pad()));
             updates++;
             followPhase();
             if (frontEnd.startGame()) {
@@ -137,6 +142,19 @@ public final class FrontEndScreen extends ScreenAdapter {
             return dirs | (on ? (scriptedHold & ~dirs) | Buttons.JUMP : 0);
         }
         return scriptedHold;
+    }
+
+    private RawInput raw() {
+        if (AutoRun.active()) {
+            return new RawInput(Bindings.NONE, Bindings.NONE, controls.pad());
+        }
+        int key = Bindings.NONE;
+        for (int k = 0; k <= Keys.MAX_KEYCODE && key == Bindings.NONE; k++) {
+            if (k != Keys.ESCAPE && Gdx.input.isKeyJustPressed(k)) {
+                key = k;
+            }
+        }
+        return new RawInput(key, controls.padPressed(), controls.pad());
     }
 
     private void followPhase() {
@@ -169,6 +187,8 @@ public final class FrontEndScreen extends ScreenAdapter {
         if (p == Phase.READY) {
             drawCentered("Ready to play?", H / 2f + 60);
             drawCentered("Press START", H / 2f - 30);
+        } else if (p == Phase.OPTIONS) {
+            drawOptions(frontEnd.options());
         } else if (p == Phase.LOGO || p == Phase.OPENING) {
             Texture frame = (p == Phase.LOGO ? logo : opening).frame(frontEnd.movieFrame());
             if (frame != null) {
@@ -197,6 +217,40 @@ public final class FrontEndScreen extends ScreenAdapter {
             shapes.rect(0, 0, W, H);
             shapes.end();
         }
+    }
+
+    private void drawOptions(OptionsMenu o) {
+        String title = switch (o.page()) {
+            case OPTIONS -> "OPTIONS";
+            case KEYBOARD -> "KEYBOARD SETTINGS";
+            case CONTROLLER -> "CONTROLLER SETTINGS";
+        };
+        font.getData().setScale(3);
+        font.setColor(0.6f, 0.85f, 1f, 1);
+        drawCentered(title, H - 50);
+        String prompt = o.prompt();
+        if (prompt != null) {
+            font.setColor(1, 1, 1, 1);
+            drawCentered(prompt, H / 2f);
+        } else {
+            boolean big = o.page() == OptionsMenu.Page.OPTIONS;
+            font.getData().setScale(big ? 3 : 2);
+            float step = big ? 70 : 40;
+            float top = big ? H - 220 : H - 130;
+            List<String> rows = o.rows();
+            for (int i = 0; i < rows.size(); i++) {
+                boolean on = i == o.row();
+                font.setColor(on ? 1f : 0.7f, on ? 1f : 0.7f, on ? 0.4f : 0.7f, 1);
+                font.draw(batch, (on ? "> " : "   ") + rows.get(i), big ? 260 : 160, top - i * step);
+            }
+        }
+        if (o.message() != null) {
+            font.getData().setScale(2);
+            font.setColor(1, 0.4f, 0.4f, 1);
+            drawCentered(o.message(), 50);
+        }
+        font.getData().setScale(3);
+        font.setColor(1, 1, 1, 1);
     }
 
     private void drawCentered(String text, float y) {

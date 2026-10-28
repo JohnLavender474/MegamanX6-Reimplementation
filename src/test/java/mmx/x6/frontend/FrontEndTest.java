@@ -143,18 +143,34 @@ class FrontEndTest {
     }
 
     @Test
-    void continueAndOptionDoNothing() {
+    void continueDoesNothing() {
         FrontEnd fe = menuReady();
-        for (int row = 1; row <= 2; row++) {
-            fe.update(Buttons.DOWN);
-            fe.update(0);
-            fe.update(Buttons.START);
-            fe.update(0);
-            assertEquals(row, fe.row());
-        }
+        fe.update(Buttons.DOWN);
+        fe.update(0);
+        fe.update(Buttons.START);
         run(fe, 40, 0);
-        assertEquals(List.of("0/12", "0/12"), sounds);
+        assertEquals(1, fe.row());
+        assertEquals(List.of("0/12"), sounds);
         assertEquals(Phase.MENU, fe.phase());
+        assertFalse(fe.startGame());
+    }
+
+    @Test
+    void optionFadesToTheOptionsScreenAndBackReturnsToTheOptionRow() {
+        FrontEnd fe = menuReady();
+        fe.update(Buttons.UP);
+        fe.update(0);
+        fe.update(Buttons.JUMP);
+        assertEquals(List.of("0/12", "0/34"), sounds);
+        run(fe, 32, 0);
+        assertEquals(Phase.OPTIONS, fe.phase());
+        assertEquals(0f, fe.darkness());
+        assertEquals(OptionsMenu.Page.OPTIONS, fe.options().page());
+        fe.update(Buttons.JUMP);
+        assertEquals(Phase.MENU, fe.phase());
+        assertEquals(2, fe.row());
+        run(fe, 32, 0);
+        assertEquals(0f, fe.darkness());
         assertFalse(fe.startGame());
     }
 

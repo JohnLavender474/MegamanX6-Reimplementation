@@ -72,7 +72,8 @@ Gradle 9.1.0.
 
 On the front end, Enter is Start and K is Cross. Start leaves the ready screen and skips the logo. Start or a face button (J, K,
 L, I) skips the opening. Start on the title opens the menu. On the menu, W and S choose and Enter or
-K picks; only GAME START has a screen.
+K picks. GAME START starts the game. OPTION opens the options screen, where you can rebind the keys and
+the controller buttons for the current session (CONTROLLER SETTINGS needs a connected controller).
 
 The keys above are the defaults. A controller works with the keyboard at the same time: its D-pad
 moves, and the bottom, right, left and top face buttons are Cross (jump), Circle (dash), Square
@@ -85,7 +86,7 @@ On the stage select screen, Up and Down choose, and Start, Cross or Square start
 | property | effect |
 |---|---|
 | `-Dmmx.stage=KEY` | start this stage (`intro`, `yammark`, `wolfang`, `heatnix`, `scaravich`, `turtloid`, `sheldon`) without the select screen |
-| `-Dmmx.front=NAME` | start the front end at `ready` (default), `logo`, `load`, `opening`, `title` or `menu`; `select` starts at the stage select screen |
+| `-Dmmx.front=NAME` | start the front end at `ready` (default), `logo`, `load`, `opening`, `title`, `menu` or `options`; `select` starts at the stage select screen |
 | `-Dmmx.checkpoint=N` | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3) |
 | `-Dmmx.startX=X -Dmmx.startY=Y` | start standing at a point, with wide camera limits |
 | `-Dmmx.debug=true` | start with the F1 view on |

@@ -1,7 +1,9 @@
 package mmx.x6.frontend;
 
 import mmx.x6.audio.Sfx;
+import mmx.x6.input.Bindings;
 import mmx.x6.input.Buttons;
+import mmx.x6.input.RawInput;
 
 public final class FrontEnd {
 
@@ -17,12 +19,14 @@ public final class FrontEnd {
     public static final int SOUND_MOVE = 12;
     public static final int SOUND_PICK = 34;
     private static final int ROWS = 3;
+    private static final int ROW_OPTION = 2;
     private static final int OPENING_SKIP = Buttons.START | Buttons.JUMP | Buttons.BUSTER | Buttons.DASH
             | Buttons.WEAPON;
     private static final int MENU_PICK = Buttons.START | Buttons.JUMP;
 
     private final Sfx sfx;
     private final Fade fade = new Fade();
+    private final OptionsMenu options;
     private Phase phase;
     private Phase pending;
     private boolean starting;
@@ -33,8 +37,17 @@ public final class FrontEnd {
     private int before;
 
     public FrontEnd(Sfx sfx, Phase start) {
+        this(sfx, start, new Bindings());
+    }
+
+    public FrontEnd(Sfx sfx, Phase start, Bindings bindings) {
         this.sfx = sfx;
+        this.options = new OptionsMenu(sfx, bindings);
         enter(start);
+    }
+
+    public OptionsMenu options() {
+        return options;
     }
 
     public Phase phase() {
@@ -78,6 +91,10 @@ public final class FrontEnd {
     }
 
     public void update(int held) {
+        update(held, RawInput.NONE);
+    }
+
+    public void update(int held, RawInput raw) {
         int pressed = held & ~before;
         before = held;
         fade.update();
@@ -129,6 +146,12 @@ public final class FrontEnd {
                 }
             }
             case MENU -> menu(pressed);
+            case OPTIONS -> {
+                if (options.update(pressed, raw)) {
+                    enter(Phase.MENU);
+                    row = ROW_OPTION;
+                }
+            }
         }
     }
 
@@ -160,10 +183,13 @@ public final class FrontEnd {
             row = (row + 1) % ROWS;
             sfx.play(0, SOUND_MOVE);
         } else if ((pressed & MENU_PICK) != 0 && row == 0) {
-            // TODO: CONTINUE and OPTION (rows 1, 2) and the two new-game cheats on row 0 are not made (docs/gaps.md, "Front end")
+            // TODO: CONTINUE (row 1) and the two new-game cheats on row 0 are not made (docs/gaps.md, "Front end")
             sfx.play(0, SOUND_PICK);
             starting = true;
             fade.out(FADE_SPEED);
+        } else if ((pressed & MENU_PICK) != 0 && row == ROW_OPTION) {
+            sfx.play(0, SOUND_PICK);
+            fadeTo(Phase.OPTIONS);
         }
     }
 
@@ -183,6 +209,9 @@ public final class FrontEnd {
             fade.in(FADE_SPEED);
         } else if (next == Phase.MENU) {
             fade.in(FADE_SPEED);
+        } else if (next == Phase.OPTIONS) {
+            options.open();
+            fade.clear();
         } else {
             fade.clear();
         }

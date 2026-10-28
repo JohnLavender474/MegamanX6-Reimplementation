@@ -1,3 +1,3 @@
 package mmx.x6.frontend;
 
-public enum Phase { READY, LOGO, LOAD, OPENING, TITLE, MENU }
+public enum Phase { READY, LOGO, LOAD, OPENING, TITLE, MENU, OPTIONS }
