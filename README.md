@@ -1,6 +1,6 @@
 # Mega Man X6 (vibe-coded)
 
-A fan remake of stages from Mega Man X6 (PlayStation, 2001), written in Java with
+A fan reimplementation of stages from Mega Man X6 (PlayStation, 2001), written in Java with
 the help of AI.
 
 This is not an emulator and not a port. The game code is new. The graphics, sounds,
