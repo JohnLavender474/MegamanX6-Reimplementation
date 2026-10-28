@@ -1,4 +1,4 @@
-# Mega Man X6 (vibe-coded)
+# Mega Man X6 - Reimplementation
 
 A fan reimplementation of stages from Mega Man X6 (PlayStation, 2001), written in Java with
 the help of AI.
