@@ -12,7 +12,7 @@
   "rate": 37800,
   "frames": 15740928,
   "seconds": 416.427,
-  "wav": "c00-t00.wav"
+  "wav": "c00-t00.ogg"
  },
  {
   "file": 1,
@@ -27,7 +27,7 @@
   "rate": 37800,
   "frames": 15589728,
   "seconds": 412.427,
-  "wav": "c01-t00.wav"
+  "wav": "c01-t00.ogg"
  },
  {
   "file": 1,
@@ -42,7 +42,7 @@
   "rate": 37800,
   "frames": 15269184,
   "seconds": 403.947,
-  "wav": "c02-t00.wav"
+  "wav": "c02-t00.ogg"
  },
  {
   "file": 1,
@@ -57,7 +57,7 @@
   "rate": 37800,
   "frames": 15049440,
   "seconds": 398.133,
-  "wav": "c03-t00.wav"
+  "wav": "c03-t00.ogg"
  },
  {
   "file": 1,
@@ -72,7 +72,7 @@
   "rate": 37800,
   "frames": 14851872,
   "seconds": 392.907,
-  "wav": "c04-t00.wav"
+  "wav": "c04-t00.ogg"
  },
  {
   "file": 1,
@@ -87,7 +87,7 @@
   "rate": 37800,
   "frames": 14837760,
   "seconds": 392.533,
-  "wav": "c05-t00.wav"
+  "wav": "c05-t00.ogg"
  },
  {
   "file": 1,
@@ -102,7 +102,7 @@
   "rate": 37800,
   "frames": 14680512,
   "seconds": 388.373,
-  "wav": "c06-t00.wav"
+  "wav": "c06-t00.ogg"
  },
  {
   "file": 1,
@@ -117,7 +117,7 @@
   "rate": 37800,
   "frames": 14648256,
   "seconds": 387.52,
-  "wav": "c07-t00.wav"
+  "wav": "c07-t00.ogg"
  },
  {
   "file": 1,
@@ -132,7 +132,7 @@
   "rate": 37800,
   "frames": 14585760,
   "seconds": 385.867,
-  "wav": "c07-t01.wav"
+  "wav": "c07-t01.ogg"
  },
  {
   "file": 1,
@@ -147,7 +147,7 @@
   "rate": 37800,
   "frames": 14345856,
   "seconds": 379.52,
-  "wav": "c06-t01.wav"
+  "wav": "c06-t01.ogg"
  },
  {
   "file": 1,
@@ -162,7 +162,7 @@
   "rate": 37800,
   "frames": 14261184,
   "seconds": 377.28,
-  "wav": "c05-t01.wav"
+  "wav": "c05-t01.ogg"
  },
  {
   "file": 1,
@@ -177,7 +177,7 @@
   "rate": 37800,
   "frames": 14128128,
   "seconds": 373.76,
-  "wav": "c04-t01.wav"
+  "wav": "c04-t01.ogg"
  },
  {
   "file": 1,
@@ -192,7 +192,7 @@
   "rate": 37800,
   "frames": 14122080,
   "seconds": 373.6,
-  "wav": "c03-t01.wav"
+  "wav": "c03-t01.ogg"
  },
  {
   "file": 1,
@@ -207,7 +207,7 @@
   "rate": 37800,
   "frames": 13999104,
   "seconds": 370.347,
-  "wav": "c02-t01.wav"
+  "wav": "c02-t01.ogg"
  },
  {
   "file": 1,
@@ -222,7 +222,7 @@
   "rate": 37800,
   "frames": 13999104,
   "seconds": 370.347,
-  "wav": "c01-t01.wav"
+  "wav": "c01-t01.ogg"
  },
  {
   "file": 1,
@@ -237,7 +237,7 @@
   "rate": 37800,
   "frames": 13890240,
   "seconds": 367.467,
-  "wav": "c00-t01.wav"
+  "wav": "c00-t01.ogg"
  },
  {
   "file": 1,
@@ -252,7 +252,7 @@
   "rate": 37800,
   "frames": 13847904,
   "seconds": 366.347,
-  "wav": "c04-t02.wav"
+  "wav": "c04-t02.ogg"
  },
  {
   "file": 1,
@@ -267,7 +267,7 @@
   "rate": 37800,
   "frames": 13753152,
   "seconds": 363.84,
-  "wav": "c06-t02.wav"
+  "wav": "c06-t02.ogg"
  },
  {
   "file": 1,
@@ -282,7 +282,7 @@
   "rate": 37800,
   "frames": 13730976,
   "seconds": 363.253,
-  "wav": "c05-t02.wav"
+  "wav": "c05-t02.ogg"
  },
  {
   "file": 1,
@@ -297,7 +297,7 @@
   "rate": 37800,
   "frames": 13614048,
   "seconds": 360.16,
-  "wav": "c03-t02.wav"
+  "wav": "c03-t02.ogg"
  },
  {
   "file": 1,
@@ -312,7 +312,7 @@
   "rate": 37800,
   "frames": 13591872,
   "seconds": 359.573,
-  "wav": "c07-t02.wav"
+  "wav": "c07-t02.ogg"
  },
  {
   "file": 1,
@@ -327,7 +327,7 @@
   "rate": 37800,
   "frames": 9402624,
   "seconds": 248.747,
-  "wav": "c02-t02.wav"
+  "wav": "c02-t02.ogg"
  },
  {
   "file": 1,
@@ -342,7 +342,7 @@
   "rate": 37800,
   "frames": 356832,
   "seconds": 9.44,
-  "wav": "c01-t02.wav"
+  "wav": "c01-t02.ogg"
  },
  {
   "file": 1,
@@ -357,7 +357,7 @@
   "rate": 37800,
   "frames": 243936,
   "seconds": 6.453,
-  "wav": "c00-t02.wav"
+  "wav": "c00-t02.ogg"
  },
  {
   "file": 1,
@@ -372,7 +372,7 @@
   "rate": 37800,
   "frames": 209664,
   "seconds": 5.547,
-  "wav": "c00-t03.wav"
+  "wav": "c00-t03.ogg"
  },
  {
   "file": 1,
@@ -387,7 +387,7 @@
   "rate": 37800,
   "frames": 38304,
   "seconds": 1.013,
-  "wav": "c01-t03.wav"
+  "wav": "c01-t03.ogg"
  },
  {
   "file": 1,
@@ -402,7 +402,7 @@
   "rate": 37800,
   "frames": 38304,
   "seconds": 1.013,
-  "wav": "c01-t04.wav"
+  "wav": "c01-t04.ogg"
  },
  {
   "file": 1,
@@ -417,7 +417,7 @@
   "rate": 37800,
   "frames": 38304,
   "seconds": 1.013,
-  "wav": "c01-t05.wav"
+  "wav": "c01-t05.ogg"
  },
  {
   "file": 1,
@@ -432,7 +432,7 @@
   "rate": 37800,
   "frames": 38304,
   "seconds": 1.013,
-  "wav": "c00-t04.wav"
+  "wav": "c00-t04.ogg"
  },
  {
   "file": 1,
@@ -447,6 +447,6 @@
   "rate": 37800,
   "frames": 38304,
   "seconds": 1.013,
-  "wav": "c01-t06.wav"
+  "wav": "c01-t06.ogg"
  }
 ]

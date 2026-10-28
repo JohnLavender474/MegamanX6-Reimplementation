@@ -47,7 +47,8 @@ in [`docs/custom-changes.md`](docs/custom-changes.md).
    - the stages into maps for the Tiled map editor (tiles, collision, enemy
      placement and camera zones);
    - the sprites into picture strips with their animation timing;
-   - the sound banks into WAV files, and the streamed music into WAV tracks;
+   - the sound banks into WAV files, and the streamed music into WAV tracks
+     (`make assets` changes the music to OGG for this repo);
    - the logo and opening movies into picture frames and a soundtrack;
    - the menu text into tables.
 4. **The study of the game (reverse engineering).** To learn how each enemy, boss,

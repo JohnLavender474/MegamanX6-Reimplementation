@@ -106,7 +106,8 @@ Tests (`src/test/java/mmx/x6/`): `game/Sim` (a headless world on an ASCII grid),
 
 The game reads nothing else. `make assets` (`tools/import_assets.py`) copies the data root into it:
 `sprites/` (`players/`, `enemies/`, `banks/`, `stages/`, and `frontend/` from `re/front-end/images/`),
-`sounds/`, `music/` (from `music/bgm/`), `movies/`, and `tiled/tmx/`, `tiled/tsx/`, `tiled/png/` (from
+`sounds/` (WAV, because `WavRate` sets the pitch in the WAV header), `music/` (from `music/bgm/`; ffmpeg
+changes each track to OGG Vorbis, and `songs.json` and `tracks.json` point at the `.ogg` files), `movies/`, and `tiled/tmx/`, `tiled/tsx/`, `tiled/png/` (from
 `tmx/`: each embedded tileset moves out to `<map>-tiles.tsx` or `collision.tsx`). It keeps files that
 exist (`--update` replaces them) and never replaces a map in `tiled/tmx/`.
 

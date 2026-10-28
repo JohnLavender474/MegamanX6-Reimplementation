@@ -18,18 +18,18 @@ class MusicTracksTest {
     @Test
     void stageTrack() {
         MusicTrack t = tracks().get(9);
-        assertEquals("c07-t02.wav", t.record());
+        assertEquals("c07-t02.ogg", t.record());
         assertTrue(t.loop());
         assertEquals(359.52, t.end(), 0.01);
     }
 
     @Test
     void bossTrack() {
-        assertEquals("c05-t02.wav", tracks().get(21).record());
+        assertEquals("c05-t02.ogg", tracks().get(21).record());
     }
 
     @Test
     void gateTrack() {
-        assertEquals("c03-t02.wav", tracks().get(28).record());
+        assertEquals("c03-t02.ogg", tracks().get(28).record());
     }
 }

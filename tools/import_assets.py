@@ -1,6 +1,7 @@
 import argparse
 import re
 import shutil
+import subprocess
 from pathlib import Path
 
 REPO = Path(__file__).resolve().parent.parent
@@ -14,9 +15,30 @@ FOLDERS = [
     ("sprites/stages", "sprites/stages"),
     ("re/front-end/images", "sprites/frontend"),
     ("sounds", "sounds"),
-    ("music/bgm", "music"),
     ("movies", "movies"),
 ]
+MUSIC = ("music/bgm", "music")
+MUSIC_TABLES = ("songs.json", "tracks.json")
+
+
+def import_music(src, dst, update, counts):
+    dst.mkdir(parents=True, exist_ok=True)
+    for f in sorted(src.glob("*.wav")):
+        ogg = dst / f"{f.stem}.ogg"
+        if ogg.exists() and not update:
+            counts["kept"] += 1
+            continue
+        subprocess.run(["ffmpeg", "-y", "-loglevel", "error", "-i", str(f), "-c:a", "libvorbis", "-q:a", "5",
+                        str(ogg)], check=True)
+        counts["converted"] += 1
+    for name in MUSIC_TABLES:
+        table = dst / name
+        if table.exists() and not update:
+            counts["kept"] += 1
+            continue
+        text = (src / name).read_text(encoding="utf-8")
+        table.write_text(re.sub(r'\.wav"', '.ogg"', text), encoding="utf-8")
+        counts["copied"] += 1
 
 
 def copy_file(src, dst, update, counts):
@@ -86,12 +108,16 @@ def main():
     p.add_argument("--update", action="store_true", help="replace the files that are already in assets/ (not maps)")
     args = p.parse_args()
 
-    counts = {"copied": 0, "kept": 0, "maps": 0, "maps kept": 0}
+    counts = {"copied": 0, "converted": 0, "kept": 0, "maps": 0, "maps kept": 0}
     for src, dst in FOLDERS:
         folder = args.source / src
         if not folder.is_dir():
             raise SystemExit(f"missing {folder}")
         copy_folder(folder, args.out / dst, args.update, counts)
+    music = args.source / MUSIC[0]
+    if not music.is_dir():
+        raise SystemExit(f"missing {music}")
+    import_music(music, args.out / MUSIC[1], args.update, counts)
     maps = args.maps or args.source / "tmx"
     for map_dir in sorted(d for d in maps.iterdir() if d.is_dir()):
         import_map(map_dir, args.out, args.update, counts)

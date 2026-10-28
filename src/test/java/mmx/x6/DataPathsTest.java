@@ -59,6 +59,6 @@ class DataPathsTest {
         assertEquals(Path.of("/r/sprites/banks/intro/intro-1_start/bank-1.png"), p.bankSheet("intro-1_start", 1));
         assertEquals(Path.of("/r/sounds/m087-e11"), p.soundBank("m087-e11"));
         assertEquals(Path.of("/r/music/songs.json"), p.songsJson());
-        assertEquals(Path.of("/r/music/c07-t02.wav"), p.musicRecord("c07-t02.wav"));
+        assertEquals(Path.of("/r/music/c07-t02.ogg"), p.musicRecord("c07-t02.ogg"));
     }
 }
