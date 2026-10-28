@@ -90,15 +90,17 @@ make run
 
 ```
 make dist           # both
-make dist-linux     # build/dist/MegamanX6-<version>-linux64/ and .zip
-make dist-windows   # build/dist/MegamanX6-<version>-windows64/ and .zip
+make dist-linux     # game-builds/MegamanX6-<version>-linux64/ and .zip
+make dist-windows   # game-builds/MegamanX6-<version>-windows64/ and .zip
 ```
 
 Each bundle holds a launcher (`MegamanX6` or `MegamanX6.exe`), the game JAR, a Java 17
 runtime and the `assets/` folder, so the player does not need Java. The version is
-`projectVersion` in `gradle.properties`. The first build downloads packr and the Java
-runtimes to `build/dist/cache/`; it needs `curl`, `tar`, `unzip` and `zip`. You can make
-both bundles on Linux.
+`projectVersion` in `gradle.properties`; set a new version before a release, so that
+the builds of older versions stay in `game-builds/` (git ignores the folder). A build
+of the same version replaces the old one. The first build downloads packr to
+`game-builds/` and the Java runtimes to `game-builds/jdk/`; it needs `curl`, `tar`,
+`unzip` and `zip`. You can make both bundles on Linux.
 
 ## Controls
 

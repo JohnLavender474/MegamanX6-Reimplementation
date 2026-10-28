@@ -4,3 +4,4 @@ build/
 *.iml
 *.state.gz
 *.bin
+/game-builds/

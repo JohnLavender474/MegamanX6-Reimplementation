@@ -33,11 +33,12 @@ case "$PLATFORM" in
         ;;
 esac
 
-CACHE="build/dist/cache"
-JRE_DIR="$CACHE/jre-$PLATFORM"
-PACKR="$CACHE/packr-all-4.0.0.jar"
+BUILDS="game-builds"
+CACHE="$BUILDS/jdk"
+JRE_DIR="$CACHE/$PLATFORM"
+PACKR="$BUILDS/packr-all-4.0.0.jar"
 NAME="$APP_NAME-$VERSION-$PLATFORM"
-OUT="build/dist/$NAME"
+OUT="$BUILDS/$NAME"
 
 if [ ! -f "$JAR" ]; then
     echo "Error: $JAR is missing; run ./gradlew jar first."
@@ -95,6 +96,6 @@ if [ "$PLATFORM" = "linux64" ]; then
 fi
 
 echo "Zipping $NAME"
-(cd build/dist && zip -qr "$NAME.zip" "$NAME")
+(cd "$BUILDS" && zip -qr "$NAME.zip" "$NAME")
 
 echo "Done: $OUT and $OUT.zip"
