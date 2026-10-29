@@ -298,7 +298,7 @@ final class ContentRules {
             }
         }
         for (String name : List.of("records", "fixed records", "camera zones")) {
-            if (!objects(objectGroup(map, name), region).equals(objects(objectGroup(template, name), region))) {
+            if (!objects(objectGroup(map, name), region, name).equals(objects(objectGroup(template, name), region, name))) {
                 problems.add("objects of \"" + name + "\" differ");
             }
         }
@@ -358,7 +358,7 @@ final class ContentRules {
         }
     }
 
-    private static List<String> objects(XmlReader.Element group, Catalog.Region region) {
+    private static List<String> objects(XmlReader.Element group, Catalog.Region region, String groupName) {
         List<String> out = new ArrayList<>();
         if (group == null) {
             return out;
@@ -366,9 +366,14 @@ final class ContentRules {
         for (XmlReader.Element o : group.getChildrenByName("object")) {
             double x = number(o, "x");
             if (x >= region.x0() && x <= region.x1()) {
+                Map<String, String> props = new TreeMap<>(properties(o));
+                props.remove("index");
+                if ("camera zones".equals(groupName)) {
+                    props.remove("record");
+                }
                 out.add(o.getAttribute("name", "") + "|" + o.getAttribute("type", "") + "|" + x + "|"
                         + number(o, "y") + "|" + number(o, "width") + "|" + number(o, "height") + "|"
-                        + new TreeMap<>(properties(o)));
+                        + props);
             }
         }
         Collections.sort(out);

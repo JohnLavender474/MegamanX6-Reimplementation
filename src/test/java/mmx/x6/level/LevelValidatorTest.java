@@ -377,4 +377,25 @@ class LevelValidatorTest {
         ValidationReport r = checkRegion(TmxFixture.valid(), null);
         assertFinding(r, "fixed-region", Finding.Result.REJECT);
     }
+
+    @Test
+    void renumberedIndexOutsideRegionIsAccepted() {
+        String a = record("MetaWheelF", "0", "0");
+        String b = record("MetaWheelF", "1", "0").replace("x=\"16\"", "x=\"40\"");
+        String zone = "<object id=\"9\" name=\"CameraZone\" x=\"40\" y=\"0\" width=\"16\" height=\"16\">"
+                + "<properties><property name=\"record\" type=\"int\" value=\"1\"/></properties></object>";
+        String template = TmxFixture.valid().objectLayer("records", a + b).objectLayer("camera zones", zone).build();
+        ValidationReport r = checkRegion(TmxFixture.valid().objectLayer("records", b)
+                .objectLayer("camera zones", zone), template);
+        assertFinding(r, "record-index", Finding.Result.REPAIR);
+        assertTrue(r.findings().stream().noneMatch(f -> f.code().equals("fixed-region")), r.findings().toString());
+    }
+
+    @Test
+    void checkpointIntWithLettersIsRejected() {
+        String bad = checkpoint(1, "0", "true").replace("name=\"cam_x\" type=\"int\" value=\"0\"",
+                "name=\"cam_x\" type=\"int\" value=\"abc\"");
+        assertFinding(check(TmxFixture.valid().objectLayer("x6 checkpoints", bad)), "property-type",
+                Finding.Result.REJECT);
+    }
 }
