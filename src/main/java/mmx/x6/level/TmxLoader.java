@@ -7,6 +7,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -65,13 +66,16 @@ public final class TmxLoader {
         List<RecordDef> records = new ArrayList<>();
         List<RecordDef> fixed = new ArrayList<>();
         List<CameraZoneDef> zones = new ArrayList<>();
+        List<Object[]> checkpointRows = new ArrayList<>();
         for (XmlReader.Element group : children(map, "objectgroup")) {
             String groupName = attr(group, "name");
             for (XmlReader.Element o : children(group, "object")) {
                 Map<String, String> p = properties(o);
                 int x = (int) Double.parseDouble(attr(o, "x"));
                 int y = (int) Double.parseDouble(attr(o, "y"));
-                if ("records".equals(groupName) || "fixed records".equals(groupName)) {
+                if ("x6 checkpoints".equals(groupName)) {
+                    checkpointRows.add(new Object[] {intOr(p, "checkpoint", 0), checkpoint(p, x, y)});
+                } else if ("records".equals(groupName) || "fixed records".equals(groupName)) {
                     RecordDef r = new RecordDef(intOr(p, "index", -1), attr(o, "name"), attr(o, "type"),
                             intOr(p, "kind", 0), intOr(p, "b", 0), intOr(p, "id", 0), intOr(p, "a", 0), x, y,
                             o.getInt("id", 0), intOr(p, "goal", 0), intOr(p, "opened_by", 0));
@@ -86,10 +90,28 @@ public final class TmxLoader {
             }
         }
 
+        checkpointRows.sort(Comparator.comparingInt(row -> (Integer) row[0]));
+        List<Checkpoint> checkpoints = new ArrayList<>();
+        for (Object[] row : checkpointRows) {
+            checkpoints.add((Checkpoint) row[1]);
+        }
+
         return new Level(width, height, require(layers, "art 2 background", name),
                 require(layers, "art 1 decoration", name), require(layers, "art 0 main", name),
                 require(layers, "art 0 front", name), new CollisionGrid(width, height, values),
-                List.copyOf(records), List.copyOf(zones), List.copyOf(fixed));
+                List.copyOf(records), List.copyOf(zones), List.copyOf(fixed), Map.copyOf(properties(map)),
+                List.copyOf(checkpoints), List.of());
+    }
+
+    private static Checkpoint checkpoint(Map<String, String> p, int x, int y) {
+        Point layer1 = p.containsKey("layer1_x") && p.containsKey("layer1_y")
+                ? new Point(intOr(p, "layer1_x", 0), intOr(p, "layer1_y", 0)) : null;
+        Point layer2 = p.containsKey("layer2_offset_x") && p.containsKey("layer2_offset_y")
+                ? new Point(intOr(p, "layer2_offset_x", 0), intOr(p, "layer2_offset_y", 0)) : null;
+        String face = p.getOrDefault("face_right", "false");
+        return new Checkpoint(x, y, intOr(p, "cam_x", 0), intOr(p, "cam_y", 0), intOr(p, "min_x", 0),
+                intOr(p, "max_x", 0), intOr(p, "min_y", 0), intOr(p, "max_y", 0),
+                "true".equals(face) || "1".equals(face), intOr(p, "beam_thru", 0), layer1, layer2);
     }
 
     private static boolean isCollisionTileset(XmlReader.Element ts) {

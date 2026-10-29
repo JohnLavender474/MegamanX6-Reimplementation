@@ -166,4 +166,59 @@ class TmxLoaderTest {
         assertEquals(new Checkpoint(2112, 1072, 1968, 944, 1968, 5120, 944, 944, true, 6), IntroCheckpoints.ALL.get(1));
         assertEquals(new Checkpoint(5904, 364, 5744, 224, 5744, 5744, 224, 224, true, 1), IntroCheckpoints.ALL.get(2));
     }
+
+    @Test
+    void readsMapPropertiesAndCheckpoints() throws Exception {
+        StringBuilder layers = new StringBuilder();
+        for (String name : List.of("art 2 background", "art 1 decoration", "art 0 main", "art 0 front", "collision")) {
+            layers.append("<layer name=\"").append(name).append("\" width=\"1\" height=\"1\"><data encoding=\"csv\">0</data></layer>\n");
+        }
+        layers.append("<objectgroup name=\"x6 checkpoints\">\n")
+                .append(checkpointObject(2112, 1072, 1, 1968, 944, 1968, 5120, 944, 944, 6))
+                .append(checkpointObject(144, 976, 0, 0, 944, 0, 5120, 896, 944, 1))
+                .append("</objectgroup>\n");
+        String text = "<?xml version=\"1.0\"?>\n<map width=\"1\" height=\"1\">\n"
+                + "<properties><property name=\"x6_profile\" value=\"1\"/><property name=\"x6_theme\" value=\"intro\"/></properties>\n"
+                + "<tileset firstgid=\"1\" name=\"tiles\" tilewidth=\"16\" tileheight=\"16\"/>\n"
+                + "<tileset firstgid=\"5\" name=\"collision\" tilewidth=\"16\" tileheight=\"16\"/>\n" + layers + "</map>\n";
+        Level l = TmxLoader.parse(text, "inline");
+        assertEquals("intro", l.properties().get("x6_theme"));
+        assertEquals("1", l.properties().get("x6_profile"));
+        assertEquals(List.of(new Checkpoint(144, 976, 0, 944, 0, 5120, 896, 944, true, 1),
+                new Checkpoint(2112, 1072, 1968, 944, 1968, 5120, 944, 944, true, 6)), l.checkpoints());
+        assertTrue(l.goals().isEmpty());
+    }
+
+    @Test
+    void checkpointLayersAreReadWhenBothCoordinatesExist() throws Exception {
+        StringBuilder layers = new StringBuilder();
+        for (String name : List.of("art 2 background", "art 1 decoration", "art 0 main", "art 0 front", "collision")) {
+            layers.append("<layer name=\"").append(name).append("\" width=\"1\" height=\"1\"><data encoding=\"csv\">0</data></layer>\n");
+        }
+        layers.append("<objectgroup name=\"x6 checkpoints\"><object id=\"1\" x=\"10\" y=\"20\"><properties>"
+                + "<property name=\"checkpoint\" type=\"int\" value=\"0\"/>"
+                + "<property name=\"layer1_x\" type=\"int\" value=\"3\"/><property name=\"layer1_y\" type=\"int\" value=\"4\"/>"
+                + "<property name=\"layer2_offset_x\" type=\"int\" value=\"5\"/>"
+                + "</properties></object></objectgroup>\n");
+        String text = "<?xml version=\"1.0\"?>\n<map width=\"1\" height=\"1\">\n"
+                + "<tileset firstgid=\"1\" name=\"tiles\" tilewidth=\"16\" tileheight=\"16\"/>\n"
+                + "<tileset firstgid=\"5\" name=\"collision\" tilewidth=\"16\" tileheight=\"16\"/>\n" + layers + "</map>\n";
+        Checkpoint c = TmxLoader.parse(text, "inline").checkpoints().get(0);
+        assertEquals(new Point(3, 4), c.layer1());
+        assertEquals(null, c.layer2Offset());
+        assertFalse(c.faceRight());
+    }
+
+    private static String checkpointObject(int x, int y, int n, int camX, int camY, int minX, int maxX, int minY,
+                                           int maxY, int beam) {
+        return "<object id=\"" + (n + 1) + "\" x=\"" + x + "\" y=\"" + y + "\"><properties>"
+                + prop("checkpoint", n) + prop("cam_x", camX) + prop("cam_y", camY) + prop("min_x", minX)
+                + prop("max_x", maxX) + prop("min_y", minY) + prop("max_y", maxY)
+                + "<property name=\"face_right\" type=\"bool\" value=\"true\"/>" + prop("beam_thru", beam)
+                + "</properties></object>\n";
+    }
+
+    private static String prop(String name, int value) {
+        return "<property name=\"" + name + "\" type=\"int\" value=\"" + value + "\"/>";
+    }
 }
