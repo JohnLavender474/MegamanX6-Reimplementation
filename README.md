@@ -3,6 +3,10 @@
 A fan reimplementation of stages from Mega Man X6 (PlayStation, 2001), written in Java with
 the help of AI.
 
+<img src="img/title_screen.png" width="300">
+
+<img src="img/intro_stage_x_slash.png" width="300">
+
 This is not an emulator and not a port. The game code is new. The graphics, sounds,
 music and maps come from the original disc, and the enemy and boss behaviour is
 rebuilt from a study of the original game.
