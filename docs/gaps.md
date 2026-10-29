@@ -370,3 +370,8 @@ load, opening, title, menu), the fades (32 updates: `FadeTask` moves a level of 
 
 - Item drops (health, weapon energy, extra lives): the drop weights exist, the drops are out of
   scope. (`docs/engine.md`, "Death, debris and drops")
+
+## User levels
+
+- The fixed boss room region `x` 5744 to 6655 of the intro theme is a guess from the gate at x 5744,
+  the room walls and the tile store columns up to x 6592.

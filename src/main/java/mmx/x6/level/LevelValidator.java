@@ -28,14 +28,15 @@ public final class LevelValidator {
             return new ValidationReport(findings, null);
         }
         try {
-            checkStructure(map, catalog, findings);
+            checkStructure(map, catalog, templates, findings);
         } catch (RuntimeException e) {
             findings.add(reject("parse", "The document cannot be read: " + e.getMessage()));
         }
         return new ValidationReport(findings, map);
     }
 
-    private static void checkStructure(XmlReader.Element map, Catalog catalog, List<Finding> findings) {
+    private static void checkStructure(XmlReader.Element map, Catalog catalog, Function<String, String> templates,
+                                       List<Finding> findings) {
         int width = intAttr(map, "width");
         int height = intAttr(map, "height");
         checkMap(map, width, height, findings);
@@ -45,10 +46,13 @@ public final class LevelValidator {
         }
 
         Catalog.Theme theme = theme(map, catalog);
-        if (theme != null) {
+        if (theme == null) {
+            findings.add(reject("theme", "The map property x6_theme is missing or names an unknown theme."));
+        } else {
             checkTilesets(map, theme, findings);
         }
         checkLayers(map, width, height, theme, findings);
+        ContentRules.check(map, catalog, theme, templates, findings);
     }
 
     private static void checkMap(XmlReader.Element map, int width, int height, List<Finding> findings) {
@@ -182,7 +186,7 @@ public final class LevelValidator {
         }
     }
 
-    private static XmlReader.Element findLayer(XmlReader.Element map, String name) {
+    static XmlReader.Element findLayer(XmlReader.Element map, String name) {
         for (XmlReader.Element l : map.getChildrenByName("layer")) {
             if (name.equals(l.getAttribute("name", ""))) {
                 return l;
@@ -191,7 +195,7 @@ public final class LevelValidator {
         return null;
     }
 
-    private static int intAttr(XmlReader.Element e, String name) {
+    static int intAttr(XmlReader.Element e, String name) {
         try {
             return Integer.parseInt(e.getAttribute(name, "").trim());
         } catch (NumberFormatException ex) {
@@ -203,7 +207,7 @@ public final class LevelValidator {
         return path.substring(path.lastIndexOf('/') + 1);
     }
 
-    private static Finding reject(String code, String message) {
+    static Finding reject(String code, String message) {
         return new Finding(Finding.Result.REJECT, code, message);
     }
 }

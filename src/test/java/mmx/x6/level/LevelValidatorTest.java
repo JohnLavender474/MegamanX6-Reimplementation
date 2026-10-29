@@ -163,9 +163,218 @@ class LevelValidatorTest {
     }
 
     @Test
-    void unknownThemeSkipsTilesetAndGidRules() {
+    void unknownThemeRejectsAndSkipsTilesetAndGidRules() {
         TmxFixture f = TmxFixture.valid().mapProperty("x6_theme", "string", "nope")
                 .layerData("art 0 main", "99999," + cells(255, "0"));
-        assertTrue(check(f).findings().isEmpty());
+        ValidationReport r = check(f);
+        assertFinding(r, "theme", Finding.Result.REJECT);
+        assertTrue(r.findings().stream().noneMatch(x -> x.code().equals("tileset") || x.code().equals("gid-range")),
+                r.findings().toString());
+    }
+
+    private static String record(String name, String idx, String kind) {
+        return "<object id=\"" + (idx.hashCode() & 0xFFF) + "\" name=\"" + name + "\" x=\"16\" y=\"16\">"
+                + "<properties><property name=\"index\" type=\"int\" value=\"" + idx + "\"/>"
+                + "<property name=\"kind\" type=\"int\" value=\"" + kind + "\"/></properties></object>";
+    }
+
+    private static String checkpoint(int id, String number, String faceRight) {
+        return "<object id=\"" + id + "\" name=\"c" + id + "\" x=\"32\" y=\"32\"><properties>"
+                + "<property name=\"checkpoint\" type=\"int\" value=\"" + number + "\"/>"
+                + "<property name=\"cam_x\" type=\"int\" value=\"0\"/>"
+                + "<property name=\"cam_y\" type=\"int\" value=\"0\"/>"
+                + "<property name=\"min_x\" type=\"int\" value=\"0\"/>"
+                + "<property name=\"max_x\" type=\"int\" value=\"256\"/>"
+                + "<property name=\"min_y\" type=\"int\" value=\"0\"/>"
+                + "<property name=\"max_y\" type=\"int\" value=\"256\"/>"
+                + "<property name=\"face_right\" type=\"bool\" value=\"" + faceRight + "\"/>"
+                + "<property name=\"beam_thru\" type=\"int\" value=\"0\"/>"
+                + "</properties><point/></object>";
+    }
+
+    @Test
+    void missingProfileIsRejected() {
+        assertFinding(check(TmxFixture.valid().removeMapProperty("x6_profile")), "profile", Finding.Result.REJECT);
+    }
+
+    @Test
+    void profileOtherThanOneIsRejected() {
+        assertFinding(check(TmxFixture.valid().mapProperty("x6_profile", "int", "2")), "profile",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void missingThemeIsRejected() {
+        assertFinding(check(TmxFixture.valid().removeMapProperty("x6_theme")), "theme", Finding.Result.REJECT);
+    }
+
+    @Test
+    void unknownThemeIsRejected() {
+        assertFinding(check(TmxFixture.valid().mapProperty("x6_theme", "string", "nope")), "theme",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void musicOtherThanThemeIsRejected() {
+        assertFinding(check(TmxFixture.valid().mapProperty("x6_music", "int", "10")), "property",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void missingThemePropertyIsRejected() {
+        assertFinding(check(TmxFixture.valid().removeMapProperty("x6_bank5")), "property", Finding.Result.REJECT);
+    }
+
+    @Test
+    void intPropertyWithLettersIsRejected() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("records", record("MetaWheelF", "0", "abc")));
+        assertFinding(r, "property-type", Finding.Result.REJECT);
+    }
+
+    @Test
+    void boolPropertyWithYesIsRejected() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("x6 checkpoints", checkpoint(1, "0", "yes")));
+        assertFinding(r, "property-type", Finding.Result.REJECT);
+    }
+
+    @Test
+    void missingCheckpointLayerIsRejected() {
+        assertFinding(check(TmxFixture.valid().removeLayer("x6 checkpoints")), "checkpoint",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void checkpointGapIsRejected() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("x6 checkpoints",
+                checkpoint(1, "0", "true") + checkpoint(2, "2", "true")));
+        assertFinding(r, "checkpoint", Finding.Result.REJECT);
+    }
+
+    @Test
+    void duplicateCheckpointNumberIsRejected() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("x6 checkpoints",
+                checkpoint(1, "0", "true") + checkpoint(2, "0", "true")));
+        assertFinding(r, "checkpoint", Finding.Result.REJECT);
+    }
+
+    @Test
+    void checkpointThatIsNotAPointIsRejected() {
+        String box = checkpoint(1, "0", "true").replace("<point/>", "");
+        assertFinding(check(TmxFixture.valid().objectLayer("x6 checkpoints", box)), "checkpoint",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void checkpointWithoutRequiredPropertyIsRejected() {
+        String cut = checkpoint(1, "0", "true").replace("<property name=\"cam_x\" type=\"int\" value=\"0\"/>", "");
+        assertFinding(check(TmxFixture.valid().objectLayer("x6 checkpoints", cut)), "checkpoint",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void duplicateIndexIsRenumberedAndZoneFollows() {
+        String zone = "<object id=\"9\" name=\"CameraZone\" x=\"0\" y=\"0\" width=\"16\" height=\"16\">"
+                + "<properties><property name=\"record\" type=\"int\" value=\"5\"/></properties></object>";
+        ValidationReport r = check(TmxFixture.valid()
+                .objectLayer("records", record("MetaWheelF", "5", "0") + record("MetaWheelF", "5", "0")
+                        + record("MetaWheelF", "7", "0"))
+                .objectLayer("camera zones", zone));
+        assertFinding(r, "record-index", Finding.Result.REPAIR);
+        XmlReader.Element records = null;
+        XmlReader.Element zones = null;
+        for (XmlReader.Element g : r.map().getChildrenByName("objectgroup")) {
+            if ("records".equals(g.getAttribute("name"))) {
+                records = g;
+            } else if ("camera zones".equals(g.getAttribute("name"))) {
+                zones = g;
+            }
+        }
+        StringBuilder order = new StringBuilder();
+        for (XmlReader.Element o : records.getChildrenByName("object")) {
+            for (XmlReader.Element p : o.getChildByName("properties").getChildrenByName("property")) {
+                if ("index".equals(p.getAttribute("name"))) {
+                    order.append(p.getAttribute("value"));
+                }
+            }
+        }
+        assertEquals("012", order.toString());
+        XmlReader.Element zoneProp = zones.getChildByName("object").getChildByName("properties")
+                .getChildByName("property");
+        assertEquals("0", zoneProp.getAttribute("value"));
+        assertEquals(ValidationReport.Status.CERTIFIED, r.status());
+    }
+
+    @Test
+    void permutedIndexIsLeftAlone() {
+        ValidationReport r = check(TmxFixture.valid()
+                .objectLayer("records", record("MetaWheelF", "1", "0") + record("MetaWheelF", "0", "0")));
+        assertTrue(r.findings().isEmpty(), r.findings().toString());
+    }
+
+    @Test
+    void unknownEntityWarns() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("records", record("Nope", "0", "0")));
+        assertFinding(r, "entity-unknown", Finding.Result.WARN);
+        assertEquals(ValidationReport.Status.PLAYABLE, r.status());
+    }
+
+    @Test
+    void stageBoundRecordIsLocked() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("fixed records", record("BossGate", "0", "0")));
+        assertFinding(r, "stage-bound", Finding.Result.LOCK);
+        assertEquals(ValidationReport.Status.PLAYABLE, r.status());
+    }
+
+    private static final Catalog REGION_CATALOG = Catalog.parse(TmxFixture.CATALOG.replace(
+            "\"tiles_png\": \"intro-tiles.png\",",
+            "\"tiles_png\": \"intro-tiles.png\", \"fixed_region\": {\"x0\": 32, \"x1\": 63, "
+                    + "\"template\": \"t.tmx\"},"));
+
+    private static ValidationReport checkRegion(TmxFixture f, String template) {
+        return LevelValidator.validate(f.build(), REGION_CATALOG, name -> "t.tmx".equals(name) ? template : null);
+    }
+
+    private static String cellsWith(int index, String value) {
+        String[] a = new String[256];
+        java.util.Arrays.fill(a, "0");
+        a[index] = value;
+        return String.join(",", a);
+    }
+
+    @Test
+    void changedTileInRegionIsRejected() {
+        String template = TmxFixture.valid().build();
+        ValidationReport r = checkRegion(TmxFixture.valid().layerData("art 0 main", cellsWith(3, "5")), template);
+        assertFinding(r, "fixed-region", Finding.Result.REJECT);
+    }
+
+    @Test
+    void changedTileOutsideRegionIsAccepted() {
+        String template = TmxFixture.valid().build();
+        ValidationReport r = checkRegion(TmxFixture.valid().layerData("art 0 main", cellsWith(0, "5")), template);
+        assertTrue(r.findings().isEmpty(), r.findings().toString());
+    }
+
+    @Test
+    void changedObjectInRegionIsRejected() {
+        String template = TmxFixture.valid().build();
+        ValidationReport r = checkRegion(TmxFixture.valid().objectLayer("fixed records",
+                "<object id=\"3\" name=\"MetaWheelF\" x=\"40\" y=\"16\"/>"), template);
+        assertFinding(r, "fixed-region", Finding.Result.REJECT);
+    }
+
+    @Test
+    void objectIdIsIgnoredInRegionCompare() {
+        String obj = "<object id=\"%d\" name=\"MetaWheelF\" x=\"40\" y=\"16\"><properties>"
+                + "<property name=\"index\" type=\"int\" value=\"0\"/></properties></object>";
+        String template = TmxFixture.valid().objectLayer("records", String.format(obj, 3)).build();
+        ValidationReport r = checkRegion(TmxFixture.valid().objectLayer("records", String.format(obj, 8)), template);
+        assertTrue(r.findings().stream().noneMatch(f -> f.code().equals("fixed-region")), r.findings().toString());
+    }
+
+    @Test
+    void missingTemplateIsRejected() {
+        ValidationReport r = checkRegion(TmxFixture.valid(), null);
+        assertFinding(r, "fixed-region", Finding.Result.REJECT);
     }
 }
