@@ -23,6 +23,7 @@ public final class Stages {
                     new Checkpoint(5904, 364, 5744, 224, 5744, 5744, 224, 224, true, 1)),
             9, 21, "m094-e05", "m094-e03", "m123-e01", 0, IntroEntityFactory::new);
 
+    // TODO: two data sources: the intro reads its X6 data from the map, the six stages below keep it here until each moves to the profile (docs/superpowers/specs/2026-10-29-user-levels-design.md, "Loader")
     public static final StageDef YAMMARK = new StageDef("yammark", "COMMANDER YAMMARK", 1,
             "commander-yammark-section-1.tmx",
             List.of(

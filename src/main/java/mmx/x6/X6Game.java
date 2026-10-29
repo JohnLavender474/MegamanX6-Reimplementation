@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.InvalidPathException;
 import java.nio.file.Path;
 import mmx.x6.audio.CachedSfx;
 import mmx.x6.audio.GdxMusicPlayer;
@@ -13,6 +14,7 @@ import mmx.x6.audio.Sfx;
 import mmx.x6.audio.SoundBanks;
 import mmx.x6.game.Progress;
 import mmx.x6.input.Bindings;
+import mmx.x6.level.Finding;
 import mmx.x6.input.Controls;
 import mmx.x6.input.GdxPads;
 import mmx.x6.render.Assets;
@@ -105,7 +107,7 @@ public final class X6Game extends Game {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        play(loaded, def, () -> show(flow.afterStageEscape(def)), () -> show(flow.afterStageClear(def)));
+        play(loaded, () -> show(flow.afterStageEscape(def)), () -> show(flow.afterStageClear(def)));
     }
 
     private void startLevelFile(String file) {
@@ -114,16 +116,24 @@ public final class X6Game extends Game {
             loaded = StageLoader.file(paths, Path.of(file));
         } catch (IOException e) {
             throw new UncheckedIOException(e);
+        } catch (InvalidPathException e) {
+            loaded = StageLoader.unreadable(file, e);
+        }
+        System.err.println(file + ": " + loaded.report().status());
+        for (Finding f : loaded.report().findings()) {
+            if (f.result() != Finding.Result.REPAIR) {
+                System.err.println(f.code() + ": " + f.message());
+            }
         }
         if (loaded.stage() == null) {
             swap(new LevelErrorScreen(loaded.report().findings(), () -> Gdx.app.exit()));
             return;
         }
         progress = new Progress();
-        play(loaded, loaded.stage(), () -> Gdx.app.exit(), () -> Gdx.app.exit());
+        play(loaded, () -> Gdx.app.exit(), () -> Gdx.app.exit());
     }
 
-    private void play(LoadedStage loaded, StageDef def, Runnable exit, Runnable cleared) {
+    private void play(LoadedStage loaded, Runnable exit, Runnable cleared) {
         StageDef stage = loaded.stage();
         Path tiles = loaded.tilesPng() != null ? paths.tilesPngNamed(loaded.tilesPng())
                 : paths.tilesPng(stage.tmxFile());

@@ -80,7 +80,11 @@ public final class StageScreen extends ScreenAdapter {
         this.world = new World(stage, level, assets::anim, sfx, music);
         world.progress = progress;
         Integer startCheckpoint = Integer.getInteger("mmx.checkpoint");
-        if (startCheckpoint != null) {
+        int checkpoints = stage.checkpoints().size();
+        if (startCheckpoint != null && (startCheckpoint < 0 || startCheckpoint >= checkpoints)) {
+            System.err.println("mmx.checkpoint=" + startCheckpoint + " is ignored: the stage has checkpoints 0 to "
+                    + (checkpoints - 1));
+        } else if (startCheckpoint != null) {
             world.flow.restart(startCheckpoint);
         }
         Integer startX = Integer.getInteger("mmx.startX");

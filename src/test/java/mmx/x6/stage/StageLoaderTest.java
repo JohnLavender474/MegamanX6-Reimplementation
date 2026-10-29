@@ -1,8 +1,10 @@
 package mmx.x6.stage;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertSame;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
@@ -12,6 +14,7 @@ import java.nio.file.Path;
 import java.util.List;
 import mmx.x6.DataPaths;
 import mmx.x6.level.Checkpoint;
+import mmx.x6.level.Finding;
 import mmx.x6.level.ValidationReport;
 import mmx.x6.level.Catalog;
 import org.junit.jupiter.api.Test;
@@ -70,5 +73,40 @@ class StageLoaderTest {
         assertEquals(ValidationReport.Status.REJECTED, s.report().status());
         assertNull(s.stage());
         assertNull(s.level());
+    }
+
+    private static void assertRejectedWith(LoadedStage s, String code) {
+        assertEquals(ValidationReport.Status.REJECTED, s.report().status());
+        assertTrue(s.report().findings().stream().anyMatch(f -> f.result() == Finding.Result.REJECT
+                && f.code().equals(code)), s.report().findings().toString());
+        assertNull(s.stage());
+        assertNull(s.level());
+    }
+
+    @Test
+    void missingFileIsRejectedWithRead(@TempDir Path dir) throws IOException {
+        assumeTrue(DataPaths.assetsExist());
+        assertRejectedWith(StageLoader.file(DataPaths.assets(), dir.resolve("none.tmx")), "read");
+    }
+
+    @Test
+    void fileThatIsNotUtf8IsRejectedWithRead(@TempDir Path dir) throws IOException {
+        assumeTrue(DataPaths.assetsExist());
+        Path bad = dir.resolve("bad.tmx");
+        Files.write(bad, new byte[] {'<', 'm', (byte) 0xC3, (byte) 0x28, '>'});
+        assertRejectedWith(StageLoader.file(DataPaths.assets(), bad), "read");
+    }
+
+    @Test
+    void loaderFailureAfterValidationIsRejectedWithLoad(@TempDir Path dir) throws IOException {
+        assumeTrue(DataPaths.assetsExist());
+        DataPaths p = DataPaths.assets();
+        String text = Files.readString(p.tmx("intro.tmx"), StandardCharsets.UTF_8);
+        String bad = text.replaceFirst("<object id=\"1\" name=\"CheckpointMarker\"",
+                "<object id=\"abc\" name=\"CheckpointMarker\"");
+        assertNotEquals(text, bad);
+        Path copy = dir.resolve("bad.tmx");
+        Files.writeString(copy, bad, StandardCharsets.UTF_8);
+        assertRejectedWith(StageLoader.file(p, copy), "load");
     }
 }

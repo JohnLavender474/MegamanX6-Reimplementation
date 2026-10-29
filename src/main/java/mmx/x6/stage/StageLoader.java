@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import mmx.x6.DataPaths;
@@ -24,32 +25,54 @@ public final class StageLoader {
         Path file = p.tmx(def.tmxFile());
         String text = Files.readString(file, StandardCharsets.UTF_8);
         if (!hasProfile(text, def.tmxFile())) {
+            // TODO: the six other stages bypass the validator and keep their data in Stages until each moves to the profile (docs/superpowers/specs/2026-10-29-user-levels-design.md, "Validator")
             return new LoadedStage(def, TmxLoader.load(file), null, null);
         }
-        ValidationReport report = validate(p, text);
+        Catalog catalog = Catalog.load(p.catalogJson());
+        ValidationReport report = validate(p, catalog, text);
         if (report.status() == ValidationReport.Status.REJECTED) {
             throw new IOException(describe(def.tmxFile(), report));
         }
         Level level = TmxLoader.fromElement(report.map(), def.tmxFile());
-        return new LoadedStage(def.withMapData(level), level, report, tilesOf(p, level));
+        return new LoadedStage(def.withMapData(level), level, report, tilesOf(catalog, level));
     }
 
     public static LoadedStage file(DataPaths p, Path tmx) throws IOException {
-        String name = tmx.getFileName().toString();
-        String text = Files.readString(tmx, StandardCharsets.UTF_8);
-        ValidationReport report = validate(p, text);
+        String name = tmx.getFileName() == null ? tmx.toString() : tmx.getFileName().toString();
+        String text;
+        try {
+            text = Files.readString(tmx, StandardCharsets.UTF_8);
+        } catch (IOException | RuntimeException e) {
+            return rejected(List.of(), "read", "The file " + tmx + " cannot be read: " + e);
+        }
+        Catalog catalog = Catalog.load(p.catalogJson());
+        ValidationReport report = validate(p, catalog, text);
         if (report.status() == ValidationReport.Status.REJECTED) {
             return new LoadedStage(null, null, report, null);
         }
-        Level level = TmxLoader.fromElement(report.map(), name);
-        StageDef def = new StageDef("level", name, 0, name, List.of(), 0, 0, null, null, null, 0,
-                Themes.factory(level.properties().get("x6_theme"))).withMapData(level);
-        return new LoadedStage(def, level, report, tilesOf(p, level));
+        try {
+            Level level = TmxLoader.fromElement(report.map(), name);
+            StageDef def = new StageDef("level", name, 0, name, List.of(), 0, 0, null, null, null, 0,
+                    Themes.factory(level.properties().get("x6_theme"))).withMapData(level);
+            return new LoadedStage(def, level, report, tilesOf(catalog, level));
+        } catch (IOException | RuntimeException e) {
+            return rejected(report.findings(), "load", "The level passed the validator, but the loader failed: " + e);
+        }
     }
 
-    private static String tilesOf(DataPaths p, Level level) throws IOException {
+    public static LoadedStage unreadable(String file, RuntimeException e) {
+        return rejected(List.of(), "read", "The file " + file + " cannot be read: " + e);
+    }
+
+    private static LoadedStage rejected(List<Finding> before, String code, String message) {
+        List<Finding> findings = new ArrayList<>(before);
+        findings.add(new Finding(Finding.Result.REJECT, code, message));
+        return new LoadedStage(null, null, new ValidationReport(List.copyOf(findings), null), null);
+    }
+
+    private static String tilesOf(Catalog catalog, Level level) {
         String theme = level.properties().get("x6_theme");
-        return theme == null ? null : Themes.tilesPng(Catalog.load(p.catalogJson()), theme);
+        return theme == null ? null : Themes.tilesPng(catalog, theme);
     }
 
     private static boolean hasProfile(String text, String name) throws IOException {
@@ -70,8 +93,7 @@ public final class StageLoader {
         }
     }
 
-    private static ValidationReport validate(DataPaths p, String text) throws IOException {
-        Catalog catalog = Catalog.load(p.catalogJson());
+    private static ValidationReport validate(DataPaths p, Catalog catalog, String text) {
         return LevelValidator.validate(text, catalog, name -> {
             try {
                 return Files.readString(p.tmx(name), StandardCharsets.UTF_8);

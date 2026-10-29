@@ -110,4 +110,41 @@ class GoalsTest {
         w.goals.reportKill(w, r);
         assertTrue(w.goals.done(1));
     }
+
+    @Test
+    void bossGateWithOpenedByWaitsForItsGoal() {
+        String sky = "................................................................";
+        String floor = "################################################################";
+        String[] rows = new String[10];
+        java.util.Arrays.fill(rows, sky);
+        rows[8] = floor;
+        rows[9] = floor;
+        CollisionGrid g = mmx.x6.physics.Grids.grid(rows);
+        TileLayer empty = new TileLayer("empty", 64, 10, new int[64 * 10], 0, 0, 0);
+        RecordDef member = new RecordDef(10, "MetaWheelF", "main", 0, 0, 0, 0, 900, 100, 10, 1, 0);
+        RecordDef gate = new RecordDef(18, "BossGate", "stage", 4, 8, 2, 0, 400, 96, 11, 0, 1);
+        Level level = new Level(64, 10, empty, empty, empty, empty, g, List.of(member), List.of(), List.of(),
+                java.util.Map.of(), List.of(), List.of(goal(1, GoalMode.ALL, false, 0)));
+        World w = new World(level, Sim::set, new Sim.RecordingSfx(), new Sim.RecordingMusic());
+        w.spawner = new Spawner(List.of(gate), 1, new mmx.x6.game.enemy.IntroEntityFactory());
+        w.camera.reset(new mmx.x6.level.Checkpoint(0, 0, 100, 0, 100, 700, 0, 0, true, 1));
+        w.player.placeStanding(300, 128 - 21);
+        for (int i = 0; i < 200; i++) {
+            w.buttons.set(mmx.x6.input.Buttons.RIGHT);
+            w.update();
+        }
+        mmx.x6.game.enemy.BossGate bossGate = w.entities.stream()
+                .filter(e -> e instanceof mmx.x6.game.enemy.BossGate)
+                .map(e -> (mmx.x6.game.enemy.BossGate) e).findFirst().orElseThrow();
+        assertEquals(mmx.x6.game.enemy.BossGate.GateStep.WAIT, bossGate.step());
+        assertFalse(w.locked());
+        w.goals.reportKill(w, member);
+        assertTrue(w.goals.done(1));
+        int guard = 0;
+        while (bossGate.step() == mmx.x6.game.enemy.BossGate.GateStep.WAIT && guard++ < 120) {
+            w.buttons.set(mmx.x6.input.Buttons.RIGHT);
+            w.update();
+        }
+        assertTrue(bossGate.step() != mmx.x6.game.enemy.BossGate.GateStep.WAIT, "gate step " + bossGate.step());
+    }
 }
