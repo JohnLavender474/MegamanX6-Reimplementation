@@ -1,6 +1,7 @@
 package mmx.x6.level;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
@@ -477,5 +478,135 @@ class LevelValidatorTest {
                 "goal-props", Finding.Result.REJECT);
         assertFinding(check(TmxFixture.valid().objectLayer("goals", goalObj(30, prop("ends_stage", "bool", "yes")))),
                 "goal-props", Finding.Result.REJECT);
+    }
+
+    private static String marker(int objectId, int id) {
+        return "<object id=\"" + objectId + "\" name=\"CheckpointMarker\" x=\"16\" y=\"16\"><properties>"
+                + prop("index", "int", "0") + prop("id", "int", String.valueOf(id)) + "</properties></object>";
+    }
+
+    private static boolean has(ValidationReport r, String code, Finding.Result result) {
+        return r.findings().stream().anyMatch(f -> f.code().equals(code) && f.result() == result);
+    }
+
+    @Test
+    void checkpointMarkerBeyondTheCheckpointsIsRejected() {
+        assertFinding(check(TmxFixture.valid().objectLayer("records", marker(20, 1))), "checkpoint",
+                Finding.Result.REJECT);
+        assertFinding(check(TmxFixture.valid().objectLayer("fixed records", marker(20, 0x81))), "checkpoint",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void checkpointMarkerInRangeIsAccepted() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("records", marker(20, 0x80)));
+        assertTrue(r.findings().stream().noneMatch(f -> f.result() == Finding.Result.REJECT), r.findings().toString());
+    }
+
+    @Test
+    void goalThatIsNotARectangleIsRejected() {
+        String point = "<object id=\"30\" name=\"g\" type=\"Goal\" x=\"0\" y=\"0\"><point/></object>";
+        assertFinding(check(TmxFixture.valid().objectLayer("goals", point)), "goal-props", Finding.Result.REJECT);
+        String flat = "<object id=\"30\" name=\"g\" type=\"Goal\" x=\"0\" y=\"0\" width=\"32\" height=\"0\"/>";
+        assertFinding(check(TmxFixture.valid().objectLayer("goals", flat)), "goal-props", Finding.Result.REJECT);
+        String ellipse = "<object id=\"30\" name=\"g\" type=\"Goal\" x=\"0\" y=\"0\" width=\"32\" height=\"32\">"
+                + "<ellipse/></object>";
+        assertFinding(check(TmxFixture.valid().objectLayer("goals", ellipse)), "goal-props", Finding.Result.REJECT);
+    }
+
+    @Test
+    void cameraZoneWithoutASizeIsRejected() {
+        String point = "<object id=\"9\" name=\"CameraZone\" x=\"0\" y=\"0\"><point/></object>";
+        assertFinding(check(TmxFixture.valid().objectLayer("camera zones", point)), "camera-zone",
+                Finding.Result.REJECT);
+        String flat = "<object id=\"9\" name=\"CameraZone\" x=\"0\" y=\"0\" width=\"0\" height=\"16\"/>";
+        assertFinding(check(TmxFixture.valid().objectLayer("camera zones", flat)), "camera-zone",
+                Finding.Result.REJECT);
+    }
+
+    @Test
+    void duplicateTileLayerIsRejected() {
+        String extra = "<layer id=\"50\" name=\"art 0 main\" width=\"16\" height=\"16\"><data encoding=\"csv\">"
+                + cells(256, "0") + "</data></layer>\n";
+        assertFinding(check(TmxFixture.valid().raw(extra)), "layer-duplicate", Finding.Result.REJECT);
+    }
+
+    @Test
+    void duplicateObjectLayerIsRejected() {
+        for (String name : java.util.List.of("records", "fixed records", "camera zones", "x6 checkpoints", "goals")) {
+            String extra = "<objectgroup id=\"50\" name=\"" + name + "\"/>\n";
+            assertFinding(check(TmxFixture.valid().objectLayer("goals", "").raw(extra)), "layer-duplicate",
+                    Finding.Result.REJECT);
+        }
+    }
+
+    @Test
+    void cameraZoneIntWithLettersIsRejected() {
+        for (String key : java.util.List.of("record", "zone_id", "min_x", "max_x", "min_y", "max_y", "texture_swap")) {
+            String zone = "<object id=\"9\" name=\"CameraZone\" x=\"0\" y=\"0\" width=\"16\" height=\"16\">"
+                    + "<properties>" + prop(key, "int", "abc") + "</properties></object>";
+            assertFinding(check(TmxFixture.valid().objectLayer("camera zones", zone)), "property-type",
+                    Finding.Result.REJECT);
+        }
+    }
+
+    @Test
+    void tileLayerIntWithLettersIsRejected() {
+        for (String key : java.util.List.of("x6_mode", "x6_offset_x", "x6_offset_y")) {
+            String text = TmxFixture.valid().build().replaceFirst("<data encoding=\"csv\">",
+                    "<properties>" + prop(key, "int", "abc") + "</properties><data encoding=\"csv\">");
+            assertFinding(LevelValidator.validate(text, CATALOG, name -> null), "property-type",
+                    Finding.Result.REJECT);
+        }
+    }
+
+    @Test
+    void goalTargetOnAnotherLayerIsRejected() {
+        TmxFixture f = TmxFixture.valid()
+                .objectLayer("records", entity(20, "MetaWheelF", 0, prop("goal", "object", "30")))
+                .objectLayer("TODO", goalObj(30, ""));
+        assertFinding(check(f), "goal-target", Finding.Result.REJECT);
+    }
+
+    @Test
+    void extraTileLayerWarns() {
+        String extra = "<layer id=\"50\" name=\"sketch\" width=\"16\" height=\"16\"><data encoding=\"csv\">"
+                + cells(256, "0") + "</data></layer>\n";
+        ValidationReport r = check(TmxFixture.valid().raw(extra));
+        assertFinding(r, "ignored", Finding.Result.WARN);
+        assertEquals(ValidationReport.Status.PLAYABLE, r.status());
+    }
+
+    @Test
+    void imageLayerWarns() {
+        assertFinding(check(TmxFixture.valid().raw("<imagelayer id=\"50\" name=\"ref\"/>\n")), "ignored",
+                Finding.Result.WARN);
+    }
+
+    @Test
+    void objectOnTheGoalsLayerThatIsNotAGoalWarns() {
+        String note = "<object id=\"30\" name=\"note\" x=\"0\" y=\"0\" width=\"16\" height=\"16\"/>";
+        assertFinding(check(TmxFixture.valid().objectLayer("goals", note)), "ignored", Finding.Result.WARN);
+    }
+
+    @Test
+    void otherObjectLayerHasNoFinding() {
+        String note = "<object id=\"30\" name=\"note\" x=\"0\" y=\"0\"><point/></object>";
+        ValidationReport r = check(TmxFixture.valid().objectLayer("TODO", note));
+        assertTrue(r.findings().isEmpty(), r.findings().toString());
+    }
+
+    @Test
+    void tilesetSourceWithBackslashesIsAccepted() {
+        TmxFixture f = TmxFixture.valid().tilesets("<tileset firstgid=\"1\" source=\"..\\tsx\\intro-tiles.tsx\"/>\n"
+                + "<tileset firstgid=\"3265\" source=\"..\\tsx\\collision.tsx\"/>\n");
+        ValidationReport r = check(f);
+        assertEquals(ValidationReport.Status.CERTIFIED, r.status(), r.findings().toString());
+    }
+
+    @Test
+    void validGoalOnTheGoalsLayerHasNoIgnoredFinding() {
+        ValidationReport r = check(TmxFixture.valid().objectLayer("goals", goalObj(30, "")));
+        assertFalse(has(r, "ignored", Finding.Result.WARN), r.findings().toString());
     }
 }

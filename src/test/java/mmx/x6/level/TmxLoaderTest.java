@@ -209,6 +209,63 @@ class TmxLoaderTest {
         assertFalse(c.faceRight());
     }
 
+    private static String oneTileMap(String objectGroups) {
+        StringBuilder layers = new StringBuilder();
+        for (String name : List.of("art 2 background", "art 1 decoration", "art 0 main", "art 0 front", "collision")) {
+            layers.append("<layer name=\"").append(name).append("\" width=\"1\" height=\"1\"><data encoding=\"csv\">0</data></layer>\n");
+        }
+        return "<?xml version=\"1.0\"?>\n<map width=\"1\" height=\"1\">\n"
+                + "<tileset firstgid=\"1\" name=\"tiles\" tilewidth=\"16\" tileheight=\"16\"/>\n"
+                + "<tileset firstgid=\"5\" name=\"collision\" tilewidth=\"16\" tileheight=\"16\"/>\n" + layers
+                + objectGroups + "</map>\n";
+    }
+
+    @Test
+    void readsGoalsAndGoalLinks() throws Exception {
+        String text = oneTileMap("<objectgroup name=\"records\">"
+                + "<object id=\"20\" name=\"MetaWheelF\" x=\"16\" y=\"32\"><properties>"
+                + "<property name=\"index\" type=\"int\" value=\"0\"/>"
+                + "<property name=\"goal\" type=\"object\" value=\"30\"/></properties></object>"
+                + "<object id=\"21\" name=\"BossGate\" x=\"48\" y=\"32\"><properties>"
+                + "<property name=\"index\" type=\"int\" value=\"1\"/>"
+                + "<property name=\"opened_by\" type=\"object\" value=\"31\"/></properties></object>"
+                + "</objectgroup>\n<objectgroup name=\"goals\">"
+                + "<object id=\"30\" name=\"a\" type=\"Goal\" x=\"0\" y=\"8\" width=\"64\" height=\"32\"><properties>"
+                + "<property name=\"mode\" type=\"string\" value=\"any\"/>"
+                + "<property name=\"goal\" type=\"object\" value=\"31\"/></properties></object>"
+                + "<object id=\"31\" name=\"b\" type=\"Goal\" x=\"0\" y=\"0\" width=\"16\" height=\"16\"><properties>"
+                + "<property name=\"ends_stage\" type=\"bool\" value=\"true\"/></properties></object>"
+                + "</objectgroup>\n");
+        Level l = TmxLoader.parse(text, "inline");
+        RecordDef wheel = l.records().get(0);
+        RecordDef gate = l.records().get(1);
+        assertEquals(20, wheel.tmxId());
+        assertEquals(30, wheel.goal());
+        assertEquals(0, wheel.openedBy());
+        assertEquals(21, gate.tmxId());
+        assertEquals(31, gate.openedBy());
+        assertEquals(List.of(new GoalDef(30, 0, 8, 63, 39, GoalMode.ANY, false, 31),
+                new GoalDef(31, 0, 0, 15, 15, GoalMode.ALL, true, 0)), l.goals());
+    }
+
+    @Test
+    void numbersWithSpacesAreTrimmed() throws Exception {
+        String text = oneTileMap("<objectgroup name=\"x6 checkpoints\"><object id=\" 1\" x=\"10\" y=\"20\"><properties>"
+                + "<property name=\"checkpoint\" type=\"int\" value=\" 0\"/>"
+                + "<property name=\"cam_x\" type=\"int\" value=\"5 \"/>"
+                + "</properties><point/></object></objectgroup>\n"
+                + "<objectgroup name=\"camera zones\"><object id=\"2\" x=\"0\" y=\"0\" width=\"16\" height=\"16\">"
+                + "<properties><property name=\"zone_id\" type=\"int\" value=\" 3\"/></properties></object>"
+                + "</objectgroup>\n").replace("<map width=\"1\"", "<map width=\" 1\"")
+                .replace("name=\"art 1 decoration\" width=\"1\" height=\"1\">",
+                        "name=\"art 1 decoration\" width=\"1\" height=\"1\"><properties>"
+                                + "<property name=\"x6_mode\" type=\"int\" value=\" 2\"/></properties>");
+        Level l = TmxLoader.parse(text, "inline");
+        assertEquals(2, l.art1().x6Mode());
+        assertEquals(5, l.checkpoints().get(0).camX());
+        assertEquals(3, l.cameraZones().get(0).zoneId());
+    }
+
     private static String checkpointObject(int x, int y, int n, int camX, int camY, int minX, int maxX, int minY,
                                            int maxY, int beam) {
         return "<object id=\"" + (n + 1) + "\" x=\"" + x + "\" y=\"" + y + "\"><properties>"

@@ -23,6 +23,9 @@ final class ContentRules {
             "max_x", "min_y", "max_y", "face_right", "beam_thru");
     private static final List<String> CHECKPOINT_OPTIONAL_INTS = List.of("layer1_x", "layer1_y",
             "layer2_offset_x", "layer2_offset_y");
+    private static final List<String> ZONE_INTS = List.of("record", "zone_id", "min_x", "max_x", "min_y",
+            "max_y", "texture_swap");
+    private static final List<String> SHAPES = List.of("point", "ellipse", "polygon", "polyline", "text");
     private static final long FLIP_BITS = 0xE0000000L;
 
     private ContentRules() {
@@ -38,10 +41,59 @@ final class ContentRules {
         checkCheckpoints(map, findings);
         checkRecordProperties(map, findings);
         checkRecordIndex(map, findings);
+        checkCameraZones(map, findings);
         checkEntities(map, catalog, theme, findings);
-        checkGoals(map, catalog, findings);
         if (theme != null && theme.fixedRegion() != null) {
             checkFixedRegion(map, theme.fixedRegion(), templates, findings);
+        }
+        checkGoals(map, catalog, findings);
+    }
+
+    private static boolean isRectangle(XmlReader.Element o) {
+        for (String shape : SHAPES) {
+            if (o.getChildByName(shape) != null) {
+                return false;
+            }
+        }
+        double w = number(o, "width");
+        double h = number(o, "height");
+        return w > 0 && h > 0;
+    }
+
+    private static void checkCameraZones(XmlReader.Element map, List<Finding> findings) {
+        XmlReader.Element group = objectGroup(map, "camera zones");
+        if (group == null) {
+            return;
+        }
+        for (XmlReader.Element o : group.getChildrenByName("object")) {
+            String label = o.getAttribute("name", "?");
+            if (!isRectangle(o)) {
+                findings.add(LevelValidator.reject("camera-zone", "The camera zone \"" + label
+                        + "\" is not a rectangle with a width and height above 0."));
+            }
+            Map<String, String> p = properties(o);
+            for (String key : ZONE_INTS) {
+                String v = p.get(key);
+                if (v != null && !v.isEmpty() && !isInt(v)) {
+                    findings.add(LevelValidator.reject("property-type", "The camera zone property " + key
+                            + " of \"" + label + "\" is not an int."));
+                }
+            }
+        }
+    }
+
+    private static void checkMarkers(XmlReader.Element map, int count, List<Finding> findings) {
+        for (XmlReader.Element o : recordObjects(map, true)) {
+            if (!"CheckpointMarker".equals(o.getAttribute("name", ""))) {
+                continue;
+            }
+            String v = properties(o).get("id");
+            int id = v == null || v.isEmpty() || !isInt(v) ? 0 : Integer.parseInt(v.trim());
+            if ((id & 0x7F) >= count) {
+                findings.add(LevelValidator.reject("checkpoint", "The CheckpointMarker object "
+                        + o.getAttribute("id", "?") + " sets checkpoint " + (id & 0x7F) + ", but the map has "
+                        + count + " checkpoints."));
+            }
         }
     }
 
@@ -57,15 +109,7 @@ final class ContentRules {
     }
 
     private static boolean isInt(String text) {
-        if (text == null) {
-            return false;
-        }
-        try {
-            Integer.parseInt(text.trim());
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
+        return LevelValidator.isInt(text);
     }
 
     private static boolean isBool(String text) {
@@ -173,6 +217,8 @@ final class ContentRules {
             if (!sequence) {
                 findings.add(LevelValidator.reject("checkpoint",
                         "The checkpoint numbers must be unique and exactly 0 to n-1."));
+            } else {
+                checkMarkers(map, sorted.size(), findings);
             }
         }
     }
@@ -281,12 +327,24 @@ final class ContentRules {
         }
         XmlReader.Element group = objectGroup(map, "goals");
         Map<Integer, Integer> parents = new LinkedHashMap<>();
+        Set<Integer> goalIds = new HashSet<>();
         if (group != null) {
             for (XmlReader.Element o : group.getChildrenByName("object")) {
+                if ("Goal".equals(o.getAttribute("type", ""))) {
+                    goalIds.add(LevelValidator.intAttr(o, "id"));
+                }
+            }
+            for (XmlReader.Element o : group.getChildrenByName("object")) {
+                String label = o.getAttribute("name", "?");
                 if (!"Goal".equals(o.getAttribute("type", ""))) {
+                    findings.add(new Finding(Finding.Result.WARN, "ignored", "The object \"" + label
+                            + "\" on the goals layer is not a Goal; the engine ignores it."));
                     continue;
                 }
-                String label = o.getAttribute("name", "?");
+                if (!isRectangle(o)) {
+                    findings.add(LevelValidator.reject("goal-props", "The goal \"" + label
+                            + "\" is not a rectangle with a width and height above 0."));
+                }
                 Map<String, String> p = properties(o);
                 String mode = p.get("mode");
                 if (mode != null && !"all".equals(mode) && !"any".equals(mode)) {
@@ -298,7 +356,7 @@ final class ContentRules {
                     findings.add(LevelValidator.reject("goal-props", "The goal \"" + label
                             + "\" has an ends_stage that is not a bool."));
                 }
-                int parent = checkGoalRef(o, "goal", label, true, byId, findings);
+                int parent = checkGoalRef(o, "goal", label, true, byId, goalIds, findings);
                 if (parent != 0) {
                     parents.put(LevelValidator.intAttr(o, "id"), parent);
                 }
@@ -307,12 +365,12 @@ final class ContentRules {
         for (XmlReader.Element o : recordObjects(map, true)) {
             String label = o.getAttribute("name", "?");
             Catalog.Entity entity = catalog.entity(label);
-            int goal = checkGoalRef(o, "goal", label, false, byId, findings);
+            int goal = checkGoalRef(o, "goal", label, false, byId, goalIds, findings);
             if (goal != 0 && entity != null && !entity.defeatable()) {
                 findings.add(LevelValidator.reject("goal-member", "The object \"" + label
                         + "\" has a goal but cannot be defeated."));
             }
-            int listener = checkGoalRef(o, "opened_by", label, false, byId, findings);
+            int listener = checkGoalRef(o, "opened_by", label, false, byId, goalIds, findings);
             if (listener != 0 && entity != null && !entity.openable()) {
                 findings.add(LevelValidator.reject("goal-listener", "The object \"" + label
                         + "\" has opened_by but cannot be opened."));
@@ -332,7 +390,8 @@ final class ContentRules {
     }
 
     private static int checkGoalRef(XmlReader.Element o, String key, String label, boolean isGoalObject,
-                                    Map<Integer, XmlReader.Element> byId, List<Finding> findings) {
+                                    Map<Integer, XmlReader.Element> byId, Set<Integer> goalIds,
+                                    List<Finding> findings) {
         String v = properties(o).get(key);
         if (v != null && !isInt(v)) {
             if (isGoalObject) {
@@ -354,9 +413,9 @@ final class ContentRules {
                     + "\" names the id " + id + ", which is not an object in the map."));
             return 0;
         }
-        if (!"Goal".equals(target.getAttribute("type", ""))) {
+        if (!goalIds.contains(id)) {
             findings.add(LevelValidator.reject("goal-target", "The property " + key + " of \"" + label
-                    + "\" names an object that is not a Goal."));
+                    + "\" names an object that is not a Goal on the goals layer."));
             return 0;
         }
         return id;

@@ -79,12 +79,12 @@ public final class TmxLoader {
                 } else if ("records".equals(groupName) || "fixed records".equals(groupName)) {
                     RecordDef r = new RecordDef(intOr(p, "index", -1), attr(o, "name"), attr(o, "type"),
                             intOr(p, "kind", 0), intOr(p, "b", 0), intOr(p, "id", 0), intOr(p, "a", 0), x, y,
-                            o.getInt("id", 0), intOr(p, "goal", 0), intOr(p, "opened_by", 0));
+                            objectId(o), intOr(p, "goal", 0), intOr(p, "opened_by", 0));
                     ("records".equals(groupName) ? records : fixed).add(r);
                 } else if ("goals".equals(groupName) && "Goal".equals(attr(o, "type"))) {
                     int w = (int) Double.parseDouble(attr(o, "width"));
                     int h = (int) Double.parseDouble(attr(o, "height"));
-                    goals.add(new GoalDef(o.getInt("id", 0), x, y, x + w - 1, y + h - 1,
+                    goals.add(new GoalDef(objectId(o), x, y, x + w - 1, y + h - 1,
                             "any".equals(p.get("mode")) ? GoalMode.ANY : GoalMode.ALL,
                             "true".equals(p.get("ends_stage")), intOr(p, "goal", 0)));
                 } else if ("camera zones".equals(groupName)) {
@@ -141,7 +141,7 @@ public final class TmxLoader {
     private static int[] parseCsv(String text, int count) {
         int[] out = new int[count];
         int i = 0;
-        for (String part : text.split(",")) {
+        for (String part : (text == null ? "" : text).split(",")) {
             String s = part.trim();
             if (!s.isEmpty() && i < count) {
                 out[i++] = (int) Long.parseLong(s);
@@ -162,7 +162,12 @@ public final class TmxLoader {
 
     private static int intOr(Map<String, String> props, String key, int fallback) {
         String v = props.get(key);
-        return v == null || v.isEmpty() ? fallback : Integer.parseInt(v);
+        return v == null || v.trim().isEmpty() ? fallback : Integer.parseInt(v.trim());
+    }
+
+    private static int objectId(XmlReader.Element o) {
+        String v = attr(o, "id").trim();
+        return v.isEmpty() ? 0 : Integer.parseInt(v);
     }
 
     private static String attr(XmlReader.Element e, String name) {
@@ -170,7 +175,7 @@ public final class TmxLoader {
     }
 
     private static int intAttr(XmlReader.Element e, String name) {
-        return Integer.parseInt(attr(e, name));
+        return Integer.parseInt(attr(e, name).trim());
     }
 
     private static List<XmlReader.Element> children(XmlReader.Element parent, String tag) {

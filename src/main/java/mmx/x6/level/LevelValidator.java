@@ -9,6 +9,9 @@ public final class LevelValidator {
 
     private static final List<String> TILE_LAYERS = List.of("art 2 background", "art 1 decoration",
             "art 0 main", "art 0 front", "collision");
+    private static final List<String> OBJECT_LAYERS = List.of("records", "fixed records", "camera zones",
+            "x6 checkpoints", "goals");
+    private static final List<String> LAYER_INTS = List.of("x6_mode", "x6_offset_x", "x6_offset_y");
     private static final long FLIP_BITS = 0xE0000000L;
 
     private LevelValidator() {
@@ -114,13 +117,69 @@ public final class LevelValidator {
 
     private static void checkLayers(XmlReader.Element map, int width, int height, Catalog.Theme theme,
                                     List<Finding> findings) {
+        checkDuplicates(map, "layer", TILE_LAYERS, findings);
+        checkDuplicates(map, "objectgroup", OBJECT_LAYERS, findings);
+        for (XmlReader.Element l : map.getChildrenByName("layer")) {
+            String name = l.getAttribute("name", "");
+            if (!TILE_LAYERS.contains(name)) {
+                findings.add(new Finding(Finding.Result.WARN, "ignored", "The tile layer \"" + name
+                        + "\" is not one of the five tile layers; the engine ignores it."));
+            }
+        }
+        for (XmlReader.Element l : map.getChildrenByName("imagelayer")) {
+            findings.add(new Finding(Finding.Result.WARN, "ignored", "The image layer \""
+                    + l.getAttribute("name", "") + "\" is ignored by the engine."));
+        }
         for (String name : TILE_LAYERS) {
             XmlReader.Element layer = findLayer(map, name);
             if (layer == null) {
                 findings.add(reject("layer-missing", "The tile layer \"" + name + "\" is missing."));
                 continue;
             }
+            checkLayerProperties(layer, name, findings);
             checkLayer(layer, name, width, height, theme, findings);
+        }
+    }
+
+    private static void checkDuplicates(XmlReader.Element map, String tag, List<String> names,
+                                        List<Finding> findings) {
+        for (String name : names) {
+            int count = 0;
+            for (XmlReader.Element l : map.getChildrenByName(tag)) {
+                if (name.equals(l.getAttribute("name", ""))) {
+                    count++;
+                }
+            }
+            if (count > 1) {
+                findings.add(reject("layer-duplicate", "The layer name \"" + name + "\" occurs " + count
+                        + " times."));
+            }
+        }
+    }
+
+    private static void checkLayerProperties(XmlReader.Element layer, String name, List<Finding> findings) {
+        XmlReader.Element props = layer.getChildByName("properties");
+        if (props == null) {
+            return;
+        }
+        for (XmlReader.Element p : props.getChildrenByName("property")) {
+            String key = p.getAttribute("name", "");
+            if (LAYER_INTS.contains(key) && !isInt(p.getAttribute("value", ""))) {
+                findings.add(reject("property-type", "The layer property " + key + " of \"" + name
+                        + "\" is not an int."));
+            }
+        }
+    }
+
+    static boolean isInt(String text) {
+        if (text == null) {
+            return false;
+        }
+        try {
+            Integer.parseInt(text.trim());
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
         }
     }
 
@@ -204,7 +263,7 @@ public final class LevelValidator {
     }
 
     private static String baseName(String path) {
-        return path.substring(path.lastIndexOf('/') + 1);
+        return path.substring(Math.max(path.lastIndexOf('/'), path.lastIndexOf('\\')) + 1);
     }
 
     static Finding reject(String code, String message) {

@@ -72,4 +72,28 @@ class IntroProfileTest {
         assertTrue(r.findings().stream().noneMatch(f -> f.result() == Finding.Result.REJECT),
                 r.findings().toString());
     }
+
+    @Test
+    void deletedCheckpointWithItsMarkerLeftIsRejected() throws IOException {
+        String text = intro();
+        String cut = text.replaceFirst("(?s)<object id=\"83\".*?</object>\\s*", "");
+        assertFalse(text.equals(cut));
+        ValidationReport r = validate(cut);
+        assertTrue(r.findings().stream().anyMatch(f -> f.result() == Finding.Result.REJECT
+                && f.code().equals("checkpoint")), r.findings().toString());
+    }
+
+    @Test
+    void deletedGoalIsRepairedWithoutAFixedRegionReject() throws IOException {
+        String text = intro();
+        String cut = text.replaceFirst("(?s)<object id=\"80\".*?</object>\\s*", "");
+        assertFalse(text.equals(cut));
+        ValidationReport r = validate(cut);
+        assertTrue(r.findings().stream().noneMatch(f -> f.code().equals("fixed-region")), r.findings().toString());
+        assertTrue(r.findings().stream().anyMatch(f -> f.result() == Finding.Result.REPAIR
+                && f.code().equals("goal-ref")), r.findings().toString());
+        assertTrue(r.findings().stream().anyMatch(f -> f.result() == Finding.Result.WARN
+                && f.code().equals("goal-ref")), r.findings().toString());
+        assertEquals(ValidationReport.Status.PLAYABLE, r.status());
+    }
 }
