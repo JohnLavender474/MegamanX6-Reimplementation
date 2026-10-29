@@ -73,7 +73,7 @@ public final class World {
     private int frozen;
 
     public World(Level level, Function<String, AnimSet> sets, Sfx sfx, MusicPlayer music) {
-        this(Stages.INTRO, level, sets, sfx, music);
+        this(Stages.SANDBOX, level, sets, sfx, music);
     }
 
     public World(StageDef stage, Level level, Function<String, AnimSet> sets, Sfx sfx, MusicPlayer music) {

@@ -12,8 +12,6 @@ import mmx.x6.game.Entity;
 import mmx.x6.game.Sim;
 import mmx.x6.game.World;
 import mmx.x6.input.Buttons;
-import mmx.x6.level.Level;
-import mmx.x6.level.TmxLoader;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
@@ -28,9 +26,10 @@ class StageSmokeTest {
         StageDef stage = Stages.byKey(key);
         DataPaths p = DataPaths.assets();
         Map<String, Integer> seen = new TreeMap<>();
-        for (int cp = 0; cp < stage.checkpoints().size(); cp++) {
-            Level level = TmxLoader.load(p.tmx(stage.tmxFile()));
-            World w = new World(stage, level, Sim::set, Sfx.NONE, new Sim.RecordingMusic());
+        int count = StageLoader.builtIn(p, stage).stage().checkpoints().size();
+        for (int cp = 0; cp < count; cp++) {
+            LoadedStage loaded = StageLoader.builtIn(p, stage);
+            World w = new World(loaded.stage(), loaded.level(), Sim::set, Sfx.NONE, new Sim.RecordingMusic());
             w.flow.restart(cp);
             float startX = w.player.x;
             float maxX = startX;

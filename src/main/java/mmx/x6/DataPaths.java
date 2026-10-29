@@ -52,6 +52,10 @@ public final class DataPaths {
         return root.resolve("tiled/png").resolve(tmxFile.replaceFirst("\\.tmx$", "") + "-tiles.png");
     }
 
+    public Path tilesPngNamed(String png) {
+        return root.resolve("tiled/png").resolve(png);
+    }
+
     public Path playerDir(String name) {
         return root.resolve("sprites/players").resolve(name);
     }

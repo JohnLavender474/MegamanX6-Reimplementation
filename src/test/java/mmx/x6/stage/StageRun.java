@@ -9,7 +9,6 @@ import mmx.x6.DataPaths;
 import mmx.x6.game.Entity;
 import mmx.x6.game.Sim;
 import mmx.x6.game.World;
-import mmx.x6.level.TmxLoader;
 
 public final class StageRun {
 
@@ -21,7 +20,8 @@ public final class StageRun {
         assumeTrue(DataPaths.assetsExist());
         DataPaths p = DataPaths.assets();
         try {
-            world = new World(stage, TmxLoader.load(p.tmx(stage.tmxFile())), Sim::set, sfx, music);
+            LoadedStage loaded = StageLoader.builtIn(p, stage);
+            world = new World(loaded.stage(), loaded.level(), Sim::set, sfx, music);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }

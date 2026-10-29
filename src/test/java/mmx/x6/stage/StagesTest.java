@@ -25,10 +25,11 @@ class StagesTest {
         assumeTrue(DataPaths.assetsExist());
         DataPaths p = DataPaths.assets();
         for (StageDef s : Stages.ALL) {
-            Level level = TmxLoader.load(p.tmx(s.tmxFile()));
+            LoadedStage loaded = StageLoader.builtIn(p, s);
+            Level level = loaded.level();
             assertFalse(level.records().isEmpty(), s.key());
             long markers = level.records().stream().filter(r -> r.name().equals("CheckpointMarker")).count();
-            assertEquals(s.checkpoints().size() - 1, markers, s.key());
+            assertEquals(loaded.stage().checkpoints().size() - 1, markers, s.key());
         }
     }
 

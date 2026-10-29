@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import java.io.IOException;
 import java.io.UncheckedIOException;
+import java.nio.file.Path;
 import mmx.x6.audio.CachedSfx;
 import mmx.x6.audio.GdxMusicPlayer;
 import mmx.x6.audio.GdxSounds;
@@ -14,14 +15,16 @@ import mmx.x6.game.Progress;
 import mmx.x6.input.Bindings;
 import mmx.x6.input.Controls;
 import mmx.x6.input.GdxPads;
-import mmx.x6.level.Level;
-import mmx.x6.level.TmxLoader;
+import mmx.x6.level.Catalog;
 import mmx.x6.render.Assets;
 import mmx.x6.screen.FrontEndScreen;
 import mmx.x6.screen.SelectScreen;
 import mmx.x6.screen.StageScreen;
+import mmx.x6.stage.LoadedStage;
 import mmx.x6.stage.StageDef;
+import mmx.x6.stage.StageLoader;
 import mmx.x6.stage.Stages;
+import mmx.x6.stage.Themes;
 
 public final class X6Game extends Game {
 
@@ -90,23 +93,33 @@ public final class X6Game extends Game {
         swap(new SelectScreen(controls, Stages.BOSSES, lastIndex, s -> Gdx.app.postRunnable(() -> startStage(s))));
     }
 
-    private void startStage(StageDef stage) {
-        lastIndex = Math.max(0, Stages.BOSSES.indexOf(stage));
-        Level level;
+    private void startStage(StageDef def) {
+        lastIndex = Math.max(0, Stages.BOSSES.indexOf(def));
+        LoadedStage loaded;
         try {
-            level = TmxLoader.load(paths.tmx(stage.tmxFile()));
+            loaded = StageLoader.builtIn(paths, def);
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        assets.useTiles(paths.tilesPng(stage.tmxFile()));
+        StageDef stage = loaded.stage();
+        String theme = loaded.level().properties().get("x6_theme");
+        Path tiles = paths.tilesPng(stage.tmxFile());
+        if (theme != null) {
+            try {
+                tiles = paths.tilesPngNamed(Themes.tilesPng(Catalog.load(paths.catalogJson()), theme));
+            } catch (IOException e) {
+                throw new UncheckedIOException(e);
+            }
+        }
+        assets.useTiles(tiles);
         if (sfx != null) {
             sfx.dispose();
         }
         sfx = new CachedSfx(SoundBanks.load(paths, stage.bank2(), stage.bank5(), stage.bossBank2()),
                 GdxSounds::load, System.err::println);
-        swap(new StageScreen(assets, controls, stage, level, sfx, music, progress,
-                () -> Gdx.app.postRunnable(() -> show(flow.afterStageEscape(stage))),
-                () -> Gdx.app.postRunnable(() -> show(flow.afterStageClear(stage)))));
+        swap(new StageScreen(assets, controls, stage, loaded.level(), sfx, music, progress,
+                () -> Gdx.app.postRunnable(() -> show(flow.afterStageEscape(def))),
+                () -> Gdx.app.postRunnable(() -> show(flow.afterStageClear(def)))));
     }
 
     private void swap(Screen next) {

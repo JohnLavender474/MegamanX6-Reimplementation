@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="416" height="96" tilewidth="16" tileheight="16" infinite="0" parallaxoriginx="160" parallaxoriginy="120" nextlayerid="10" nextobjectid="80">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="416" height="96" tilewidth="16" tileheight="16" infinite="0" parallaxoriginx="160" parallaxoriginy="120" nextlayerid="11" nextobjectid="84">
+ <properties>
+  <property name="x6_bank2" value="m094-e05"/>
+  <property name="x6_bank5" value="m094-e03"/>
+  <property name="x6_boss_bank2" value="m123-e01"/>
+  <property name="x6_boss_music" type="int" value="21"/>
+  <property name="x6_music" type="int" value="9"/>
+  <property name="x6_nightmare_effect" type="int" value="0"/>
+  <property name="x6_profile" type="int" value="1"/>
+  <property name="x6_theme" value="intro"/>
+ </properties>
  <tileset firstgid="1" source="../tsx/intro-tiles.tsx"/>
  <tileset firstgid="3265" source="../tsx/collision.tsx"/>
  <objectgroup id="9" name="TODO">
@@ -1307,6 +1317,50 @@
     <property name="texture_swap" type="int" value="0"/>
     <property name="zone_id" type="int" value="12"/>
    </properties>
+  </object>
+ </objectgroup>
+ <objectgroup id="10" name="x6 checkpoints">
+  <object id="81" x="144" y="976">
+   <properties>
+    <property name="beam_thru" type="int" value="1"/>
+    <property name="cam_x" type="int" value="0"/>
+    <property name="cam_y" type="int" value="944"/>
+    <property name="checkpoint" type="int" value="0"/>
+    <property name="face_right" type="bool" value="true"/>
+    <property name="max_x" type="int" value="5120"/>
+    <property name="max_y" type="int" value="944"/>
+    <property name="min_x" type="int" value="0"/>
+    <property name="min_y" type="int" value="896"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="82" x="2112" y="1072">
+   <properties>
+    <property name="beam_thru" type="int" value="6"/>
+    <property name="cam_x" type="int" value="1968"/>
+    <property name="cam_y" type="int" value="944"/>
+    <property name="checkpoint" type="int" value="1"/>
+    <property name="face_right" type="bool" value="true"/>
+    <property name="max_x" type="int" value="5120"/>
+    <property name="max_y" type="int" value="944"/>
+    <property name="min_x" type="int" value="1968"/>
+    <property name="min_y" type="int" value="944"/>
+   </properties>
+   <point/>
+  </object>
+  <object id="83" x="5904" y="364">
+   <properties>
+    <property name="beam_thru" type="int" value="1"/>
+    <property name="cam_x" type="int" value="5744"/>
+    <property name="cam_y" type="int" value="224"/>
+    <property name="checkpoint" type="int" value="2"/>
+    <property name="face_right" type="bool" value="true"/>
+    <property name="max_x" type="int" value="5744"/>
+    <property name="max_y" type="int" value="224"/>
+    <property name="min_x" type="int" value="5744"/>
+    <property name="min_y" type="int" value="224"/>
+   </properties>
+   <point/>
   </object>
  </objectgroup>
 </map>

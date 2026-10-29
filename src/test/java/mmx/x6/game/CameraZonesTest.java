@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.List;
 import mmx.x6.level.CameraZoneDef;
 import mmx.x6.level.Checkpoint;
-import mmx.x6.level.IntroCheckpoints;
+import mmx.x6.stage.Stages;
 import org.junit.jupiter.api.Test;
 
 class CameraZonesTest {
@@ -74,7 +74,7 @@ class CameraZonesTest {
     @Test
     void realZonesLoadIntoTheController() {
         CameraController c = new CameraController();
-        c.reset(IntroCheckpoints.ALL.get(0));
+        c.reset(Stages.SANDBOX.checkpoints().get(0));
         CameraZones z = new CameraZones(List.of(ZONE0, ZONE1));
         z.update(2140, 1100, c);
         assertEquals(1968, c.targetMinX());

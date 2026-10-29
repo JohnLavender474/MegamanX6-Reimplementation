@@ -9,13 +9,19 @@ import mmx.x6.game.enemy.turtloid.TurtloidEntityFactory;
 import mmx.x6.game.enemy.wolfang.WolfangEntityFactory;
 import mmx.x6.game.enemy.yammark.YammarkEntityFactory;
 import mmx.x6.level.Checkpoint;
-import mmx.x6.level.IntroCheckpoints;
 import mmx.x6.level.Point;
 
 public final class Stages {
 
     public static final StageDef INTRO = new StageDef("intro", "INTRO STAGE", 0, "intro.tmx",
-            IntroCheckpoints.ALL, 9, 21, "m094-e05", "m094-e03", "m123-e01", 0, IntroEntityFactory::new);
+            List.of(), 0, 0, null, null, null, 0, IntroEntityFactory::new);
+
+    public static final StageDef SANDBOX = new StageDef("sandbox", "SANDBOX", 0, "intro.tmx",
+            List.of(
+                    new Checkpoint(144, 976, 0, 944, 0, 5120, 896, 944, true, 1),
+                    new Checkpoint(2112, 1072, 1968, 944, 1968, 5120, 944, 944, true, 6),
+                    new Checkpoint(5904, 364, 5744, 224, 5744, 5744, 224, 224, true, 1)),
+            9, 21, "m094-e05", "m094-e03", "m123-e01", 0, IntroEntityFactory::new);
 
     public static final StageDef YAMMARK = new StageDef("yammark", "COMMANDER YAMMARK", 1,
             "commander-yammark-section-1.tmx",

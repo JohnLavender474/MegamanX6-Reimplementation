@@ -3,7 +3,7 @@ package mmx.x6.game;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import mmx.x6.level.Checkpoint;
-import mmx.x6.level.IntroCheckpoints;
+import mmx.x6.stage.Stages;
 import org.junit.jupiter.api.Test;
 
 class CameraControllerTest {
@@ -15,7 +15,7 @@ class CameraControllerTest {
     @Test
     void resetUsesTheCheckpoint() {
         CameraController cam = new CameraController();
-        cam.reset(IntroCheckpoints.ALL.get(0));
+        cam.reset(Stages.SANDBOX.checkpoints().get(0));
         assertEquals(0, cam.x());
         assertEquals(944, cam.y());
         assertEquals(896, cam.minY());
@@ -53,7 +53,7 @@ class CameraControllerTest {
     @Test
     void followStopsAtTheLimits() {
         CameraController cam = new CameraController();
-        cam.reset(IntroCheckpoints.ALL.get(0));
+        cam.reset(Stages.SANDBOX.checkpoints().get(0));
         cam.setFollow(true);
         for (int i = 0; i < 40; i++) {
             cam.update(1000, 1300);
@@ -80,7 +80,7 @@ class CameraControllerTest {
     @Test
     void noFollowKeepsPosition() {
         CameraController cam = new CameraController();
-        cam.reset(IntroCheckpoints.ALL.get(0));
+        cam.reset(Stages.SANDBOX.checkpoints().get(0));
         cam.update(1000, 1100);
         assertEquals(0, cam.x());
     }
@@ -88,7 +88,7 @@ class CameraControllerTest {
     @Test
     void closingLimitMovesAtTheEaseSpeed() {
         CameraController cam = new CameraController();
-        cam.reset(IntroCheckpoints.ALL.get(0));
+        cam.reset(Stages.SANDBOX.checkpoints().get(0));
         cam.setFollow(true);
         cam.setTargets(1968, -1, -1, -1);
         cam.update(160, 944 + 150);
@@ -118,7 +118,7 @@ class CameraControllerTest {
     @Test
     void playerAtLeftOfMinX() {
         CameraController cam = new CameraController();
-        cam.reset(IntroCheckpoints.ALL.get(1));
+        cam.reset(Stages.SANDBOX.checkpoints().get(1));
         cam.setFollow(true);
         cam.update(2000, 1100);
         assertEquals(1968, cam.x());

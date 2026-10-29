@@ -9,8 +9,8 @@ import mmx.x6.game.enemy.IntroEntityFactory;
 import mmx.x6.game.enemy.SabreBlock;
 import mmx.x6.game.player.PlayerStep;
 import mmx.x6.level.Checkpoint;
-import mmx.x6.level.IntroCheckpoints;
 import mmx.x6.level.RecordDef;
+import mmx.x6.stage.Stages;
 import org.junit.jupiter.api.Test;
 
 class StageFlowTest {
@@ -29,7 +29,7 @@ class StageFlowTest {
             s.step(0);
         }
         assertTrue(s.world.flow.restarted(), "restart");
-        assertEquals(IntroCheckpoints.ALL.get(1).playerX(), s.world.player.x, 0.001);
+        assertEquals(Stages.SANDBOX.checkpoints().get(1).playerX(), s.world.player.x, 0.001);
         assertEquals(32, s.world.player.hp);
     }
 
@@ -43,7 +43,7 @@ class StageFlowTest {
         assertTrue(s.world.entities.isEmpty());
         assertEquals(0, s.world.grid.raw(3, 3));
         assertEquals(0, s.world.lockCount);
-        assertEquals(IntroCheckpoints.ALL.get(1).camX(), s.world.camera.x(), 0.001);
+        assertEquals(Stages.SANDBOX.checkpoints().get(1).camX(), s.world.camera.x(), 0.001);
         assertEquals(9, s.music.track());
         assertEquals(2112, s.world.player.x, 0.001);
         assertTrue(s.world.player.step() != PlayerStep.DEAD);

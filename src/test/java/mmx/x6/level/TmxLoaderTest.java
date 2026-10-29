@@ -162,9 +162,9 @@ class TmxLoaderTest {
 
     @Test
     void checkpoints() {
-        assertEquals(new Checkpoint(144, 976, 0, 944, 0, 5120, 896, 944, true, 1), IntroCheckpoints.ALL.get(0));
-        assertEquals(new Checkpoint(2112, 1072, 1968, 944, 1968, 5120, 944, 944, true, 6), IntroCheckpoints.ALL.get(1));
-        assertEquals(new Checkpoint(5904, 364, 5744, 224, 5744, 5744, 224, 224, true, 1), IntroCheckpoints.ALL.get(2));
+        assertEquals(new Checkpoint(144, 976, 0, 944, 0, 5120, 896, 944, true, 1), level().checkpoints().get(0));
+        assertEquals(new Checkpoint(2112, 1072, 1968, 944, 1968, 5120, 944, 944, true, 6), level().checkpoints().get(1));
+        assertEquals(new Checkpoint(5904, 364, 5744, 224, 5744, 5744, 224, 224, true, 1), level().checkpoints().get(2));
     }
 
     @Test
