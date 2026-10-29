@@ -1,5 +1,6 @@
 package mmx.x6.level;
 
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -59,6 +60,20 @@ class TmxLoaderTest {
         Level l = TmxLoader.load(tmx);
         assertEquals(0, l.collision().raw(0, 0));
         assertEquals(57, l.collision().raw(1, 0));
+    }
+
+    @Test
+    void csvWithCrLfSpacesAndTrailingComma() throws Exception {
+        StringBuilder layers = new StringBuilder();
+        for (String name : List.of("art 2 background", "art 1 decoration", "art 0 front", "collision")) {
+            layers.append("<layer name=\"").append(name).append("\" width=\"2\" height=\"2\"><data encoding=\"csv\">0,0,0,0</data></layer>\n");
+        }
+        layers.append("<layer name=\"art 0 main\" width=\"2\" height=\"2\"><data encoding=\"csv\">\r\n1, 2,\r\n 3,4,\r\n</data></layer>\n");
+        String text = "<?xml version=\"1.0\"?>\n<map width=\"2\" height=\"2\">\n"
+                + "<tileset firstgid=\"1\" name=\"tiles\" tilewidth=\"16\" tileheight=\"16\"/>\n"
+                + "<tileset firstgid=\"5\" name=\"collision\" tilewidth=\"16\" tileheight=\"16\"/>\n" + layers + "</map>\n";
+        Level l = TmxLoader.parse(text, "inline");
+        assertArrayEquals(new int[] {1, 2, 3, 4}, l.art0Main().gids());
     }
 
     @Test

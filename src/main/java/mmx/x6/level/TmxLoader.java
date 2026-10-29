@@ -1,20 +1,15 @@
 package mmx.x6.level;
 
+import com.badlogic.gdx.utils.GdxRuntimeException;
+import com.badlogic.gdx.utils.XmlReader;
 import java.io.IOException;
-import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-import org.xml.sax.SAXException;
 
 public final class TmxLoader {
 
@@ -22,30 +17,45 @@ public final class TmxLoader {
     }
 
     public static Level load(Path tmx) throws IOException {
-        Element map = parse(tmx);
+        return parse(Files.readString(tmx, StandardCharsets.UTF_8), tmx.toString());
+    }
+
+    public static Level parse(String tmxText, String name) throws IOException {
+        XmlReader.Element map;
+        try {
+            map = new XmlReader().parse(tmxText);
+        } catch (GdxRuntimeException | IllegalArgumentException e) {
+            throw new IOException("cannot parse " + name + ": " + e.getMessage(), e);
+        }
+        return fromElement(map, name);
+    }
+
+    public static Level fromElement(XmlReader.Element map, String name) throws IOException {
         int width = intAttr(map, "width");
         int height = intAttr(map, "height");
 
         int collisionFirstGid = -1;
-        for (Element ts : children(map, "tileset")) {
-            if ("collision".equals(tilesetName(tmx, ts))) {
+        for (XmlReader.Element ts : children(map, "tileset")) {
+            if (isCollisionTileset(ts)) {
                 collisionFirstGid = intAttr(ts, "firstgid");
             }
         }
         if (collisionFirstGid < 0) {
-            throw new IOException(tmx + " has no collision tileset");
+            throw new IOException(name + " has no collision tileset");
         }
 
         Map<String, TileLayer> layers = new HashMap<>();
-        for (Element layer : children(map, "layer")) {
+        for (XmlReader.Element layer : children(map, "layer")) {
             int lw = intAttr(layer, "width");
             int lh = intAttr(layer, "height");
             Map<String, String> props = properties(layer);
-            int[] gids = parseCsv(children(layer, "data").get(0).getTextContent(), lw * lh);
-            layers.put(layer.getAttribute("name"), new TileLayer(layer.getAttribute("name"), lw, lh, gids,
+            List<XmlReader.Element> data = children(layer, "data");
+            int[] gids = parseCsv(data.isEmpty() ? "" : data.get(0).getText(), lw * lh);
+            String layerName = attr(layer, "name");
+            layers.put(layerName, new TileLayer(layerName, lw, lh, gids,
                     intOr(props, "x6_mode", 0), intOr(props, "x6_offset_x", 0), intOr(props, "x6_offset_y", 0)));
         }
-        TileLayer collisionLayer = require(layers, "collision", tmx);
+        TileLayer collisionLayer = require(layers, "collision", name);
         int[] values = new int[width * height];
         for (int i = 0; i < values.length; i++) {
             int gid = collisionLayer.gids()[i] & 0x1FFFFFFF;
@@ -55,19 +65,20 @@ public final class TmxLoader {
         List<RecordDef> records = new ArrayList<>();
         List<RecordDef> fixed = new ArrayList<>();
         List<CameraZoneDef> zones = new ArrayList<>();
-        for (Element group : children(map, "objectgroup")) {
-            String groupName = group.getAttribute("name");
-            for (Element o : children(group, "object")) {
+        for (XmlReader.Element group : children(map, "objectgroup")) {
+            String groupName = attr(group, "name");
+            for (XmlReader.Element o : children(group, "object")) {
                 Map<String, String> p = properties(o);
-                int x = (int) Double.parseDouble(o.getAttribute("x"));
-                int y = (int) Double.parseDouble(o.getAttribute("y"));
+                int x = (int) Double.parseDouble(attr(o, "x"));
+                int y = (int) Double.parseDouble(attr(o, "y"));
                 if ("records".equals(groupName) || "fixed records".equals(groupName)) {
-                    RecordDef r = new RecordDef(intOr(p, "index", -1), o.getAttribute("name"), o.getAttribute("type"),
-                            intOr(p, "kind", 0), intOr(p, "b", 0), intOr(p, "id", 0), intOr(p, "a", 0), x, y);
+                    RecordDef r = new RecordDef(intOr(p, "index", -1), attr(o, "name"), attr(o, "type"),
+                            intOr(p, "kind", 0), intOr(p, "b", 0), intOr(p, "id", 0), intOr(p, "a", 0), x, y,
+                            o.getInt("id", 0), intOr(p, "goal", 0), intOr(p, "opened_by", 0));
                     ("records".equals(groupName) ? records : fixed).add(r);
                 } else if ("camera zones".equals(groupName)) {
-                    int w = (int) Double.parseDouble(o.getAttribute("width"));
-                    int h = (int) Double.parseDouble(o.getAttribute("height"));
+                    int w = (int) Double.parseDouble(attr(o, "width"));
+                    int h = (int) Double.parseDouble(attr(o, "height"));
                     zones.add(new CameraZoneDef(intOr(p, "record", -1), intOr(p, "zone_id", -1) & 0x7F,
                             x, x + w - 1, y, y + h - 1, intOr(p, "min_x", -1), intOr(p, "max_x", -1),
                             intOr(p, "min_y", -1), intOr(p, "max_y", -1), intOr(p, "texture_swap", 0) != 0));
@@ -75,35 +86,25 @@ public final class TmxLoader {
             }
         }
 
-        return new Level(width, height, require(layers, "art 2 background", tmx),
-                require(layers, "art 1 decoration", tmx), require(layers, "art 0 main", tmx),
-                require(layers, "art 0 front", tmx), new CollisionGrid(width, height, values),
+        return new Level(width, height, require(layers, "art 2 background", name),
+                require(layers, "art 1 decoration", name), require(layers, "art 0 main", name),
+                require(layers, "art 0 front", name), new CollisionGrid(width, height, values),
                 List.copyOf(records), List.copyOf(zones), List.copyOf(fixed));
     }
 
-    private static Element parse(Path xml) throws IOException {
-        try (InputStream in = Files.newInputStream(xml)) {
-            DocumentBuilderFactory f = DocumentBuilderFactory.newInstance();
-            f.setFeature("http://apache.org/xml/features/disallow-doctype-decl", true);
-            Document doc = f.newDocumentBuilder().parse(in);
-            return doc.getDocumentElement();
-        } catch (ParserConfigurationException | SAXException e) {
-            throw new IOException("cannot parse " + xml + ": " + e.getMessage(), e);
-        }
-    }
-
-    private static String tilesetName(Path tmx, Element ts) throws IOException {
-        String source = ts.getAttribute("source");
+    private static boolean isCollisionTileset(XmlReader.Element ts) {
+        String source = attr(ts, "source");
         if (source.isEmpty()) {
-            return ts.getAttribute("name");
+            return "collision".equals(attr(ts, "name"));
         }
-        return parse(tmx.resolveSibling(source).normalize()).getAttribute("name");
+        String base = source.substring(Math.max(source.lastIndexOf('/'), source.lastIndexOf('\\')) + 1);
+        return "collision.tsx".equals(base);
     }
 
-    private static TileLayer require(Map<String, TileLayer> layers, String name, Path tmx) throws IOException {
-        TileLayer l = layers.get(name);
+    private static TileLayer require(Map<String, TileLayer> layers, String layerName, String name) throws IOException {
+        TileLayer l = layers.get(layerName);
         if (l == null) {
-            throw new IOException(tmx + " has no layer '" + name + "'");
+            throw new IOException(name + " has no layer '" + layerName + "'");
         }
         return l;
     }
@@ -120,11 +121,11 @@ public final class TmxLoader {
         return out;
     }
 
-    private static Map<String, String> properties(Element e) {
+    private static Map<String, String> properties(XmlReader.Element e) {
         Map<String, String> out = new HashMap<>();
-        for (Element props : children(e, "properties")) {
-            for (Element p : children(props, "property")) {
-                out.put(p.getAttribute("name"), p.getAttribute("value"));
+        for (XmlReader.Element props : children(e, "properties")) {
+            for (XmlReader.Element p : children(props, "property")) {
+                out.put(attr(p, "name"), attr(p, "value"));
             }
         }
         return out;
@@ -135,17 +136,20 @@ public final class TmxLoader {
         return v == null || v.isEmpty() ? fallback : Integer.parseInt(v);
     }
 
-    private static int intAttr(Element e, String name) {
-        return Integer.parseInt(e.getAttribute(name));
+    private static String attr(XmlReader.Element e, String name) {
+        return e.get(name, "");
     }
 
-    private static List<Element> children(Element parent, String tag) {
-        List<Element> out = new ArrayList<>();
-        NodeList nodes = parent.getChildNodes();
-        for (int i = 0; i < nodes.getLength(); i++) {
-            Node n = nodes.item(i);
-            if (n instanceof Element el && tag.equals(el.getTagName())) {
-                out.add(el);
+    private static int intAttr(XmlReader.Element e, String name) {
+        return Integer.parseInt(attr(e, name));
+    }
+
+    private static List<XmlReader.Element> children(XmlReader.Element parent, String tag) {
+        List<XmlReader.Element> out = new ArrayList<>();
+        for (int i = 0; i < parent.getChildCount(); i++) {
+            XmlReader.Element c = parent.getChild(i);
+            if (tag.equals(c.getName())) {
+                out.add(c);
             }
         }
         return out;
