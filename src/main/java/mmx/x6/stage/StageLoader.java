@@ -24,14 +24,14 @@ public final class StageLoader {
         Path file = p.tmx(def.tmxFile());
         String text = Files.readString(file, StandardCharsets.UTF_8);
         if (!hasProfile(text, def.tmxFile())) {
-            return new LoadedStage(def, TmxLoader.load(file), null);
+            return new LoadedStage(def, TmxLoader.load(file), null, null);
         }
         ValidationReport report = validate(p, text);
         if (report.status() == ValidationReport.Status.REJECTED) {
             throw new IOException(describe(def.tmxFile(), report));
         }
         Level level = TmxLoader.fromElement(report.map(), def.tmxFile());
-        return new LoadedStage(def.withMapData(level), level, report);
+        return new LoadedStage(def.withMapData(level), level, report, tilesOf(p, level));
     }
 
     public static LoadedStage file(DataPaths p, Path tmx) throws IOException {
@@ -39,12 +39,17 @@ public final class StageLoader {
         String text = Files.readString(tmx, StandardCharsets.UTF_8);
         ValidationReport report = validate(p, text);
         if (report.status() == ValidationReport.Status.REJECTED) {
-            return new LoadedStage(null, null, report);
+            return new LoadedStage(null, null, report, null);
         }
         Level level = TmxLoader.fromElement(report.map(), name);
         StageDef def = new StageDef("level", name, 0, name, List.of(), 0, 0, null, null, null, 0,
                 Themes.factory(level.properties().get("x6_theme"))).withMapData(level);
-        return new LoadedStage(def, level, report);
+        return new LoadedStage(def, level, report, tilesOf(p, level));
+    }
+
+    private static String tilesOf(DataPaths p, Level level) throws IOException {
+        String theme = level.properties().get("x6_theme");
+        return theme == null ? null : Themes.tilesPng(Catalog.load(p.catalogJson()), theme);
     }
 
     private static boolean hasProfile(String text, String name) throws IOException {

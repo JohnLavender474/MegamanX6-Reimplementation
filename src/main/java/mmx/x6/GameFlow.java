@@ -13,9 +13,15 @@ public final class GameFlow {
 
     private final StageDef stage;
     private final String front;
+    private final String levelPath;
     private Phase frontStart;
 
     public GameFlow(String stageKey, String front) {
+        this(stageKey, front, null);
+    }
+
+    public GameFlow(String stageKey, String front, String levelPath) {
+        this.levelPath = levelPath;
         this.stage = stageKey == null ? null : Stages.byKey(stageKey);
         this.front = front == null ? "ready" : front.toLowerCase(Locale.ROOT);
         this.frontStart = SELECT.equals(this.front) ? Phase.LOGO : Phase.valueOf(this.front.toUpperCase(Locale.ROOT));
@@ -25,8 +31,12 @@ public final class GameFlow {
         return stage;
     }
 
+    public String levelPath() {
+        return levelPath;
+    }
+
     public Screen first() {
-        if (stage != null) {
+        if (stage != null || levelPath != null) {
             return Screen.STAGE;
         }
         return SELECT.equals(front) ? Screen.SELECT : Screen.FRONT_END;

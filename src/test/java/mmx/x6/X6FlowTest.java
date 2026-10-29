@@ -34,6 +34,11 @@ class X6FlowTest {
     }
 
     @Test
+    void levelPathStartsStage() {
+        assertEquals(GameFlow.Screen.STAGE, new GameFlow(null, null, "/x.tmx").first());
+    }
+
+    @Test
     void introClearOpensSelect() {
         assertEquals(GameFlow.Screen.SELECT, new GameFlow(null, null).afterStageClear(Stages.INTRO));
     }

@@ -15,16 +15,15 @@ import mmx.x6.game.Progress;
 import mmx.x6.input.Bindings;
 import mmx.x6.input.Controls;
 import mmx.x6.input.GdxPads;
-import mmx.x6.level.Catalog;
 import mmx.x6.render.Assets;
 import mmx.x6.screen.FrontEndScreen;
+import mmx.x6.screen.LevelErrorScreen;
 import mmx.x6.screen.SelectScreen;
 import mmx.x6.screen.StageScreen;
 import mmx.x6.stage.LoadedStage;
 import mmx.x6.stage.StageDef;
 import mmx.x6.stage.StageLoader;
 import mmx.x6.stage.Stages;
-import mmx.x6.stage.Themes;
 
 public final class X6Game extends Game {
 
@@ -48,7 +47,12 @@ public final class X6Game extends Game {
         assets = new Assets(paths);
         controls = new Controls(new Bindings(), new GdxPads());
         music = new GdxMusicPlayer(paths);
-        flow = new GameFlow(System.getProperty("mmx.stage"), System.getProperty("mmx.front"));
+        flow = new GameFlow(System.getProperty("mmx.stage"), System.getProperty("mmx.front"),
+                System.getProperty("mmx.level"));
+        if (flow.levelPath() != null) {
+            startLevelFile(flow.levelPath());
+            return;
+        }
         switch (flow.first()) {
             case STAGE -> startStage(flow.stage());
             case SELECT -> showSelect();
@@ -101,16 +105,28 @@ public final class X6Game extends Game {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
-        StageDef stage = loaded.stage();
-        String theme = loaded.level().properties().get("x6_theme");
-        Path tiles = paths.tilesPng(stage.tmxFile());
-        if (theme != null) {
-            try {
-                tiles = paths.tilesPngNamed(Themes.tilesPng(Catalog.load(paths.catalogJson()), theme));
-            } catch (IOException e) {
-                throw new UncheckedIOException(e);
-            }
+        play(loaded, def, () -> show(flow.afterStageEscape(def)), () -> show(flow.afterStageClear(def)));
+    }
+
+    private void startLevelFile(String file) {
+        LoadedStage loaded;
+        try {
+            loaded = StageLoader.file(paths, Path.of(file));
+        } catch (IOException e) {
+            throw new UncheckedIOException(e);
         }
+        if (loaded.stage() == null) {
+            swap(new LevelErrorScreen(loaded.report().findings(), () -> Gdx.app.exit()));
+            return;
+        }
+        progress = new Progress();
+        play(loaded, loaded.stage(), () -> Gdx.app.exit(), () -> Gdx.app.exit());
+    }
+
+    private void play(LoadedStage loaded, StageDef def, Runnable exit, Runnable cleared) {
+        StageDef stage = loaded.stage();
+        Path tiles = loaded.tilesPng() != null ? paths.tilesPngNamed(loaded.tilesPng())
+                : paths.tilesPng(stage.tmxFile());
         assets.useTiles(tiles);
         if (sfx != null) {
             sfx.dispose();
@@ -118,8 +134,7 @@ public final class X6Game extends Game {
         sfx = new CachedSfx(SoundBanks.load(paths, stage.bank2(), stage.bank5(), stage.bossBank2()),
                 GdxSounds::load, System.err::println);
         swap(new StageScreen(assets, controls, stage, loaded.level(), sfx, music, progress,
-                () -> Gdx.app.postRunnable(() -> show(flow.afterStageEscape(def))),
-                () -> Gdx.app.postRunnable(() -> show(flow.afterStageClear(def)))));
+                () -> Gdx.app.postRunnable(exit), () -> Gdx.app.postRunnable(cleared)));
     }
 
     private void swap(Screen next) {

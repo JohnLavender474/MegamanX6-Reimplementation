@@ -6,11 +6,16 @@ import static org.junit.jupiter.api.Assertions.assertSame;
 import static org.junit.jupiter.api.Assumptions.assumeTrue;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import mmx.x6.DataPaths;
 import mmx.x6.level.Checkpoint;
 import mmx.x6.level.ValidationReport;
+import mmx.x6.level.Catalog;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.io.TempDir;
 
 class StageLoaderTest {
 
@@ -37,5 +42,33 @@ class StageLoaderTest {
         LoadedStage s = StageLoader.builtIn(DataPaths.assets(), Stages.YAMMARK);
         assertNull(s.report());
         assertSame(Stages.YAMMARK, s.stage());
+    }
+
+    @Test
+    void fileLevelInOtherFolderUsesThemeTiles(@TempDir Path dir) throws IOException {
+        assumeTrue(DataPaths.assetsExist());
+        DataPaths p = DataPaths.assets();
+        Path copy = dir.resolve("my-level.tmx");
+        Files.writeString(copy, Files.readString(p.tmx("intro.tmx"), StandardCharsets.UTF_8), StandardCharsets.UTF_8);
+        LoadedStage s = StageLoader.file(p, copy);
+        assertEquals(ValidationReport.Status.PLAYABLE, s.report().status());
+        assertEquals("my-level.tmx", s.stage().tmxFile());
+        assertEquals("intro-tiles.png", Themes.tilesPng(Catalog.load(p.catalogJson()), "intro"));
+        assertEquals("intro-tiles.png", s.tilesPng());
+        assertEquals(StageLoader.builtIn(p, Stages.INTRO).stage().checkpoints(), s.stage().checkpoints());
+    }
+
+    @Test
+    void rejectedFileHasNoStage(@TempDir Path dir) throws IOException {
+        assumeTrue(DataPaths.assetsExist());
+        DataPaths p = DataPaths.assets();
+        String text = Files.readString(p.tmx("intro.tmx"), StandardCharsets.UTF_8);
+        String cut = text.replaceAll("(?s)<layer [^>]*name=\"collision\".*?</layer>", "");
+        Path copy = dir.resolve("bad.tmx");
+        Files.writeString(copy, cut, StandardCharsets.UTF_8);
+        LoadedStage s = StageLoader.file(p, copy);
+        assertEquals(ValidationReport.Status.REJECTED, s.report().status());
+        assertNull(s.stage());
+        assertNull(s.level());
     }
 }

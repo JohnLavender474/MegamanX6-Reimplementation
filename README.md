@@ -134,6 +134,7 @@ For developers, these Java properties change how the game starts
 | property                            | effect                                                                                                                                                    |
 |-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `-Dmmx.stage=KEY`                   | start this stage without the select screen                                                                                                                |
+| `-Dmmx.level=PATH`                  | play a level file in the X6 TMX profile; it is checked first, and a rejected file shows the reasons on an error screen                                    |
 | `-Dmmx.front=NAME`                  | start the front end at `ready` (default), `logo`, `load`, `opening`, `title`, `menu` or `options`; `select` starts at the stage select screen             |
 | `-Dmmx.checkpoint=N`                | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3)                                        |
 | `-Dmmx.startX=X -Dmmx.startY=Y`     | start standing at a point, with wide camera limits                                                                                                        |
@@ -141,3 +142,16 @@ For developers, these Java properties change how the game starts
 | `-Dmmx.hold=BITS`                   | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon, 2048 Start) |
 | `-Dmmx.jumpEvery=N`                 | with `mmx.hold`: pulse jump and the held non-direction buttons every N updates                                                                            |
 | `-Dmmx.shot=FILE -Dmmx.shotAfter=N` | save a PNG after N updates and quit (a list such as `300,600` saves one PNG each); keyboard and controller are off, and a red border marks the window     |
+
+## User levels
+
+To make a level, copy `assets/tiled/tmx/intro.tmx` to a new file and edit the copy in Tiled. Do not
+change the boss room region at the end of the map. Play the level with:
+
+```
+./gradlew run -Dmmx.level=/path/to/my-level.tmx
+```
+
+The game checks the file first. If the file is rejected, a "LEVEL REJECTED" screen lists each reason
+(`code: message`), and any key closes the game. When the goal of the level is done, STAGE CLEAR shows,
+and the next key press closes the game.
