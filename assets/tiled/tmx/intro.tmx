@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="416" height="96" tilewidth="16" tileheight="16" infinite="0" parallaxoriginx="160" parallaxoriginy="120" nextlayerid="11" nextobjectid="84">
+<map version="1.10" tiledversion="1.12.2" orientation="orthogonal" renderorder="right-down" width="416" height="96" tilewidth="16" tileheight="16" infinite="0" parallaxoriginx="160" parallaxoriginy="120" nextlayerid="12" nextobjectid="84">
  <properties>
   <property name="x6_bank2" value="m094-e05"/>
   <property name="x6_bank5" value="m094-e03"/>
@@ -1095,6 +1095,7 @@
    <properties>
     <property name="a" type="int" value="0"/>
     <property name="b" type="int" value="48"/>
+    <property name="goal" type="object" value="80"/>
     <property name="id" type="int" value="0"/>
     <property name="index" type="int" value="56"/>
     <property name="kind" type="int" value="0"/>
@@ -1361,6 +1362,14 @@
     <property name="min_y" type="int" value="224"/>
    </properties>
    <point/>
+  </object>
+ </objectgroup>
+ <objectgroup id="11" name="goals">
+  <object id="80" name="D-1000 room" type="Goal" x="6064" y="208" width="384" height="224">
+   <properties>
+    <property name="ends_stage" type="bool" value="true"/>
+    <property name="mode" propertytype="GoalMode" value="all"/>
+   </properties>
   </object>
  </objectgroup>
 </map>

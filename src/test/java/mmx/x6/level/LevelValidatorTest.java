@@ -398,4 +398,78 @@ class LevelValidatorTest {
         assertFinding(check(TmxFixture.valid().objectLayer("x6 checkpoints", bad)), "property-type",
                 Finding.Result.REJECT);
     }
+
+    private static String goalObj(int id, String props) {
+        return "<object id=\"" + id + "\" name=\"g" + id + "\" type=\"Goal\" x=\"0\" y=\"0\" width=\"32\" "
+                + "height=\"32\"><properties>" + props + "</properties></object>";
+    }
+
+    private static String prop(String name, String type, String value) {
+        return "<property name=\"" + name + "\" type=\"" + type + "\" value=\"" + value + "\"/>";
+    }
+
+    private static String entity(int id, String name, int index, String props) {
+        return "<object id=\"" + id + "\" name=\"" + name + "\" x=\"16\" y=\"16\"><properties>"
+                + prop("index", "int", String.valueOf(index)) + prop("kind", "int", "0") + props
+                + "</properties></object>";
+    }
+
+    @Test
+    void validGoalsAreCertified() {
+        TmxFixture f = TmxFixture.valid()
+                .objectLayer("records", entity(20, "MetaWheelF", 0, prop("goal", "object", "30"))
+                        + entity(21, "BossGate", 1, prop("opened_by", "object", "30")))
+                .objectLayer("goals", goalObj(30, prop("mode", "string", "any") + prop("ends_stage", "bool", "true")));
+        ValidationReport r = check(f);
+        assertTrue(r.findings().stream().noneMatch(x -> x.code().startsWith("goal")), r.findings().toString());
+    }
+
+    @Test
+    void goalRefToMissingObjectIsRepaired() {
+        TmxFixture f = TmxFixture.valid()
+                .objectLayer("records", entity(20, "MetaWheelF", 0, prop("goal", "object", "99")));
+        ValidationReport r = check(f);
+        assertFinding(r, "goal-ref", Finding.Result.REPAIR);
+        assertFinding(r, "goal-ref", Finding.Result.WARN);
+        assertTrue(r.map().getChildrenByName("objectgroup").get(0).getChildByName("object")
+                .getChildByName("properties").getChildrenByName("property").size == 2);
+    }
+
+    @Test
+    void goalTargetThatIsNotAGoalIsRejected() {
+        TmxFixture f = TmxFixture.valid().objectLayer("records",
+                entity(20, "MetaWheelF", 0, prop("goal", "object", "21")) + entity(21, "MetaWheelF", 1, ""));
+        assertFinding(check(f), "goal-target", Finding.Result.REJECT);
+    }
+
+    @Test
+    void goalMemberThatCannotBeDefeatedIsRejected() {
+        TmxFixture f = TmxFixture.valid()
+                .objectLayer("records", entity(20, "BossGate", 0, prop("goal", "object", "30")))
+                .objectLayer("goals", goalObj(30, ""));
+        assertFinding(check(f), "goal-member", Finding.Result.REJECT);
+    }
+
+    @Test
+    void goalListenerThatCannotBeOpenedIsRejected() {
+        TmxFixture f = TmxFixture.valid()
+                .objectLayer("records", entity(20, "MetaWheelF", 0, prop("opened_by", "object", "30")))
+                .objectLayer("goals", goalObj(30, ""));
+        assertFinding(check(f), "goal-listener", Finding.Result.REJECT);
+    }
+
+    @Test
+    void goalCycleIsRejected() {
+        TmxFixture f = TmxFixture.valid().objectLayer("goals",
+                goalObj(30, prop("goal", "object", "31")) + goalObj(31, prop("goal", "object", "30")));
+        assertFinding(check(f), "goal-cycle", Finding.Result.REJECT);
+    }
+
+    @Test
+    void goalPropsWithWrongValuesAreRejected() {
+        assertFinding(check(TmxFixture.valid().objectLayer("goals", goalObj(30, prop("mode", "string", "some")))),
+                "goal-props", Finding.Result.REJECT);
+        assertFinding(check(TmxFixture.valid().objectLayer("goals", goalObj(30, prop("ends_stage", "bool", "yes")))),
+                "goal-props", Finding.Result.REJECT);
+    }
 }

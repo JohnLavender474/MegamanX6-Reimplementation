@@ -42,7 +42,7 @@ public final class BossGate extends Entity implements Solid {
         Player p = w.player;
         switch (step) {
             case WAIT -> {
-                if (canOpen(id, w) && triggered(p)) {
+                if (canOpen(id, w) && (record.openedBy() == 0 || w.goals.done(record.openedBy())) && triggered(p)) {
                     w.lockCount++;
                     w.clearEnemies();
                     p.startGate();

@@ -375,3 +375,6 @@ load, opening, title, menu), the fades (32 updates: `FadeTask` moves a level of 
 
 - The fixed boss room region `x` 5744 to 6655 of the intro theme is a guess from the gate at x 5744,
   the room walls and the tile store columns up to x 6592.
+- The goal rectangle of the intro (`x` 6064, `y` 208, 384 wide, 224 high) is a guess from the room walls at
+  `x` 6064 and `x` 6448 and the camera limits. The game does not read the rectangle yet; only the
+  member and parent links decide when a goal is done.

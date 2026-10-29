@@ -3,12 +3,13 @@ package mmx.x6.game.boss;
 import mmx.x6.anim.Animator;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Entity;
+import mmx.x6.game.GoalMember;
 import mmx.x6.game.World;
 import mmx.x6.game.enemy.NightmareVirus;
 import mmx.x6.game.fx.BossExplosion;
 import mmx.x6.level.RecordDef;
 
-public abstract class Maverick extends Entity {
+public abstract class Maverick extends Entity implements GoalMember {
 
     private static final int FAST_FIGHT = 5401;
     private static final int[] BLINK_TOGGLES = {26, 47, 63, 74};
@@ -157,7 +158,7 @@ public abstract class Maverick extends Entity {
                     shown = false;
                     int id = fightTimer < FAST_FIGHT ? NightmareVirus.BOSS_SOUL_FAST : NightmareVirus.BOSS_SOUL_SLOW;
                     // TODO: after the boss soul the player exit (player step 25, game+0x0F = 16) is not read; STAGE CLEAR shows instead (docs/gaps.md, "Maverick end")
-                    w.add(NightmareVirus.make(w, id, x, y).onBossSoul(w.flow::clear));
+                    w.add(NightmareVirus.make(w, id, x, y).onBossSoul(() -> w.goals.reportBossEnd(w, record)));
                     deathSub = 2;
                 }
             }

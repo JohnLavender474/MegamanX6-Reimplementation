@@ -37,6 +37,7 @@ public final class World {
     public final List<Entity> entities = new ArrayList<>();
     public final Random rng = new Random(6);
     public final StageFlow flow;
+    public final Goals goals;
     public Progress progress = new Progress();
     public Player player;
     public Spawner spawner;
@@ -89,6 +90,7 @@ public final class World {
         this.music = music;
         this.zones = new CameraZones(level.cameraZones());
         this.flow = new StageFlow(this);
+        this.goals = new Goals(level.goals(), level.records(), level.fixedRecords());
         this.spawner = new Spawner(level.records(), level.fixedRecords(), DIFFICULTY, stage.factory().get());
         TileLayer l1 = level.art1();
         TileLayer l2 = level.art2();
@@ -290,6 +292,7 @@ public final class World {
         camera.reset(cp);
         zones.reset();
         spawner.reset();
+        goals.reset();
         bossHp = 0;
         bossBarShown = false;
         whiteLevel = 0;

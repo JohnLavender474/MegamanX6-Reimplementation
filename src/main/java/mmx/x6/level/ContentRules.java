@@ -4,9 +4,11 @@ import com.badlogic.gdx.utils.XmlReader;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 import java.util.function.Function;
 
@@ -16,7 +18,7 @@ final class ContentRules {
             "art 0 main", "art 0 front", "collision");
     private static final List<String> THEME_PROPERTIES = List.of("x6_music", "x6_boss_music", "x6_bank2",
             "x6_bank5", "x6_boss_bank2", "x6_nightmare_effect");
-    private static final List<String> RECORD_INTS = List.of("kind", "b", "id", "a", "index");
+    private static final List<String> RECORD_INTS = List.of("kind", "b", "id", "a", "index", "goal", "opened_by");
     private static final List<String> CHECKPOINT_REQUIRED = List.of("checkpoint", "cam_x", "cam_y", "min_x",
             "max_x", "min_y", "max_y", "face_right", "beam_thru");
     private static final List<String> CHECKPOINT_OPTIONAL_INTS = List.of("layer1_x", "layer1_y",
@@ -37,6 +39,7 @@ final class ContentRules {
         checkRecordProperties(map, findings);
         checkRecordIndex(map, findings);
         checkEntities(map, catalog, theme, findings);
+        checkGoals(map, catalog, findings);
         if (theme != null && theme.fixedRegion() != null) {
             checkFixedRegion(map, theme.fixedRegion(), templates, findings);
         }
@@ -265,6 +268,102 @@ final class ContentRules {
             } else if (entity.stageBound()) {
                 findings.add(new Finding(Finding.Result.LOCK, "stage-bound",
                         "The object \"" + name + "\" is stage-bound and cannot be changed."));
+            }
+        }
+    }
+
+    private static void checkGoals(XmlReader.Element map, Catalog catalog, List<Finding> findings) {
+        Map<Integer, XmlReader.Element> byId = new HashMap<>();
+        for (XmlReader.Element g : map.getChildrenByName("objectgroup")) {
+            for (XmlReader.Element o : g.getChildrenByName("object")) {
+                byId.putIfAbsent(LevelValidator.intAttr(o, "id"), o);
+            }
+        }
+        XmlReader.Element group = objectGroup(map, "goals");
+        Map<Integer, Integer> parents = new LinkedHashMap<>();
+        if (group != null) {
+            for (XmlReader.Element o : group.getChildrenByName("object")) {
+                if (!"Goal".equals(o.getAttribute("type", ""))) {
+                    continue;
+                }
+                String label = o.getAttribute("name", "?");
+                Map<String, String> p = properties(o);
+                String mode = p.get("mode");
+                if (mode != null && !"all".equals(mode) && !"any".equals(mode)) {
+                    findings.add(LevelValidator.reject("goal-props", "The goal \"" + label
+                            + "\" has a mode that is not all or any."));
+                }
+                String ends = p.get("ends_stage");
+                if (ends != null && !isBool(ends)) {
+                    findings.add(LevelValidator.reject("goal-props", "The goal \"" + label
+                            + "\" has an ends_stage that is not a bool."));
+                }
+                int parent = checkGoalRef(o, "goal", label, byId, findings);
+                if (parent != 0) {
+                    parents.put(LevelValidator.intAttr(o, "id"), parent);
+                }
+            }
+        }
+        for (XmlReader.Element o : recordObjects(map, true)) {
+            String label = o.getAttribute("name", "?");
+            Catalog.Entity entity = catalog.entity(label);
+            int goal = checkGoalRef(o, "goal", label, byId, findings);
+            if (goal != 0 && entity != null && !entity.defeatable()) {
+                findings.add(LevelValidator.reject("goal-member", "The object \"" + label
+                        + "\" has a goal but cannot be defeated."));
+            }
+            int listener = checkGoalRef(o, "opened_by", label, byId, findings);
+            if (listener != 0 && entity != null && !entity.openable()) {
+                findings.add(LevelValidator.reject("goal-listener", "The object \"" + label
+                        + "\" has opened_by but cannot be opened."));
+            }
+        }
+        for (Integer start : parents.keySet()) {
+            Set<Integer> seen = new HashSet<>();
+            int at = start;
+            while (parents.containsKey(at) && seen.add(at)) {
+                at = parents.get(at);
+            }
+            if (seen.contains(at) && at == start) {
+                findings.add(LevelValidator.reject("goal-cycle", "The goal parents form a cycle."));
+                break;
+            }
+        }
+    }
+
+    private static int checkGoalRef(XmlReader.Element o, String key, String label,
+                                    Map<Integer, XmlReader.Element> byId, List<Finding> findings) {
+        String v = properties(o).get(key);
+        if (v == null || !isInt(v) || Integer.parseInt(v.trim()) == 0) {
+            return 0;
+        }
+        int id = Integer.parseInt(v.trim());
+        XmlReader.Element target = byId.get(id);
+        if (target == null) {
+            removeProperty(o, key);
+            findings.add(new Finding(Finding.Result.REPAIR, "goal-ref", "The property " + key + " of \"" + label
+                    + "\" is cleared."));
+            findings.add(new Finding(Finding.Result.WARN, "goal-ref", "The property " + key + " of \"" + label
+                    + "\" names the id " + id + ", which is not an object in the map."));
+            return 0;
+        }
+        if (!"Goal".equals(target.getAttribute("type", ""))) {
+            findings.add(LevelValidator.reject("goal-target", "The property " + key + " of \"" + label
+                    + "\" names an object that is not a Goal."));
+            return 0;
+        }
+        return id;
+    }
+
+    private static void removeProperty(XmlReader.Element object, String name) {
+        XmlReader.Element props = object.getChildByName("properties");
+        if (props == null) {
+            return;
+        }
+        for (int i = 0; i < props.getChildCount(); i++) {
+            if (name.equals(props.getChild(i).getAttribute("name", ""))) {
+                props.removeChild(props.getChild(i));
+                return;
             }
         }
     }

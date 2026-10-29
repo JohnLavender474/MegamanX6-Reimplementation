@@ -4,6 +4,7 @@ import mmx.x6.anim.Animator;
 import mmx.x6.game.CustomChanges;
 import mmx.x6.game.DamageTables;
 import mmx.x6.game.Entity;
+import mmx.x6.game.GoalMember;
 import mmx.x6.game.World;
 import mmx.x6.game.fx.BossExplosion;
 import mmx.x6.game.player.PlayerStep;
@@ -11,7 +12,7 @@ import mmx.x6.level.RecordDef;
 import mmx.x6.level.TileLayer;
 import mmx.x6.physics.Rect;
 
-public final class D1000 extends Entity {
+public final class D1000 extends Entity implements GoalMember {
 
     public enum BossStep { ENTRY, THINK, WALK, CROUCH, BOMB, SUMMON, RAM, STUN, DEATH }
 
@@ -498,7 +499,7 @@ public final class D1000 extends Entity {
             }
             case 2 -> {
                 if (explosion.dead) {
-                    w.flow.clear();
+                    w.goals.reportBossEnd(w, record);
                     sub = 3;
                 }
             }

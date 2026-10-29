@@ -67,6 +67,7 @@ public final class TmxLoader {
         List<RecordDef> fixed = new ArrayList<>();
         List<CameraZoneDef> zones = new ArrayList<>();
         List<Object[]> checkpointRows = new ArrayList<>();
+        List<GoalDef> goals = new ArrayList<>();
         for (XmlReader.Element group : children(map, "objectgroup")) {
             String groupName = attr(group, "name");
             for (XmlReader.Element o : children(group, "object")) {
@@ -80,6 +81,12 @@ public final class TmxLoader {
                             intOr(p, "kind", 0), intOr(p, "b", 0), intOr(p, "id", 0), intOr(p, "a", 0), x, y,
                             o.getInt("id", 0), intOr(p, "goal", 0), intOr(p, "opened_by", 0));
                     ("records".equals(groupName) ? records : fixed).add(r);
+                } else if ("goals".equals(groupName) && "Goal".equals(attr(o, "type"))) {
+                    int w = (int) Double.parseDouble(attr(o, "width"));
+                    int h = (int) Double.parseDouble(attr(o, "height"));
+                    goals.add(new GoalDef(o.getInt("id", 0), x, y, x + w - 1, y + h - 1,
+                            "any".equals(p.get("mode")) ? GoalMode.ANY : GoalMode.ALL,
+                            "true".equals(p.get("ends_stage")), intOr(p, "goal", 0)));
                 } else if ("camera zones".equals(groupName)) {
                     int w = (int) Double.parseDouble(attr(o, "width"));
                     int h = (int) Double.parseDouble(attr(o, "height"));
@@ -100,7 +107,7 @@ public final class TmxLoader {
                 require(layers, "art 1 decoration", name), require(layers, "art 0 main", name),
                 require(layers, "art 0 front", name), new CollisionGrid(width, height, values),
                 List.copyOf(records), List.copyOf(zones), List.copyOf(fixed), Map.copyOf(properties(map)),
-                List.copyOf(checkpoints), List.of());
+                List.copyOf(checkpoints), List.copyOf(goals));
     }
 
     private static Checkpoint checkpoint(Map<String, String> p, int x, int y) {

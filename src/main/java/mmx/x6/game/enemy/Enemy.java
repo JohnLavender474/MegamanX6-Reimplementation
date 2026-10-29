@@ -2,10 +2,11 @@ package mmx.x6.game.enemy;
 
 import mmx.x6.anim.Animator;
 import mmx.x6.game.Entity;
+import mmx.x6.game.GoalMember;
 import mmx.x6.game.World;
 import mmx.x6.level.RecordDef;
 
-public abstract class Enemy extends Entity {
+public abstract class Enemy extends Entity implements GoalMember {
 
     private final String set;
     protected float offMarginX = 64;
@@ -53,6 +54,7 @@ public abstract class Enemy extends Entity {
         dead = true;
         w.spawner.released(record);
         onDeath(w);
+        w.goals.reportKill(w, record);
     }
 
     protected abstract void onDeath(World w);
