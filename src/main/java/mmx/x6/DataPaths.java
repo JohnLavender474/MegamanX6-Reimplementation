@@ -99,6 +99,10 @@ public final class DataPaths {
         return true;
     }
 
+    public Path catalogJson() {
+        return root.resolve("levels/catalog.json");
+    }
+
     public Path songsJson() {
         return root.resolve("music/songs.json");
     }

@@ -1,0 +1,30 @@
+{
+  "themes": {
+    "intro": {
+      "art_source": "intro-tiles.tsx",
+      "art_tilecount": 3264,
+      "tiles_png": "intro-tiles.png",
+      "properties": {
+        "x6_music": "9", "x6_boss_music": "21", "x6_bank2": "m094-e05", "x6_bank5": "m094-e03",
+        "x6_boss_bank2": "m123-e01", "x6_nightmare_effect": "0"
+      },
+      "fixed_region": {"x0": 5744, "x1": 6655, "template": "intro.tmx"}
+    }
+  },
+  "entities": {
+    "MetaWheelF": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
+    "MetaDridler": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
+    "Junkroid": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
+    "SabreBlock": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
+    "HoverGunner": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
+    "BossGate": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": true},
+    "D1000": {"themes": ["intro"], "stage_bound": true, "defeatable": true, "openable": false},
+    "IntroWreckA": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": false},
+    "IntroWreckB": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": false},
+    "IntroHunters": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": false},
+    "TalkZone": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": false},
+    "PaletteCycle": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": false},
+    "CheckpointMarker": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": false},
+    "CameraZone": {"themes": ["intro"], "stage_bound": true, "defeatable": false, "openable": false}
+  }
+}
