@@ -13,7 +13,7 @@
   },
   "entities": {
     "MetaWheelF": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
-    "MetaDridler": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
+    "MetaDridler": {"themes": ["intro"], "stage_bound": false, "defeatable": false, "openable": false},
     "Junkroid": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
     "SabreBlock": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},
     "HoverGunner": {"themes": ["intro"], "stage_bound": false, "defeatable": true, "openable": false},

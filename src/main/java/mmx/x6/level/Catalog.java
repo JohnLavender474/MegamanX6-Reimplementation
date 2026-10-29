@@ -85,6 +85,10 @@ public final class Catalog {
         return entities.get(name);
     }
 
+    public java.util.Collection<Entity> entities() {
+        return entities.values();
+    }
+
     public Set<String> themeKeys() {
         return themes.keySet();
     }

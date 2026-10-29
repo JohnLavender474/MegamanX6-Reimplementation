@@ -55,6 +55,7 @@ public final class SabreBlock extends Enemy implements Solid {
         dead = true;
         w.spawner.kept(record);
         onDeath(w);
+        w.goals.reportKill(w, record);
     }
 
     @Override

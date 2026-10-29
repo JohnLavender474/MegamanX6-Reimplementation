@@ -466,6 +466,12 @@ class LevelValidatorTest {
     }
 
     @Test
+    void goalWithNonIntParentIsRejected() {
+        TmxFixture f = TmxFixture.valid().objectLayer("goals", goalObj(30, prop("goal", "object", "abc")));
+        assertFinding(check(f), "goal-props", Finding.Result.REJECT);
+    }
+
+    @Test
     void goalPropsWithWrongValuesAreRejected() {
         assertFinding(check(TmxFixture.valid().objectLayer("goals", goalObj(30, prop("mode", "string", "some")))),
                 "goal-props", Finding.Result.REJECT);

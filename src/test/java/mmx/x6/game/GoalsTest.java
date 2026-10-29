@@ -65,16 +65,16 @@ class GoalsTest {
 
     @Test
     void despawnDoesNotCount() {
-        RecordDef r = rec(10, 1);
+        RecordDef r = new RecordDef(10, "MetaWheelF", "main", 0, 0, 0, 0, 500, 100, 10, 1, 0);
         World w = world(List.of(goal(1, GoalMode.ALL, false, 0)), List.of(r));
-        Entity e = new mmx.x6.game.enemy.MetaWheelF(w, r);
+        mmx.x6.game.enemy.MetaWheelF e = new mmx.x6.game.enemy.MetaWheelF(w, r);
         w.entities.add(e);
-        w.spawner.released(r);
-        e.dead = true;
+        e.update(w);
+        assertTrue(e.dead);
         assertFalse(w.goals.done(1));
-        Entity again = new mmx.x6.game.enemy.MetaWheelF(w, r);
+        mmx.x6.game.enemy.MetaWheelF again = new mmx.x6.game.enemy.MetaWheelF(w, r);
         w.entities.add(again);
-        again.onKilled(w, 0);
+        again.onKilled(w, 19);
         assertTrue(w.goals.done(1));
     }
 

@@ -298,7 +298,7 @@ final class ContentRules {
                     findings.add(LevelValidator.reject("goal-props", "The goal \"" + label
                             + "\" has an ends_stage that is not a bool."));
                 }
-                int parent = checkGoalRef(o, "goal", label, byId, findings);
+                int parent = checkGoalRef(o, "goal", label, true, byId, findings);
                 if (parent != 0) {
                     parents.put(LevelValidator.intAttr(o, "id"), parent);
                 }
@@ -307,12 +307,12 @@ final class ContentRules {
         for (XmlReader.Element o : recordObjects(map, true)) {
             String label = o.getAttribute("name", "?");
             Catalog.Entity entity = catalog.entity(label);
-            int goal = checkGoalRef(o, "goal", label, byId, findings);
+            int goal = checkGoalRef(o, "goal", label, false, byId, findings);
             if (goal != 0 && entity != null && !entity.defeatable()) {
                 findings.add(LevelValidator.reject("goal-member", "The object \"" + label
                         + "\" has a goal but cannot be defeated."));
             }
-            int listener = checkGoalRef(o, "opened_by", label, byId, findings);
+            int listener = checkGoalRef(o, "opened_by", label, false, byId, findings);
             if (listener != 0 && entity != null && !entity.openable()) {
                 findings.add(LevelValidator.reject("goal-listener", "The object \"" + label
                         + "\" has opened_by but cannot be opened."));
@@ -331,10 +331,17 @@ final class ContentRules {
         }
     }
 
-    private static int checkGoalRef(XmlReader.Element o, String key, String label,
+    private static int checkGoalRef(XmlReader.Element o, String key, String label, boolean isGoalObject,
                                     Map<Integer, XmlReader.Element> byId, List<Finding> findings) {
         String v = properties(o).get(key);
-        if (v == null || !isInt(v) || Integer.parseInt(v.trim()) == 0) {
+        if (v != null && !isInt(v)) {
+            if (isGoalObject) {
+                findings.add(LevelValidator.reject("goal-props", "The property " + key + " of \"" + label
+                        + "\" is not an int."));
+            }
+            return 0;
+        }
+        if (v == null || Integer.parseInt(v.trim()) == 0) {
             return 0;
         }
         int id = Integer.parseInt(v.trim());
