@@ -134,9 +134,9 @@ For developers, these Java properties change how the game starts
 | property                            | effect                                                                                                                                                    |
 |-------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------|
 | `-Dmmx.stage=KEY`                   | start this stage without the select screen                                                                                                                |
-| `-Dmmx.level=PATH`                  | play a level file in the X6 TMX profile; it is checked first, and a rejected file shows the reasons on an error screen                                    |
+| `-Dmmx.level=PATH`                  | play a level file in the X6 TMX profile; it is checked first, a rejected file shows the reasons on an error screen, and ESC closes the game               |
 | `-Dmmx.front=NAME`                  | start the front end at `ready` (default), `logo`, `load`, `opening`, `title`, `menu` or `options`; `select` starts at the stage select screen             |
-| `-Dmmx.checkpoint=N`                | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3)                                        |
+| `-Dmmx.checkpoint=N`                | start at checkpoint N (intro 0–2, Yammark 0–3, Wolfang 0–5, Heatnix 0–7, Scaravich 0–2, Turtloid 0–5, Sheldon 0–3); an N out of range is ignored          |
 | `-Dmmx.startX=X -Dmmx.startY=Y`     | start standing at a point, with wide camera limits                                                                                                        |
 | `-Dmmx.debug=true`                  | start with the F1 view on                                                                                                                                 |
 | `-Dmmx.hold=BITS`                   | hold buttons by their X6 bits (1 right, 2 left, 4 up, 8 down, 16 sabre, 32 buster, 128 jump, 256 dash, 512 next weapon, 1024 previous weapon, 2048 Start) |
@@ -153,5 +153,6 @@ change the boss room region at the end of the map. Play the level with:
 ```
 
 The game checks the file first. If the file is rejected, a "LEVEL REJECTED" screen lists each reason
-(`code: message`), and any key closes the game. When the goal of the level is done, STAGE CLEAR shows,
-and the next key press closes the game.
+(`code: message`), and any key closes the game. The status and the warnings also go to stderr. ESC in
+the level closes the game. When the goal of the level is done, STAGE CLEAR shows, and the next key
+press closes the game.
