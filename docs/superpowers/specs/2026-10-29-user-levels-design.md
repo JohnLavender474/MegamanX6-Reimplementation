@@ -2,6 +2,9 @@
 
 Date: 2026-10-29. Repo: `~/IdeaProjects/mmx-x6`.
 
+The status of this work, what is left, and the decisions made after this spec are in
+`docs/superpowers/status/user-levels.md`.
+
 ## Intent
 
 Users make their own Mega Man X6 levels and play them on this engine, on the desktop and in a web

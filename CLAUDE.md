@@ -17,6 +17,9 @@ they give data, and best guesses elsewhere. **Every guess, simplification and ga
 `docs/gaps.md`.** The changes that differ from X6 on purpose (the user's design choices) are in
 `docs/custom-changes.md`, with their values in `game/CustomChanges.java`. The design and plans are in `docs/superpowers/specs/` and
 `docs/superpowers/plans/`. `README.md` has the keys, the debug options and a short account of how the data was made.
+The user-levels work (level files, the validator, goals, the web player, the Tiled kit) has its
+status, what is left and its decisions in `docs/superpowers/status/user-levels.md`; read it before you
+work on it. `docs/CLAUDE.md` says which docs go where.
 
 ## Build, run, test
 
